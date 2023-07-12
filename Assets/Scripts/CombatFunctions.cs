@@ -31,7 +31,7 @@ public class CombatFunctions : MonoBehaviour
     {
         unit.currentStamina -= attack.staminaCost;
 
-        Debug.Log(unit.currentStamina + "is the current stamina of" + unit.unitName);
+        
         return unit.currentStamina;
     }
 
