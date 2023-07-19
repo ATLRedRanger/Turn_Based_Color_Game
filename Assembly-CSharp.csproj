@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\AttacksClass.cs" />
     <Compile Include="Assets\Scripts\AttacksDatabase.cs" />
     <Compile Include="Assets\Scripts\CombatFunctions.cs" />
+    <Compile Include="Assets\Scripts\Enemy_Combat_Functions.cs" />
     <Compile Include="Assets\Scripts\Enums.cs" />
     <Compile Include="Assets\Scripts\ENV_Mana.cs" />
     <Compile Include="Assets\Scripts\ItemClass.cs" />

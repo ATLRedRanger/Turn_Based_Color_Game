@@ -22,9 +22,9 @@ public class AttacksDatabase : MonoBehaviour
 
 
         //I can make private weapons in this way using the createAttack function
-        _kick = createAttack("Kick", 1, 1, 0, 100, Color.Neutral);
+        _kick = createAttack("Kick", 1, 3, 0, 100, Color.Neutral);
 
-        _chop = createAttack("Chop", 2, 2, 0, 95, Color.Neutral);
+        _chop = createAttack("Chop", 2, 5, 0, 95, Color.Neutral);
 
         
     }

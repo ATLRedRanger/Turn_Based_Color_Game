@@ -1694,24 +1694,28 @@ MonoBehaviour:
     attackName: 
     attackDamage: 0
     staminaCost: 0
+    attackAccuracy: 0
     colorCost: 0
     attackColor: 0
   _kick:
     attackName: 
     attackDamage: 0
     staminaCost: 0
+    attackAccuracy: 0
     colorCost: 0
     attackColor: 0
   _chop:
     attackName: 
     attackDamage: 0
     staminaCost: 0
+    attackAccuracy: 0
     colorCost: 0
     attackColor: 0
   _fireBall:
     attackName: 
     attackDamage: 0
     staminaCost: 0
+    attackAccuracy: 0
     colorCost: 0
     attackColor: 0
 --- !u!4 &1239664327
@@ -1800,6 +1804,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1334024789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1334024791}
+  - component: {fileID: 1334024790}
+  m_Layer: 0
+  m_Name: Enemy_Combat_Functions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1334024790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334024789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f92840ac1e940134d8d310add263cf2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDatabaseScript: {fileID: 0}
+  unitSpawnerScript: {fileID: 0}
+  combatFunctionsScript: {fileID: 0}
+  enemyOne: {fileID: 0}
+  player: {fileID: 0}
+  chosenAttack:
+    attackName: 
+    attackDamage: 0
+    staminaCost: 0
+    attackAccuracy: 0
+    colorCost: 0
+    attackColor: 0
+--- !u!4 &1334024791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334024789}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 406.9402, y: 278.4634, z: -0.5458094}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1366832032
 GameObject:
@@ -2497,6 +2556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDatabase: {fileID: 1239664326}
   envManaScript: {fileID: 727368242}
+  unitSpawnerScript: {fileID: 0}
   attackDamage: 0
   chosenEnemy: {fileID: 0}
 --- !u!4 &1963110896
@@ -2581,6 +2641,8 @@ MonoBehaviour:
   currentSpeed: 0
   maxStamina: 0
   currentStamina: 0
+  staminaRegenModifier: 0
+  baseAccuracy: 0
   currentLevel: 0
   isPlayer: 0
   hadATurn: 0
@@ -2588,6 +2650,7 @@ MonoBehaviour:
   gameOrganizer: {fileID: 1308018017}
   attacksDatabase: {fileID: 1239664326}
   turnManagerScript: {fileID: 0}
+  enemyCombatScript: {fileID: 0}
 --- !u!4 &2026866406
 Transform:
   m_ObjectHideFlags: 0

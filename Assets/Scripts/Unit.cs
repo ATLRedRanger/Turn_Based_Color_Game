@@ -35,9 +35,12 @@ public class Unit : MonoBehaviour
 
     public GameObject gameOrganizer;
 
+    //Scripts
     public AttacksDatabase attacksDatabase;
 
     public Turn_Manager turnManagerScript;
+
+    public Enemy_Combat_Functions enemyCombatScript;
 
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
@@ -47,6 +50,7 @@ public class Unit : MonoBehaviour
 
         
         attacksDatabase = FindObjectOfType<AttacksDatabase>();
+        enemyCombatScript = FindObjectOfType<Enemy_Combat_Functions>();
         LearnAttacks();
         
     }
@@ -65,8 +69,6 @@ public class Unit : MonoBehaviour
             case 1:
                 unitAttackDictionary["Punch"] = attacksDatabase._punch;
                 unitAttackDictionary["Kick"] = attacksDatabase._kick;
-                break;
-            case 3:
                 unitAttackDictionary.Add("Chop", attacksDatabase._chop);
 
                 break;
@@ -88,7 +90,10 @@ public class Unit : MonoBehaviour
 
     public void EnemyAi()
     {
-        Debug.Log("ENEMY DID A THING");
+        
+        
+
+        enemyCombatScript.EnemyAttacking();
 
         coroutine = Waiting(2.0f);
         StartCoroutine(coroutine);

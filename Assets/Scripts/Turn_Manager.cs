@@ -106,11 +106,11 @@ public class Turn_Manager : MonoBehaviour
     public void BeginTurn()
     {
         
-        Debug.Log("Beginning The Turn");
+        
         if(state == BattleState.PLAYERTURN)
         {
             combatFunctionsScript.RegenStamina(unitSpawnerScript.player);
-            Debug.Log(unitSpawnerScript.player.currentStamina + " APPLE");
+            
             
         }
         if(state == BattleState.ENEMYTURN)

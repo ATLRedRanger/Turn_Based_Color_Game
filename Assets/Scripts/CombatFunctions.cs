@@ -11,6 +11,8 @@ public class CombatFunctions : MonoBehaviour
 
     public ENV_Mana envManaScript;
 
+    public Unit_Spawner unitSpawnerScript;
+
     public int attackDamage;
 
     public Unit chosenEnemy;
@@ -20,7 +22,7 @@ public class CombatFunctions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
         envManaScript = FindObjectOfType<ENV_Mana>();
     }
 
@@ -185,6 +187,25 @@ public class CombatFunctions : MonoBehaviour
         return StaminaLevels.Broken;
     }
     
+    //Attacks
+
+    public void FireBall()
+    {
+        //Function for calculating total damage by the player using this attack.
+        DamageFromAttack(attackDatabase._fireBall, unitSpawnerScript.player);
+
+        //Function for reducing the stamina of the player but the stamina cost of the attack.
+        ReduceStamina(attackDatabase._fireBall, unitSpawnerScript.player);
+
+        //This is where we put the function for enemies taking damage.
+        ReduceHealth(attackDamage, unitSpawnerScript.enemyOne);
+
+        //This is where we put the function to reduce the color in the environment.
+        ReduceColorFromEnv(attackDatabase._fireBall);
+    }
+
+
+
 }
 //TODO: Accuracy? I would like to tie in stamina, health or both into accuracy. Concerned that it could snowball.
 //Ie: You are dealing damage to OP, meaning they're accuracy drops and therefor open the door for you to deal more damage.

@@ -62,7 +62,7 @@ public class UI : MonoBehaviour
     {
        StartCoroutine(StartStuff());
         _backButton.SetActive(false);
-       //Debug.Log("APPLE "+unitSpawnerScript.player.playerAttackDictionary["Punch"].attackDamage);
+       
 
        
 
@@ -200,17 +200,8 @@ public class UI : MonoBehaviour
 
         if(combatFunctions.HitorMiss(attacksDatabase._fireBall, unitSpawnerScript.player) == true)
         {
-            //Function for calculating total damage by the player using this attack.
-            combatFunctions.DamageFromAttack(attacksDatabase._fireBall, unitSpawnerScript.player);
 
-            //Function for reducing the stamina of the player but the stamina cost of the attack.
-            combatFunctions.ReduceStamina(attacksDatabase._fireBall, unitSpawnerScript.player);
-
-            //This is where we put the function for enemies taking damage.
-            combatFunctions.ReduceHealth(combatFunctions.attackDamage, unitSpawnerScript.enemyOne);
-
-            //This is where we put the function to reduce the color in the environment.
-            combatFunctions.ReduceColorFromEnv(attacksDatabase._fireBall);
+            combatFunctions.FireBall();
 
             player.hadATurn = true;
 
@@ -220,7 +211,7 @@ public class UI : MonoBehaviour
         }
         else
         {
-            //UpdateUI();
+            
             player.hadATurn = true;
 
             SetFalse();
@@ -269,7 +260,7 @@ public class UI : MonoBehaviour
     {
         _fireBallButton.SetActive(false);
 
-        if(envManaScript.currentRed >= attacksDatabase._fireBall.colorCost && _fireBallButton != null)
+        if(envManaScript.currentRed >= attacksDatabase._fireBall.colorCost && _fireBallButton != null && unitSpawnerScript.player.currentStamina >= attacksDatabase._fireBall.staminaCost)
         {
             _fireBallButton.SetActive(true);
         }
