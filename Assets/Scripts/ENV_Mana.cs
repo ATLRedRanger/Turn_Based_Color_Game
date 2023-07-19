@@ -37,3 +37,4 @@ public class ENV_Mana : MonoBehaviour
         
     }
 }
+//TODO: Make a ENV_Color regen system

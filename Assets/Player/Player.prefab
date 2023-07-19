@@ -100,9 +100,12 @@ MonoBehaviour:
   currentSpeed: 10
   maxStamina: 20
   currentStamina: 20
+  staminaRegenModifier: 1
+  baseAccuracy: 50
   currentLevel: 1
   isPlayer: 1
-  playerTurn: 0
   hadATurn: 0
   myTurn: 0
+  gameOrganizer: {fileID: 0}
   attacksDatabase: {fileID: 0}
+  turnManagerScript: {fileID: 0}

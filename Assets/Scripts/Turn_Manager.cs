@@ -14,12 +14,14 @@ public class Turn_Manager : MonoBehaviour
 
     public List<Unit> turnOrder;
 
+    private CombatFunctions combatFunctionsScript;
 
 
     // Start is called before the first frame update
     void Start()
     {
         unitSpawnerScript = GetComponent<Unit_Spawner>();
+        combatFunctionsScript = FindObjectOfType<CombatFunctions>();
 
         state = BattleState.START;
         Debug.Log("BattleState is " + state);
@@ -98,11 +100,27 @@ public class Turn_Manager : MonoBehaviour
 
     }
 
+    public void BeginTurn()
+    {
+        Debug.Log("Beginning The Turn");
+        if(state == BattleState.PLAYERTURN)
+        {
+            combatFunctionsScript.RegenStamina(unitSpawnerScript.player);
+            Debug.Log(unitSpawnerScript.player.currentStamina + " APPLE");
+        }
+        if(state == BattleState.ENEMYTURN)
+        {
+            combatFunctionsScript.RegenStamina(unitSpawnerScript.enemyOne);
+        }
+    }
 
     public void PlayerTurn()
     {
         state = BattleState.PLAYERTURN;
+        BeginTurn();
+
         Debug.Log("PLAYER TURN");
+
         unitSpawnerScript.enemyOne.myTurn = false;
         unitSpawnerScript.player.myTurn = true;
         ui_Script.MenuVisibile();
@@ -113,6 +131,8 @@ public class Turn_Manager : MonoBehaviour
     public void EnemyTurn()
     {
         state = BattleState.ENEMYTURN;
+        BeginTurn();
+
         Debug.Log("ENEMY TURN");
         
         unitSpawnerScript.player.myTurn = false;

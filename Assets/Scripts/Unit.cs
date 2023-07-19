@@ -19,6 +19,11 @@ public class Unit : MonoBehaviour
     public int maxStamina;
     
     public int currentStamina;
+
+    public int staminaRegenModifier;
+
+    public int baseAccuracy;
+
     [SerializeField]
     private int currentLevel;
     
@@ -34,7 +39,7 @@ public class Unit : MonoBehaviour
 
     public Turn_Manager turnManagerScript;
 
-    public Dictionary<string, Attack> playerAttackDictionary = new Dictionary<string, Attack>();
+    public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
     private IEnumerator coroutine;
     void Start()
@@ -58,11 +63,11 @@ public class Unit : MonoBehaviour
         {
             
             case 1:
-                playerAttackDictionary["Punch"] = attacksDatabase._punch;
-                playerAttackDictionary["Kick"] = attacksDatabase._kick;
+                unitAttackDictionary["Punch"] = attacksDatabase._punch;
+                unitAttackDictionary["Kick"] = attacksDatabase._kick;
                 break;
             case 3:
-                playerAttackDictionary.Add("Chop", attacksDatabase._chop);
+                unitAttackDictionary.Add("Chop", attacksDatabase._chop);
 
                 break;
         }
@@ -75,6 +80,7 @@ public class Unit : MonoBehaviour
         {
             currentHealth = 0;
             Debug.Log(unitName + "is DEAD!");
+            
         }
         
              
@@ -100,4 +106,5 @@ public class Unit : MonoBehaviour
     }
 }
 
-//TODO: MAKE THE ENEMY TAKE DAMAGE
+//TODO: Make the enemy deal damage
+//TODO: Make a stamina regen system

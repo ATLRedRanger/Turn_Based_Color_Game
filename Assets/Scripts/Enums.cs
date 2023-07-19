@@ -26,3 +26,12 @@ public enum Color
     Violet,
     Neutral
 }
+
+public enum StaminaLevels
+{
+    Full,
+    ThreeQuarters,
+    Half,
+    OneQuarter,
+    Broken
+}

@@ -18,6 +18,8 @@ public class Unit_Spawner : MonoBehaviour
 
     public Unit enemyOne;
 
+    public Unit chosenEnemy;
+
     public Turn_Manager turnManagerScript;
     // Start is called before the first frame update
     void Start()
@@ -78,7 +80,7 @@ public class Unit_Spawner : MonoBehaviour
 
         enemyOne = (Instantiate(listOfEnemies[whatEnemy], enemyPositions[enemyPosition].transform).GetComponent<Unit>());
         enemyOne.SetTurnManager(turnManagerScript);
-
+        
 
         return enemyOne;
     }

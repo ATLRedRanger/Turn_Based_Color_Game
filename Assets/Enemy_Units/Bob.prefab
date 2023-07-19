@@ -52,6 +52,8 @@ MonoBehaviour:
   currentSpeed: 5
   maxStamina: 10
   currentStamina: 10
+  staminaRegenModifier: 1
+  baseAccuracy: 0
   currentLevel: 1
   isPlayer: 0
   hadATurn: 0

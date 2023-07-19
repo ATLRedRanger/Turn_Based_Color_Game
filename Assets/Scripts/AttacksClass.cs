@@ -10,8 +10,11 @@ public class Attack
 
     public int staminaCost;
 
+    public int attackAccuracy;
+
     public int colorCost;
 
+    
     
 
     public Color attackColor;
@@ -34,12 +37,13 @@ public class Attack
     }
 
     //Using this method, I can do things once. 
-    public Attack(string attackName, int attackDamage, int staminaCost, int colorCost, Color attackColor)
+    public Attack(string attackName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, Color attackColor)
     {
         this.attackName = attackName;
         this.attackDamage = attackDamage;
         this.staminaCost = staminaCost;
         this.colorCost = colorCost;
+        this.attackAccuracy = attackAccuracy;
         this.attackColor = attackColor;
         
 

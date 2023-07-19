@@ -13,6 +13,8 @@ public class UI : MonoBehaviour
 
     public Text enemyOneStamina;
 
+    public Text enemyOneButtonText;
+
     public Text playerName;
 
     public Text playerHealth;
@@ -20,6 +22,8 @@ public class UI : MonoBehaviour
     public Text playerStamina;
 
     public Text environmentRed;
+
+    public Text backButtonText;
 
     public Unit_Spawner unitSpawnerScript;
 
@@ -39,7 +43,13 @@ public class UI : MonoBehaviour
 
     public Button _punchButton;
 
-    public GameObject _fightPanel;
+    public GameObject _enemyOneButton;
+
+    public GameObject _backButton;
+
+    public GameObject _enemyPanel;
+
+    public GameObject _attacksPanel;
 
     public GameObject _fightButton;
 
@@ -51,7 +61,7 @@ public class UI : MonoBehaviour
     void Start()
     {
        StartCoroutine(StartStuff());
-       
+        _backButton.SetActive(false);
        //Debug.Log("APPLE "+unitSpawnerScript.player.playerAttackDictionary["Punch"].attackDamage);
 
        
@@ -80,6 +90,8 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(.02f);
         enemyOneName.text = unitSpawnerScript.listOfCombatants[1].unitName;
         playerName.text = unitSpawnerScript.player.unitName;
+        enemyOneButtonText.text = unitSpawnerScript.enemyOne.unitName;
+        backButtonText.text = "B";
     }
 
     IEnumerator HealthText()
@@ -123,6 +135,7 @@ public class UI : MonoBehaviour
         {
             _fightButton.SetActive(true);
             AvailableAttacks();
+            
         }
         else
         {
@@ -134,58 +147,122 @@ public class UI : MonoBehaviour
 
     //Buttons
 
+    public void BackButton()
+    {
+        //This button is to allow the player to go back to a previous menu
+        if (_enemyPanel.activeSelf == true)
+        {
+            _enemyPanel.SetActive(false);
+            _fightButton.SetActive(true);
+        }
+        if (_attacksPanel.activeSelf == true)
+        {
+            _attacksPanel.SetActive(false);
+            _enemyPanel.SetActive(true);
+        }
+        if (_attacksPanel.activeSelf == false && _enemyPanel.activeSelf == false)
+        {
+            _backButton.SetActive(false);
+        }
+        
+    }
+
+    public void EnemyOneButton()
+    {
+        unitSpawnerScript.chosenEnemy = unitSpawnerScript.enemyOne;
+        _enemyPanel.SetActive(false);
+        OpenFightPanel();
+        
+    }
+
     public void OnPunchClick()
     {
         //Function for calculating total damage by the player using this attack.
-        combatFunctions.DamageFromAttack(player.playerAttackDictionary["Punch"], unitSpawnerScript.player);
+        combatFunctions.DamageFromAttack(player.unitAttackDictionary["Punch"], unitSpawnerScript.player);
         
         //Function for reducing the stamina of the player but the stamina cost of the attack.
         combatFunctions.ReduceStamina(attacksDatabase._punch, unitSpawnerScript.player);
 
         //This is where we put the function for enemies taking damage.
-        combatFunctions.ReduceHealth(combatFunctions.attackDamage, unitSpawnerScript.enemyOne);
+        combatFunctions.ReduceHealth(combatFunctions.attackDamage, unitSpawnerScript.chosenEnemy);
 
         UpdateUI();
         player.hadATurn = true;
 
-        _fightPanel.SetActive(false);
+        SetFalse();
 
         turnManagerScript.EndTurn();
     }
 
     public void OnFireballClick()
     {
+        
 
-        //Function for calculating total damage by the player using this attack.
-        combatFunctions.DamageFromAttack(attacksDatabase._fireBall, unitSpawnerScript.player);
+        if(combatFunctions.HitorMiss(attacksDatabase._fireBall, unitSpawnerScript.player) == true)
+        {
+            //Function for calculating total damage by the player using this attack.
+            combatFunctions.DamageFromAttack(attacksDatabase._fireBall, unitSpawnerScript.player);
 
-        //Function for reducing the stamina of the player but the stamina cost of the attack.
-        combatFunctions.ReduceStamina(attacksDatabase._fireBall, unitSpawnerScript.player);
+            //Function for reducing the stamina of the player but the stamina cost of the attack.
+            combatFunctions.ReduceStamina(attacksDatabase._fireBall, unitSpawnerScript.player);
 
-        //This is where we put the function for enemies taking damage.
-        combatFunctions.ReduceHealth(combatFunctions.attackDamage, unitSpawnerScript.enemyOne);
+            //This is where we put the function for enemies taking damage.
+            combatFunctions.ReduceHealth(combatFunctions.attackDamage, unitSpawnerScript.enemyOne);
 
-        //This is where we put the function to reduce the color in the environment.
-        combatFunctions.ReduceColorFromEnv(attacksDatabase._fireBall);
+            //This is where we put the function to reduce the color in the environment.
+            combatFunctions.ReduceColorFromEnv(attacksDatabase._fireBall);
 
-        UpdateUI();
-        player.hadATurn = true;
+            UpdateUI();
+            player.hadATurn = true;
 
-        _fightPanel.SetActive(false);
+            SetFalse();
 
-        turnManagerScript.EndTurn();
+            turnManagerScript.EndTurn();
+        }
+        else
+        {
+            UpdateUI();
+            player.hadATurn = true;
+
+            SetFalse();
+
+            turnManagerScript.EndTurn();
+        }
+
+    }
+
+    public void OpenEnemyPanel()
+    {
+        
+        //Function to open and close the panel that houses all of the attack options
+        if (_enemyPanel != null)
+        {
+            //Sets a bool for the panel
+            bool isActive = _enemyPanel.activeSelf;
+            //Whatever the bool is for the panel, this will make it the opposite
+            _enemyPanel.SetActive(!isActive);
+        }
+        if(_enemyPanel.activeSelf == true)
+        {
+            _fightButton.SetActive(false);
+            _backButton.SetActive(true);
+        }
     }
 
     public void OpenFightPanel()
     {
         
         //Function to open and close the panel that houses all of the attack options
-        if(_fightPanel != null)
+        if (_attacksPanel != null)
         {
             //Sets a bool for the panel
-            bool isActive = _fightPanel.activeSelf;
+            bool isActive = _attacksPanel.activeSelf;
             //Whatever the bool is for the panel, this will make it the opposite
-            _fightPanel.SetActive(!isActive);
+            _attacksPanel.SetActive(!isActive);
+        }
+        if (_enemyPanel.activeSelf == true)
+        {
+            _backButton.SetActive(true);
         }
     }
 
@@ -198,4 +275,11 @@ public class UI : MonoBehaviour
             _fireBallButton.SetActive(true);
         }
     }
+    private void SetFalse()
+    {
+        _backButton.SetActive(false);
+        _attacksPanel.SetActive(false);
+    }
 }
+//KEYBOARD SHORTCUTS
+//HIGHLIGHT INSTANCES - SHIFT+ALT+. (Highlights instances of a word)
