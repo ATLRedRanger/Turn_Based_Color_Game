@@ -103,12 +103,13 @@ public class CombatFunctions : MonoBehaviour
 
         unit.currentStamina += staminaRegend;
 
-        Debug.Log(unit.currentStamina + " is the current stamina of " + unit.unitName + " and the max stamina is " + unit.maxStamina);
 
         if(unit.currentStamina >= unit.maxStamina)
         {
             unit.currentStamina = unit.maxStamina;
         }
+
+        Debug.Log(unit.currentStamina + " is the current stamina of " + unit.unitName + " and the max stamina is " + unit.maxStamina);
 
         Debug.Log(unit.unitName + " has gained " + staminaRegend + " stamina.");
     }

@@ -18,7 +18,7 @@ public class AttacksDatabase : MonoBehaviour
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
         _punch = new Attack("Punch", 1, 1, 0, 100, Color.Neutral);
 
-        _fireBall = new Attack("Fireball", 5, 3, 4, 95, Color.Red);
+        _fireBall = new Attack("Fireball", 5, 12, 4, 95, Color.Red);
 
 
         //I can make private weapons in this way using the createAttack function

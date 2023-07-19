@@ -88,6 +88,8 @@ public class Turn_Manager : MonoBehaviour
 
     public void EndTurn()
     {
+        
+
         if (unitSpawnerScript.player.myTurn == true)
         {
             EnemyTurn();
@@ -97,21 +99,26 @@ public class Turn_Manager : MonoBehaviour
             PlayerTurn();
         }
 
+        ui_Script.UpdateUI();
 
     }
 
     public void BeginTurn()
     {
+        
         Debug.Log("Beginning The Turn");
         if(state == BattleState.PLAYERTURN)
         {
             combatFunctionsScript.RegenStamina(unitSpawnerScript.player);
             Debug.Log(unitSpawnerScript.player.currentStamina + " APPLE");
+            
         }
         if(state == BattleState.ENEMYTURN)
         {
             combatFunctionsScript.RegenStamina(unitSpawnerScript.enemyOne);
+            
         }
+        ui_Script.UpdateUI();
     }
 
     public void PlayerTurn()

@@ -212,7 +212,6 @@ public class UI : MonoBehaviour
             //This is where we put the function to reduce the color in the environment.
             combatFunctions.ReduceColorFromEnv(attacksDatabase._fireBall);
 
-            UpdateUI();
             player.hadATurn = true;
 
             SetFalse();
@@ -221,14 +220,14 @@ public class UI : MonoBehaviour
         }
         else
         {
-            UpdateUI();
+            //UpdateUI();
             player.hadATurn = true;
 
             SetFalse();
 
             turnManagerScript.EndTurn();
         }
-
+        
     }
 
     public void OpenEnemyPanel()
