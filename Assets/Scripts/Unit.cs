@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    //Unit Attributes
     public string unitName;
 
     public int maxHealth;
@@ -26,7 +27,19 @@ public class Unit : MonoBehaviour
 
     [SerializeField]
     private int currentLevel;
-    
+
+    //Inventory related variables
+    public List<Item> itemList = new List<Item>(); 
+
+    //Equipment related variables
+    public Weapon equippedWeapon;
+    public int axeMastery;
+    public int staffMastery;
+    public int swordMastery;
+    public int hammerMastery;
+    public int bowMastery;
+
+    //Turn related variables
     public bool isPlayer;
 
     public bool hadATurn;
@@ -42,6 +55,9 @@ public class Unit : MonoBehaviour
 
     public Enemy_Combat_Functions enemyCombatScript;
 
+    public ENV_Mana envManaScript;
+
+    //Dictionaries
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
     private IEnumerator coroutine;
@@ -51,6 +67,7 @@ public class Unit : MonoBehaviour
         
         attacksDatabase = FindObjectOfType<AttacksDatabase>();
         enemyCombatScript = FindObjectOfType<Enemy_Combat_Functions>();
+        envManaScript = FindObjectOfType<ENV_Mana>();
         LearnAttacks();
         
     }
@@ -69,11 +86,51 @@ public class Unit : MonoBehaviour
             case 1:
                 unitAttackDictionary["Punch"] = attacksDatabase._punch;
                 unitAttackDictionary["Kick"] = attacksDatabase._kick;
-                unitAttackDictionary.Add("Chop", attacksDatabase._chop);
-
+                unitAttackDictionary["Fireball"] = attacksDatabase._fireBall;
                 break;
         }
+        switch(axeMastery)
+        {
+            case 1:
+                unitAttackDictionary["Chop"] = attacksDatabase._chop;
+                break;
+        }
+        switch (staffMastery)
+        {
+            case 1:
+                unitAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
+                break;
+        }
+        switch (swordMastery)
+        {
+            case 1:
+                unitAttackDictionary["Slash"] = attacksDatabase._slash;
+                break;
+        }
+        switch (hammerMastery)
+        {
+            case 1:
+                unitAttackDictionary["Slam"] = attacksDatabase._slam;
+                break;
+        }
+        switch (bowMastery)
+        {
+            case 1:
+                unitAttackDictionary["Quick Shot"] = attacksDatabase._quickShot;
+                break;
+        }
+    }
 
+    public void CanUseAttack()
+    {
+        foreach(var kvp in unitAttackDictionary)
+        {
+            if(kvp.Value.attackType == equippedWeapon.weaponType && currentStamina >= kvp.Value.staminaCost)
+            {
+
+            }
+        }
+        
     }
 
     public void AmIDeadYet()

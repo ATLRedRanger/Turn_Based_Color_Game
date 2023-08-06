@@ -35,3 +35,25 @@ public enum StaminaLevels
     OneQuarter,
     Broken
 }
+
+public enum WeaponType
+{
+    Axe,
+    Staff,
+    Sword,
+    Hammer,
+    Bow,
+    Neutral
+    
+}
+
+public enum ItemType
+{
+    Consumable, 
+    Equipment
+}
+
+public enum ConsumableType
+{
+    Health,Stamina
+}

@@ -77,7 +77,7 @@ public class CombatFunctions : MonoBehaviour
         Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
         Debug.Log("This roll is " + roll);
         return hit;
-
+        
     }
 
     private int RollForAccuracy(Unit unit, float accuracyMultiple)
@@ -163,6 +163,8 @@ public class CombatFunctions : MonoBehaviour
             case Color.Violet:
                 envManaScript.currentViolet -= attack.colorCost;
                 break;
+            default:
+                break;
         }
     }
     
@@ -188,7 +190,15 @@ public class CombatFunctions : MonoBehaviour
     }
     
     //Attacks
+    public void UseAttack(Attack attack, Unit player, Unit enemy)
+    {
+        Debug.Log("Using the UseAttack Function");
+        DamageFromAttack(attack, player);
+        ReduceStamina(attack, player);
+        ReduceHealth(attackDamage, enemy);
+        ReduceColorFromEnv(attack);
 
+    }
     public void FireBall()
     {
         //Function for calculating total damage by the player using this attack.

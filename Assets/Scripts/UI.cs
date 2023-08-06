@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-
+    //UI Text
     public Text enemyOneName;
 
     public Text enemyOneHealth;
@@ -25,35 +25,78 @@ public class UI : MonoBehaviour
 
     public Text backButtonText;
 
+
+    //UI Menu Buttons
+    public GameObject _itemButton;
+
+    public GameObject _spellsButton;
+
+    public GameObject _attackButton;
+
+    public GameObject _defendButton;
+
+    public GameObject _abilitiesButton;
+
+    public GameObject _fightButton;
+
+    public GameObject _backButton;
+
+    //UI Abilities Buttons
+    public GameObject _punchButton;
+
+
+    //UI Item Buttons
+    public GameObject _healthPotion;
+
+
+    //UI Spells Buttons
+    public GameObject _fireBallButton;
+
+
+    //UI Enemies Buttons
+    public GameObject _enemyOneButton;
+
+    public GameObject _enemyTwoButton;
+
+    
+
+    
+
+    
+
+    //UI Panels
+    public GameObject _enemiesPanel;
+
+    public GameObject _abilitiesPanel;
+
+    public GameObject _itemPanel;
+
+    public GameObject _spellsPanel;
+
+    public GameObject _fightPanel;
+
+
+    //Scripts
+    public ENV_Mana envManaScript;
+
+    public GameObject gameOrganizer;
+
     public Unit_Spawner unitSpawnerScript;
 
     public Turn_Manager turnManagerScript;
-
-    public ENV_Mana envManaScript;
-
-    public List<GameObject> buttonList;
-
-    public GameObject gameOrganizer;
 
     public CombatFunctions combatFunctions;
 
     public AttacksDatabase attacksDatabase;
 
+    public Inventory inventoryScript;
+
+    //Player
     private Unit player;
 
-    public Button _punchButton;
+    
 
-    public GameObject _enemyOneButton;
-
-    public GameObject _backButton;
-
-    public GameObject _enemyPanel;
-
-    public GameObject _attacksPanel;
-
-    public GameObject _fightButton;
-
-    public GameObject _fireBallButton;
+    
 
     
 
@@ -63,7 +106,7 @@ public class UI : MonoBehaviour
        StartCoroutine(StartStuff());
         _backButton.SetActive(false);
        
-
+        
        
 
     }
@@ -80,6 +123,7 @@ public class UI : MonoBehaviour
         turnManagerScript = gameOrganizer.GetComponent<Turn_Manager>();
         envManaScript = FindObjectOfType<ENV_Mana>();
         player = unitSpawnerScript.player;
+        inventoryScript = FindObjectOfType<Inventory>();
         StartCoroutine(NamesText());
         StartCoroutine(HealthText());
         StartCoroutine(StaminaText());
@@ -150,17 +194,17 @@ public class UI : MonoBehaviour
     public void BackButton()
     {
         //This button is to allow the player to go back to a previous menu
-        if (_enemyPanel.activeSelf == true)
+        if (_enemiesPanel.activeSelf == true)
         {
-            _enemyPanel.SetActive(false);
+            _enemiesPanel.SetActive(false);
             _fightButton.SetActive(true);
         }
-        if (_attacksPanel.activeSelf == true)
+        if (_abilitiesPanel.activeSelf == true)
         {
-            _attacksPanel.SetActive(false);
-            _enemyPanel.SetActive(true);
+            _abilitiesPanel.SetActive(false);
+            _enemiesPanel.SetActive(true);
         }
-        if (_attacksPanel.activeSelf == false && _enemyPanel.activeSelf == false)
+        if (_abilitiesPanel.activeSelf == false && _enemiesPanel.activeSelf == false)
         {
             _backButton.SetActive(false);
         }
@@ -170,8 +214,8 @@ public class UI : MonoBehaviour
     public void EnemyOneButton()
     {
         unitSpawnerScript.chosenEnemy = unitSpawnerScript.enemyOne;
-        _enemyPanel.SetActive(false);
-        OpenFightPanel();
+        _enemiesPanel.SetActive(false);
+        OpenAbilitiesPanel();
         
     }
 
@@ -201,7 +245,8 @@ public class UI : MonoBehaviour
         if(combatFunctions.HitorMiss(attacksDatabase._fireBall, unitSpawnerScript.player) == true)
         {
 
-            combatFunctions.FireBall();
+            //combatFunctions.FireBall();
+            combatFunctions.UseAttack(attacksDatabase._fireBall, player, unitSpawnerScript.chosenEnemy);
 
             player.hadATurn = true;
 
@@ -221,38 +266,126 @@ public class UI : MonoBehaviour
         
     }
 
-    public void OpenEnemyPanel()
+    public void OpenFightPanel()
     {
-        
-        //Function to open and close the panel that houses all of the attack options
-        if (_enemyPanel != null)
+        bool isActive = _fightPanel.activeSelf;
+
+        if(_fightPanel != null)
         {
-            //Sets a bool for the panel
-            bool isActive = _enemyPanel.activeSelf;
-            //Whatever the bool is for the panel, this will make it the opposite
-            _enemyPanel.SetActive(!isActive);
+            
+            _fightPanel.SetActive(!isActive);
         }
-        if(_enemyPanel.activeSelf == true)
+
+        
+    }
+
+    public void OpenItemsPanel()
+    {
+        bool isActive = _itemPanel.activeSelf;
+
+        if(_itemPanel != null)
         {
-            _fightButton.SetActive(false);
-            _backButton.SetActive(true);
+            
+            _itemPanel.SetActive(!isActive);
+        }
+
+        if(_itemPanel != null)
+        {
+            if(_itemPanel.activeSelf == true)
+            {
+                _spellsPanel.SetActive(false);
+                _abilitiesPanel.SetActive(false);
+                
+            }
         }
     }
 
-    public void OpenFightPanel()
+    public void OpenSpellsPanel()
+    {
+        bool isActive = _spellsPanel.activeSelf;
+
+        if (_spellsPanel != null)
+        {
+
+            _spellsPanel.SetActive(!isActive);
+        }
+
+        if (_spellsPanel != null)
+        {
+            if (_spellsPanel.activeSelf == true)
+            {
+                _itemPanel.SetActive(false);
+                _abilitiesPanel.SetActive(false);
+
+            }
+        }
+    }
+
+    public void OpenAbilitiesPanel()
+    {
+        bool isActive = _abilitiesPanel.activeSelf;
+
+        if (_abilitiesPanel != null)
+        {
+
+            _abilitiesPanel.SetActive(!isActive);
+        }
+
+        if (_abilitiesPanel != null)
+        {
+            if (_abilitiesPanel.activeSelf == true)
+            {
+                _itemPanel.SetActive(false);
+                _spellsPanel.SetActive(false);
+
+            }
+        }
+    }
+
+    public void OpenEnemiesPanel()
+    {
+        bool isActive = _enemiesPanel.activeSelf;
+
+        if (_enemiesPanel != null)
+        {
+
+            _enemiesPanel.SetActive(!isActive);
+        }
+
+    }
+
+    /*public void OpenAbilitiesPanel()
     {
         
         //Function to open and close the panel that houses all of the attack options
-        if (_attacksPanel != null)
+        if (_abilitiesPanel != null)
         {
             //Sets a bool for the panel
-            bool isActive = _attacksPanel.activeSelf;
+            bool isActive = _abilitiesPanel.activeSelf;
             //Whatever the bool is for the panel, this will make it the opposite
-            _attacksPanel.SetActive(!isActive);
+            _abilitiesPanel.SetActive(!isActive);
         }
-        if (_enemyPanel.activeSelf == true)
+        if (_enemiesPanel.activeSelf == true)
         {
             _backButton.SetActive(true);
+        }
+    }*/
+
+    public void UseHealthPotion()
+    {
+           foreach(Item item in inventoryScript.playerItemList)
+        {
+            if(item.itemName == "Health Potion" && item.itemAmount > 0)
+            {
+                Consumable healthPotion = item.GetComponent<Consumable>();
+                player.currentHealth += healthPotion.refillAmount;
+                item.itemAmount -= 1;
+                if(item.itemAmount < 1)
+                {
+                    inventoryScript.playerItemList.Remove(item);
+                }
+            }
+            
         }
     }
 
@@ -268,8 +401,12 @@ public class UI : MonoBehaviour
     private void SetFalse()
     {
         _backButton.SetActive(false);
-        _attacksPanel.SetActive(false);
+        _abilitiesPanel.SetActive(false);
     }
 }
 //KEYBOARD SHORTCUTS
 //HIGHLIGHT INSTANCES - SHIFT+ALT+. (Highlights instances of a word)
+
+//TODO: Finish UI panel setup. Do I want to select the enemy before or after selecting an attack?
+//TODO: Upload new version to git
+//TODO: Fix UseHealthPotion()

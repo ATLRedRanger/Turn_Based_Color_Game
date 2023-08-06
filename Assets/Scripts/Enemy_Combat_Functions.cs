@@ -36,6 +36,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         player = unitSpawnerScript.player;
 
+        
     }
 
     // Update is called once per frame
@@ -57,15 +58,21 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player);
         Debug.Log(player.unitName + " has " + player.currentHealth + " health reminaing.");
+
+        combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
     }
     
     public void EnemyAttackChoice()
     {
+        //For each key-value pair in the units' dictionary of attacks
         foreach(var kvp in enemyOne.unitAttackDictionary)
         {
+            //if the enemy's stamina is greater than the stamina cost of the selected attack is rgeater than or equal to it
             if(enemyOne.currentStamina >= kvp.Value.staminaCost)
             {
+                //The chosen attack is the value (the actual attack)
                 chosenAttack = kvp.Value;
+                //The key is the name of the attack
                 Debug.Log(kvp.Key + " is the chosen ATTACK.");
             }
         }

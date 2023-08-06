@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class ItemDatabase : MonoBehaviour
 {
-    public Item _healthPotion;
+    public Consumable _healthPotion;
+
+    public Weapon _basicSword;
 
     // Start is called before the first frame update
     void Start()
     {
-        _healthPotion = CreateItem("Health Potion");
+        _healthPotion = new Consumable("Health Potion", "Heals a small amount of health.", 0, ConsumableType.Health, 10);
+
+        _basicSword = new Weapon("Basic Sword", "A basic sword", 1, 2, WeaponType.Sword);
+
     }
 
     // Update is called once per frame
@@ -18,10 +23,9 @@ public class ItemDatabase : MonoBehaviour
         
     }
 
-    private Item CreateItem(string itemName)
+    private Item CreateItem(string itemName, string itemDescription, int itemAmount)
     {
-        var item = new Item(itemName);
-
+        var item = new Item(itemName, itemDescription, itemAmount);
         return item;
     }
 }

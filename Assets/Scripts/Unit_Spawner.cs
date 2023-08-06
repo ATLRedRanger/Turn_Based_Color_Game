@@ -5,6 +5,7 @@ using UnityEngine;
 public class Unit_Spawner : MonoBehaviour
 {
     public List<Unit> listOfEnemies;
+
     [SerializeField]
     private Unit playerUnit;
 
@@ -66,7 +67,7 @@ public class Unit_Spawner : MonoBehaviour
         }*/
 
     }
-
+    
 
     //Input - Position to spawn something in. 
     //Output - We want a unit. 
@@ -81,7 +82,7 @@ public class Unit_Spawner : MonoBehaviour
         enemyOne = (Instantiate(listOfEnemies[whatEnemy], enemyPositions[enemyPosition].transform).GetComponent<Unit>());
         enemyOne.SetTurnManager(turnManagerScript);
         
-
+        
         return enemyOne;
     }
 
