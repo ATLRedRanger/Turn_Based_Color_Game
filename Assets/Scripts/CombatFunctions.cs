@@ -13,19 +13,37 @@ public class CombatFunctions : MonoBehaviour
 
     public Unit_Spawner unitSpawnerScript;
 
+    public Inventory inventoryScript;
+
+    public UI uiScript;
+
+    public Unit player;
+
     public int attackDamage;
 
     public Unit chosenEnemy;
+
+    public Attack chosenAttack;
 
     int roll;
     
     // Start is called before the first frame update
     void Start()
     {
-        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
-        envManaScript = FindObjectOfType<ENV_Mana>();
+        StartCoroutine(LoadingScripts());
     }
 
+    IEnumerator LoadingScripts()
+    {
+        yield return new WaitForSeconds(.5f);
+
+        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
+        envManaScript = FindObjectOfType<ENV_Mana>();
+        inventoryScript = FindObjectOfType<Inventory>();
+        uiScript = FindObjectOfType<UI>();
+        player = unitSpawnerScript.player;
+
+    }
     // Update is called once per frame
     void Update()
     {
@@ -190,12 +208,12 @@ public class CombatFunctions : MonoBehaviour
     }
     
     //Attacks
-    public void UseAttack(Attack attack, Unit player, Unit enemy)
+    public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
         Debug.Log("Using the UseAttack Function");
         DamageFromAttack(attack, player);
         ReduceStamina(attack, player);
-        ReduceHealth(attackDamage, enemy);
+        ReduceHealth(attackDamage, chosenEnemy);
         ReduceColorFromEnv(attack);
 
     }
@@ -214,6 +232,33 @@ public class CombatFunctions : MonoBehaviour
         ReduceColorFromEnv(attackDatabase._fireBall);
     }
 
+    public void UseHealthPotion()
+    {
+        foreach (Consumable item in inventoryScript.playerConsumableList)
+        {
+            Debug.Log(inventoryScript.playerConsumableList[0].itemName);
+
+            if (item.itemName == "Health Potion" && item.itemAmount > 0)
+            {
+                Debug.Log(item.refillAmount);
+                player.currentHealth += item.refillAmount;
+                if(player.currentHealth >= player.maxHealth)
+                {
+                    player.currentHealth = player.maxHealth;
+                }
+                Debug.Log(player.currentHealth);
+                item.itemAmount -= 1;
+                if (item.itemAmount < 1)
+                {
+                    inventoryScript.playerConsumableList.Remove(item);
+                }
+            }
+
+        }
+        
+        
+    }
+
 
 
 }
@@ -221,5 +266,4 @@ public class CombatFunctions : MonoBehaviour
 //Ie: You are dealing damage to OP, meaning they're accuracy drops and therefor open the door for you to deal more damage.
 //Maybe just stamina then. 
 
-//Refactor the UI so that the UI functions call the Combat functions of the same name
-//IE UI_Fireball() needs to call CombatFucntions_Fireball()
+//Make a function that determines what attacks are available at the start of the round.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class UI : MonoBehaviour
@@ -13,7 +14,7 @@ public class UI : MonoBehaviour
 
     public Text enemyOneStamina;
 
-    public Text enemyOneButtonText;
+    public Text enemyOneButton;
 
     public Text playerName;
 
@@ -21,9 +22,20 @@ public class UI : MonoBehaviour
 
     public Text playerStamina;
 
+    public Text backButtonText;
+
+    //Environment Text
     public Text environmentRed;
 
-    public Text backButtonText;
+    public Text environmentOrange;
+
+    public Text environmentYellow;
+
+    public Text environmentGreen;
+
+    public Text environmentBlue;
+
+    public Text environmentViolet;
 
 
     //UI Menu Buttons
@@ -41,6 +53,7 @@ public class UI : MonoBehaviour
 
     public GameObject _backButton;
 
+
     //UI Abilities Buttons
     public GameObject _punchButton;
 
@@ -55,6 +68,8 @@ public class UI : MonoBehaviour
 
     //UI Enemies Buttons
     public GameObject _enemyOneButton;
+
+    public TMP_Text enemyOneText;
 
     public GameObject _enemyTwoButton;
 
@@ -131,10 +146,11 @@ public class UI : MonoBehaviour
     }
     IEnumerator NamesText()
     {
+        
         yield return new WaitForSeconds(.02f);
         enemyOneName.text = unitSpawnerScript.listOfCombatants[1].unitName;
         playerName.text = unitSpawnerScript.player.unitName;
-        enemyOneButtonText.text = unitSpawnerScript.enemyOne.unitName;
+        enemyOneText.text = unitSpawnerScript.enemyOne.unitName;
         backButtonText.text = "B";
     }
 
@@ -156,6 +172,11 @@ public class UI : MonoBehaviour
     {
         yield return new WaitForSeconds(.02f);
         environmentRed.text = "Red:" + envManaScript.currentRed.ToString() + "/" + envManaScript.maxRed.ToString();
+        environmentOrange.text = "Orange:" + envManaScript.currentOrange.ToString() + "/" + envManaScript.maxOrange.ToString();
+        environmentYellow.text = "Yellow:" + envManaScript.currentYellow.ToString() + "/" + envManaScript.maxYellow.ToString();
+        environmentGreen.text = "Green:" + envManaScript.currentGreen.ToString() + "/" + envManaScript.maxGreen.ToString();
+        environmentBlue.text = "Blue:" + envManaScript.currentBlue.ToString() + "/" + envManaScript.maxBlue.ToString();
+        environmentViolet.text = "Violet:" + envManaScript.currentViolet.ToString() + "/" + envManaScript.maxViolet.ToString();
     }
     public void UpdateUI()
     {
@@ -213,40 +234,16 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-        unitSpawnerScript.chosenEnemy = unitSpawnerScript.enemyOne;
+        combatFunctions.chosenEnemy = unitSpawnerScript.enemyOne;
+
+        Unit enemy_One = combatFunctions.chosenEnemy;
+
         _enemiesPanel.SetActive(false);
-        OpenAbilitiesPanel();
-        
-    }
 
-    public void OnPunchClick()
-    {
-        //Function for calculating total damage by the player using this attack.
-        combatFunctions.DamageFromAttack(player.unitAttackDictionary["Punch"], unitSpawnerScript.player);
-        
-        //Function for reducing the stamina of the player but the stamina cost of the attack.
-        combatFunctions.ReduceStamina(attacksDatabase._punch, unitSpawnerScript.player);
-
-        //This is where we put the function for enemies taking damage.
-        combatFunctions.ReduceHealth(combatFunctions.attackDamage, unitSpawnerScript.chosenEnemy);
-
-        UpdateUI();
-        player.hadATurn = true;
-
-        SetFalse();
-
-        turnManagerScript.EndTurn();
-    }
-
-    public void OnFireballClick()
-    {
-        
-
-        if(combatFunctions.HitorMiss(attacksDatabase._fireBall, unitSpawnerScript.player) == true)
+        if (combatFunctions.HitorMiss(combatFunctions.chosenAttack, unitSpawnerScript.player) == true)
         {
 
-            //combatFunctions.FireBall();
-            combatFunctions.UseAttack(attacksDatabase._fireBall, player, unitSpawnerScript.chosenEnemy);
+            combatFunctions.UseAttack(combatFunctions.chosenAttack, player, enemy_One);
 
             player.hadATurn = true;
 
@@ -256,7 +253,7 @@ public class UI : MonoBehaviour
         }
         else
         {
-            
+
             player.hadATurn = true;
 
             SetFalse();
@@ -266,6 +263,20 @@ public class UI : MonoBehaviour
         
     }
 
+    public void OnPunchClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Punch"];
+        OpenEnemiesPanel();
+    }
+
+    public void OnFireballClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
+        OpenEnemiesPanel();
+    }
+
+
+    //Open Panels
     public void OpenFightPanel()
     {
         bool isActive = _fightPanel.activeSelf;
@@ -275,7 +286,6 @@ public class UI : MonoBehaviour
             
             _fightPanel.SetActive(!isActive);
         }
-
         
     }
 
@@ -354,39 +364,14 @@ public class UI : MonoBehaviour
 
     }
 
-    /*public void OpenAbilitiesPanel()
-    {
-        
-        //Function to open and close the panel that houses all of the attack options
-        if (_abilitiesPanel != null)
-        {
-            //Sets a bool for the panel
-            bool isActive = _abilitiesPanel.activeSelf;
-            //Whatever the bool is for the panel, this will make it the opposite
-            _abilitiesPanel.SetActive(!isActive);
-        }
-        if (_enemiesPanel.activeSelf == true)
-        {
-            _backButton.SetActive(true);
-        }
-    }*/
-
+    //Use Items 
     public void UseHealthPotion()
     {
-           foreach(Item item in inventoryScript.playerItemList)
-        {
-            if(item.itemName == "Health Potion" && item.itemAmount > 0)
-            {
-                Consumable healthPotion = item.GetComponent<Consumable>();
-                player.currentHealth += healthPotion.refillAmount;
-                item.itemAmount -= 1;
-                if(item.itemAmount < 1)
-                {
-                    inventoryScript.playerItemList.Remove(item);
-                }
-            }
-            
-        }
+        combatFunctions.UseHealthPotion();
+        UpdateUI();
+        //StartCoroutine(WaitForTime());
+        
+        turnManagerScript.EndTurn();
     }
 
     public void AvailableAttacks()
@@ -403,6 +388,13 @@ public class UI : MonoBehaviour
         _backButton.SetActive(false);
         _abilitiesPanel.SetActive(false);
     }
+
+    IEnumerator WaitForTime()
+    {
+        yield return new WaitForSeconds(1);
+        Debug.Log("Waiting");
+    }
+
 }
 //KEYBOARD SHORTCUTS
 //HIGHLIGHT INSTANCES - SHIFT+ALT+. (Highlights instances of a word)

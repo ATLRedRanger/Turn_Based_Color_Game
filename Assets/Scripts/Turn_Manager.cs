@@ -98,8 +98,8 @@ public class Turn_Manager : MonoBehaviour
         {
             PlayerTurn();
         }
-
-        ui_Script.UpdateUI();
+        StartCoroutine(WaitForTime());
+        
 
     }
 
@@ -118,6 +118,8 @@ public class Turn_Manager : MonoBehaviour
             combatFunctionsScript.RegenStamina(unitSpawnerScript.enemyOne);
             
         }
+        StartCoroutine(WaitForTime());
+
         ui_Script.UpdateUI();
     }
 
@@ -149,5 +151,9 @@ public class Turn_Manager : MonoBehaviour
         turnCount += 1;
     }
 
-
+    IEnumerator WaitForTime()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Debug.Log("Waiting");
+    }
 }

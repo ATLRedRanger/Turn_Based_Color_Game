@@ -11,7 +11,7 @@ public class ItemDatabase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _healthPotion = new Consumable("Health Potion", "Heals a small amount of health.", 0, ConsumableType.Health, 10);
+        _healthPotion = new Consumable("Health Potion", "Heals a small amount of health.", 5, ConsumableType.Health, 10);
 
         _basicSword = new Weapon("Basic Sword", "A basic sword", 1, 2, WeaponType.Sword);
 

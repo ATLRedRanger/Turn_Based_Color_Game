@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour
     
     public List<Item> playerItemList = new List<Item>();
 
+    public List<Consumable> playerConsumableList = new List<Consumable>();
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +33,8 @@ public class Inventory : MonoBehaviour
     {
         
         playerItemList.Add(itemScript._basicSword);
-        playerItemList.Add(itemScript._healthPotion);
-        playerItemList[1].itemAmount += 1;
+        playerConsumableList.Add(itemScript._healthPotion);
+        //playerConsumableList[0].itemAmount += 1;
         Debug.Log(player.itemList.Count);
         Debug.Log(playerItemList[0].itemName);
     }
