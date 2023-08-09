@@ -1317,7 +1317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthPotion: {fileID: 0}
+  _basicHammer: {fileID: 0}
   _basicSword: {fileID: 0}
+  _basicAxe: {fileID: 0}
+  _basicBow: {fileID: 0}
+  _basicStaff: {fileID: 0}
 --- !u!4 &477431591
 Transform:
   m_ObjectHideFlags: 0
@@ -4852,6 +4856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listOfEnemies:
+  - {fileID: -7878557954145564610, guid: b3636bde8c0adc9428c1f50a3a95f8a5, type: 3}
   - {fileID: 1994576159268737038, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
   playerUnit: {fileID: 3880475512651158921, guid: a2b2f0991e6b82c49b7182be870f57c3,
     type: 3}
@@ -6839,16 +6844,20 @@ MonoBehaviour:
   unitName: 
   maxHealth: 0
   currentHealth: 0
-  baseAttack: 0
-  baseDefense: 0
+  physicalAttack: 0
+  physicalDefense: 0
+  magicAttack: 0
+  magicDefense: 0
   currentSpeed: 0
   maxStamina: 0
   currentStamina: 0
   staminaRegenModifier: 0
   baseAccuracy: 0
+  isDefending: 0
   currentLevel: 0
   itemList: []
   equippedWeapon: {fileID: 0}
+  isWeaponEquipped: 0
   axeMastery: 0
   staffMastery: 0
   swordMastery: 0

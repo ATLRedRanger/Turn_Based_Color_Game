@@ -100,16 +100,20 @@ MonoBehaviour:
   unitName: Goblin 2
   maxHealth: 6
   currentHealth: 6
-  baseAttack: 3
-  baseDefense: 2
+  physicalAttack: 2
+  physicalDefense: 3
+  magicAttack: 2
+  magicDefense: 3
   currentSpeed: 7
   maxStamina: 7
   currentStamina: 7
   staminaRegenModifier: 1
   baseAccuracy: 35
+  isDefending: 0
   currentLevel: 1
   itemList: []
   equippedWeapon: {fileID: 0}
+  isWeaponEquipped: 0
   axeMastery: 0
   staffMastery: 0
   swordMastery: 0

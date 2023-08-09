@@ -100,16 +100,20 @@ MonoBehaviour:
   unitName: Player
   maxHealth: 20
   currentHealth: 20
-  baseAttack: 0
-  baseDefense: 0
+  physicalAttack: 3
+  physicalDefense: 3
+  magicAttack: 3
+  magicDefense: 3
   currentSpeed: 10
   maxStamina: 20
   currentStamina: 20
   staminaRegenModifier: 1
   baseAccuracy: 50
+  isDefending: 0
   currentLevel: 1
   itemList: []
   equippedWeapon: {fileID: 0}
+  isWeaponEquipped: 0
   axeMastery: 1
   staffMastery: 1
   swordMastery: 1

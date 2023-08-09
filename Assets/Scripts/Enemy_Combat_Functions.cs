@@ -15,6 +15,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public Unit player;
 
+    private Unit currentEnemy;
+
     public Attack chosenAttack;
     // Start is called before the first frame update
     void Start()
@@ -50,16 +52,19 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         EnemyAttackChoice();
 
-        combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
-        Debug.Log(chosenAttack.attackDamage + " + " + enemyOne.baseAttack);
-
-        combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
-        Debug.Log(enemyOne.unitName + " has " + enemyOne.currentStamina + " stamina reminaing.");
-
-        combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player);
-        Debug.Log(player.unitName + " has " + player.currentHealth + " health reminaing.");
-
-        combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
+        if(combatFunctionsScript.HitorMiss(chosenAttack, enemyOne) == true )
+            
+        {
+            combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
+            combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
+            combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player, enemyOne);
+            combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
+        }
+        else
+        {
+            Debug.Log(enemyOne.unitName + " has missed!");
+        }
+        
     }
     
     public void EnemyAttackChoice()

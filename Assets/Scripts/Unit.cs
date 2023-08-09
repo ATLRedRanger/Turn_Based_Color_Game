@@ -12,9 +12,13 @@ public class Unit : MonoBehaviour
 
     public int currentHealth;
 
-    public int baseAttack;
+    public int physicalAttack;
 
-    public int baseDefense;
+    public int physicalDefense;
+
+    public int magicAttack;
+
+    public int magicDefense;
 
     public int currentSpeed; 
     
@@ -26,6 +30,8 @@ public class Unit : MonoBehaviour
 
     public int baseAccuracy;
 
+    public bool isDefending;
+
     [SerializeField]
     private int currentLevel;
 
@@ -34,6 +40,7 @@ public class Unit : MonoBehaviour
 
     //Equipment related variables
     public Weapon equippedWeapon;
+    public bool isWeaponEquipped = false;
     public int axeMastery;
     public int staffMastery;
     public int swordMastery;

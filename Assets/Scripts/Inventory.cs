@@ -29,20 +29,20 @@ public class Inventory : MonoBehaviour
         
     }
 
-    private void AddToInventory()
+    public void AddToInventory()
     {
         
-        playerWeaponList.Add(itemScript._basicSword);
+        playerWeaponList.Add(itemScript._basicAxe);
         playerConsumableList.Add(itemScript._healthPotion);
         player.equippedWeapon = playerWeaponList[0];
-        
-        
+        player.isWeaponEquipped = true;
+
     }
     
 
     IEnumerator LoadingScripts()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
 
         unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
 

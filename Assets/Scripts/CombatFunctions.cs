@@ -92,8 +92,8 @@ public class CombatFunctions : MonoBehaviour
             
             hit = true;
         }
-        //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
-        //Debug.Log("This roll is " + roll);
+        Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
+        Debug.Log("This roll is " + roll);
         return hit;
         
     }
@@ -104,6 +104,7 @@ public class CombatFunctions : MonoBehaviour
         int currentAccuracy = (int)(unit.currentStamina * accuracyMultiple);
 
         dieRoll = Random.Range(currentAccuracy, 100);
+        
         return dieRoll;
     }
 
@@ -136,25 +137,90 @@ public class CombatFunctions : MonoBehaviour
 
     public int DamageFromAttack(Attack attack, Unit unit)
     {
-        attackDamage = unit.baseAttack + attack.attackDamage;
+        
+        
 
-        Debug.Log(attackDamage + "is the amount of damage dealt by"+unit.unitName);
+        if (unit.isWeaponEquipped != false)
+        {
+            Debug.Log("Orange");
+            Debug.Log(unit.equippedWeapon.itemName);
+            switch(unit.equippedWeapon.weaponType)
+            {
+                case WeaponType.Axe:
+                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
+                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    break;
+                case WeaponType.Staff:
+                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
+                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    break;
+                case WeaponType.Sword:
+                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
+                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    break;
+                case WeaponType.Hammer:
+                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
+                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    break;
+                case WeaponType.Bow:
+                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
+                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("Banana");
+            attackDamage = unit.physicalAttack + attack.attackDamage;
+        }
+        
+
+        Debug.Log(attackDamage + "is the amount of damage dealt by" + unit.unitName);
         return attackDamage;
 
     }
 
-    public void ReduceHealth(int damage, Unit unit)
+    public int DamageFromSpell(Attack attack, Unit unit)
     {
-        if(unit.currentStamina <= 0)
+        return attackDamage;
+    }
+
+    public void ReduceHealth(int damage, Unit defender, Unit attacker)
+    {
+        
+        if(defender.isDefending != true)
         {
-            unit.currentHealth -= damage * 2;
-            unit.AmIDeadYet();
+            Debug.Log(defender.currentHealth);
+            defender.currentHealth -= damage - defender.physicalDefense;
+            Debug.Log(defender.currentHealth);
         }
         else
         {
-            unit.currentHealth -= damage;
-            unit.AmIDeadYet();
+            if(attacker.isWeaponEquipped != false)
+            {
+                switch (attacker.equippedWeapon.weaponType)
+                {
+                    case WeaponType.Axe:
+                        Debug.Log(defender.unitName + " has " + defender.currentHealth);
+                        defender.currentHealth -= (int)(damage * .6);
+                        defender.currentStamina -= (int)(damage * .4);
+                        Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+                        defender.AmIDeadYet();
+                        break;
+                    case WeaponType.Hammer:
+                        Debug.Log(defender.unitName + " has " + defender.currentHealth);
+                        defender.currentHealth -= (int)(damage * .4);
+                        defender.currentStamina -= (int)(damage * .6);
+                        Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+                        defender.AmIDeadYet();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
         }
+        
         
         
     }
@@ -213,7 +279,7 @@ public class CombatFunctions : MonoBehaviour
         
         DamageFromAttack(attack, player);
         ReduceStamina(attack, player);
-        ReduceHealth(attackDamage, chosenEnemy);
+        ReduceHealth(attackDamage, chosenEnemy, player);
         ReduceColorFromEnv(attack);
 
     }
@@ -244,9 +310,9 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
-    public bool EnoughStaminaForAttack(Attack attack, Unit player)
+    public bool EnoughStaminaForAttack(Attack attack, Unit unit)
     {
-        if(player.currentStamina >= attack.staminaCost)
+        if(unit.currentStamina >= attack.staminaCost)
         {
             return true;
         }
@@ -258,4 +324,4 @@ public class CombatFunctions : MonoBehaviour
 //Ie: You are dealing damage to OP, meaning they're accuracy drops and therefor open the door for you to deal more damage.
 //Maybe just stamina then. 
 
-//Make a function that determines what attacks are available at the start of the round.
+

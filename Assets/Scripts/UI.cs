@@ -246,7 +246,7 @@ public class UI : MonoBehaviour
     {
         combatFunctions.chosenEnemy = unitSpawnerScript.enemyOne;
 
-        Unit enemy_One = combatFunctions.chosenEnemy;
+        Unit enemy_One = unitSpawnerScript.enemyOne;
 
         _enemiesPanel.SetActive(false);
 
