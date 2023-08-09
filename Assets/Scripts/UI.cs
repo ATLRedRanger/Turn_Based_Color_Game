@@ -56,6 +56,16 @@ public class UI : MonoBehaviour
 
     //UI Abilities Buttons
     public GameObject _punchButton;
+    public Button _chopButton;
+    public Button _violetBallButton;
+    public Button _slashButton;
+    public Button _slamButton;
+    public Button _quickShotButton;
+    public Button _yellowSplash;
+    public Button _orangeSpike;
+    public Button _blueCrush;
+    public Button _greenPunch;
+
 
 
     //UI Item Buttons
@@ -63,7 +73,7 @@ public class UI : MonoBehaviour
 
 
     //UI Spells Buttons
-    public GameObject _fireBallButton;
+    public Button _fireBallButton;
 
 
     //UI Enemies Buttons
@@ -73,11 +83,6 @@ public class UI : MonoBehaviour
 
     public GameObject _enemyTwoButton;
 
-    
-
-    
-
-    
 
     //UI Panels
     public GameObject _enemiesPanel;
@@ -148,7 +153,7 @@ public class UI : MonoBehaviour
     {
         
         yield return new WaitForSeconds(.02f);
-        enemyOneName.text = unitSpawnerScript.listOfCombatants[1].unitName;
+        enemyOneName.text = unitSpawnerScript.listOfCombatants[0].unitName;
         playerName.text = unitSpawnerScript.player.unitName;
         enemyOneText.text = unitSpawnerScript.enemyOne.unitName;
         backButtonText.text = "B";
@@ -192,6 +197,11 @@ public class UI : MonoBehaviour
 
         //Update Environment Stuff
         environmentRed.text = "Red:" + envManaScript.currentRed.ToString() + "/" + envManaScript.maxRed.ToString();
+        environmentOrange.text = "Orange:" + envManaScript.currentOrange.ToString() + "/" + envManaScript.maxOrange.ToString();
+        environmentYellow.text = "Yellow:" + envManaScript.currentYellow.ToString() + "/" + envManaScript.maxYellow.ToString();
+        environmentGreen.text = "Green:" + envManaScript.currentGreen.ToString() + "/" + envManaScript.maxGreen.ToString();
+        environmentBlue.text = "Blue:" + envManaScript.currentBlue.ToString() + "/" + envManaScript.maxBlue.ToString();
+        environmentViolet.text = "Violet:" + envManaScript.currentViolet.ToString() + "/" + envManaScript.maxViolet.ToString();
     }
     public void MenuVisibile()
     {
@@ -199,7 +209,7 @@ public class UI : MonoBehaviour
         if (_fightButton != null && unitSpawnerScript.player.myTurn == true)
         {
             _fightButton.SetActive(true);
-            AvailableAttacks();
+            
             
         }
         else
@@ -212,7 +222,7 @@ public class UI : MonoBehaviour
 
     //Buttons
 
-    public void BackButton()
+    /*public void BackButton()
     {
         //This button is to allow the player to go back to a previous menu
         if (_enemiesPanel.activeSelf == true)
@@ -230,7 +240,7 @@ public class UI : MonoBehaviour
             _backButton.SetActive(false);
         }
         
-    }
+    }*/
 
     public void EnemyOneButton()
     {
@@ -247,7 +257,7 @@ public class UI : MonoBehaviour
 
             player.hadATurn = true;
 
-            SetFalse();
+            ClosePanels();
 
             turnManagerScript.EndTurn();
         }
@@ -256,56 +266,280 @@ public class UI : MonoBehaviour
 
             player.hadATurn = true;
 
-            SetFalse();
+            ClosePanels();
 
             turnManagerScript.EndTurn();
         }
         
     }
-
+    
+    //Color.Neutral Attack Buttons
     public void OnPunchClick()
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Punch"];
         OpenEnemiesPanel();
     }
 
+    //Color.Red Attack Buttons
     public void OnFireballClick()
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
         OpenEnemiesPanel();
     }
 
+    //Color.Orange Attack Buttons
+    public void OnOrangeSpikeClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Orange Spike"];
+        OpenEnemiesPanel();
+    }
+
+    //Color.Yellow Attack Buttons
+    public void OnYellowSplashClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Yellow Splash"];
+        OpenEnemiesPanel();
+    }
+    
+    //Color.Green Attack Buttons
+    public void OnGreenPunchClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Green Punch"];
+        OpenEnemiesPanel();
+    }
+
+    //Color.Blue Attack Buttons
+    public void OnBlueCrushClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Blue Crush"];
+        OpenEnemiesPanel();
+    }
+    
+    //Color.Violet Attack Buttons
+
+
+    //Use Items 
+    public void UseHealthPotion()
+    {
+        combatFunctions.UseHealthPotion();
+        UpdateUI();
+        //StartCoroutine(WaitForTime());
+        
+        turnManagerScript.EndTurn();
+    }
+
+    public bool CheckForAttackAvailability(Attack attack)
+    {
+        bool isUseable = false;
+        //Checks to see if the attack has a color component
+        if (attack.attackColor != Color.Neutral)
+        {
+            //if it does, checks to see which color so can take from the environment
+            switch(attack.attackColor)
+            {
+                case Color.Red:
+                    if(attack.colorCost <= envManaScript.currentRed && player.currentStamina >= attack.staminaCost)
+                    {
+                        isUseable = true;
+                    }
+                    break;
+                case Color.Orange:
+                    if (attack.colorCost <= envManaScript.currentOrange && player.currentStamina >= attack.staminaCost)
+                    {
+                        isUseable = true;
+                    }
+                    break;
+                case Color.Yellow:
+                    if (attack.colorCost <= envManaScript.currentYellow && player.currentStamina >= attack.staminaCost)
+                    {
+                        isUseable = true;
+                    }
+                    break;
+                case Color.Green:
+                    if (attack.colorCost <= envManaScript.currentGreen && player.currentStamina >= attack.staminaCost)
+                    {
+                        isUseable = true;
+                    }
+                    break;
+                case Color.Blue:
+                    if (attack.colorCost <= envManaScript.currentBlue && player.currentStamina >= attack.staminaCost)
+                    {
+                        isUseable = true;
+                    }
+                    break;
+                case Color.Violet:
+                    if (attack.colorCost <= envManaScript.currentViolet && player.currentStamina >= attack.staminaCost)
+                    {
+                        isUseable = true;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            if(player.currentStamina >= attack.staminaCost)
+            {
+                isUseable = true;
+            }
+        }
+        
+        return isUseable;
+        
+    }
+
+    public void AvailableSpells()
+    {
+
+        SetSpellsFalse();
+        foreach(var kvp in player.unitAttackDictionary)
+        {
+            switch(kvp.Value.attackColor)
+            {
+                case Color.Red:
+                    if(player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentRed)
+                    {
+                        _fireBallButton.interactable = true;
+                    }
+                    break;
+                case Color.Orange:
+                    if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentOrange)
+                    {
+                        _orangeSpike.interactable = true;
+                    }
+                    break;
+                case Color.Yellow:
+                    if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentYellow)
+                    {
+                        _yellowSplash.interactable = true;
+                    }
+                    break;
+                case Color.Green:
+                    if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentGreen)
+                    {
+                        _greenPunch.interactable = true;
+                    }
+                    break;
+                case Color.Blue:
+                    if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentBlue)
+                    {
+                        _blueCrush.interactable = true;
+                    }
+                    break;
+                case Color.Violet:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        
+    }
+
+    public void AvailableAbilities()
+    {
+        SetAbilitiesFalse();
+        
+        Debug.Log(player.equippedWeapon.itemName);
+        switch(player.equippedWeapon.weaponType)
+        {
+            case WeaponType.Axe:
+                switch (player.axeMastery)
+                {
+                    case 1:
+                        if (CheckForAttackAvailability(player.unitAttackDictionary["Chop"]))
+                        {
+                            _chopButton.interactable = true;
+                        }
+                        
+                        break;
+                    case 3:
+                        break;
+                    
+                }
+                break;
+            case WeaponType.Staff:
+                switch (player.staffMastery)
+                {
+                    case 1:
+                        _violetBallButton.interactable = true; 
+                        break;
+                }
+                break;
+            case WeaponType.Sword:
+                switch (player.swordMastery)
+                {
+                    case 1:
+                        if (CheckForAttackAvailability(player.unitAttackDictionary["Slash"]))
+                        {
+                            _slashButton.interactable = true;
+                        }
+                        //_slashButton.interactable = true;
+                        break;
+                }
+                break;
+            case WeaponType.Hammer:
+                switch (player.hammerMastery)
+                {
+                    case 1:
+                        if (CheckForAttackAvailability(player.unitAttackDictionary["Slam"]))
+                        {
+                            _slamButton.interactable = true;
+                        }
+                        
+                        break;
+                }
+                break;
+            case WeaponType.Bow:
+                switch (player.bowMastery)
+                {
+                    case 1:
+                        if (CheckForAttackAvailability(player.unitAttackDictionary["Quick Shot"]))
+                        {
+                            _quickShotButton.interactable = true;
+                        }
+                        
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     //Open Panels
     public void OpenFightPanel()
     {
         bool isActive = _fightPanel.activeSelf;
 
-        if(_fightPanel != null)
+        if (_fightPanel != null)
         {
-            
+
             _fightPanel.SetActive(!isActive);
         }
-        
+
+        if (_fightPanel.activeSelf == false)
+        {
+            ClosePanels();
+        }
     }
 
     public void OpenItemsPanel()
     {
         bool isActive = _itemPanel.activeSelf;
 
-        if(_itemPanel != null)
+        if (_itemPanel != null)
         {
-            
+
             _itemPanel.SetActive(!isActive);
         }
 
-        if(_itemPanel != null)
+        if (_itemPanel != null)
         {
-            if(_itemPanel.activeSelf == true)
+            if (_itemPanel.activeSelf == true)
             {
                 _spellsPanel.SetActive(false);
                 _abilitiesPanel.SetActive(false);
-                
+
             }
         }
     }
@@ -313,7 +547,7 @@ public class UI : MonoBehaviour
     public void OpenSpellsPanel()
     {
         bool isActive = _spellsPanel.activeSelf;
-
+        AvailableSpells();
         if (_spellsPanel != null)
         {
 
@@ -334,7 +568,7 @@ public class UI : MonoBehaviour
     public void OpenAbilitiesPanel()
     {
         bool isActive = _abilitiesPanel.activeSelf;
-
+        AvailableAbilities();
         if (_abilitiesPanel != null)
         {
 
@@ -350,6 +584,7 @@ public class UI : MonoBehaviour
 
             }
         }
+
     }
 
     public void OpenEnemiesPanel()
@@ -364,29 +599,31 @@ public class UI : MonoBehaviour
 
     }
 
-    //Use Items 
-    public void UseHealthPotion()
+    private void ClosePanels()
     {
-        combatFunctions.UseHealthPotion();
-        UpdateUI();
-        //StartCoroutine(WaitForTime());
-        
-        turnManagerScript.EndTurn();
-    }
-
-    public void AvailableAttacks()
-    {
-        _fireBallButton.SetActive(false);
-
-        if(envManaScript.currentRed >= attacksDatabase._fireBall.colorCost && _fireBallButton != null && unitSpawnerScript.player.currentStamina >= attacksDatabase._fireBall.staminaCost)
-        {
-            _fireBallButton.SetActive(true);
-        }
-    }
-    private void SetFalse()
-    {
-        _backButton.SetActive(false);
+        _fightPanel.SetActive(false);
         _abilitiesPanel.SetActive(false);
+        _spellsPanel.SetActive(false);
+        _itemPanel.SetActive(false);
+        _enemiesPanel.SetActive(false);
+    }
+
+    private void SetSpellsFalse()
+    {
+        _fireBallButton.interactable = false;
+        _greenPunch.interactable = false;
+        _yellowSplash.interactable = false;
+        _blueCrush.interactable = false;
+        _orangeSpike.interactable = false;
+    }
+
+    private void SetAbilitiesFalse()
+    {
+        _chopButton.interactable = false;
+        _slamButton.interactable = false;
+        _slashButton.interactable = false;
+        _quickShotButton.interactable = false;
+        _violetBallButton.interactable = false;
     }
 
     IEnumerator WaitForTime()
@@ -394,6 +631,8 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(1);
         Debug.Log("Waiting");
     }
+
+
 
 }
 //KEYBOARD SHORTCUTS

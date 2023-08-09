@@ -92,8 +92,8 @@ public class CombatFunctions : MonoBehaviour
             
             hit = true;
         }
-        Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
-        Debug.Log("This roll is " + roll);
+        //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
+        //Debug.Log("This roll is " + roll);
         return hit;
         
     }
@@ -129,9 +129,9 @@ public class CombatFunctions : MonoBehaviour
             unit.currentStamina = unit.maxStamina;
         }
 
-        Debug.Log(unit.currentStamina + " is the current stamina of " + unit.unitName + " and the max stamina is " + unit.maxStamina);
+        //Debug.Log(unit.currentStamina + " is the current stamina of " + unit.unitName + " and the max stamina is " + unit.maxStamina);
 
-        Debug.Log(unit.unitName + " has gained " + staminaRegend + " stamina.");
+        //Debug.Log(unit.unitName + " has gained " + staminaRegend + " stamina.");
     }
 
     public int DamageFromAttack(Attack attack, Unit unit)
@@ -210,33 +210,18 @@ public class CombatFunctions : MonoBehaviour
     //Attacks
     public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-        Debug.Log("Using the UseAttack Function");
+        
         DamageFromAttack(attack, player);
         ReduceStamina(attack, player);
         ReduceHealth(attackDamage, chosenEnemy);
         ReduceColorFromEnv(attack);
 
     }
-    public void FireBall()
-    {
-        //Function for calculating total damage by the player using this attack.
-        DamageFromAttack(attackDatabase._fireBall, unitSpawnerScript.player);
-
-        //Function for reducing the stamina of the player but the stamina cost of the attack.
-        ReduceStamina(attackDatabase._fireBall, unitSpawnerScript.player);
-
-        //This is where we put the function for enemies taking damage.
-        ReduceHealth(attackDamage, unitSpawnerScript.enemyOne);
-
-        //This is where we put the function to reduce the color in the environment.
-        ReduceColorFromEnv(attackDatabase._fireBall);
-    }
 
     public void UseHealthPotion()
     {
         foreach (Consumable item in inventoryScript.playerConsumableList)
         {
-            Debug.Log(inventoryScript.playerConsumableList[0].itemName);
 
             if (item.itemName == "Health Potion" && item.itemAmount > 0)
             {
@@ -259,7 +244,14 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
-
+    public bool EnoughStaminaForAttack(Attack attack, Unit player)
+    {
+        if(player.currentStamina >= attack.staminaCost)
+        {
+            return true;
+        }
+        else return false;
+    }
 
 }
 //TODO: Accuracy? I would like to tie in stamina, health or both into accuracy. Concerned that it could snowball.

@@ -154,6 +154,6 @@ public class Turn_Manager : MonoBehaviour
     IEnumerator WaitForTime()
     {
         yield return new WaitForSeconds(1.5f);
-        Debug.Log("Waiting");
+        
     }
 }

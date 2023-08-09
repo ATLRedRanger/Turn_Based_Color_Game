@@ -80,7 +80,7 @@ public class Unit_Spawner : MonoBehaviour
         int whatEnemy = Random.Range(0, listOfEnemies.Count);
 
         enemyOne = (Instantiate(listOfEnemies[whatEnemy], enemyPositions[enemyPosition].transform).GetComponent<Unit>());
-        enemyOne.SetTurnManager(turnManagerScript);
+        //enemyOne.SetTurnManager(turnManagerScript);
         
         
         return enemyOne;

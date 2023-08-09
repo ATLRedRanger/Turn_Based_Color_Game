@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -60,26 +61,27 @@ public class Unit : MonoBehaviour
     //Dictionaries
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
+    public Dictionary<string, Attack> unitSpellsDictionary = new Dictionary<string, Attack>();
+
+    public Dictionary<string, Attack> enemyAttackDictionary = new Dictionary<string, Attack>();
 
     private IEnumerator coroutine;
-    void Start()
+    public virtual void Start()
     {
 
         
         attacksDatabase = FindObjectOfType<AttacksDatabase>();
         enemyCombatScript = FindObjectOfType<Enemy_Combat_Functions>();
         envManaScript = FindObjectOfType<ENV_Mana>();
-        LearnAttacks();
+        turnManagerScript = FindObjectOfType<Turn_Manager>();
+        LearnAbilities();
+        EnemyAttacks();
+        //LearnSpells();
         
-    }
-
-    public void SetTurnManager(Turn_Manager t)
-    {
-       turnManagerScript = t;
     }
     
     //Adding attacks to an attack dictionary
-    private void LearnAttacks()
+    private void LearnAbilities()
     {
         switch (currentLevel)
         {
@@ -88,6 +90,11 @@ public class Unit : MonoBehaviour
                 unitAttackDictionary["Punch"] = attacksDatabase._punch;
                 unitAttackDictionary["Kick"] = attacksDatabase._kick;
                 unitAttackDictionary["Fireball"] = attacksDatabase._fireBall;
+                unitAttackDictionary["Yellow Splash"] = attacksDatabase._yellowSplash;
+                unitAttackDictionary["Orange Spike"] = attacksDatabase._orangeSpike;
+                unitAttackDictionary["Blue Crush"] = attacksDatabase._blueCrush;
+                unitAttackDictionary["Green Punch"] = attacksDatabase._greenPunch;
+
                 break;
         }
         switch(axeMastery)
@@ -122,6 +129,16 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public virtual void EnemyAttacks()
+    {
+        enemyAttackDictionary["Slash"] = attacksDatabase._slash;
+    }
+
+    private void LearnSpells()
+    {
+        unitSpellsDictionary["Fireball"] = attacksDatabase._fireBall;
+    } 
+
     public void CanUseAttack()
     {
         foreach(var kvp in unitAttackDictionary)
@@ -146,7 +163,7 @@ public class Unit : MonoBehaviour
              
     }
 
-    public void EnemyAi()
+    public virtual void EnemyAi()
     {
         
         
@@ -166,6 +183,11 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         
         turnManagerScript.PlayerTurn();
+    }
+
+    internal void SetTurnManager(Turn_Manager turnManagerScript)
+    {
+        throw new NotImplementedException();
     }
 }
 

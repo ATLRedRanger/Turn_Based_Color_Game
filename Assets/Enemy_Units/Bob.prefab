@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3488934391302614344}
-  - component: {fileID: 753362862734032020}
   - component: {fileID: 45232040415763686}
+  - component: {fileID: -7878557954145564610}
   m_Layer: 0
   m_Name: Bob
   m_TagString: Untagged
@@ -28,39 +28,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &753362862734032020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2957999976247191155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2390d9c5a4ade14d816dee46bf167bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitName: Bob
-  maxHealth: 10
-  currentHealth: 10
-  baseAttack: 2
-  baseDefense: 2
-  currentSpeed: 5
-  maxStamina: 10
-  currentStamina: 10
-  staminaRegenModifier: 1
-  baseAccuracy: 0
-  currentLevel: 1
-  isPlayer: 0
-  hadATurn: 0
-  myTurn: 0
-  gameOrganizer: {fileID: 0}
-  attacksDatabase: {fileID: 0}
-  turnManagerScript: {fileID: 0}
 --- !u!212 &45232040415763686
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -72,9 +44,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -86,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -109,3 +85,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7878557954145564610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2957999976247191155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2390d9c5a4ade14d816dee46bf167bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Bob
+  maxHealth: 10
+  currentHealth: 10
+  baseAttack: 2
+  baseDefense: 2
+  currentSpeed: 2
+  maxStamina: 9
+  currentStamina: 9
+  staminaRegenModifier: 1
+  baseAccuracy: 40
+  currentLevel: 1
+  itemList: []
+  equippedWeapon: {fileID: 0}
+  axeMastery: 0
+  staffMastery: 0
+  swordMastery: 0
+  hammerMastery: 0
+  bowMastery: 0
+  isPlayer: 0
+  hadATurn: 0
+  myTurn: 0
+  gameOrganizer: {fileID: 0}
+  attacksDatabase: {fileID: 0}
+  turnManagerScript: {fileID: 0}
+  enemyCombatScript: {fileID: 0}
+  envManaScript: {fileID: 0}

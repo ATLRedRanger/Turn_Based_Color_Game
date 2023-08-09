@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
 
     private ItemDatabase itemScript;
     
-    public List<Item> playerItemList = new List<Item>();
+    public List<Weapon> playerWeaponList = new List<Weapon>();
 
     public List<Consumable> playerConsumableList = new List<Consumable>();
 
@@ -32,11 +32,11 @@ public class Inventory : MonoBehaviour
     private void AddToInventory()
     {
         
-        playerItemList.Add(itemScript._basicSword);
+        playerWeaponList.Add(itemScript._basicSword);
         playerConsumableList.Add(itemScript._healthPotion);
-        //playerConsumableList[0].itemAmount += 1;
-        Debug.Log(player.itemList.Count);
-        Debug.Log(playerItemList[0].itemName);
+        player.equippedWeapon = playerWeaponList[0];
+        
+        
     }
     
 
@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
 
         player = unitSpawnerScript.player;
 
-        playerItemList = player.itemList;
+        //playerWeaponList = player.weaponList;
 
         AddToInventory();
     }

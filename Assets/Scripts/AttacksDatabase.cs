@@ -22,6 +22,12 @@ public class AttacksDatabase : MonoBehaviour
 
     //Magic Offensive
     public Attack _fireBall;
+    public Attack _greenPunch;
+    public Attack _orangeSpike;
+    public Attack _yellowSplash;
+    public Attack _blueCrush;
+
+
     //Magic Defensive
     
 
@@ -31,8 +37,15 @@ public class AttacksDatabase : MonoBehaviour
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
         _punch = new Attack("Punch", 1, 1, 0, 100, Color.Neutral, WeaponType.Neutral);
 
-        _fireBall = new Attack("Fireball", 5, 12, 4, 95, Color.Red, WeaponType.Neutral) ;
+        _fireBall = new Attack("Fireball", 5, 12, 4, 75, Color.Red, WeaponType.Neutral) ;
 
+        _greenPunch = new Attack("Green Punch", 5, 7, 7, 75, Color.Green, WeaponType.Neutral);
+
+        _orangeSpike = new Attack("Orange Spike", 5, 6, 4, 75, Color.Orange, WeaponType.Neutral);
+
+        _blueCrush = new Attack("Blue Crush", 1, 3, 8, 50, Color.Blue, WeaponType.Neutral);
+
+        _yellowSplash = new Attack("Yellow Splash", 6, 12, 4, 85, Color.Yellow, WeaponType.Neutral);
 
         //I can make private weapons in this way using the createAttack function
         _kick = createAttack("Kick", 3, 3, 0, 100, Color.Neutral, WeaponType.Neutral);
