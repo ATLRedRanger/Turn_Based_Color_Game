@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Unit : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class Unit : MonoBehaviour
     public int baseAccuracy;
 
     public bool isDefending;
+
+    //Status Effects
+    public bool isBurning;
 
     [SerializeField]
     private int currentLevel;
@@ -195,6 +199,27 @@ public class Unit : MonoBehaviour
     internal void SetTurnManager(Turn_Manager turnManagerScript)
     {
         throw new NotImplementedException();
+    }
+
+    private void OnEnable()
+    {
+        StatusEffects.isBurned += Burning;
+    }
+
+    private void OnDisable()
+    {
+        StatusEffects.isBurned -= Burning;
+    }
+
+    //Status Effects
+    void Burning()
+    {
+        if (isBurning)
+        {
+            currentHealth -= 10;
+        }
+        
+
     }
 }
 

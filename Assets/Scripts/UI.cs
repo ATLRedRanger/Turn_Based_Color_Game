@@ -114,7 +114,7 @@ public class UI : MonoBehaviour
     //Player
     private Unit player;
 
-    
+    public StatusEffects statusEffectsScript;
 
     
 
@@ -125,6 +125,7 @@ public class UI : MonoBehaviour
     {
        StartCoroutine(StartStuff());
         _backButton.SetActive(false);
+        statusEffectsScript = FindObjectOfType<StatusEffects>();
        
         
        
@@ -284,6 +285,9 @@ public class UI : MonoBehaviour
     public void OnFireballClick()
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
+        
+        player.isBurning = true;
+        statusEffectsScript.BurningCondition();
         OpenEnemiesPanel();
     }
 
@@ -537,11 +541,13 @@ public class UI : MonoBehaviour
         {
             if (_itemPanel.activeSelf == true)
             {
-                _spellsPanel.SetActive(false);
                 _abilitiesPanel.SetActive(false);
+                _spellsPanel.SetActive(false);
+                _enemiesPanel.SetActive(false);
 
             }
         }
+        
     }
 
     public void OpenSpellsPanel()
@@ -558,10 +564,18 @@ public class UI : MonoBehaviour
         {
             if (_spellsPanel.activeSelf == true)
             {
-                _itemPanel.SetActive(false);
                 _abilitiesPanel.SetActive(false);
+                _itemPanel.SetActive(false);
+                _enemiesPanel.SetActive(false);
 
             }
+        }
+        if(_spellsPanel.activeSelf == false)
+        {
+            _abilitiesPanel.SetActive(false);
+            _itemPanel.SetActive(false);
+            _enemiesPanel.SetActive(false);
+
         }
     }
 
@@ -581,8 +595,15 @@ public class UI : MonoBehaviour
             {
                 _itemPanel.SetActive(false);
                 _spellsPanel.SetActive(false);
-
+                _enemiesPanel.SetActive(false);
             }
+        }
+        if(_abilitiesPanel.activeSelf == false)
+        {
+            
+            _spellsPanel.SetActive(false);
+            _itemPanel.SetActive(false);
+            _enemiesPanel.SetActive(false);
         }
 
     }

@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\TestClass.cs" />
     <Compile Include="Assets\Scripts\ENV_Mana.cs" />
     <Compile Include="Assets\Scripts\UI.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
     <Compile Include="Assets\Scripts\Enemy_Goblin.cs" />
     <Compile Include="Assets\Scripts\Unit_Spawner.cs" />

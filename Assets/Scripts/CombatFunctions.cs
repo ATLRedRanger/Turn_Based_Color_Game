@@ -101,7 +101,7 @@ public class CombatFunctions : MonoBehaviour
     private int RollForAccuracy(Unit unit, float accuracyMultiple)
     {
         int dieRoll;
-        int currentAccuracy = (int)(unit.currentStamina * accuracyMultiple);
+        int currentAccuracy = (int)(unit.baseAccuracy * accuracyMultiple);
 
         dieRoll = Random.Range(currentAccuracy, 100);
         
@@ -187,7 +187,7 @@ public class CombatFunctions : MonoBehaviour
 
     public void ReduceHealth(int damage, Unit defender, Unit attacker)
     {
-        
+        //If the defender is not defending, deal full damage
         if(defender.isDefending != true)
         {
             Debug.Log(defender.currentHealth);
@@ -196,27 +196,36 @@ public class CombatFunctions : MonoBehaviour
         }
         else
         {
+            //If they are defending and the attacker is using a weapon that modifies damage based on if 
+            //they are defending
             if(attacker.isWeaponEquipped != false)
             {
                 switch (attacker.equippedWeapon.weaponType)
                 {
                     case WeaponType.Axe:
                         Debug.Log(defender.unitName + " has " + defender.currentHealth);
-                        defender.currentHealth -= (int)(damage * .6);
-                        defender.currentStamina -= (int)(damage * .4);
+                        defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
+                        defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
                         Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
                         defender.AmIDeadYet();
                         break;
                     case WeaponType.Hammer:
                         Debug.Log(defender.unitName + " has " + defender.currentHealth);
-                        defender.currentHealth -= (int)(damage * .4);
-                        defender.currentStamina -= (int)(damage * .6);
+                        defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
+                        defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
                         Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
                         defender.AmIDeadYet();
                         break;
                     default:
+                        defender.currentHealth -= (int)(damage * .5);
                         break;
                 }
+            }
+            else 
+            //If defending, attacker isn't equipped, defender takes half damage
+            {
+                
+                defender.currentHealth -= (int)(damage * .5);
             }
             
         }
