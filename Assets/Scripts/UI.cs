@@ -139,21 +139,22 @@ public class UI : MonoBehaviour
     }
     IEnumerator StartStuff()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.02f);
         unitSpawnerScript = gameOrganizer.GetComponent<Unit_Spawner>();
         turnManagerScript = gameOrganizer.GetComponent<Turn_Manager>();
         envManaScript = FindObjectOfType<ENV_Mana>();
         player = unitSpawnerScript.player;
         inventoryScript = FindObjectOfType<Inventory>();
-        StartCoroutine(NamesText());
+        //StartCoroutine(NamesText());
+        NamesText();
         StartCoroutine(HealthText());
         StartCoroutine(StaminaText());
         StartCoroutine(EnvironmentText());
     }
-    IEnumerator NamesText()
+    void NamesText()
     {
         
-        yield return new WaitForSeconds(.02f);
+        //yield return new WaitForSeconds(.02f);
         enemyOneName.text = unitSpawnerScript.listOfCombatants[0].unitName;
         playerName.text = unitSpawnerScript.player.unitName;
         enemyOneText.text = unitSpawnerScript.enemyOne.unitName;
@@ -222,6 +223,12 @@ public class UI : MonoBehaviour
     }
 
     //Buttons
+
+    public void OnDefendClick()
+    {
+        player.isDefending = true;
+        turnManagerScript.EndTurn();
+    }
 
     /*public void BackButton()
     {
@@ -327,7 +334,7 @@ public class UI : MonoBehaviour
     {
         combatFunctions.UseHealthPotion();
         UpdateUI();
-        //StartCoroutine(WaitForTime());
+        StartCoroutine(WaitForTime());
         
         turnManagerScript.EndTurn();
     }
@@ -443,7 +450,6 @@ public class UI : MonoBehaviour
     {
         SetAbilitiesFalse();
         
-        Debug.Log(player.equippedWeapon.itemName);
         switch(player.equippedWeapon.weaponType)
         {
             case WeaponType.Axe:

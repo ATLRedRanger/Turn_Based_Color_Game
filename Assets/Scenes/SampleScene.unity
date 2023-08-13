@@ -2782,8 +2782,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 519420030}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OpenEnemyPanel
+        m_TargetAssemblyTypeName: UI, Assembly-CSharp
+        m_MethodName: OnDefendClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6900,6 +6900,7 @@ MonoBehaviour:
   baseAccuracy: 0
   isDefending: 0
   isBurning: 0
+  isExhausted: 0
   currentLevel: 0
   itemList: []
   equippedWeapon: {fileID: 0}

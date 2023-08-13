@@ -112,6 +112,11 @@ public class CombatFunctions : MonoBehaviour
     {
         unit.currentStamina -= attack.staminaCost;
 
+        if(unit.currentStamina < 1)
+        {
+            unit.currentStamina = 0;
+            unit.isExhausted = true;
+        }
         
         return unit.currentStamina;
     }
@@ -192,6 +197,7 @@ public class CombatFunctions : MonoBehaviour
         {
             Debug.Log(defender.currentHealth);
             defender.currentHealth -= damage - defender.physicalDefense;
+            defender.AmIDeadYet();
             Debug.Log(defender.currentHealth);
         }
         else
@@ -218,6 +224,7 @@ public class CombatFunctions : MonoBehaviour
                         break;
                     default:
                         defender.currentHealth -= (int)(damage * .5);
+                        defender.AmIDeadYet();
                         break;
                 }
             }
@@ -226,11 +233,10 @@ public class CombatFunctions : MonoBehaviour
             {
                 
                 defender.currentHealth -= (int)(damage * .5);
+                defender.AmIDeadYet();
             }
             
         }
-        
-        
         
     }
 

@@ -35,6 +35,8 @@ public class Unit : MonoBehaviour
 
     //Status Effects
     public bool isBurning;
+    public bool isExhausted;
+
 
     [SerializeField]
     private int currentLevel;
@@ -203,17 +205,20 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
+        //Subscribes to the isBurned event
         StatusEffects.isBurned += Burning;
     }
 
     private void OnDisable()
     {
+        //Unsubscribes from the isBurned event
         StatusEffects.isBurned -= Burning;
     }
 
     //Status Effects
     void Burning()
     {
+        //Happens when the event for isBurned is triggered
         if (isBurning)
         {
             currentHealth -= 10;

@@ -32,7 +32,7 @@ public class Turn_Manager : MonoBehaviour
     IEnumerator TimeForBattle()
     {
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(.05f);
 
         WhoseTurnIsIt();
         
@@ -110,15 +110,15 @@ public class Turn_Manager : MonoBehaviour
         if(state == BattleState.PLAYERTURN)
         {
             combatFunctionsScript.RegenStamina(unitSpawnerScript.player);
-            
+            unitSpawnerScript.player.isDefending = false;
             
         }
         if(state == BattleState.ENEMYTURN)
         {
             combatFunctionsScript.RegenStamina(unitSpawnerScript.enemyOne);
-            
+            unitSpawnerScript.enemyOne.isDefending = false;
         }
-        StartCoroutine(WaitForTime());
+        //StartCoroutine(WaitForTime());
 
         ui_Script.UpdateUI();
     }
