@@ -151,25 +151,23 @@ public class CombatFunctions : MonoBehaviour
             Debug.Log(unit.equippedWeapon.itemName);
             switch(unit.equippedWeapon.weaponType)
             {
-                case WeaponType.Axe:
-                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
-                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                /*case WeaponType.Axe:
+                    
                     break;
                 case WeaponType.Staff:
-                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
-                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    
                     break;
                 case WeaponType.Sword:
-                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
-                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    
                     break;
                 case WeaponType.Hammer:
-                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
-                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
+                    
                     break;
                 case WeaponType.Bow:
+                    
+                    break;*/
+                default:
                     attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
-                    Debug.Log(attackDamage + " = " + unit.physicalAttack + " + " + unit.equippedWeapon.weaponDamage + " + " + attack.attackDamage);
                     break;
             }
         }
@@ -187,6 +185,16 @@ public class CombatFunctions : MonoBehaviour
 
     public int DamageFromSpell(Attack attack, Unit unit)
     {
+        if(unit.equippedWeapon.weaponType == WeaponType.Staff)
+        {
+            attackDamage = unit.magicAttack + attack.attackDamage + unit.equippedWeapon.weaponDamage;
+        }
+        else
+        {
+            attackDamage = unit.magicAttack + attack.attackDamage;
+        }
+        
+
         return attackDamage;
     }
 
@@ -267,6 +275,59 @@ public class CombatFunctions : MonoBehaviour
         }
     }
     
+    public void ColorReturn(Attack attack)
+    {
+        int roll = Random.Range(0, 5);
+
+        switch (attack.attackColor)
+        {
+            case Color.Red:
+                envManaScript.currentOrange += attack.colorCost;
+                if(envManaScript.currentOrange > envManaScript.maxOrange)
+                {
+                    envManaScript.maxOrange = envManaScript.currentOrange;
+                }
+                break;
+            case Color.Orange:
+                envManaScript.currentYellow += attack.colorCost;
+                if (envManaScript.currentYellow > envManaScript.maxYellow)
+                {
+                    envManaScript.maxYellow = envManaScript.currentYellow;
+                }
+                break;
+            case Color.Yellow:
+                envManaScript.currentGreen += attack.colorCost;
+                if (envManaScript.currentGreen > envManaScript.maxGreen)
+                {
+                    envManaScript.maxGreen = envManaScript.currentGreen;
+                }
+                break;
+            case Color.Green:
+                envManaScript.currentBlue += attack.colorCost;
+                if (envManaScript.currentBlue > envManaScript.maxBlue)
+                {
+                    envManaScript.maxBlue = envManaScript.currentBlue;
+                }
+                break;
+            case Color.Blue:
+                envManaScript.currentViolet += attack.colorCost;
+                if (envManaScript.currentViolet > envManaScript.maxViolet)
+                {
+                    envManaScript.maxViolet = envManaScript.currentViolet;
+                }
+                break;
+            case Color.Violet:
+                envManaScript.currentRed += attack.colorCost;
+                if (envManaScript.currentRed > envManaScript.maxRed)
+                {
+                    envManaScript.maxRed = envManaScript.currentRed;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private StaminaLevels StaminaConversion(Unit unit)
     {
         if (unit.currentStamina <= (unit.maxStamina*1/4))
@@ -287,15 +348,27 @@ public class CombatFunctions : MonoBehaviour
         }
         return StaminaLevels.Broken;
     }
-    
+
     //Attacks
+    public void UseSpecialAttack(Attack attack, Unit player, Unit chosenEnemy)
+    {
+
+        DamageFromSpell(attack, player);
+        ReduceStamina(attack, player);
+        ReduceHealth(attackDamage, chosenEnemy, player);
+        ReduceColorFromEnv(attack);
+        ColorReturn(attack);
+
+    }
+
     public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-        
+       
         DamageFromAttack(attack, player);
         ReduceStamina(attack, player);
         ReduceHealth(attackDamage, chosenEnemy, player);
         ReduceColorFromEnv(attack);
+        ColorReturn(attack);
 
     }
 

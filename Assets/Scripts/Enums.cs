@@ -55,7 +55,14 @@ public enum ItemType
 
 public enum ConsumableType
 {
-    Health,Stamina
+    Health,
+    Stamina
+}
+
+public enum AttackType
+{
+    Physical,
+    Special
 }
 
 public struct LocationMana

@@ -73,7 +73,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
         foreach(var kvp in enemyOne.enemyAttackDictionary)
         {
             Debug.Log(kvp.Key);
-            //if the enemy's stamina is greater than the stamina cost of the selected attack is rgeater than or equal to it
+            //if the enemy's stamina is greater than the stamina cost of the selected attack is greater than or equal to it
             if(enemyOne.currentStamina >= kvp.Value.staminaCost)
             {
                 
@@ -81,6 +81,10 @@ public class Enemy_Combat_Functions : MonoBehaviour
                 chosenAttack = kvp.Value;
                 //The key is the name of the attack
                 Debug.Log(kvp.Key + " is the chosen ATTACK.");
+            }
+            else
+            {
+                enemyOne.isDefending = true;
             }
         }
     }

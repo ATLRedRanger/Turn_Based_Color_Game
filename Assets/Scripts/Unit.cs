@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour
 
     //Status Effects
     public bool isBurning;
-    private int burnTimer = 3;
+    public int burnTimer = 3;
 
     public bool isExhausted;
 
@@ -158,7 +158,7 @@ public class Unit : MonoBehaviour
     {
         foreach(var kvp in unitAttackDictionary)
         {
-            if(kvp.Value.attackType == equippedWeapon.weaponType && currentStamina >= kvp.Value.staminaCost)
+            if(kvp.Value.weaponType == equippedWeapon.weaponType && currentStamina >= kvp.Value.staminaCost)
             {
 
             }

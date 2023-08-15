@@ -285,7 +285,7 @@ RectTransform:
   m_GameObject: {fileID: 37491806}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417792119}
@@ -293,8 +293,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 427.2}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 89.87058, y: 356.08807}
+  m_SizeDelta: {x: 113.6418, y: 59.3044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &37491808
 MonoBehaviour:
@@ -2270,7 +2270,7 @@ RectTransform:
   m_GameObject: {fileID: 582186855}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417792119}
@@ -2278,8 +2278,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 477.5}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 89.8706, y: 455.52173}
+  m_SizeDelta: {x: 113.6418, y: 59.3044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &582186857
 MonoBehaviour:
@@ -2953,12 +2953,12 @@ MonoBehaviour:
   currentViolet: 0
   maxViolet: 0
   location: Forest
-  forestReds: 00000000050000000a000000
+  forestReds: 0a0000000a0000000a000000
   forestOranges: 00000000050000000a000000
   forestYellows: 050000000a0000000f000000
   forestGreens: 0a0000000f00000014000000
   forestBlues: 050000000a0000000f000000
-  forestViolets: 02000000060000000c000000
+  forestViolets: 050000000a0000000f000000
 --- !u!4 &727368243
 Transform:
   m_ObjectHideFlags: 0
@@ -3135,7 +3135,7 @@ RectTransform:
   m_GameObject: {fileID: 826212899}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417792119}
@@ -3143,8 +3143,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 456.7}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 89.87058, y: 414.40405}
+  m_SizeDelta: {x: 113.6418, y: 59.3044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &826212901
 MonoBehaviour:
@@ -4299,8 +4299,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 519420030}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OpenEnemyPanel
+        m_TargetAssemblyTypeName: UI, Assembly-CSharp
+        m_MethodName: OnPunchClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4513,96 +4513,108 @@ MonoBehaviour:
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _kick:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _chop:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _violetBall:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _slash:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _slam:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _quickShot:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _fireBall:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _greenPunch:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _orangeSpike:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _yellowSplash:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
   _blueCrush:
     attackName: 
     attackDamage: 0
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
 --- !u!4 &1239664327
 Transform:
   m_ObjectHideFlags: 0
@@ -4992,8 +5004,9 @@ MonoBehaviour:
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
 --- !u!4 &1334024791
 Transform:
   m_ObjectHideFlags: 0
@@ -5250,7 +5263,7 @@ RectTransform:
   m_GameObject: {fileID: 1396932286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417792119}
@@ -5258,8 +5271,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 467.1}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 89.87058, y: 434.9629}
+  m_SizeDelta: {x: 113.6418, y: 59.3044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1396932288
 MonoBehaviour:
@@ -5671,7 +5684,7 @@ RectTransform:
   m_GameObject: {fileID: 1447227847}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417792119}
@@ -5679,8 +5692,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 436.5}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 89.87058, y: 374.4724}
+  m_SizeDelta: {x: 113.6418, y: 59.3044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1447227849
 MonoBehaviour:
@@ -6767,8 +6780,9 @@ MonoBehaviour:
     staminaCost: 0
     attackAccuracy: 0
     colorCost: 0
-    attackType: 0
     attackColor: 0
+    attackType: 0
+    weaponType: 0
 --- !u!4 &1963110896
 Transform:
   m_ObjectHideFlags: 0
@@ -6811,7 +6825,7 @@ RectTransform:
   m_GameObject: {fileID: 1967245611}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1417792119}
@@ -6819,8 +6833,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 446.1}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 89.87058, y: 393.44983}
+  m_SizeDelta: {x: 113.6418, y: 59.3044}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1967245613
 MonoBehaviour:
@@ -6907,6 +6921,7 @@ MonoBehaviour:
   baseAccuracy: 0
   isDefending: 0
   isBurning: 0
+  burnTimer: 3
   isExhausted: 0
   currentLevel: 0
   itemList: []

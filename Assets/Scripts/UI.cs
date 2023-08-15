@@ -259,8 +259,16 @@ public class UI : MonoBehaviour
 
         if (combatFunctions.HitorMiss(combatFunctions.chosenAttack, unitSpawnerScript.player) == true)
         {
-
-            combatFunctions.UseAttack(combatFunctions.chosenAttack, player, enemy_One);
+            switch (combatFunctions.chosenAttack.attackType)
+            {
+                case AttackType.Special:
+                    combatFunctions.UseSpecialAttack(combatFunctions.chosenAttack, player, enemy_One);
+                    break;
+                default:
+                    combatFunctions.UseAttack(combatFunctions.chosenAttack, player, enemy_One);
+                    break;
+            }
+            
 
             player.hadATurn = true;
 
@@ -292,7 +300,7 @@ public class UI : MonoBehaviour
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
         
-        player.isBurning = true;
+        unitSpawnerScript.enemyOne.isBurning = true;
         
         OpenEnemiesPanel();
     }
@@ -338,6 +346,7 @@ public class UI : MonoBehaviour
         turnManagerScript.EndTurn();
     }
 
+    //Attack Functions
     public bool CheckForAttackAvailability(Attack attack)
     {
         bool isUseable = false;

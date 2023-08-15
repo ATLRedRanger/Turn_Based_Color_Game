@@ -14,9 +14,13 @@ public class Attack
 
     public int colorCost;
 
-
-    public WeaponType attackType;
     public Color attackColor;
+
+    public AttackType attackType;
+
+    public WeaponType weaponType;
+
+    
   
     //These are different ways to *initialize* the attack
 
@@ -36,7 +40,7 @@ public class Attack
     }
 
     //Using this method, I can do things once. 
-    public Attack(string attackName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, Color attackColor, WeaponType attackType)
+    public Attack(string attackName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, Color attackColor, AttackType attackType ,WeaponType weaponType)
     {
         this.attackName = attackName;
         this.attackDamage = attackDamage;
@@ -44,7 +48,8 @@ public class Attack
         this.colorCost = colorCost;
         this.attackAccuracy = attackAccuracy;
         this.attackColor = attackColor;
-        this.attackType = attackType;  
+        this.attackType = attackType;
+        this.weaponType = weaponType;  
         
 
             

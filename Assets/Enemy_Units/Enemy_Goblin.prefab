@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Goblin 2
-  maxHealth: 6
-  currentHealth: 6
+  maxHealth: 12
+  currentHealth: 12
   physicalAttack: 2
   physicalDefense: 3
   magicAttack: 2
