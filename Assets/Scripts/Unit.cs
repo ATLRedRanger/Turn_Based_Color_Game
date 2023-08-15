@@ -35,6 +35,8 @@ public class Unit : MonoBehaviour
 
     //Status Effects
     public bool isBurning;
+    private int burnTimer = 3;
+
     public bool isExhausted;
 
 
@@ -221,9 +223,13 @@ public class Unit : MonoBehaviour
         //Happens when the event for isBurned is triggered
         if (isBurning)
         {
-            currentHealth -= 10;
+            currentHealth -= (maxHealth * 1/5);
+            burnTimer -= 1;
         }
-        
+        if(burnTimer < 1)
+        {
+            isBurning = false;
+        }
 
     }
 }

@@ -16,13 +16,15 @@ public class Turn_Manager : MonoBehaviour
 
     private CombatFunctions combatFunctionsScript;
 
+    private StatusEffects statusEffectsScript;
+
 
     // Start is called before the first frame update
     void Start()
     {
         unitSpawnerScript = GetComponent<Unit_Spawner>();
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
-
+        statusEffectsScript = FindObjectOfType<StatusEffects>();
         state = BattleState.START;
         Debug.Log("BattleState is " + state);
 
@@ -92,6 +94,7 @@ public class Turn_Manager : MonoBehaviour
 
         if (unitSpawnerScript.player.myTurn == true)
         {
+            statusEffectsScript.BurningCondition();
             EnemyTurn();
         }
         else 

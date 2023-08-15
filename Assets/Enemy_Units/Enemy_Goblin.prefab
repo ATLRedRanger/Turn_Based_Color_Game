@@ -108,8 +108,10 @@ MonoBehaviour:
   maxStamina: 7
   currentStamina: 7
   staminaRegenModifier: 1
-  baseAccuracy: 35
+  baseAccuracy: 45
   isDefending: 0
+  isBurning: 0
+  isExhausted: 0
   currentLevel: 1
   itemList: []
   equippedWeapon: {fileID: 0}

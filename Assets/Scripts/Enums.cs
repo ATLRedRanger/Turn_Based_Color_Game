@@ -57,3 +57,17 @@ public enum ConsumableType
 {
     Health,Stamina
 }
+
+public struct LocationMana
+{
+    
+    public LocationMana(int currentAmount, int colorMax)
+    {
+        this.currentAmount = currentAmount;
+        this.colorMax = colorMax;
+    }
+
+    public int currentAmount { get; }
+    public int colorMax { get; }
+
+}

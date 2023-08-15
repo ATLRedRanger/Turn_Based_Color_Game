@@ -2941,17 +2941,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRed: 0
-  maxRed: 10
+  maxRed: 0
   currentOrange: 0
-  maxOrange: 10
+  maxOrange: 0
   currentYellow: 0
-  maxYellow: 10
+  maxYellow: 0
   currentGreen: 0
-  maxGreen: 10
+  maxGreen: 0
   currentBlue: 0
-  maxBlue: 10
+  maxBlue: 0
   currentViolet: 0
-  maxViolet: 10
+  maxViolet: 0
+  location: Forest
+  forestReds: 00000000050000000a000000
+  forestOranges: 00000000050000000a000000
+  forestYellows: 050000000a0000000f000000
+  forestGreens: 0a0000000f00000014000000
+  forestBlues: 050000000a0000000f000000
+  forestViolets: 02000000060000000c000000
 --- !u!4 &727368243
 Transform:
   m_ObjectHideFlags: 0
@@ -2959,8 +2966,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727368241}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500.08298, y: 298.26974, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.850006, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

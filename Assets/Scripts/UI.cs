@@ -139,7 +139,7 @@ public class UI : MonoBehaviour
     }
     IEnumerator StartStuff()
     {
-        yield return new WaitForSeconds(.02f);
+        yield return new WaitForSeconds(.5f);
         unitSpawnerScript = gameOrganizer.GetComponent<Unit_Spawner>();
         turnManagerScript = gameOrganizer.GetComponent<Turn_Manager>();
         envManaScript = FindObjectOfType<ENV_Mana>();
@@ -155,7 +155,6 @@ public class UI : MonoBehaviour
     {
         
         //yield return new WaitForSeconds(.02f);
-        enemyOneName.text = unitSpawnerScript.listOfCombatants[0].unitName;
         playerName.text = unitSpawnerScript.player.unitName;
         enemyOneText.text = unitSpawnerScript.enemyOne.unitName;
         backButtonText.text = "B";
@@ -178,12 +177,12 @@ public class UI : MonoBehaviour
     IEnumerator EnvironmentText()
     {
         yield return new WaitForSeconds(.02f);
-        environmentRed.text = "Red:" + envManaScript.currentRed.ToString() + "/" + envManaScript.maxRed.ToString();
-        environmentOrange.text = "Orange:" + envManaScript.currentOrange.ToString() + "/" + envManaScript.maxOrange.ToString();
-        environmentYellow.text = "Yellow:" + envManaScript.currentYellow.ToString() + "/" + envManaScript.maxYellow.ToString();
-        environmentGreen.text = "Green:" + envManaScript.currentGreen.ToString() + "/" + envManaScript.maxGreen.ToString();
-        environmentBlue.text = "Blue:" + envManaScript.currentBlue.ToString() + "/" + envManaScript.maxBlue.ToString();
-        environmentViolet.text = "Violet:" + envManaScript.currentViolet.ToString() + "/" + envManaScript.maxViolet.ToString();
+        environmentRed.text = "Red:" + envManaScript.Locations["Forest"][Color.Red].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Red].colorMax.ToString();
+        environmentOrange.text = "Orange:" + envManaScript.Locations["Forest"][Color.Orange].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Orange].colorMax.ToString();
+        environmentYellow.text = "Yellow:" + envManaScript.Locations["Forest"][Color.Yellow].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Yellow].colorMax.ToString();
+        environmentGreen.text = "Green:" + envManaScript.Locations["Forest"][Color.Green].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Green].colorMax.ToString();
+        environmentBlue.text = "Blue:" + envManaScript.Locations["Forest"][Color.Blue].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Blue].colorMax.ToString();
+        environmentViolet.text = "Violet:" + envManaScript.Locations["Forest"][Color.Violet].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Violet].colorMax.ToString();
     }
     public void UpdateUI()
     {
@@ -294,7 +293,7 @@ public class UI : MonoBehaviour
         combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
         
         player.isBurning = true;
-        statusEffectsScript.BurningCondition();
+        
         OpenEnemiesPanel();
     }
 
