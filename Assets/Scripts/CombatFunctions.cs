@@ -125,7 +125,7 @@ public class CombatFunctions : MonoBehaviour
     {
         //Regenerate stamina at a rate of 1/5th of their maximum stanima
 
-        int staminaRegend = ((unit.maxStamina * 1 / 5)*unit.staminaRegenModifier);
+        int staminaRegend = ((unit.maxStamina * 1 / 3)*unit.staminaRegenModifier);
 
         unit.currentStamina += staminaRegend;
 
@@ -185,15 +185,19 @@ public class CombatFunctions : MonoBehaviour
 
     public int DamageFromSpell(Attack attack, Unit unit)
     {
-        if(unit.equippedWeapon.weaponType == WeaponType.Staff)
+        if(unit.isWeaponEquipped != false)
         {
-            attackDamage = unit.magicAttack + attack.attackDamage + unit.equippedWeapon.weaponDamage;
+            if (unit.equippedWeapon.weaponType == WeaponType.Staff)
+            {
+                attackDamage = unit.magicAttack + attack.attackDamage + unit.equippedWeapon.weaponDamage;
+            }
+            else
+            {
+                attackDamage = unit.magicAttack + attack.attackDamage;
+            }
+
         }
-        else
-        {
-            attackDamage = unit.magicAttack + attack.attackDamage;
-        }
-        
+
 
         return attackDamage;
     }
@@ -239,9 +243,11 @@ public class CombatFunctions : MonoBehaviour
             else 
             //If defending, attacker isn't equipped, defender takes half damage
             {
-                
+         
                 defender.currentHealth -= (int)(damage * .5);
                 defender.AmIDeadYet();
+
+                
             }
             
         }

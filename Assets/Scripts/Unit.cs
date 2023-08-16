@@ -33,8 +33,11 @@ public class Unit : MonoBehaviour
 
     public bool isDefending;
 
+    
+
     //Status Effects
     public bool isBurning;
+
     public int burnTimer = 3;
 
     public bool isExhausted;
@@ -43,16 +46,48 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private int currentLevel;
 
+    private int currentExp;
+
+    private int expToLevel;
+
+    public int expGiven;
+
     //Inventory related variables
     public List<Item> itemList = new List<Item>(); 
 
     //Equipment related variables
     public Weapon equippedWeapon;
+
     public bool isWeaponEquipped = false;
+
+    public int currentAxeExp = 0;
+
+    public int currentStaffExp = 0;
+
+    public int currentSwordExp = 0;
+
+    public int currentHammerExp = 0;
+
+    public int currentBowExp = 0;
+
+    private int axeExpToLevel = 50;
+
+    private int staffExpToLevel = 50;
+
+    private int swordExpToLevel = 50;
+
+    private int hammerExpToLevel = 50;
+
+    private int bowExpToLevel = 50;
+
     public int axeMastery;
+
     public int staffMastery;
+
     public int swordMastery;
+
     public int hammerMastery;
+
     public int bowMastery;
 
     //Turn related variables
@@ -147,35 +182,47 @@ public class Unit : MonoBehaviour
     public virtual void EnemyAttacks()
     {
         enemyAttackDictionary["Slash"] = attacksDatabase._slash;
+        enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
     }
 
     private void LearnSpells()
     {
-        unitSpellsDictionary["Fireball"] = attacksDatabase._fireBall;
+        switch (currentLevel)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                unitSpellsDictionary["Fireball"] = attacksDatabase._fireBall;
+                break;
+        }
+        
     } 
 
-    public void CanUseAttack()
+    public bool AmIDeadYet()
     {
-        foreach(var kvp in unitAttackDictionary)
-        {
-            if(kvp.Value.weaponType == equippedWeapon.weaponType && currentStamina >= kvp.Value.staminaCost)
-            {
+        bool amIDead = false;
 
-            }
-        }
-        
-    }
-
-    public void AmIDeadYet()
-    {
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && isPlayer == true)
         {
             currentHealth = 0;
+            turnManagerScript.playersAlive --;
             Debug.Log(unitName + "is DEAD!");
             
+            amIDead = true;
         }
         
-             
+        if(currentHealth <= 0 && isPlayer != true)
+        {
+
+            currentHealth = 0;
+            turnManagerScript.enemiesAlive --;
+            
+            amIDead = true;
+        }
+        
+        return amIDead;
     }
 
     public virtual void EnemyAi()
@@ -231,6 +278,66 @@ public class Unit : MonoBehaviour
             isBurning = false;
         }
 
+    }
+
+    private void DidILevelUp()
+    {
+
+        if(currentExp >= expToLevel)
+        {
+            currentLevel++;
+            LearnSpells();
+            expToLevel += 100; //+/* some modifier or something
+        }
+
+    }
+
+    private void DidWeaponLevelUp()
+    {
+        switch(equippedWeapon.weaponType)
+        {
+            case WeaponType.Axe:
+                if(currentAxeExp >= axeExpToLevel) 
+                {
+                    axeMastery += 1;
+                    axeExpToLevel += 100; //+/* some modifier or something
+                    LearnAbilities();
+                }
+                break;
+            case WeaponType.Staff:
+                if (currentStaffExp >= staffExpToLevel)
+                {
+                    staffMastery += 1;
+                    staffExpToLevel += 100; //+/* some modifier or something
+                    LearnAbilities();
+                }
+                break;
+            case WeaponType.Sword:
+                if (currentSwordExp >= swordExpToLevel)
+                {
+                    swordMastery += 1;
+                    swordExpToLevel += 100; //+/* some modifier or something
+                    LearnAbilities();
+                }
+                break;
+            case WeaponType.Hammer:
+                if (currentHammerExp >= hammerExpToLevel)
+                {
+                    hammerMastery += 1;
+                    hammerExpToLevel += 100; //+/* some modifier or something
+                    LearnAbilities();
+                }
+                break;
+            case WeaponType.Bow:
+                if (currentBowExp >= bowExpToLevel)
+                {
+                    bowMastery += 1;
+                    bowExpToLevel += 100; //+/* some modifier or something
+                    LearnAbilities();
+                }
+                break;
+            default: break;
+        }
     }
 }
 

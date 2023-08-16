@@ -32,16 +32,12 @@ public class Unit_Spawner : MonoBehaviour
 
     }
 
-
-
-
-
-
     public void SpawnPlayer()
     {
         player = Instantiate(playerUnit, playerPosition.transform).GetComponent<Unit>();
         
         listOfCombatants.Add(player);
+        turnManagerScript.playersAlive++;
         
     }
     void SelectEnemy()
@@ -80,10 +76,13 @@ public class Unit_Spawner : MonoBehaviour
         int whatEnemy = Random.Range(0, listOfEnemies.Count);
 
         enemyOne = (Instantiate(listOfEnemies[whatEnemy], enemyPositions[enemyPosition].transform).GetComponent<Unit>());
-        //enemyOne.SetTurnManager(turnManagerScript);
+        //enemyOne.SetTurnManager(turnManagerScript)
+        turnManagerScript.enemiesAlive++;
         
         
         return enemyOne;
     }
+
+
 
 }

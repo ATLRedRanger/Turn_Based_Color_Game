@@ -11,6 +11,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public CombatFunctions combatFunctionsScript;
 
+    public ENV_Mana envManaScript;
+
     public Unit enemyOne;
 
     public Unit player;
@@ -18,11 +20,13 @@ public class Enemy_Combat_Functions : MonoBehaviour
     private Unit currentEnemy;
 
     public Attack chosenAttack;
+
+    public bool canAttack;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(LoadingScripts());
-        
+
     }
 
     IEnumerator LoadingScripts()
@@ -34,61 +38,125 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
 
+        envManaScript = FindObjectOfType<ENV_Mana>();
+
         enemyOne = unitSpawnerScript.enemyOne;
 
         player = unitSpawnerScript.player;
 
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void EnemyAttacking()
     {
-
         EnemyAttackChoice();
 
-        if(combatFunctionsScript.HitorMiss(chosenAttack, enemyOne) == true )
-            
+        if (canAttack == true)
         {
-            combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
-            combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
-            combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player, enemyOne);
-            combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
-        }
-        else
-        {
-            Debug.Log(enemyOne.unitName + " has missed!");
-        }
-        
-    }
-    
-    public void EnemyAttackChoice()
-    {
-        //For each key-value pair in the units' dictionary of attacks
-        foreach(var kvp in enemyOne.enemyAttackDictionary)
-        {
-            Debug.Log(kvp.Key);
-            //if the enemy's stamina is greater than the stamina cost of the selected attack is greater than or equal to it
-            if(enemyOne.currentStamina >= kvp.Value.staminaCost)
+            if (combatFunctionsScript.HitorMiss(chosenAttack, enemyOne) == true)
+
             {
-                
-                //The chosen attack is the value (the actual attack)
-                chosenAttack = kvp.Value;
-                //The key is the name of the attack
-                Debug.Log(kvp.Key + " is the chosen ATTACK.");
+                combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
+                combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
+                combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player, enemyOne);
+                combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
+                combatFunctionsScript.ColorReturn(chosenAttack);
             }
             else
             {
-                enemyOne.isDefending = true;
+                Debug.Log(enemyOne.unitName + " has missed!");
             }
+        }
+        else
+        {
+            enemyOne.isDefending = true;
+        }
+
+
+
+
+    }
+
+    public void EnemyAttackChoice()
+    {
+
+        canAttack = false;
+
+        //For each key-value pair in the units' dictionary of attacks
+        foreach (var kvp in enemyOne.enemyAttackDictionary)
+        {
+            switch (kvp.Value.attackType)
+            {
+                case AttackType.Special:
+                    switch (kvp.Value.attackColor)
+                    {
+                        case Color.Red:
+                            if (kvp.Value.colorCost <= envManaScript.currentRed && enemyOne.currentStamina >= kvp.Value.staminaCost)
+                            {
+                                chosenAttack = kvp.Value;
+                                canAttack = true;
+                            }
+                            break;
+                        case Color.Orange:
+                            if (kvp.Value.colorCost <= envManaScript.currentOrange && enemyOne.currentStamina >= kvp.Value.staminaCost)
+                            {
+                                chosenAttack = kvp.Value;
+                                canAttack = true;
+                            }
+                            break;
+                        case Color.Yellow:
+                            if (kvp.Value.colorCost <= envManaScript.currentYellow && enemyOne.currentStamina >= kvp.Value.staminaCost)
+                            {
+                                chosenAttack = kvp.Value;
+                                canAttack = true;
+                            }
+                            break;
+                        case Color.Green:
+                            if (kvp.Value.colorCost <= envManaScript.currentGreen && enemyOne.currentStamina >= kvp.Value.staminaCost)
+                            {
+
+                                chosenAttack = kvp.Value;
+                                canAttack = true;
+                            }
+                            break;
+                        case Color.Blue:
+                            if (kvp.Value.colorCost <= envManaScript.currentBlue && enemyOne.currentStamina >= kvp.Value.staminaCost)
+                            {
+                                chosenAttack = kvp.Value;
+                                canAttack = true;
+                            }
+                            break;
+                        case Color.Violet:
+                            if (kvp.Value.colorCost <= envManaScript.currentViolet && enemyOne.currentStamina >= kvp.Value.staminaCost)
+                            {
+                                chosenAttack = kvp.Value;
+                                canAttack = true;
+                            }
+                            break;
+                        default: 
+                            break;
+                    }
+                    break;
+                default:
+                    if (enemyOne.currentStamina >= kvp.Value.staminaCost)
+                    {
+                        chosenAttack = kvp.Value;
+                        canAttack = true;
+                    }
+                    break;
+            }
+
         }
     }
 
 }
 
 //TODO: Make the enemy defend when they don't have enough stamina to do a thing.
+
+    

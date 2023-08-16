@@ -81,11 +81,15 @@ public class UI : MonoBehaviour
 
     public TMP_Text enemyOneText;
 
-    public GameObject _enemyTwoButton;
+    public GameObject _enemyOneButtonTwo;
+
+    public TMP_Text enemyOneTextTwo;
 
 
     //UI Panels
     public GameObject _enemiesPanel;
+
+    public GameObject _enemiesTwoPanel;
 
     public GameObject _abilitiesPanel;
 
@@ -157,6 +161,7 @@ public class UI : MonoBehaviour
         //yield return new WaitForSeconds(.02f);
         playerName.text = unitSpawnerScript.player.unitName;
         enemyOneText.text = unitSpawnerScript.enemyOne.unitName;
+        enemyOneTextTwo.text = enemyOneText.text;
         backButtonText.text = "B";
     }
 
@@ -207,10 +212,9 @@ public class UI : MonoBehaviour
     public void MenuVisibile()
     {
         
-        if (_fightButton != null && unitSpawnerScript.player.myTurn == true)
+        if (_fightButton != null && turnManagerScript.state == BattleState.PLAYERTURN)
         {
             _fightButton.SetActive(true);
-            
             
         }
         else
@@ -227,6 +231,7 @@ public class UI : MonoBehaviour
     {
         player.isDefending = true;
         turnManagerScript.EndTurn();
+        ClosePanels();
     }
 
     /*public void BackButton()
@@ -289,10 +294,10 @@ public class UI : MonoBehaviour
     }
     
     //Color.Neutral Attack Buttons
-    public void OnPunchClick()
+    public void OnAttackClick()
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Punch"];
-        OpenEnemiesPanel();
+        OpenEnemiesTwoPanel();
     }
 
     //Color.Red Attack Buttons
@@ -335,7 +340,36 @@ public class UI : MonoBehaviour
     
     //Color.Violet Attack Buttons
 
-
+    //Axe Buttons
+    public void OnChopClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Chop"];
+        OpenEnemiesPanel();
+    }
+    //Staff Buttons
+    public void OnVioletBallClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Violet Ball"];
+        OpenEnemiesPanel();
+    }
+    //Sword Buttons
+    public void OnSlashClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Slash"];
+        OpenEnemiesPanel();
+    }
+    //Hammer Buttons
+    public void OnSlamClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Slam"];
+        OpenEnemiesPanel();
+    }
+    //Bow Buttons
+    public void OnQuickShotClick()
+    {
+        combatFunctions.chosenAttack = player.unitAttackDictionary["Quick Shot"];
+        OpenEnemiesPanel();
+    }
     //Use Items 
     public void UseHealthPotion()
     {
@@ -634,6 +668,22 @@ public class UI : MonoBehaviour
 
     }
 
+    public void OpenEnemiesTwoPanel()
+    {
+        bool isActive = _enemiesTwoPanel.activeSelf;
+
+        if (_enemiesTwoPanel != null)
+        {
+
+            _enemiesTwoPanel.SetActive(!isActive);
+
+        }
+
+        _itemPanel.SetActive(false);
+        _spellsPanel.SetActive(false);
+        _enemiesPanel.SetActive(false);
+    }
+
     private void ClosePanels()
     {
         _fightPanel.SetActive(false);
@@ -641,6 +691,7 @@ public class UI : MonoBehaviour
         _spellsPanel.SetActive(false);
         _itemPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
+        _enemiesTwoPanel.SetActive(false);
     }
 
     private void SetSpellsFalse()
