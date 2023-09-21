@@ -215,7 +215,7 @@ public class Unit : MonoBehaviour
         
         if(currentHealth < 1 && isPlayer != true)
         {
-
+            Debug.Log("Apple");
             turnManagerScript.enemiesAlive --;
             Destroy(this.gameObject);
             amIDead = true;
@@ -264,12 +264,12 @@ public class Unit : MonoBehaviour
     }
 
     //Status Effects
-    void Burning()
+    public void Burning()
     {
         //Happens when the event for isBurned is triggered
         if (isBurning)
         {
-            currentHealth -= (maxHealth * 1/5);
+            currentHealth -= (int)(Mathf.Round(maxHealth/5));
             burnTimer -= 1;
         }
         if(burnTimer < 1)
@@ -277,6 +277,8 @@ public class Unit : MonoBehaviour
             isBurning = false;
         }
 
+        
+        
     }
 
     private void DidILevelUp()

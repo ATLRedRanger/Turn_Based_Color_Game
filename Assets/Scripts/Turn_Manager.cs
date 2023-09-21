@@ -99,9 +99,12 @@ public class Turn_Manager : MonoBehaviour
 
     public void EndTurn()
     {
+
+
+        StatusCheck();
         
-        
-        statusEffectsScript.BurningCondition();
+        unitSpawnerScript.enemyOne.AmIDeadYet();
+        player.AmIDeadYet();
 
         if (unitSpawnerScript.player.myTurn == true)
         {
@@ -114,10 +117,13 @@ public class Turn_Manager : MonoBehaviour
         }
 
         CombatantsCheck();
-        ui_Script.UpdateUI();
-        StartCoroutine(WaitForTime());
-        
 
+        
+        
+       
+
+        //StartCoroutine(WaitForTime());
+        ui_Script.UpdateUI();
     }
 
     public void BeginTurn()
@@ -196,6 +202,11 @@ public class Turn_Manager : MonoBehaviour
         }
     }
 
+    private void StatusCheck()
+    {
+        statusEffectsScript.BurningCondition();
+    }
+
     public void EndBattle()
     {
         state = BattleState.WON;
@@ -218,6 +229,16 @@ public class Turn_Manager : MonoBehaviour
         StartCoroutine(TimeForBattle());
     }
 
+    IEnumerator DeathCheckCoroutine()
+    {
+        int i = 5;
+        Debug.Log(i + "LEMON");
+        yield return new WaitForSeconds(i);
+        Debug.Log(i + "KIWI");
+        
+
+    }
+    
     IEnumerator WaitForTime()
     {
         yield return new WaitForSeconds(1.5f);

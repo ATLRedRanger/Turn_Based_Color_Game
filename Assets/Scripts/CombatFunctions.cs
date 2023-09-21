@@ -204,13 +204,27 @@ public class CombatFunctions : MonoBehaviour
 
     public void ReduceHealth(int damage, Unit defender, Unit attacker)
     {
+        
+
         //If the defender is not defending, deal full damage
         if(defender.isDefending != true)
         {
+            switch (chosenAttack.attackType)
+            {
+                case AttackType.Physical:
+                    defender.currentHealth -= (damage - defender.physicalDefense);
+                    
+                    break;
+                case AttackType.Special:
+                    defender.currentHealth -= (damage - defender.magicDefense);
+                    
+                    Debug.Log(defender.currentHealth + "CUCUMBER");
+                    break;
+            }
+
             Debug.Log(defender.currentHealth);
-            defender.currentHealth -= damage - defender.physicalDefense;
-            defender.AmIDeadYet();
-            Debug.Log(defender.currentHealth);
+            
+            
         }
         else
         {
@@ -225,18 +239,18 @@ public class CombatFunctions : MonoBehaviour
                         defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
                         defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
                         Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
-                        defender.AmIDeadYet();
+                        
                         break;
                     case WeaponType.Hammer:
                         Debug.Log(defender.unitName + " has " + defender.currentHealth);
                         defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
                         defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
                         Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
-                        defender.AmIDeadYet();
+                        
                         break;
                     default:
                         defender.currentHealth -= (int)(damage * .5);
-                        defender.AmIDeadYet();
+                        
                         break;
                 }
             }
@@ -245,13 +259,13 @@ public class CombatFunctions : MonoBehaviour
             {
          
                 defender.currentHealth -= (int)(damage * .5);
-                defender.AmIDeadYet();
+                
 
                 
             }
             
         }
-        
+        defender.AmIDeadYet();
     }
 
     public void ReduceColorFromEnv(Attack attack)
