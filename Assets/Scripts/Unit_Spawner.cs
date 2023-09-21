@@ -40,7 +40,7 @@ public class Unit_Spawner : MonoBehaviour
         turnManagerScript.playersAlive++;
         
     }
-    void SelectEnemy()
+    public void SelectEnemy()
     {
 
 

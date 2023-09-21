@@ -110,11 +110,12 @@ MonoBehaviour:
   staminaRegenModifier: 1
   baseAccuracy: 50
   isDefending: 0
+  moneyGiven: 7
   isBurning: 0
   burnTimer: 3
   isExhausted: 0
   currentLevel: 1
-  expGiven: 0
+  expGiven: 13
   itemList: []
   equippedWeapon: {fileID: 0}
   isWeaponEquipped: 0

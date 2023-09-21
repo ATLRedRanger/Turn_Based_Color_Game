@@ -33,7 +33,7 @@ public class Unit : MonoBehaviour
 
     public bool isDefending;
 
-    
+    public int moneyGiven;
 
     //Status Effects
     public bool isBurning;
@@ -213,12 +213,11 @@ public class Unit : MonoBehaviour
             amIDead = true;
         }
         
-        if(currentHealth <= 0 && isPlayer != true)
+        if(currentHealth < 1 && isPlayer != true)
         {
 
-            currentHealth = 0;
             turnManagerScript.enemiesAlive --;
-            
+            Destroy(this.gameObject);
             amIDead = true;
         }
         

@@ -24,6 +24,8 @@ public class Turn_Manager : MonoBehaviour
 
     private StatusEffects statusEffectsScript;
 
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -197,8 +199,9 @@ public class Turn_Manager : MonoBehaviour
     public void EndBattle()
     {
         state = BattleState.WON;
+        ui_Script.EndBattleUI();
         ui_Script._fightButton.SetActive(false);
-        Debug.Log("Player gains exp, loot and other end battle things happen.");
+        
     }
 
     public void PlayerLost()
@@ -206,6 +209,13 @@ public class Turn_Manager : MonoBehaviour
         state = BattleState.LOST;
         ui_Script._fightButton.SetActive(false);
         Debug.Log("Game Over");
+    }
+
+    public void NewBattle()
+    {
+        enemiesAlive = 0;
+        unitSpawnerScript.SelectEnemy();
+        StartCoroutine(TimeForBattle());
     }
 
     IEnumerator WaitForTime()

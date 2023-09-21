@@ -24,6 +24,12 @@ public class UI : MonoBehaviour
 
     public Text backButtonText;
 
+    public TMP_Text experienceGained;
+
+    public TMP_Text weaponExperienceGained;
+
+    public TMP_Text moneyGained;
+
     //Environment Text
     public Text environmentRed;
 
@@ -99,6 +105,7 @@ public class UI : MonoBehaviour
 
     public GameObject _fightPanel;
 
+    public GameObject _endBattlePanel;
 
     //Scripts
     public ENV_Mana envManaScript;
@@ -177,6 +184,8 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(.02f);
         playerStamina.text = "Stamina:" + unitSpawnerScript.player.currentStamina.ToString() + "/" + unitSpawnerScript.player.maxStamina.ToString();
         enemyOneStamina.text = "Stamina:" + unitSpawnerScript.enemyOne.currentStamina.ToString() + "/" + unitSpawnerScript.enemyOne.maxStamina.ToString();
+        
+        
     }
 
     IEnumerator EnvironmentText()
@@ -209,6 +218,24 @@ public class UI : MonoBehaviour
         environmentBlue.text = "Blue:" + envManaScript.currentBlue.ToString() + "/" + envManaScript.maxBlue.ToString();
         environmentViolet.text = "Violet:" + envManaScript.currentViolet.ToString() + "/" + envManaScript.maxViolet.ToString();
     }
+
+    
+    public void EndBattleUI()
+    {
+        //This function controls all of the text that happens at the end of a battle
+        //Experience, weapon experience, money 
+        //TODO: Ask the player if they'd like to continue or go back to town
+
+        enemyOneHealth.enabled = false;
+        enemyOneName.enabled = false;
+        enemyOneStamina.enabled = false; 
+        
+        _endBattlePanel.SetActive(true);
+        experienceGained.text = "Player gains " + unitSpawnerScript.enemyOne.expGiven + " experience.";
+        weaponExperienceGained.text = "Player gains " + 15 + " " + player.equippedWeapon.weaponType + " experience.";
+        moneyGained.text = "Player gains " + unitSpawnerScript.enemyOne.moneyGiven + " money.";
+    }
+
     public void MenuVisibile()
     {
         
@@ -339,6 +366,7 @@ public class UI : MonoBehaviour
     }
     
     //Color.Violet Attack Buttons
+    
 
     //Axe Buttons
     public void OnChopClick()
