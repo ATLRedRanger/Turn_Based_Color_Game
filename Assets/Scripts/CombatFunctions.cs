@@ -427,6 +427,8 @@ public class CombatFunctions : MonoBehaviour
         else return false;
     }
 
+    
+
 }
 //TODO: Accuracy? I would like to tie in stamina, health or both into accuracy. Concerned that it could snowball.
 //Ie: You are dealing damage to OP, meaning they're accuracy drops and therefor open the door for you to deal more damage.

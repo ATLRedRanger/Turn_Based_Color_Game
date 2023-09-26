@@ -40,7 +40,7 @@ public class ENV_Mana : MonoBehaviour
         //StartingLocation();
         //Locations is a Dictionary that has the key of a string and the value of another Dictionary
 
-        //Locations["Forest"] is making a new Dictionary with the key of a Color and the struct LocationMana
+        //Locations["Forest"] is Dictionary with the key of a Dictionary (Color) and the value is the struct LocationMana
         Locations["Forest"] = new Dictionary<Color, LocationMana>();
 
         Locations["Forest"][Color.Red] = LocationColors(forestReds);
@@ -57,11 +57,17 @@ public class ENV_Mana : MonoBehaviour
 
     private LocationMana LocationColors(List<int> locationValues)
     {
+        //This is a struct that takes in a List of values
+        //It then rolls a random number between 0 and the number of values in the list
+        //It then assigns that value at the List[roll] to the min and max variables
+        //If the min is greater than the max, it sets the min to the max
+        //Then it returns those values
         int roll;
         
 
         roll = Random.Range(0, locationValues.Count);
         int locationMinAmount = locationValues[roll];
+
         roll = Random.Range(0, locationValues.Count);
         int locationMaxAmount = locationValues[roll];
 
@@ -81,9 +87,16 @@ public class ENV_Mana : MonoBehaviour
         
     }
 
-    private void StartingLocation()
+    public void StartingLocation()
     {
-
+        //This uses the location to set the min and max color values for that location
+        //Using a switch statement and assigning the variables of min and max colors
+        //To the appropriate values based on the dictionaries created earlier
+        //SO, if the location is Forest, we are setting the currentRed equal to the
+        //random number in the list of numbers in the Dictionary Locations
+        //with a key of "Forest" and a second key Color.Red and using the value
+        //at that location to set the min (current) red. 
+        
         if (location != null)
         {
             switch(location)
@@ -109,7 +122,6 @@ public class ENV_Mana : MonoBehaviour
     }
 
     
-
+   
 
 }
-//TODO: Make a ENV_Color regen system

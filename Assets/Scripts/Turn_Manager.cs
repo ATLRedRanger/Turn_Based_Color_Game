@@ -24,7 +24,9 @@ public class Turn_Manager : MonoBehaviour
 
     private StatusEffects statusEffectsScript;
 
-    
+    private ENV_Mana envManaScript;
+
+    private Enemy_Combat_Functions enemyFunctionsScript;
 
 
     // Start is called before the first frame update
@@ -33,6 +35,8 @@ public class Turn_Manager : MonoBehaviour
         unitSpawnerScript = GetComponent<Unit_Spawner>();
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
         statusEffectsScript = FindObjectOfType<StatusEffects>();
+        enemyFunctionsScript = FindObjectOfType<Enemy_Combat_Functions>();
+        envManaScript = FindObjectOfType<ENV_Mana>();
         state = BattleState.START;
         player = unitSpawnerScript.player;
         Debug.Log("BattleState is " + state);
@@ -51,10 +55,16 @@ public class Turn_Manager : MonoBehaviour
 
     public void SortCombatants()
     {
-       unitSpawnerScript.listOfCombatants.Sort((y, x) => x.currentSpeed.CompareTo(y.currentSpeed));
+        unitSpawnerScript.listOfCombatants.Sort((y, x) => x.currentSpeed.CompareTo(y.currentSpeed));
+
+       
 
        for(int i = 0; i < unitSpawnerScript.listOfCombatants.Count; i++)
         {
+            if (unitSpawnerScript.listOfCombatants[i].isPlayer == true)
+            {
+                i ++;
+            }
             turnOrder.Add(unitSpawnerScript.listOfCombatants[i]);
             
         }
@@ -99,12 +109,18 @@ public class Turn_Manager : MonoBehaviour
 
     public void EndTurn()
     {
+        
 
+        
 
+        //Checks if a unit has a status and then applies the appropriate effects
         StatusCheck();
         
-        unitSpawnerScript.enemyOne.AmIDeadYet();
-        player.AmIDeadYet();
+        
+
+        //Checks if the combatants are alive
+        DeathCheck();
+        
 
         if (unitSpawnerScript.player.myTurn == true)
         {
@@ -118,10 +134,10 @@ public class Turn_Manager : MonoBehaviour
 
         CombatantsCheck();
 
-        
-        
-       
 
+
+
+        
         //StartCoroutine(WaitForTime());
         ui_Script.UpdateUI();
     }
@@ -132,17 +148,17 @@ public class Turn_Manager : MonoBehaviour
         
         if(state == BattleState.PLAYERTURN)
         {
-            StartCoroutine(WaitForTime());
+            StartCoroutine(WaitForTime(1.5f));
             combatFunctionsScript.RegenStamina(unitSpawnerScript.player);
             unitSpawnerScript.player.isDefending = false;
-            StartCoroutine(WaitForTime());
+            StartCoroutine(WaitForTime(1.5f));
         }
         if(state == BattleState.ENEMYTURN)
         {
-            StartCoroutine(WaitForTime());
+            StartCoroutine(WaitForTime(1.5f));
             combatFunctionsScript.RegenStamina(unitSpawnerScript.enemyOne);
             unitSpawnerScript.enemyOne.isDefending = false;
-            StartCoroutine(WaitForTime());
+            StartCoroutine(WaitForTime(1.5f));
         }
         
         ui_Script.MenuVisibile();
@@ -193,7 +209,7 @@ public class Turn_Manager : MonoBehaviour
     {
         if(enemiesAlive == 0)
         {
-            EndBattle();
+            PlayerWon();
         }
         
         if(playersAlive == 0)
@@ -204,44 +220,60 @@ public class Turn_Manager : MonoBehaviour
 
     private void StatusCheck()
     {
+        //Function for statuses to be applied
+
         statusEffectsScript.BurningCondition();
     }
 
-    public void EndBattle()
+    public void PlayerWon()
     {
         state = BattleState.WON;
         ui_Script.EndBattleUI();
         ui_Script._fightButton.SetActive(false);
-        
+        player.DidILevelUp();
+        player.DidWeaponLevelUp();
     }
 
     public void PlayerLost()
     {
         state = BattleState.LOST;
+        ui_Script.EndBattleUI();
         ui_Script._fightButton.SetActive(false);
-        Debug.Log("Game Over");
+        
+    }
+
+    private void DeathCheck()
+    {
+        if (unitSpawnerScript.enemyOne.AmIDeadYet())
+        {
+            turnOrder.Remove(unitSpawnerScript.enemyOne);
+            unitSpawnerScript.listOfCombatants.Remove(unitSpawnerScript.enemyOne);
+        }
+        player.AmIDeadYet();
     }
 
     public void NewBattle()
     {
-        enemiesAlive = 0;
         unitSpawnerScript.SelectEnemy();
-        StartCoroutine(TimeForBattle());
-    }
+        envManaScript.StartingLocation();
+        enemiesAlive++;
 
-    IEnumerator DeathCheckCoroutine()
-    {
-        int i = 5;
-        Debug.Log(i + "LEMON");
-        yield return new WaitForSeconds(i);
-        Debug.Log(i + "KIWI");
+        state = BattleState.START;
+        ui_Script.NewBattleStuff();
+        enemyFunctionsScript.NewBattleStuff();
         
-
+       
+        StartCoroutine(TimeForBattle());
+        ui_Script.CloseEndBattle();
+        
+        
     }
-    
-    IEnumerator WaitForTime()
+
+
+    IEnumerator WaitForTime(float time)
     {
-        yield return new WaitForSeconds(1.5f);
+        
+        yield return new WaitForSeconds(time);
         
     }
 }

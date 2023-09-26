@@ -155,6 +155,22 @@ public class Enemy_Combat_Functions : MonoBehaviour
         }
     }
 
+    public void NewBattleStuff()
+    {
+        
+        attackDatabaseScript = FindObjectOfType<AttacksDatabase>();
+
+        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
+
+        combatFunctionsScript = FindObjectOfType<CombatFunctions>();
+
+        envManaScript = FindObjectOfType<ENV_Mana>();
+
+        enemyOne = unitSpawnerScript.enemyOne;
+
+        player = unitSpawnerScript.player;
+    }
+
 }
 
 //TODO: Make the enemy defend when they don't have enough stamina to do a thing.

@@ -281,11 +281,12 @@ public class Unit : MonoBehaviour
         
     }
 
-    private void DidILevelUp()
+    public void DidILevelUp()
     {
 
         if(currentExp >= expToLevel)
         {
+            Debug.Log("You've gained a new level!");
             currentLevel++;
             LearnSpells();
             expToLevel += 100; //+/* some modifier or something
@@ -293,13 +294,14 @@ public class Unit : MonoBehaviour
 
     }
 
-    private void DidWeaponLevelUp()
+    public void DidWeaponLevelUp()
     {
         switch(equippedWeapon.weaponType)
         {
             case WeaponType.Axe:
                 if(currentAxeExp >= axeExpToLevel) 
                 {
+                    Debug.Log("You've gained a new Axe level!");
                     axeMastery += 1;
                     axeExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
@@ -308,6 +310,7 @@ public class Unit : MonoBehaviour
             case WeaponType.Staff:
                 if (currentStaffExp >= staffExpToLevel)
                 {
+                    Debug.Log("You've gained a new Staff level!");
                     staffMastery += 1;
                     staffExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
@@ -316,6 +319,7 @@ public class Unit : MonoBehaviour
             case WeaponType.Sword:
                 if (currentSwordExp >= swordExpToLevel)
                 {
+                    Debug.Log("You've gained a new Sword level!");
                     swordMastery += 1;
                     swordExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
@@ -324,6 +328,7 @@ public class Unit : MonoBehaviour
             case WeaponType.Hammer:
                 if (currentHammerExp >= hammerExpToLevel)
                 {
+                    Debug.Log("You've gained a new Hammer level!");
                     hammerMastery += 1;
                     hammerExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
@@ -332,6 +337,7 @@ public class Unit : MonoBehaviour
             case WeaponType.Bow:
                 if (currentBowExp >= bowExpToLevel)
                 {
+                    Debug.Log("You've gained a new Bow level!");
                     bowMastery += 1;
                     bowExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
@@ -340,6 +346,32 @@ public class Unit : MonoBehaviour
             default: break;
         }
     }
+
+    public void GainExperience(int enemyExp, int weaponExp)
+    {
+        currentExp += enemyExp;
+        switch(equippedWeapon.weaponType)
+        {
+            case WeaponType.Axe:
+                currentAxeExp += weaponExp;
+                break;
+            case WeaponType.Bow:
+                currentBowExp += weaponExp;
+                break;
+            case WeaponType.Staff:
+                currentStaffExp += weaponExp;
+                break;
+            case WeaponType.Sword:
+                currentSwordExp += weaponExp;
+                break;
+            case WeaponType.Hammer:
+                currentHammerExp += weaponExp;
+                break;
+        }
+        DidILevelUp();
+        DidWeaponLevelUp();
+    }
+    
 }
 
 //TODO: Make the enemy deal damage

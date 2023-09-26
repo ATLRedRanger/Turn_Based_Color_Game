@@ -30,6 +30,11 @@ public class UI : MonoBehaviour
 
     public TMP_Text moneyGained;
 
+    public TMP_Text victoryText;
+
+    public TMP_Text defeatText;
+
+
     //Environment Text
     public Text environmentRed;
 
@@ -58,6 +63,8 @@ public class UI : MonoBehaviour
     public GameObject _fightButton;
 
     public GameObject _backButton;
+
+    public GameObject _newBattleButton;
 
 
     //UI Abilities Buttons
@@ -200,6 +207,8 @@ public class UI : MonoBehaviour
     }
     public void UpdateUI()
     {
+        
+
         //Enemy One UI stuff
         enemyOneName.text = unitSpawnerScript.enemyOne.unitName;
         enemyOneHealth.text = "Health:" + unitSpawnerScript.enemyOne.currentHealth.ToString() + "/" + unitSpawnerScript.enemyOne.maxHealth.ToString();
@@ -225,15 +234,39 @@ public class UI : MonoBehaviour
         //This function controls all of the text that happens at the end of a battle
         //Experience, weapon experience, money 
         //TODO: Ask the player if they'd like to continue or go back to town
-
         enemyOneHealth.enabled = false;
         enemyOneName.enabled = false;
-        enemyOneStamina.enabled = false; 
-        
+        enemyOneStamina.enabled = false;
+
         _endBattlePanel.SetActive(true);
-        experienceGained.text = "Player gains " + unitSpawnerScript.enemyOne.expGiven + " experience.";
-        weaponExperienceGained.text = "Player gains " + 15 + " " + player.equippedWeapon.weaponType + " experience.";
-        moneyGained.text = "Player gains " + unitSpawnerScript.enemyOne.moneyGiven + " money.";
+        if (turnManagerScript.state == BattleState.WON)
+        {
+            
+           
+            _newBattleButton.SetActive(true);
+            
+           
+            victoryText.text = "BATTLE ENDED!";
+            defeatText.gameObject.SetActive(false);
+            experienceGained.text = "Player gains " + unitSpawnerScript.enemyOne.expGiven + " experience.";
+            weaponExperienceGained.text = "Player gains " + 15 + " " + player.equippedWeapon.weaponType + " experience.";
+            moneyGained.text = "Player gains " + unitSpawnerScript.enemyOne.moneyGiven + " money.";
+        }
+
+        if (turnManagerScript.state == BattleState.LOST)
+        {
+            
+            _newBattleButton.SetActive(false);
+
+            defeatText.text = "GAME OVER!";
+            defeatText.gameObject.SetActive(true);
+            victoryText.gameObject.SetActive(false);
+            experienceGained.gameObject.SetActive(false);
+            weaponExperienceGained.gameObject.SetActive(false);
+            moneyGained.gameObject.SetActive(false);
+        }
+
+        
     }
 
     public void MenuVisibile()
@@ -253,6 +286,22 @@ public class UI : MonoBehaviour
     }
 
     //Buttons
+
+    public void OnNewBattleClick()
+    {
+        StartCoroutine(StartStuff());
+        CloseEndBattle();
+        
+        turnManagerScript.NewBattle();
+        
+
+        enemyOneHealth.enabled = true;
+        enemyOneName.enabled = true;
+        enemyOneStamina.enabled = true;
+        
+        
+        UpdateUI();
+    }
 
     public void OnDefendClick()
     {
@@ -304,7 +353,7 @@ public class UI : MonoBehaviour
 
             player.hadATurn = true;
 
-            ClosePanels();
+            
 
             turnManagerScript.EndTurn();
         }
@@ -313,11 +362,11 @@ public class UI : MonoBehaviour
 
             player.hadATurn = true;
 
-            ClosePanels();
+            
 
             turnManagerScript.EndTurn();
         }
-        
+        ClosePanels();
     }
     
     //Color.Neutral Attack Buttons
@@ -720,6 +769,12 @@ public class UI : MonoBehaviour
         _itemPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
         _enemiesTwoPanel.SetActive(false);
+        
+    }
+
+    public void CloseEndBattle()
+    {
+        _endBattlePanel.SetActive(false);
     }
 
     private void SetSpellsFalse()
@@ -746,7 +801,19 @@ public class UI : MonoBehaviour
         Debug.Log("Waiting");
     }
 
+    public void NewBattleStuff()
+    {
+        enemyOneHealth.enabled = true;
+        enemyOneName.enabled = true;
+        enemyOneStamina.enabled = true;
+        enemyOneText.gameObject.SetActive(true);
+        UpdateUI();
+        
+        
+       
 
+       
+    }
 
 }
 //KEYBOARD SHORTCUTS
