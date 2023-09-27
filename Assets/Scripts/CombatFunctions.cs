@@ -92,8 +92,8 @@ public class CombatFunctions : MonoBehaviour
             
             hit = true;
         }
-        Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
-        Debug.Log("This roll is " + roll);
+        //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
+        
         return hit;
         
     }
@@ -147,8 +147,8 @@ public class CombatFunctions : MonoBehaviour
 
         if (unit.isWeaponEquipped != false)
         {
-            Debug.Log("Orange");
-            Debug.Log(unit.equippedWeapon.itemName);
+            //Debug.Log("Orange");
+            //Debug.Log(unit.equippedWeapon.itemName);
             switch(unit.equippedWeapon.weaponType)
             {
                 /*case WeaponType.Axe:
@@ -173,12 +173,12 @@ public class CombatFunctions : MonoBehaviour
         }
         else
         {
-            Debug.Log("Banana");
+            //Debug.Log("Banana");
             attackDamage = unit.physicalAttack + attack.attackDamage;
         }
         
 
-        Debug.Log(attackDamage + "is the amount of damage dealt by" + unit.unitName);
+        //Debug.Log(attackDamage + "is the amount of damage dealt by" + unit.unitName);
         return attackDamage;
 
     }
@@ -218,11 +218,11 @@ public class CombatFunctions : MonoBehaviour
                 case AttackType.Special:
                     defender.currentHealth -= (damage - defender.magicDefense);
                     
-                    Debug.Log(defender.currentHealth + "CUCUMBER");
+                    //Debug.Log(defender.currentHealth + "CUCUMBER");
                     break;
             }
 
-            Debug.Log(defender.currentHealth);
+            
             
             
         }
@@ -235,17 +235,17 @@ public class CombatFunctions : MonoBehaviour
                 switch (attacker.equippedWeapon.weaponType)
                 {
                     case WeaponType.Axe:
-                        Debug.Log(defender.unitName + " has " + defender.currentHealth);
+                        //Debug.Log(defender.unitName + " has " + defender.currentHealth);
                         defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
                         defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
-                        Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+                        //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
                         
                         break;
                     case WeaponType.Hammer:
-                        Debug.Log(defender.unitName + " has " + defender.currentHealth);
+                        //Debug.Log(defender.unitName + " has " + defender.currentHealth);
                         defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
                         defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
-                        Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+                        //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
                         
                         break;
                     default:
@@ -265,11 +265,13 @@ public class CombatFunctions : MonoBehaviour
             }
             
         }
-        defender.AmIDeadYet();
+        
     }
 
     public void ReduceColorFromEnv(Attack attack)
     {
+        Debug.Log("CHOSEN ATTACK " + attack.attackName);
+        Debug.Log("CHOSEN ATTACK COLOR " + attack.attackColor);
         switch (attack.attackColor)
         {
             case Color.Red:
@@ -372,7 +374,7 @@ public class CombatFunctions : MonoBehaviour
     //Attacks
     public void UseSpecialAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-
+        Debug.Log("CHOSEN ATTACK 5" + attack.attackName);
         DamageFromSpell(attack, player);
         ReduceStamina(attack, player);
         ReduceHealth(attackDamage, chosenEnemy, player);
@@ -399,13 +401,13 @@ public class CombatFunctions : MonoBehaviour
 
             if (item.itemName == "Health Potion" && item.itemAmount > 0)
             {
-                Debug.Log(item.refillAmount);
+                //Debug.Log(item.refillAmount);
                 player.currentHealth += item.refillAmount;
                 if(player.currentHealth >= player.maxHealth)
                 {
                     player.currentHealth = player.maxHealth;
                 }
-                Debug.Log(player.currentHealth);
+                //Debug.Log(player.currentHealth);
                 item.itemAmount -= 1;
                 if (item.itemAmount < 1)
                 {

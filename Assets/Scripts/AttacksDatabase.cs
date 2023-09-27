@@ -37,7 +37,7 @@ public class AttacksDatabase : MonoBehaviour
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
         _punch = new Attack("Punch", 1, 1, 0, 100, Color.Neutral, AttackType.Physical, WeaponType.Neutral);
 
-        _fireBall = new Attack("Fireball", 5, 12, 4, 75, Color.Red, AttackType.Special, WeaponType.Neutral) ;
+        _fireBall = new Attack("Fireball", 5, 12, 5, 75, Color.Red, AttackType.Special, WeaponType.Neutral);
 
         _greenPunch = new Attack("Green Punch", 5, 7, 7, 75, Color.Green, AttackType.Physical, WeaponType.Neutral);
 

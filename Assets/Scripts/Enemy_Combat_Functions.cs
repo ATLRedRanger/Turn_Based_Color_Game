@@ -70,7 +70,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
             }
             else
             {
-                Debug.Log(enemyOne.unitName + " has missed!");
+                //Debug.Log(enemyOne.unitName + " has missed!");
             }
         }
         else

@@ -340,13 +340,16 @@ public class UI : MonoBehaviour
 
         if (combatFunctions.HitorMiss(combatFunctions.chosenAttack, unitSpawnerScript.player) == true)
         {
+            Debug.Log("ENEMY ONE BUTTON 1" + combatFunctions.chosenAttack.attackName);
             switch (combatFunctions.chosenAttack.attackType)
             {
                 case AttackType.Special:
                     combatFunctions.UseSpecialAttack(combatFunctions.chosenAttack, player, enemy_One);
+                    Debug.Log("ENEMY ONE BUTTON 2" + combatFunctions.chosenAttack.attackName);
                     break;
                 default:
                     combatFunctions.UseAttack(combatFunctions.chosenAttack, player, enemy_One);
+                    Debug.Log("ENEMY ONE BUTTON 3" + combatFunctions.chosenAttack.attackName);
                     break;
             }
             
@@ -366,6 +369,7 @@ public class UI : MonoBehaviour
 
             turnManagerScript.EndTurn();
         }
+        Debug.Log("ENEMY ONE BUTTON 4" + combatFunctions.chosenAttack.attackName);
         ClosePanels();
     }
     
@@ -380,6 +384,8 @@ public class UI : MonoBehaviour
     public void OnFireballClick()
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
+
+        Debug.Log(combatFunctions.chosenAttack.attackName + "APPLE");
         
         unitSpawnerScript.enemyOne.isBurning = true;
         
@@ -798,7 +804,7 @@ public class UI : MonoBehaviour
     IEnumerator WaitForTime()
     {
         yield return new WaitForSeconds(1);
-        Debug.Log("Waiting");
+        //Debug.Log("Waiting");
     }
 
     public void NewBattleStuff()

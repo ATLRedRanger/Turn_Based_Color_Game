@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Item : MonoBehaviour
+public class Item 
 {
 
     public string itemName;
@@ -17,15 +17,15 @@ public class Item : MonoBehaviour
     public Unit player;
     void Start()
     {
-        StartCoroutine(LoadingScripts());
+        //StartCoroutine(LoadingScripts());
     }
 
-    IEnumerator LoadingScripts()
+    /*IEnumerator LoadingScripts()
     {
-        yield return new WaitForSeconds(.5f);
-        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
-        player = unitSpawnerScript.player;
-    }
+        //yield return new WaitForSeconds(.5f);
+        //unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
+        //player = unitSpawnerScript.player;
+    }*/
 
     public Item()
     {
@@ -43,7 +43,7 @@ public class Item : MonoBehaviour
     
     public virtual void Use()
     {
-        Debug.Log("Overide This");
+        //Debug.Log("Overide This");
     }
     
 

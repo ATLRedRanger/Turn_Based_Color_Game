@@ -16,16 +16,20 @@ public class ItemDatabase : MonoBehaviour
 
     public Weapon _basicStaff;
 
+    public GameObject itemDatabase;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+       
+
         _healthPotion = new Consumable("Health Potion", "Heals a small amount of health.", 5, ConsumableType.Health, 10);
 
         _basicSword = new Weapon("Basic Sword", "A basic sword", 1, 2, 1, 1, WeaponType.Sword);
 
         _basicHammer = new Weapon("Basic Hammer", "A basic hammer", 1, 2, 0.4f, 0.6f, WeaponType.Hammer);
 
-        _basicAxe = new Weapon("Basic Axe", "A basic axe", 1, 2, 0.6f, 0.4f, WeaponType.Axe);
+        _basicAxe = new Weapon("Basic Axe", "A basic axe", 1, 20, 0.6f, 0.4f, WeaponType.Axe);
 
         _basicBow = new Weapon("Basic Bow", "A basic bow", 1, 2, 1, 1, WeaponType.Bow);
 

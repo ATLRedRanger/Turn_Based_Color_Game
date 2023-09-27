@@ -95,7 +95,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Debug.Log("You have " + player.equippedWeapon.itemName + " equipped. Would you like to unequip?");
+            //Debug.Log("You have " + player.equippedWeapon.itemName + " equipped. Would you like to unequip?");
         }
 
     }

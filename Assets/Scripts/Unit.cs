@@ -43,12 +43,12 @@ public class Unit : MonoBehaviour
     public bool isExhausted;
 
 
-    [SerializeField]
-    private int currentLevel;
 
-    private int currentExp;
+    [SerializeField] private int currentLevel;
 
-    private int expToLevel;
+    public int currentExp;
+
+    [SerializeField] private int expToLevel;
 
     public int expGiven;
 
@@ -108,6 +108,8 @@ public class Unit : MonoBehaviour
 
     public ENV_Mana envManaScript;
 
+    public Unit_Spawner unit_SpawnerScript;
+
     //Dictionaries
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
@@ -124,6 +126,7 @@ public class Unit : MonoBehaviour
         enemyCombatScript = FindObjectOfType<Enemy_Combat_Functions>();
         envManaScript = FindObjectOfType<ENV_Mana>();
         turnManagerScript = FindObjectOfType<Turn_Manager>();
+        unit_SpawnerScript = FindObjectOfType<Unit_Spawner>();
         LearnAbilities();
         EnemyAttacks();
         //LearnSpells();
@@ -181,7 +184,7 @@ public class Unit : MonoBehaviour
 
     public virtual void EnemyAttacks()
     {
-        enemyAttackDictionary["Slash"] = attacksDatabase._slash;
+        //enemyAttackDictionary["Slash"] = attacksDatabase._slash;
         enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
     }
 
@@ -194,7 +197,7 @@ public class Unit : MonoBehaviour
             case 2:
                 break;
             default:
-                unitSpellsDictionary["Fireball"] = attacksDatabase._fireBall;
+                unitAttackDictionary["Fireball"] = attacksDatabase._fireBall;
                 break;
         }
         
@@ -206,7 +209,7 @@ public class Unit : MonoBehaviour
 
         if (currentHealth <= 0 && isPlayer == true)
         {
-            currentHealth = 0;
+            
             turnManagerScript.playersAlive --;
             Debug.Log(unitName + "is DEAD!");
             
@@ -215,8 +218,10 @@ public class Unit : MonoBehaviour
         
         if(currentHealth < 1 && isPlayer != true)
         {
-            Debug.Log("Apple");
+            
             turnManagerScript.enemiesAlive --;
+            unit_SpawnerScript.listOfCombatants.Remove(this);
+            
             Destroy(this.gameObject);
             amIDead = true;
         }
@@ -231,8 +236,7 @@ public class Unit : MonoBehaviour
 
         enemyCombatScript.EnemyAttacking();
 
-        coroutine = Waiting(2.0f);
-        StartCoroutine(coroutine);
+        
         
         
     }
@@ -251,7 +255,7 @@ public class Unit : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         //Subscribes to the isBurned event
         StatusEffects.isBurned += Burning;
@@ -261,25 +265,10 @@ public class Unit : MonoBehaviour
     {
         //Unsubscribes from the isBurned event
         StatusEffects.isBurned -= Burning;
-    }
+    }*/
 
     //Status Effects
-    public void Burning()
-    {
-        //Happens when the event for isBurned is triggered
-        if (isBurning)
-        {
-            currentHealth -= (int)(Mathf.Round(maxHealth/5));
-            burnTimer -= 1;
-        }
-        if(burnTimer < 1)
-        {
-            isBurning = false;
-        }
-
-        
-        
-    }
+    
 
     public void DidILevelUp()
     {
@@ -290,6 +279,7 @@ public class Unit : MonoBehaviour
             currentLevel++;
             LearnSpells();
             expToLevel += 100; //+/* some modifier or something
+            currentExp = 0;
         }
 
     }
@@ -305,6 +295,7 @@ public class Unit : MonoBehaviour
                     axeMastery += 1;
                     axeExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
+                    currentAxeExp = 0;
                 }
                 break;
             case WeaponType.Staff:
@@ -314,6 +305,7 @@ public class Unit : MonoBehaviour
                     staffMastery += 1;
                     staffExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
+                    currentStaffExp = 0;
                 }
                 break;
             case WeaponType.Sword:
@@ -323,6 +315,7 @@ public class Unit : MonoBehaviour
                     swordMastery += 1;
                     swordExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
+                    currentSwordExp = 0;
                 }
                 break;
             case WeaponType.Hammer:
@@ -332,6 +325,7 @@ public class Unit : MonoBehaviour
                     hammerMastery += 1;
                     hammerExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
+                    currentHammerExp = 0;
                 }
                 break;
             case WeaponType.Bow:
@@ -341,6 +335,7 @@ public class Unit : MonoBehaviour
                     bowMastery += 1;
                     bowExpToLevel += 100; //+/* some modifier or something
                     LearnAbilities();
+                    currentBowExp = 0;
                 }
                 break;
             default: break;

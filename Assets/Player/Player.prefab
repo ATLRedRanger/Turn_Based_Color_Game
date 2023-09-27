@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Player
-  maxHealth: 10
-  currentHealth: 10
+  maxHealth: 1
+  currentHealth: 1
   physicalAttack: 3
   physicalDefense: 3
   magicAttack: 3
@@ -110,13 +110,13 @@ MonoBehaviour:
   staminaRegenModifier: 1
   baseAccuracy: 50
   isDefending: 0
+  moneyGiven: 0
   isBurning: 0
   burnTimer: 3
   isExhausted: 0
   currentLevel: 1
+  expToLevel: 0
   expGiven: 0
-  itemList: []
-  equippedWeapon: {fileID: 0}
   isWeaponEquipped: 0
   currentAxeExp: 0
   currentStaffExp: 0
