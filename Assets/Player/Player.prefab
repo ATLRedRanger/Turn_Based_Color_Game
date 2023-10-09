@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Player
-  maxHealth: 1
-  currentHealth: 1
+  maxHealth: 18
+  currentHealth: 18
   physicalAttack: 3
   physicalDefense: 3
   magicAttack: 3
@@ -115,6 +115,7 @@ MonoBehaviour:
   burnTimer: 3
   isExhausted: 0
   currentLevel: 1
+  currentExp: 0
   expToLevel: 0
   expGiven: 0
   isWeaponEquipped: 0
@@ -136,3 +137,4 @@ MonoBehaviour:
   turnManagerScript: {fileID: 0}
   enemyCombatScript: {fileID: 0}
   envManaScript: {fileID: 0}
+  unit_SpawnerScript: {fileID: 0}

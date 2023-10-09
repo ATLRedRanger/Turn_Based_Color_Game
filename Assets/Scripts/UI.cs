@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System.Runtime.CompilerServices;
 
 public class UI : MonoBehaviour
 {
@@ -132,10 +132,13 @@ public class UI : MonoBehaviour
     //Player
     private Unit player;
 
+    public Unit enemyOne;
+
     public StatusEffects statusEffectsScript;
 
-    
 
+    //Attack
+    private Attack chosenAttack;
     
 
     // Start is called before the first frame update
@@ -157,75 +160,61 @@ public class UI : MonoBehaviour
     }
     IEnumerator StartStuff()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
         unitSpawnerScript = gameOrganizer.GetComponent<Unit_Spawner>();
         turnManagerScript = gameOrganizer.GetComponent<Turn_Manager>();
         envManaScript = FindObjectOfType<ENV_Mana>();
         player = unitSpawnerScript.player;
+        enemyOne = unitSpawnerScript.enemyOne;
         inventoryScript = FindObjectOfType<Inventory>();
-        //StartCoroutine(NamesText());
-        NamesText();
-        StartCoroutine(HealthText());
-        StartCoroutine(StaminaText());
-        StartCoroutine(EnvironmentText());
+        UpdateUI();
+        //NamesText();
+        //StartCoroutine(HealthText());
+        //StartCoroutine(StaminaText());
+        //StartCoroutine(EnvironmentText());
     }
     void NamesText()
     {
         
-        //yield return new WaitForSeconds(.02f);
         playerName.text = unitSpawnerScript.player.unitName;
-        enemyOneText.text = unitSpawnerScript.enemyOne.unitName;
-        enemyOneTextTwo.text = enemyOneText.text;
-        backButtonText.text = "B";
-    }
-
-    IEnumerator HealthText()
-    {
-        yield return new WaitForSeconds(.02f);
-        playerHealth.text = "Health:" + unitSpawnerScript.player.currentHealth.ToString() + "/" + unitSpawnerScript.player.maxHealth.ToString();
-        enemyOneHealth.text = "Health:" + unitSpawnerScript.enemyOne.currentHealth.ToString() + "/" + unitSpawnerScript.enemyOne.maxHealth.ToString();
-    }
-
-    IEnumerator StaminaText()
-    {
-        yield return new WaitForSeconds(.02f);
-        playerStamina.text = "Stamina:" + unitSpawnerScript.player.currentStamina.ToString() + "/" + unitSpawnerScript.player.maxStamina.ToString();
-        enemyOneStamina.text = "Stamina:" + unitSpawnerScript.enemyOne.currentStamina.ToString() + "/" + unitSpawnerScript.enemyOne.maxStamina.ToString();
-        
-        
-    }
-
-    IEnumerator EnvironmentText()
-    {
-        yield return new WaitForSeconds(.02f);
-        environmentRed.text = "Red:" + envManaScript.Locations["Forest"][Color.Red].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Red].colorMax.ToString();
-        environmentOrange.text = "Orange:" + envManaScript.Locations["Forest"][Color.Orange].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Orange].colorMax.ToString();
-        environmentYellow.text = "Yellow:" + envManaScript.Locations["Forest"][Color.Yellow].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Yellow].colorMax.ToString();
-        environmentGreen.text = "Green:" + envManaScript.Locations["Forest"][Color.Green].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Green].colorMax.ToString();
-        environmentBlue.text = "Blue:" + envManaScript.Locations["Forest"][Color.Blue].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Blue].colorMax.ToString();
-        environmentViolet.text = "Violet:" + envManaScript.Locations["Forest"][Color.Violet].currentAmount.ToString() + "/" + envManaScript.Locations["Forest"][Color.Violet].colorMax.ToString();
-    }
-    public void UpdateUI()
-    {
-        
-
-        //Enemy One UI stuff
         enemyOneName.text = unitSpawnerScript.enemyOne.unitName;
-        enemyOneHealth.text = "Health:" + unitSpawnerScript.enemyOne.currentHealth.ToString() + "/" + unitSpawnerScript.enemyOne.maxHealth.ToString();
-        enemyOneStamina.text = "Stamina:" + unitSpawnerScript.enemyOne.currentStamina.ToString() + "/" + unitSpawnerScript.enemyOne.maxStamina.ToString();
+        enemyOneTextTwo.text = enemyOneText.text;
+        
+    }
 
-        //Players UI stuff
-        playerName.text = unitSpawnerScript.player.unitName;
+    private void HealthText()
+    {
         playerHealth.text = "Health:" + unitSpawnerScript.player.currentHealth.ToString() + "/" + unitSpawnerScript.player.maxHealth.ToString();
-        playerStamina.text = "Stamina:" + unitSpawnerScript.player.currentStamina.ToString() + "/" + unitSpawnerScript.player.maxStamina.ToString();
+        enemyOneHealth.text = "Health:" + unitSpawnerScript.enemyOne.currentHealth.ToString() + "/" + unitSpawnerScript.enemyOne.maxHealth.ToString();
 
-        //Update Environment Stuff
+    }
+
+    private void StaminaText()
+    {
+        
+        playerStamina.text = "Stamina:" + unitSpawnerScript.player.currentStamina.ToString() + "/" + unitSpawnerScript.player.maxStamina.ToString();
+        enemyOneStamina.text = "Stamina:" + unitSpawnerScript.enemyOne.currentStamina.ToString() + "/" + unitSpawnerScript.enemyOne.maxStamina.ToString();
+        
+        
+    }
+
+    private void EnvironmentText()
+    {
+        
         environmentRed.text = "Red:" + envManaScript.currentRed.ToString() + "/" + envManaScript.maxRed.ToString();
         environmentOrange.text = "Orange:" + envManaScript.currentOrange.ToString() + "/" + envManaScript.maxOrange.ToString();
         environmentYellow.text = "Yellow:" + envManaScript.currentYellow.ToString() + "/" + envManaScript.maxYellow.ToString();
         environmentGreen.text = "Green:" + envManaScript.currentGreen.ToString() + "/" + envManaScript.maxGreen.ToString();
         environmentBlue.text = "Blue:" + envManaScript.currentBlue.ToString() + "/" + envManaScript.maxBlue.ToString();
         environmentViolet.text = "Violet:" + envManaScript.currentViolet.ToString() + "/" + envManaScript.maxViolet.ToString();
+    }
+    public void UpdateUI()
+    {
+        NamesText();
+        HealthText();
+        StaminaText();
+        EnvironmentText();
+       
     }
 
     
@@ -255,7 +244,7 @@ public class UI : MonoBehaviour
 
         if (turnManagerScript.state == BattleState.LOST)
         {
-            
+            //enemyOne.gameObject.SetActive(false);
             _newBattleButton.SetActive(false);
 
             defeatText.text = "GAME OVER!";
@@ -305,8 +294,8 @@ public class UI : MonoBehaviour
 
     public void OnDefendClick()
     {
-        player.isDefending = true;
-        turnManagerScript.EndTurn();
+        combatFunctions.IsDefending(player);
+        
         ClosePanels();
     }
 
@@ -332,91 +321,57 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-        combatFunctions.chosenEnemy = unitSpawnerScript.enemyOne;
-
-        Unit enemy_One = unitSpawnerScript.enemyOne;
-
-        _enemiesPanel.SetActive(false);
-
-        if (combatFunctions.HitorMiss(combatFunctions.chosenAttack, unitSpawnerScript.player) == true)
-        {
-            Debug.Log("ENEMY ONE BUTTON 1" + combatFunctions.chosenAttack.attackName);
-            switch (combatFunctions.chosenAttack.attackType)
-            {
-                case AttackType.Special:
-                    combatFunctions.UseSpecialAttack(combatFunctions.chosenAttack, player, enemy_One);
-                    Debug.Log("ENEMY ONE BUTTON 2" + combatFunctions.chosenAttack.attackName);
-                    break;
-                default:
-                    combatFunctions.UseAttack(combatFunctions.chosenAttack, player, enemy_One);
-                    Debug.Log("ENEMY ONE BUTTON 3" + combatFunctions.chosenAttack.attackName);
-                    break;
-            }
-            
-
-            player.hadATurn = true;
-
-            
-
-            turnManagerScript.EndTurn();
-        }
-        else
-        {
-
-            player.hadATurn = true;
-
-            
-
-            turnManagerScript.EndTurn();
-        }
-        Debug.Log("ENEMY ONE BUTTON 4" + combatFunctions.chosenAttack.attackName);
+        combatFunctions.Combat(chosenAttack, player, enemyOne);
+        
         ClosePanels();
     }
     
     //Color.Neutral Attack Buttons
     public void OnAttackClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Punch"];
-        OpenEnemiesTwoPanel();
+        chosenAttack = attacksDatabase._punch;
+        OpenEnemiesPanel();
     }
-
+   
     //Color.Red Attack Buttons
     public void OnFireballClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
+        chosenAttack = player.unitAttackDictionary["Fireball"];
+        /*combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
 
         Debug.Log(combatFunctions.chosenAttack.attackName + "APPLE");
         
         unitSpawnerScript.enemyOne.isBurning = true;
-        
+        */
         OpenEnemiesPanel();
+        
     }
 
     //Color.Orange Attack Buttons
     public void OnOrangeSpikeClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Orange Spike"];
+        chosenAttack = player.unitAttackDictionary["Orange Spike"];
         OpenEnemiesPanel();
     }
 
     //Color.Yellow Attack Buttons
     public void OnYellowSplashClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Yellow Splash"];
+        chosenAttack = player.unitAttackDictionary["Yellow Splash"];
         OpenEnemiesPanel();
     }
     
     //Color.Green Attack Buttons
     public void OnGreenPunchClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Green Punch"];
+        chosenAttack = player.unitAttackDictionary["Green Punch"];
         OpenEnemiesPanel();
     }
 
     //Color.Blue Attack Buttons
     public void OnBlueCrushClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Blue Crush"];
+        chosenAttack = player.unitAttackDictionary["Blue Crush"];
         OpenEnemiesPanel();
     }
     
@@ -427,6 +382,7 @@ public class UI : MonoBehaviour
     public void OnChopClick()
     {
         combatFunctions.chosenAttack = player.unitAttackDictionary["Chop"];
+        _abilitiesPanel.SetActive(false);
         OpenEnemiesPanel();
     }
     //Staff Buttons
@@ -661,7 +617,7 @@ public class UI : MonoBehaviour
     public void OpenItemsPanel()
     {
         bool isActive = _itemPanel.activeSelf;
-
+        
         if (_itemPanel != null)
         {
 
@@ -713,6 +669,7 @@ public class UI : MonoBehaviour
     public void OpenAbilitiesPanel()
     {
         bool isActive = _abilitiesPanel.activeSelf;
+        
         AvailableAbilities();
         if (_abilitiesPanel != null)
         {
@@ -742,6 +699,9 @@ public class UI : MonoBehaviour
     public void OpenEnemiesPanel()
     {
         bool isActive = _enemiesPanel.activeSelf;
+        _spellsPanel.SetActive(false);
+        _enemiesPanel.SetActive(false);
+        _itemPanel.SetActive(false);
 
         if (_enemiesPanel != null)
         {

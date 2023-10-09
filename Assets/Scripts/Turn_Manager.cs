@@ -7,7 +7,7 @@ public class Turn_Manager : MonoBehaviour
 {
     public BattleState state;
 
-    public int turnCount;
+    public int turnIndex;
 
     public int enemiesAlive;
 
@@ -30,8 +30,8 @@ public class Turn_Manager : MonoBehaviour
     private ENV_Mana envManaScript;
 
     private Enemy_Combat_Functions enemyFunctionsScript;
-
-   
+    
+    public Dictionary<int, Unit> unitReferences = new Dictionary<int, Unit>();
 
 
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class Turn_Manager : MonoBehaviour
         enemyOne = unitSpawnerScript.enemyOne;
         Debug.Log("BattleState is " + state);
 
-        StartCoroutine(TimeForBattle());
+        StartCoroutine(ControlCenter());
     }
 
     IEnumerator TimeForBattle()
@@ -56,9 +56,143 @@ public class Turn_Manager : MonoBehaviour
 
         yield return new WaitForSeconds(.05f);
 
-        WhoseTurnIsIt();
+        ControlCenter();
         
     }
+    
+    IEnumerator ControlCenter()
+    {
+        //TurnIndex is the location in the turnOrder list of the current round.
+        //TurnOrder is the sorted list of the combatants by speed.
+        //UnitReferences is the dictionary with the key that corresponds to the real objects.
+        //TurnOrder is the local copy and UnitReferences is the real objects. 
+        while(IsBattleWonOrLost() == false)
+        {
+            BeginRound();
+            turnIndex = 0;
+            
+            while(turnIndex != -1 && IsBattleWonOrLost() == false)
+            {
+                
+                CheckPlayerTurnIsTrue();
+                
+                UntapPhase(turnOrder[turnIndex]);
+                
+                if (state == BattleState.PLAYERTURN)
+                {
+                    ui_Script.MenuVisibile();
+                    ui_Script.UpdateUI();
+                    
+                    yield return new WaitUntil(() => player.hadATurn == true);
+                }
+                else
+                {
+                    
+                    ui_Script.MenuVisibile();
+                    ui_Script.UpdateUI();
+                    unitReferences[turnIndex].enemyCombatScript.EnemyAttacking();
+
+                }
+                AfterCombatPhase();
+                EndTurn();
+                turnIndex++;
+                if(turnIndex >= turnOrder.Count)
+                {
+                    turnIndex = 0;
+                }
+            }
+        }
+
+    }
+
+    private bool IsBattleWonOrLost()
+    {
+        if(state == BattleState.WON || state == BattleState.LOST)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void CheckPlayerTurnIsTrue()
+    {
+        if (unitReferences[turnIndex].isPlayer == true)
+        {
+            state = BattleState.PLAYERTURN;
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+        }
+    }
+    public void BeginRound() //Uses new turn scheme
+    {
+        player.hadATurn = false;
+        Debug.Log("Begin Turn");
+        ui_Script.MenuVisibile();
+        ui_Script.UpdateUI();
+
+        WhoseTurnIsIt();
+
+        //UntapPhase();
+
+        Debug.Log("Begin Turn");
+    }
+    private void UntapPhase(Unit unit)
+    {
+        Debug.Log("Untap Phase");
+        ui_Script.MenuVisibile();
+        ui_Script.UpdateUI();
+
+        unitReferences[turnIndex].isDefending = false;
+
+        UnitStaminaRegen();
+
+        StatusEffectsCheck();
+
+        DeathCheck();
+
+        CombatantsCheck();
+        
+        ui_Script.UpdateUI();
+        
+        //TODO: Make the turn end when someone dies during this phase. 
+        
+    }
+    public void AfterCombatPhase()
+    {
+        DeathCheck();
+
+        CombatantsCheck();
+
+        ReduceBuffsAndDebuffs();
+
+        ui_Script.UpdateUI();
+
+
+    }
+    public void EndTurn()
+    {
+        Debug.Log("End Turn");
+        
+
+        if(state == BattleState.PLAYERTURN)
+        {
+            player.hadATurn = false;
+        }
+        
+        ui_Script.MenuVisibile();
+        CleanUpStep();
+        
+        
+    }
+
+    //Untap: State switches to whomever turn it is.
+
+
+
+
     public void SortCombatants()
     {
 
@@ -69,169 +203,89 @@ public class Turn_Manager : MonoBehaviour
         for (int i = 0; i < unitSpawnerScript.listOfCombatants.Count; i++)
         {
 
-            if (unitSpawnerScript.listOfCombatants[i].isPlayer == true)
-            {
-                i++;
-            }
             turnOrder.Add(unitSpawnerScript.listOfCombatants[i]);
-
+            Debug.Log("TURN ORDER COUNT" + turnOrder.Count);
+            unitReferences[i] = unitSpawnerScript.listOfCombatants[i];
+            //TODO: Verify this is the right unit
         }
 
-
+        //BeginTurn();
     }
     void WhoseTurnIsIt()
     {
-
-        //Sorting the list of enemies by their speed stat
+        turnOrder.Clear();
         SortCombatants();
-
-
-        if (unitSpawnerScript.listOfCombatants[0].isPlayer == false)
-        {
-
-            EnemyTurn();
-
-        }
-        else
-        {
-
-            PlayerTurn();
-
-        }
-    }
-    public void TurnOrderCheck()
-    {
-        if (player.hadATurn != true)
-        {
-            PlayerTurn();
-
-        }
-        else
-        {
-            EnemyTurn();
-        }
-    }
-    public void BeginTurn()
-    {
-
-
-        if (state == BattleState.PLAYERTURN)
-        {
-            StartCoroutine(WaitForTime(1.5f));
-            combatFunctionsScript.RegenStamina(player);
-            player.isDefending = false;
-            StartCoroutine(WaitForTime(1.5f));
-        }
-        if (state == BattleState.ENEMYTURN)
-        {
-            StartCoroutine(WaitForTime(1.5f));
-            combatFunctionsScript.RegenStamina(enemyOne);
-            enemyOne.isDefending = false;
-            StartCoroutine(WaitForTime(1.5f));
-        }
-
-        ui_Script.MenuVisibile();
-        ui_Script.UpdateUI();
-    }
-    public void EndTurn()
-    {
-
-        CleanUpStep();
-
-        if (player.myTurn == true)
-        {
-
-            EnemyTurn();
-        }
-        else
-        {
-            PlayerTurn();
-        }
-
-        CleanUpStep();
-    }
-    public void CleanUpStep()
-    {
-        StatusCheck();
-        DeathCheck();
-        CombatantsCheck();
-        ui_Script.UpdateUI();
-    }
-    private void StatusCheck()
-    {
-        //Function for statuses to be applied
-
-        //statusEffectsScript.BurningCondition();
-        Burning();
-    }
-    private void DeathCheck()
-    {
         
-
-        if (enemyOne.AmIDeadYet())
-        {
-            turnOrder.Clear();
-            //unitSpawnerScript.listOfCombatants.Remove(enemyOne);
-            
-        }
-
-        player.AmIDeadYet();
-    }
-    public void PlayerTurn()
-    {
-        if (player.currentHealth > 0)
+        if (turnOrder[0].isPlayer == true)
         {
             state = BattleState.PLAYERTURN;
-
-            enemyOne.myTurn = false;
-
-            player.myTurn = true;
         }
-
-        if (player.currentHealth < 0)
+        else
         {
-            Debug.Log("PLAYER DEAD");
-            state = BattleState.LOST;
-            playersAlive--;
-            ui_Script._fightButton.SetActive(false);
+            state = BattleState.ENEMYTURN;
         }
-        
+        /*if (unitSpawnerScript.listOfCombatants[0].isPlayer == false && enemyOne.hadATurn == false)
+        {
+            state = BattleState.ENEMYTURN;
+            //EnemyTurn();
 
-        turnCount += 1;
-        BeginTurn();
+        }
+        else //(unitSpawnerScript.listOfCombatants[0].isPlayer == true && player.hadATurn == false)
+        {
+            state = BattleState.PLAYERTURN;
+            //PlayerTurn();
+
+        }*/
+        ui_Script.MenuVisibile();
     }
-    public void EnemyTurn()
+    private void ReduceBuffsAndDebuffs()
     {
-        if(enemyOne != null)
-        {
-            player.myTurn = false;
-            enemyOne.myTurn = true;
-
-
-            if (enemyOne.currentHealth > 0)
-            {
-                state = BattleState.ENEMYTURN;
-
-                enemyOne.EnemyAi();
-
-            }
-
-            turnCount += 1;
-            BeginTurn();
-        }
-        
+        Debug.Log("Reduce buffs and debuffs");
     }
     public void CombatantsCheck()
     {
         if(enemiesAlive == 0)
         {
             PlayerWon();
+            
         }
         
         if(playersAlive == 0)
         {
             PlayerLost();
+            
         }
+        
+    }
+    private void DeathCheck()
+    {
+        //This checks everyone to see if they're dead.
+        for(int i = 0; i < turnOrder.Count; i++)
+        {
+            unitReferences[i].AmIDeadYet();
+        }
+        
+    }
+
+    private void UnitStaminaRegen()
+    {
+        
+        combatFunctionsScript.RegenStamina(unitReferences[turnIndex]);
+        
+    }
+    private void StatusEffectsCheck()
+    {
+        //Function for statuses to be applied
+
+        //statusEffectsScript.BurningCondition();
+        Burning();
+    }
+    public void CleanUpStep()
+    {
+        
+        DeathCheck();
+        CombatantsCheck();
+        ui_Script.UpdateUI();
     }
     public void PlayerWon()
     {
@@ -261,47 +315,36 @@ public class Turn_Manager : MonoBehaviour
         ui_Script.NewBattleStuff();
         enemyFunctionsScript.NewBattleStuff();
 
-
-        StartCoroutine(TimeForBattle());
+        ui_Script.enemyOne = enemyOne;
+        StartCoroutine(ControlCenter());
 
         ui_Script.CloseEndBattle();
 
-        turnCount = 0;
+
+        
     }
-    
-    
 
-
-
+    //Statuses
     public void Burning()
     {
 
-        int playerBurnDamage = (int)(Mathf.Round(player.maxHealth / 5));
-        int enemyOneBurnDamage = (int)(Mathf.Round(enemyOne.maxHealth / 5));
+        int burnDamage = (int)(Mathf.Round(unitReferences[turnIndex].maxHealth / 5));
+        
+        
+        
+
         //Happens when the event for isBurned is triggered
-        if (player.isBurning)
+        if (unitReferences[turnIndex].isBurning)
         {
             //Debug.Log("PLAYER IS BURNING!");
-            player.currentHealth -= playerBurnDamage;
+            unitReferences[turnIndex].currentHealth -= burnDamage;
 
-            player.burnTimer -= 1;
+            unitReferences[turnIndex].burnTimer -= 1;
         }
-        if (player.burnTimer < 1)
+        if (unitReferences[turnIndex].burnTimer < 1)
         {
 
-            player.isBurning = false;
-        }
-        if (enemyOne.isBurning)
-        {
-            Debug.Log("ENEMY IS BURNING!");
-            enemyOne.currentHealth -= enemyOneBurnDamage;
-
-            enemyOne.burnTimer -= 1;
-        }
-        if (enemyOne.burnTimer < 1)
-        {
-            Debug.Log("ENEMY IS NOT BURNING!");
-            enemyOne.isBurning = false;
+            unitReferences[turnIndex].isBurning = false;
         }
 
     }

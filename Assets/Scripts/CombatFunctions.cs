@@ -15,6 +15,8 @@ public class CombatFunctions : MonoBehaviour
 
     public Inventory inventoryScript;
 
+    public Turn_Manager turnManagerScript;
+
     public UI uiScript;
 
     public Unit player;
@@ -39,6 +41,7 @@ public class CombatFunctions : MonoBehaviour
 
         unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
         envManaScript = FindObjectOfType<ENV_Mana>();
+        turnManagerScript = FindObjectOfType<Turn_Manager>();  
         inventoryScript = FindObjectOfType<Inventory>();
         uiScript = FindObjectOfType<UI>();
         player = unitSpawnerScript.player;
@@ -50,7 +53,115 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
+    public void RegenStamina(Unit unit)
+    {
+        //Regenerate stamina at a rate of 1/5th of their maximum stanima
 
+        int staminaRegend = ((unit.maxStamina * 1 / 3)*unit.staminaRegenModifier);
+
+        unit.currentStamina += staminaRegend;
+
+
+        if(unit.currentStamina >= unit.maxStamina)
+        {
+            unit.currentStamina = unit.maxStamina;
+        }
+
+        
+    }
+    public void UseHealthPotion()
+    {
+        foreach (Consumable item in inventoryScript.playerConsumableList)
+        {
+
+            if (item.itemName == "Health Potion" && item.itemAmount > 0)
+            {
+                
+                player.currentHealth += item.refillAmount;
+                if(player.currentHealth >= player.maxHealth)
+                {
+                    player.currentHealth = player.maxHealth;
+                }
+                
+                item.itemAmount -= 1;
+                if (item.itemAmount < 1)
+                {
+                    inventoryScript.playerConsumableList.Remove(item);
+                }
+            }
+
+        }
+        
+        
+    }
+
+    /*public bool EnoughStaminaForAttack(Attack attack, Unit unit)
+    {
+        if(unit.currentStamina >= attack.staminaCost)
+        {
+            return true;
+        }
+        else return false;
+    }*/
+
+    public void Combat(Attack attack, Unit attacker, Unit defender)
+    {
+        //Chosen Attack: The chosen attack is dictated by the UI script. 
+        //Chosen Enemy: The chosen enemy is dictated by the UI script. 
+        //Do I have enough stamina for the attack?
+        if (HitorMiss(attack, attacker) == true)
+        {
+            switch (attack.attackType)
+            {
+                case AttackType.Physical:
+                    UseAttack(attack, attacker, defender);
+                    break;
+                case AttackType.Special: 
+                    UseSpecialAttack(attack, attacker, defender);
+                    break;
+                default:
+                    break;
+            }
+        }
+        attacker.hadATurn = true;
+    }
+    public void IsDefending(Unit unit)
+    {
+        unit.isDefending = true;
+        unit.hadATurn = true;
+    }
+    private StaminaLevels StaminaConversion(Unit unit)
+    {
+        //The higher the stamina, the better the accuracy the unit will have
+
+        if (unit.currentStamina <= (unit.maxStamina * 1 / 4))
+        {
+            return StaminaLevels.OneQuarter;
+        }
+        if (unit.currentStamina > (unit.maxStamina * 1 / 4) && unit.currentStamina <= (unit.maxStamina * (1 / 2)))
+        {
+            return StaminaLevels.Half;
+        }
+        if ((unit.currentStamina > (1 / 2) && unit.currentStamina <= (unit.maxStamina * 3 / 4)))
+        {
+            return StaminaLevels.ThreeQuarters;
+        }
+        if (unit.currentStamina > (unit.maxStamina * 3 / 4))
+        {
+            return StaminaLevels.Full;
+        }
+        return StaminaLevels.Broken;
+    }
+    private int RollForAccuracy(Unit unit, float accuracyMultiple)
+    {
+        //Takes the unit's base accuracy and multiples it by the multiplier of the stanima value
+        int dieRoll;
+        int currentAccuracy = (int)(unit.baseAccuracy * accuracyMultiple);
+
+        dieRoll = Random.Range(currentAccuracy, 100);
+
+        return dieRoll;
+    }
     public bool HitorMiss(Attack attack, Unit unit)
     {
         //I want stamina to affect accuracy
@@ -62,8 +173,8 @@ public class CombatFunctions : MonoBehaviour
         //Attack Accuracy is out of 100
         //Meet or beat Attack Accuracy to hit
 
-        
-        
+
+
         int finalAccuracy = 0;
         bool hit = false;
         StaminaLevels accuracyLevel = StaminaConversion(unit);
@@ -87,69 +198,46 @@ public class CombatFunctions : MonoBehaviour
                 finalAccuracy = roll + unit.baseAccuracy;
                 break;
         }
-        if(finalAccuracy >= attack.attackAccuracy)
+        if (finalAccuracy >= attack.attackAccuracy)
         {
-            
+
             hit = true;
         }
         //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
-        
+
         return hit;
-        
-    }
 
-    private int RollForAccuracy(Unit unit, float accuracyMultiple)
+    }
+    public void UseSpecialAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-        int dieRoll;
-        int currentAccuracy = (int)(unit.baseAccuracy * accuracyMultiple);
 
-        dieRoll = Random.Range(currentAccuracy, 100);
-        
-        return dieRoll;
+        DamageFromSpell(attack, player);
+        ReduceStamina(attack, player);
+        ReduceHealth(attackDamage, chosenEnemy, player);
+        ReduceColorFromEnv(attack);
+        ColorReturn(attack);
+
     }
-
-    public int ReduceStamina(Attack attack, Unit unit)
+    public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-        unit.currentStamina -= attack.staminaCost;
 
-        if(unit.currentStamina < 1)
-        {
-            unit.currentStamina = 0;
-            unit.isExhausted = true;
-        }
-        
-        return unit.currentStamina;
+        DamageFromAttack(attack, player);
+        ReduceStamina(attack, player);
+        ReduceHealth(attackDamage, chosenEnemy, player);
+        ReduceColorFromEnv(attack);
+        ColorReturn(attack);
+
     }
-
-    public void RegenStamina(Unit unit)
-    {
-        //Regenerate stamina at a rate of 1/5th of their maximum stanima
-
-        int staminaRegend = ((unit.maxStamina * 1 / 3)*unit.staminaRegenModifier);
-
-        unit.currentStamina += staminaRegend;
-
-
-        if(unit.currentStamina >= unit.maxStamina)
-        {
-            unit.currentStamina = unit.maxStamina;
-        }
-
-        //Debug.Log(unit.currentStamina + " is the current stamina of " + unit.unitName + " and the max stamina is " + unit.maxStamina);
-
-        //Debug.Log(unit.unitName + " has gained " + staminaRegend + " stamina.");
-    }
-
     public int DamageFromAttack(Attack attack, Unit unit)
     {
-        
-        
+
+
 
         if (unit.isWeaponEquipped != false)
         {
             //Debug.Log("Orange");
             //Debug.Log(unit.equippedWeapon.itemName);
-            switch(unit.equippedWeapon.weaponType)
+            switch (unit.equippedWeapon.weaponType)
             {
                 /*case WeaponType.Axe:
                     
@@ -176,16 +264,16 @@ public class CombatFunctions : MonoBehaviour
             //Debug.Log("Banana");
             attackDamage = unit.physicalAttack + attack.attackDamage;
         }
-        
 
-        //Debug.Log(attackDamage + "is the amount of damage dealt by" + unit.unitName);
+
+        Debug.Log(attackDamage + "is the amount of damage dealt by" + unit.unitName);
+        
         return attackDamage;
 
     }
-
     public int DamageFromSpell(Attack attack, Unit unit)
     {
-        if(unit.isWeaponEquipped != false)
+        if (unit.isWeaponEquipped != false)
         {
             if (unit.equippedWeapon.weaponType == WeaponType.Staff)
             {
@@ -201,36 +289,60 @@ public class CombatFunctions : MonoBehaviour
 
         return attackDamage;
     }
+    public int DamageBeingDealt(Attack chosenAttack, Unit chosenEnemy)
+    {
+        if(chosenAttack.attackType == AttackType.Physical)
+        {
+            DamageFromAttack(chosenAttack, chosenEnemy);
+        }
+        else
+        {
+            DamageFromSpell(chosenAttack, chosenEnemy);
+        }
 
+        return attackDamage;
+    }
+    public int ReduceStamina(Attack attack, Unit unit)
+    {
+        unit.currentStamina -= attack.staminaCost;
+
+        if (unit.currentStamina < 1)
+        {
+            unit.currentStamina = 0;
+            unit.isExhausted = true;
+        }
+
+        return unit.currentStamina;
+    }
     public void ReduceHealth(int damage, Unit defender, Unit attacker)
     {
-        
+
 
         //If the defender is not defending, deal full damage
-        if(defender.isDefending != true)
+        if (defender.isDefending != true)
         {
             switch (chosenAttack.attackType)
             {
                 case AttackType.Physical:
                     defender.currentHealth -= (damage - defender.physicalDefense);
-                    
+
                     break;
                 case AttackType.Special:
                     defender.currentHealth -= (damage - defender.magicDefense);
-                    
+
                     //Debug.Log(defender.currentHealth + "CUCUMBER");
                     break;
             }
 
-            
-            
-            
+
+
+
         }
         else
         {
             //If they are defending and the attacker is using a weapon that modifies damage based on if 
             //they are defending
-            if(attacker.isWeaponEquipped != false)
+            if (attacker.isWeaponEquipped != false)
             {
                 switch (attacker.equippedWeapon.weaponType)
                 {
@@ -239,43 +351,45 @@ public class CombatFunctions : MonoBehaviour
                         defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
                         defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
                         //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
-                        
+
                         break;
                     case WeaponType.Hammer:
                         //Debug.Log(defender.unitName + " has " + defender.currentHealth);
                         defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
                         defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
                         //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
-                        
+
                         break;
                     default:
                         defender.currentHealth -= (int)(damage * .5);
-                        
+
                         break;
                 }
             }
-            else 
+            else
             //If defending, attacker isn't equipped, defender takes half damage
             {
-         
+
                 defender.currentHealth -= (int)(damage * .5);
-                
 
-                
+
+
             }
-            
-        }
-        
-    }
 
+        }
+
+    }
     public void ReduceColorFromEnv(Attack attack)
     {
-        Debug.Log("CHOSEN ATTACK " + attack.attackName);
-        Debug.Log("CHOSEN ATTACK COLOR " + attack.attackColor);
+        
+        //Debug.Log("CHOSEN ATTACK COLOR " + attack.attackColor);
+        
         switch (attack.attackColor)
         {
             case Color.Red:
+                
                 envManaScript.currentRed -= attack.colorCost;
+                
                 break;
             case Color.Orange:
                 envManaScript.currentOrange -= attack.colorCost;
@@ -296,16 +410,15 @@ public class CombatFunctions : MonoBehaviour
                 break;
         }
     }
-    
     public void ColorReturn(Attack attack)
     {
-        int roll = Random.Range(0, 5);
+        //int roll = Random.Range(0, 5);
 
         switch (attack.attackColor)
         {
             case Color.Red:
                 envManaScript.currentOrange += attack.colorCost;
-                if(envManaScript.currentOrange > envManaScript.maxOrange)
+                if (envManaScript.currentOrange > envManaScript.maxOrange)
                 {
                     envManaScript.maxOrange = envManaScript.currentOrange;
                 }
@@ -349,91 +462,26 @@ public class CombatFunctions : MonoBehaviour
                 break;
         }
     }
-
-    private StaminaLevels StaminaConversion(Unit unit)
-    {
-        if (unit.currentStamina <= (unit.maxStamina*1/4))
-        {
-            return StaminaLevels.OneQuarter;
-        }
-        if(unit.currentStamina > (unit.maxStamina*1/4) && unit.currentStamina <= (unit.maxStamina*(1 / 2)))
-        {
-            return StaminaLevels.Half;
-        }
-        if((unit.currentStamina > (1/2) && unit.currentStamina <= (unit.maxStamina*3/4)))
-        {
-            return StaminaLevels.ThreeQuarters;
-        }
-        if(unit.currentStamina > (unit.maxStamina * 3 / 4))
-        {
-            return StaminaLevels.Full;
-        }
-        return StaminaLevels.Broken;
-    }
-
-    //Attacks
-    public void UseSpecialAttack(Attack attack, Unit player, Unit chosenEnemy)
-    {
-        Debug.Log("CHOSEN ATTACK 5" + attack.attackName);
-        DamageFromSpell(attack, player);
-        ReduceStamina(attack, player);
-        ReduceHealth(attackDamage, chosenEnemy, player);
-        ReduceColorFromEnv(attack);
-        ColorReturn(attack);
-
-    }
-
-    public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
-    {
-       
-        DamageFromAttack(attack, player);
-        ReduceStamina(attack, player);
-        ReduceHealth(attackDamage, chosenEnemy, player);
-        ReduceColorFromEnv(attack);
-        ColorReturn(attack);
-
-    }
-
-    public void UseHealthPotion()
-    {
-        foreach (Consumable item in inventoryScript.playerConsumableList)
-        {
-
-            if (item.itemName == "Health Potion" && item.itemAmount > 0)
-            {
-                //Debug.Log(item.refillAmount);
-                player.currentHealth += item.refillAmount;
-                if(player.currentHealth >= player.maxHealth)
-                {
-                    player.currentHealth = player.maxHealth;
-                }
-                //Debug.Log(player.currentHealth);
-                item.itemAmount -= 1;
-                if (item.itemAmount < 1)
-                {
-                    inventoryScript.playerConsumableList.Remove(item);
-                }
-            }
-
-        }
-        
-        
-    }
-
-    public bool EnoughStaminaForAttack(Attack attack, Unit unit)
-    {
-        if(unit.currentStamina >= attack.staminaCost)
-        {
-            return true;
-        }
-        else return false;
-    }
-
-    
-
 }
 //TODO: Accuracy? I would like to tie in stamina, health or both into accuracy. Concerned that it could snowball.
 //Ie: You are dealing damage to OP, meaning they're accuracy drops and therefor open the door for you to deal more damage.
 //Maybe just stamina then. 
 
 
+//Need to refactor the code in an observer pattern kind of way.
+//Untap: 
+//Upkeep: The gaining of stamina and status effects should happen here.
+//Draw
+//MP1
+//Combat: 
+    //Choose an attack
+    //Choose an enemy
+    //Accuracy
+    //Amount of damage being dealt
+    //Health being reduced
+//Mp2: Check to see if the opp is still alive
+//End:
+    //Is everyone still alive?
+        //Yes?
+            //The end of buffs/debuffs should happen here.
+        //No? End of combat happens. Experience, loot, etc. D

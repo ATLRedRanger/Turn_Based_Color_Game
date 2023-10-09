@@ -29,7 +29,7 @@ public class ItemDatabase : MonoBehaviour
 
         _basicHammer = new Weapon("Basic Hammer", "A basic hammer", 1, 2, 0.4f, 0.6f, WeaponType.Hammer);
 
-        _basicAxe = new Weapon("Basic Axe", "A basic axe", 1, 20, 0.6f, 0.4f, WeaponType.Axe);
+        _basicAxe = new Weapon("Basic Axe", "A basic axe", 1, 2, 0.6f, 0.4f, WeaponType.Axe);
 
         _basicBow = new Weapon("Basic Bow", "A basic bow", 1, 2, 1, 1, WeaponType.Bow);
 

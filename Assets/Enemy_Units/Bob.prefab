@@ -115,9 +115,9 @@ MonoBehaviour:
   burnTimer: 3
   isExhausted: 0
   currentLevel: 1
+  currentExp: 0
+  expToLevel: 0
   expGiven: 13
-  itemList: []
-  equippedWeapon: {fileID: 0}
   isWeaponEquipped: 0
   currentAxeExp: 0
   currentStaffExp: 0
@@ -137,3 +137,4 @@ MonoBehaviour:
   turnManagerScript: {fileID: 0}
   enemyCombatScript: {fileID: 0}
   envManaScript: {fileID: 0}
+  unit_SpawnerScript: {fileID: 0}

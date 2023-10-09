@@ -11,6 +11,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public CombatFunctions combatFunctionsScript;
 
+    private Turn_Manager turnManagerScript;
+
     public ENV_Mana envManaScript;
 
     public Unit enemyOne;
@@ -38,6 +40,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
 
+        turnManagerScript = FindObjectOfType<Turn_Manager>();
+
         envManaScript = FindObjectOfType<ENV_Mana>();
 
         enemyOne = unitSpawnerScript.enemyOne;
@@ -55,23 +59,20 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public void EnemyAttacking()
     {
+        Debug.Log("ENEMY IS ATTACKING");
         EnemyAttackChoice();
 
-        if (canAttack == true)
-        {
-            if (combatFunctionsScript.HitorMiss(chosenAttack, enemyOne) == true)
+        
+        if (combatFunctionsScript.HitorMiss(chosenAttack, enemyOne) == true)
 
-            {
-                combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
-                combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
-                combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player, enemyOne);
-                combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
-                combatFunctionsScript.ColorReturn(chosenAttack);
-            }
-            else
-            {
-                //Debug.Log(enemyOne.unitName + " has missed!");
-            }
+        {
+            
+            combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
+            combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
+            combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player, enemyOne);
+            combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
+            combatFunctionsScript.ColorReturn(chosenAttack);
+            
         }
         else
         {
@@ -79,14 +80,14 @@ public class Enemy_Combat_Functions : MonoBehaviour
         }
 
 
-
+        enemyOne.hadATurn = true;
 
     }
 
     public void EnemyAttackChoice()
     {
 
-        canAttack = false;
+        
 
         //For each key-value pair in the units' dictionary of attacks
         foreach (var kvp in enemyOne.enemyAttackDictionary)

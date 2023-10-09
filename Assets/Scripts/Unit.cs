@@ -184,7 +184,7 @@ public class Unit : MonoBehaviour
 
     public virtual void EnemyAttacks()
     {
-        //enemyAttackDictionary["Slash"] = attacksDatabase._slash;
+        enemyAttackDictionary["Slash"] = attacksDatabase._slash;
         enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
     }
 
@@ -216,9 +216,9 @@ public class Unit : MonoBehaviour
             amIDead = true;
         }
         
-        if(currentHealth < 1 && isPlayer != true)
+        if(currentHealth < 1 && isPlayer != true && turnManagerScript.enemiesAlive >= 1)
         {
-            
+            Debug.Log("ENEMY HAS DIED");
             turnManagerScript.enemiesAlive --;
             unit_SpawnerScript.listOfCombatants.Remove(this);
             
@@ -241,14 +241,14 @@ public class Unit : MonoBehaviour
         
     }
    
-    IEnumerator Waiting(float waitTime)
+    /*IEnumerator Waiting(float waitTime)
     {
         
         
         yield return new WaitForSeconds(waitTime);
         
         turnManagerScript.PlayerTurn();
-    }
+    }*/
 
     internal void SetTurnManager(Turn_Manager turnManagerScript)
     {
