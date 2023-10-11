@@ -141,7 +141,7 @@ public class UI : MonoBehaviour
 
 
     //Attack
-    private Attack chosenAttack;
+    [SerializeField] private Attack chosenAttack;
     
 
     // Start is called before the first frame update
@@ -333,7 +333,9 @@ public class UI : MonoBehaviour
         if(chosenAttack.attackName == attacksDatabase._fireBall.attackName)
         {
             redSlash.Play("Base Layer.Red_Slash");
+            
         }
+        
     }
     
     //Color.Neutral Attack Buttons
