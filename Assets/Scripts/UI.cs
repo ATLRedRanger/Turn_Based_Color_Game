@@ -74,20 +74,20 @@ public class UI : MonoBehaviour
     public Button _slashButton;
     public Button _slamButton;
     public Button _quickShotButton;
-    public Button _yellowSplash;
-    public Button _orangeSpike;
-    public Button _blueCrush;
-    public Button _greenPunch;
+
 
 
 
     //UI Item Buttons
     public GameObject _healthPotion;
 
-
+    
     //UI Spells Buttons
     public Button _fireBallButton;
-
+    public Button _yellowSplash;
+    public Button _orangeSpike;
+    public Button _blueCrush;
+    public Button _greenPunch;
 
     //UI Enemies Buttons
     public GameObject _enemyOneButton;
@@ -113,6 +113,9 @@ public class UI : MonoBehaviour
     public GameObject _fightPanel;
 
     public GameObject _endBattlePanel;
+
+    //Animations
+    public Animator redSlash;
 
     //Scripts
     public ENV_Mana envManaScript;
@@ -167,6 +170,7 @@ public class UI : MonoBehaviour
         player = unitSpawnerScript.player;
         enemyOne = unitSpawnerScript.enemyOne;
         inventoryScript = FindObjectOfType<Inventory>();
+        
         UpdateUI();
         //NamesText();
         //StartCoroutine(HealthText());
@@ -323,7 +327,13 @@ public class UI : MonoBehaviour
     {
         combatFunctions.Combat(chosenAttack, player, enemyOne);
         
+        
         ClosePanels();
+
+        if(chosenAttack.attackName == attacksDatabase._fireBall.attackName)
+        {
+            redSlash.Play("Base Layer.Red_Slash");
+        }
     }
     
     //Color.Neutral Attack Buttons
