@@ -66,6 +66,8 @@ public class Turn_Manager : MonoBehaviour
         //TurnOrder is the sorted list of the combatants by speed.
         //UnitReferences is the dictionary with the key that corresponds to the real objects.
         //TurnOrder is the local copy and UnitReferences is the real objects. 
+
+        //TODO: Add time between events. Add a pause after animations, turns, events, etc.
         while(IsBattleWonOrLost() == false)
         {
             BeginRound();
@@ -93,6 +95,7 @@ public class Turn_Manager : MonoBehaviour
                     unitReferences[turnIndex].enemyCombatScript.EnemyAttacking();
 
                 }
+                
                 AfterCombatPhase();
                 EndTurn();
                 turnIndex++;

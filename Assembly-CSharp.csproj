@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\StatusEffects.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
     <Compile Include="Assets\Scripts\Enemy_Goblin.cs" />
+    <Compile Include="Assets\Scripts\Animations.cs" />
     <Compile Include="Assets\Scripts\Unit_Spawner.cs" />
     <Compile Include="Assets\Scripts\CombatFunctions.cs" />
     <Compile Include="Assets\Scripts\ItemClass.cs" />

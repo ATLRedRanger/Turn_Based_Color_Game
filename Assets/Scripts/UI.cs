@@ -117,6 +117,8 @@ public class UI : MonoBehaviour
     //Animations
     public Animator redSlash;
 
+    public Animator bubble;
+
     //Scripts
     public ENV_Mana envManaScript;
 
@@ -138,6 +140,8 @@ public class UI : MonoBehaviour
     public Unit enemyOne;
 
     public StatusEffects statusEffectsScript;
+
+    private Animations animationScript;
 
 
     //Attack
@@ -170,6 +174,7 @@ public class UI : MonoBehaviour
         player = unitSpawnerScript.player;
         enemyOne = unitSpawnerScript.enemyOne;
         inventoryScript = FindObjectOfType<Inventory>();
+        animationScript = FindObjectOfType<Animations>();
         
         UpdateUI();
         //NamesText();
@@ -330,31 +335,30 @@ public class UI : MonoBehaviour
         
         ClosePanels();
 
-        if(chosenAttack.attackName == attacksDatabase._fireBall.attackName)
-        {
-            redSlash.Play("Base Layer.Red_Slash");
-            
-        }
+        //Calls the function to play animations from the animation script. 
+        animationScript.PlayAnimation(chosenAttack);
+
+        //Waits x time before moving on. Ideally, it'll be the time the animation needs to finish
+        //Which means i'll need to standardize all of the animations. 
+        
+       
         
     }
     
     //Color.Neutral Attack Buttons
     public void OnAttackClick()
     {
+        
         chosenAttack = attacksDatabase._punch;
         OpenEnemiesPanel();
+
     }
    
     //Color.Red Attack Buttons
     public void OnFireballClick()
     {
         chosenAttack = player.unitAttackDictionary["Fireball"];
-        /*combatFunctions.chosenAttack = player.unitAttackDictionary["Fireball"];
-
-        Debug.Log(combatFunctions.chosenAttack.attackName + "APPLE");
         
-        unitSpawnerScript.enemyOne.isBurning = true;
-        */
         OpenEnemiesPanel();
         
     }
@@ -426,7 +430,7 @@ public class UI : MonoBehaviour
     {
         combatFunctions.UseHealthPotion();
         UpdateUI();
-        StartCoroutine(WaitForTime());
+        StartCoroutine(WaitForTime(1));
         
         turnManagerScript.EndTurn();
     }
@@ -773,9 +777,9 @@ public class UI : MonoBehaviour
         _violetBallButton.interactable = false;
     }
 
-    IEnumerator WaitForTime()
+    IEnumerator WaitForTime(float time)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(time);
         //Debug.Log("Waiting");
     }
 
