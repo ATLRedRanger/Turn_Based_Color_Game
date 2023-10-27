@@ -37,7 +37,8 @@ public class Animations : MonoBehaviour
 //TODO: Decide what the colors will do/look like and get better names. 
 //I don't think I like the idea of "Green Punch" or "Orange Spike"
 //Attacks needing animations:
-/*Fireball - 
+/*
+ * Fireball - 
  *Blue Crush - 
  *Green Punch
  *Orange Spike

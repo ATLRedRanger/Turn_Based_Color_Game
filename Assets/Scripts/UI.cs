@@ -94,6 +94,8 @@ public class UI : MonoBehaviour
 
     public TMP_Text enemyOneText;
 
+    public TMP_Text enemyOneButtonNameText;
+
     public GameObject _enemyOneButtonTwo;
 
     public TMP_Text enemyOneTextTwo;
@@ -143,6 +145,8 @@ public class UI : MonoBehaviour
 
     private Animations animationScript;
 
+    //Abilities List
+    public List<Button> abilitiesList = new List<Button>();
 
     //Attack
     [SerializeField] private Attack chosenAttack;
@@ -182,12 +186,13 @@ public class UI : MonoBehaviour
         //StartCoroutine(StaminaText());
         //StartCoroutine(EnvironmentText());
     }
-    void NamesText()
+    private void NamesText()
     {
         
         playerName.text = unitSpawnerScript.player.unitName;
         enemyOneName.text = unitSpawnerScript.enemyOne.unitName;
         enemyOneTextTwo.text = enemyOneText.text;
+        
         
     }
 
@@ -330,6 +335,8 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
+        
+
         combatFunctions.Combat(chosenAttack, player, enemyOne);
         
         
@@ -431,8 +438,9 @@ public class UI : MonoBehaviour
         combatFunctions.UseHealthPotion();
         UpdateUI();
         StartCoroutine(WaitForTime(1));
+        ClosePanels();
+        player.hadATurn = true;
         
-        turnManagerScript.EndTurn();
     }
 
     //Attack Functions
@@ -616,6 +624,8 @@ public class UI : MonoBehaviour
     //Open Panels
     public void OpenFightPanel()
     {
+        EnemyButtonNames();
+
         bool isActive = _fightPanel.activeSelf;
 
         if (_fightPanel != null)
@@ -770,17 +780,28 @@ public class UI : MonoBehaviour
 
     private void SetAbilitiesFalse()
     {
+        for(int i = 0; i < abilitiesList.Count; i++)
+        {
+            abilitiesList[i].interactable = false;
+        }
+        /*
         _chopButton.interactable = false;
         _slamButton.interactable = false;
         _slashButton.interactable = false;
         _quickShotButton.interactable = false;
         _violetBallButton.interactable = false;
+        */
     }
 
     IEnumerator WaitForTime(float time)
     {
         yield return new WaitForSeconds(time);
         //Debug.Log("Waiting");
+    }
+
+    private void EnemyButtonNames()
+    {
+        enemyOneButtonNameText.text = enemyOne.unitName;
     }
 
     public void NewBattleStuff()
@@ -791,16 +812,12 @@ public class UI : MonoBehaviour
         enemyOneText.gameObject.SetActive(true);
         UpdateUI();
         
-        
-       
-
-       
     }
 
 }
 //KEYBOARD SHORTCUTS
 //HIGHLIGHT INSTANCES - SHIFT+ALT+. (Highlights instances of a word)
 
-//TODO: Finish UI panel setup. Do I want to select the enemy before or after selecting an attack?
-//TODO: Upload new version to git
-//TODO: Fix UseHealthPotion()
+//TODO: Better button feedback 
+//TODO: Fix the reason why I can't click the Fight button too soon
+//TODO: Figure out a better way to use items. 

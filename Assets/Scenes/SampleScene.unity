@@ -2548,6 +2548,12 @@ MonoBehaviour:
   inventoryScript: {fileID: 0}
   enemyOne: {fileID: 0}
   statusEffectsScript: {fileID: 0}
+  abilitiesList:
+  - {fileID: 911874976}
+  - {fileID: 179769676}
+  - {fileID: 1463306750}
+  - {fileID: 1131631824}
+  - {fileID: 847634361}
   chosenAttack:
     attackName: 
     animationName: 
