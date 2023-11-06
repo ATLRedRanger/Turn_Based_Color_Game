@@ -53,7 +53,7 @@ public class AttacksDatabase : MonoBehaviour
 
 
         //Axe 
-        _chop = createAttack("Chop", "Chop", 2, 5, 0, 95, Hue.Neutral, AttackType.Physical, WeaponType.Axe);
+        _chop = new Attack("Chop", "Vertical_Slash", 2, 5, 0, 95, Hue.Neutral, AttackType.Physical, WeaponType.Axe);
 
         //Staff
         _violetBall = new Attack("Violet Ball", "Violet_Ball", 2, 5, 5, 85, Hue.Violet, AttackType.Special, WeaponType.Staff);

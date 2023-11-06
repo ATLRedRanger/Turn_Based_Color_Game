@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Animations : MonoBehaviour
 {
+    private GameObject clone;
     public Animator redSlash;
     public Animator bubble;
+    public Animator vertical_Slash;
+    public GameObject vert_Slash;
+    public GameObject yellow_Splash;
+
+    private Unit_Spawner unitSpawnerScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
     }
 
     // Update is called once per frame
@@ -18,16 +24,26 @@ public class Animations : MonoBehaviour
     {
         
     }
-
+    
     public void PlayAnimation(Attack attack)
     {
+        //Instantiates a clone of the GameObject with the desired animation
+        //Based off the name of the attack
+        //Destroys the clone when the animation is done. 
         switch (attack.attackName)
         {
             case "Fireball":
                 redSlash.Play("Base Layer."+attack.animationName); 
+                
                 break;
             case "Yellow Splash":
-                bubble.Play("Base Layer.Bubble");
+                //bubble.Play("Base Layer.Bubble");
+                clone = Instantiate(yellow_Splash, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
+                Destroy(clone, 2);
+                break;
+            case "Chop":
+                clone = Instantiate(vert_Slash, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
+                Destroy(clone, 1);
                 break;
         }
     }
@@ -43,7 +59,6 @@ public class Animations : MonoBehaviour
  *Green Punch
  *Orange Spike
  *Yellow Splash
- *Chop
  *Slash
  *Violet Ball
  *QuickShot

@@ -25,7 +25,6 @@ public class CombatFunctions : MonoBehaviour
 
     public Unit chosenEnemy;
 
-    public Attack chosenAttack;
 
     int roll;
     
@@ -322,7 +321,7 @@ public class CombatFunctions : MonoBehaviour
         //If the defender is not defending, deal full damage
         if (defender.isDefending != true)
         {
-            switch (chosenAttack.attackType)
+            switch (uiScript.chosenAttack.attackType)
             {
                 case AttackType.Physical:
                     defender.currentHealth -= (damage - defender.physicalDefense);

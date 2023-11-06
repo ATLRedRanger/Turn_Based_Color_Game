@@ -138,3 +138,4 @@ MonoBehaviour:
   enemyCombatScript: {fileID: 0}
   envManaScript: {fileID: 0}
   unit_SpawnerScript: {fileID: 0}
+  spriteRenderer: {fileID: 0}

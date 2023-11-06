@@ -149,7 +149,7 @@ public class UI : MonoBehaviour
     public List<Button> abilitiesList = new List<Button>();
 
     //Attack
-    [SerializeField] private Attack chosenAttack;
+    public Attack chosenAttack;
     
 
     // Start is called before the first frame update
@@ -365,7 +365,7 @@ public class UI : MonoBehaviour
     public void OnFireballClick()
     {
         chosenAttack = player.unitAttackDictionary["Fireball"];
-        
+        enemyOne.isBurning = true;
         OpenEnemiesPanel();
         
     }
@@ -404,32 +404,32 @@ public class UI : MonoBehaviour
     //Axe Buttons
     public void OnChopClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Chop"];
+        chosenAttack = player.unitAttackDictionary["Chop"];
         _abilitiesPanel.SetActive(false);
         OpenEnemiesPanel();
     }
     //Staff Buttons
     public void OnVioletBallClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Violet Ball"];
+        chosenAttack = player.unitAttackDictionary["Violet Ball"];
         OpenEnemiesPanel();
     }
     //Sword Buttons
     public void OnSlashClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Slash"];
+        chosenAttack = player.unitAttackDictionary["Slash"];
         OpenEnemiesPanel();
     }
     //Hammer Buttons
     public void OnSlamClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Slam"];
+        chosenAttack = player.unitAttackDictionary["Slam"];
         OpenEnemiesPanel();
     }
     //Bow Buttons
     public void OnQuickShotClick()
     {
-        combatFunctions.chosenAttack = player.unitAttackDictionary["Quick Shot"];
+        chosenAttack = player.unitAttackDictionary["Quick Shot"];
         OpenEnemiesPanel();
     }
     //Use Items 
