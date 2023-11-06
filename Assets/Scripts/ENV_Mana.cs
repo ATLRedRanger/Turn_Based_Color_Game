@@ -30,7 +30,7 @@ public class ENV_Mana : MonoBehaviour
 
 
     //Dictionary inside of a dictionary 
-    public Dictionary<string, Dictionary<Color, LocationMana>> Locations = new Dictionary<string, Dictionary<Color, LocationMana>>();
+    public Dictionary<string, Dictionary<Hue, LocationMana>> Locations = new Dictionary<string, Dictionary<Hue, LocationMana>>();
 
     // Start is called before the first frame update
     void Start()
@@ -41,14 +41,14 @@ public class ENV_Mana : MonoBehaviour
         //Locations is a Dictionary that has the key of a string and the value of another Dictionary
 
         //Locations["Forest"] is Dictionary with the key of a Dictionary (Color) and the value is the struct LocationMana
-        Locations["Forest"] = new Dictionary<Color, LocationMana>();
+        Locations["Forest"] = new Dictionary<Hue, LocationMana>();
 
-        Locations["Forest"][Color.Red] = LocationColors(forestReds);
-        Locations["Forest"][Color.Orange] = LocationColors(forestOranges);
-        Locations["Forest"][Color.Yellow] = LocationColors(forestYellows);
-        Locations["Forest"][Color.Green] = LocationColors(forestGreens);
-        Locations["Forest"][Color.Blue] = LocationColors(forestBlues);
-        Locations["Forest"][Color.Violet] = LocationColors(forestViolets);
+        Locations["Forest"][Hue.Red] = LocationColors(forestReds);
+        Locations["Forest"][Hue.Orange] = LocationColors(forestOranges);
+        Locations["Forest"][Hue.Yellow] = LocationColors(forestYellows);
+        Locations["Forest"][Hue.Green] = LocationColors(forestGreens);
+        Locations["Forest"][Hue.Blue] = LocationColors(forestBlues);
+        Locations["Forest"][Hue.Violet] = LocationColors(forestViolets);
 
 
         StartingLocation();
@@ -102,18 +102,18 @@ public class ENV_Mana : MonoBehaviour
             switch(location)
             {
                 case "Forest":
-                    currentRed = Locations["Forest"][Color.Red].currentAmount;
-                    maxRed = Locations["Forest"][Color.Red].colorMax;
-                    currentOrange = Locations["Forest"][Color.Orange].currentAmount;
-                    maxOrange = Locations["Forest"][Color.Orange].colorMax;
-                    currentYellow = Locations["Forest"][Color.Yellow].currentAmount;
-                    maxYellow = Locations["Forest"][Color.Yellow].colorMax;
-                    currentGreen = Locations["Forest"][Color.Green].currentAmount;
-                    maxGreen = Locations["Forest"][Color.Green].colorMax;
-                    currentBlue = Locations["Forest"][Color.Blue].currentAmount;
-                    maxBlue = Locations["Forest"][Color.Blue].colorMax;
-                    currentViolet = Locations["Forest"][Color.Violet].currentAmount;
-                    maxViolet = Locations["Forest"][Color.Violet].colorMax;
+                    currentRed = Locations["Forest"][Hue.Red].currentAmount;
+                    maxRed = Locations["Forest"][Hue.Red].colorMax;
+                    currentOrange = Locations["Forest"][Hue.Orange].currentAmount;
+                    maxOrange = Locations["Forest"][Hue.Orange].colorMax;
+                    currentYellow = Locations["Forest"][Hue.Yellow].currentAmount;
+                    maxYellow = Locations["Forest"][Hue.Yellow].colorMax;
+                    currentGreen = Locations["Forest"][Hue.Green].currentAmount;
+                    maxGreen = Locations["Forest"][Hue.Green].colorMax;
+                    currentBlue = Locations["Forest"][Hue.Blue].currentAmount;
+                    maxBlue = Locations["Forest"][Hue.Blue].colorMax;
+                    currentViolet = Locations["Forest"][Hue.Violet].currentAmount;
+                    maxViolet = Locations["Forest"][Hue.Violet].colorMax;
                     break;
                 default:
                     break;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -117,10 +118,12 @@ public class Unit : MonoBehaviour
 
     public Dictionary<string, Attack> enemyAttackDictionary = new Dictionary<string, Attack>();
 
+    public SpriteRenderer spriteRenderer;
+
     private IEnumerator coroutine;
     public virtual void Start()
     {
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
         
         attacksDatabase = FindObjectOfType<AttacksDatabase>();
         enemyCombatScript = FindObjectOfType<Enemy_Combat_Functions>();
@@ -250,10 +253,7 @@ public class Unit : MonoBehaviour
         turnManagerScript.PlayerTurn();
     }*/
 
-    internal void SetTurnManager(Turn_Manager turnManagerScript)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     /*private void OnEnable()
     {
@@ -367,7 +367,13 @@ public class Unit : MonoBehaviour
         DidWeaponLevelUp();
     }
     
+    public virtual void SpecialAbility()
+    {
+        Debug.Log("Special Ability");
+        ;
+    }
 }
 
-//TODO: Make the enemy deal damage
-//TODO: Make a stamina regen system
+//TODO: Make a base Unit with things every unit should have
+//TODO: Then make a player unit with stuff only the player should have
+//TODO: To help make things more legible

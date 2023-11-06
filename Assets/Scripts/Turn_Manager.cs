@@ -169,6 +169,8 @@ public class Turn_Manager : MonoBehaviour
 
         CombatantsCheck();
 
+        SpecialAbilitiesCheck();
+
         ReduceBuffsAndDebuffs();
 
         ui_Script.UpdateUI();
@@ -282,6 +284,11 @@ public class Turn_Manager : MonoBehaviour
 
         //statusEffectsScript.BurningCondition();
         Burning();
+    }
+
+    private void SpecialAbilitiesCheck()
+    {
+        enemyOne.SpecialAbility();
     }
     public void CleanUpStep()
     {

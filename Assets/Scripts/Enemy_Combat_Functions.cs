@@ -97,28 +97,28 @@ public class Enemy_Combat_Functions : MonoBehaviour
                 case AttackType.Special:
                     switch (kvp.Value.attackColor)
                     {
-                        case Color.Red:
+                        case Hue.Red:
                             if (kvp.Value.colorCost <= envManaScript.currentRed && enemyOne.currentStamina >= kvp.Value.staminaCost)
                             {
                                 chosenAttack = kvp.Value;
                                 canAttack = true;
                             }
                             break;
-                        case Color.Orange:
+                        case Hue.Orange:
                             if (kvp.Value.colorCost <= envManaScript.currentOrange && enemyOne.currentStamina >= kvp.Value.staminaCost)
                             {
                                 chosenAttack = kvp.Value;
                                 canAttack = true;
                             }
                             break;
-                        case Color.Yellow:
+                        case Hue.Yellow:
                             if (kvp.Value.colorCost <= envManaScript.currentYellow && enemyOne.currentStamina >= kvp.Value.staminaCost)
                             {
                                 chosenAttack = kvp.Value;
                                 canAttack = true;
                             }
                             break;
-                        case Color.Green:
+                        case Hue.Green:
                             if (kvp.Value.colorCost <= envManaScript.currentGreen && enemyOne.currentStamina >= kvp.Value.staminaCost)
                             {
 
@@ -126,14 +126,14 @@ public class Enemy_Combat_Functions : MonoBehaviour
                                 canAttack = true;
                             }
                             break;
-                        case Color.Blue:
+                        case Hue.Blue:
                             if (kvp.Value.colorCost <= envManaScript.currentBlue && enemyOne.currentStamina >= kvp.Value.staminaCost)
                             {
                                 chosenAttack = kvp.Value;
                                 canAttack = true;
                             }
                             break;
-                        case Color.Violet:
+                        case Hue.Violet:
                             if (kvp.Value.colorCost <= envManaScript.currentViolet && enemyOne.currentStamina >= kvp.Value.staminaCost)
                             {
                                 chosenAttack = kvp.Value;

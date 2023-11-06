@@ -16,7 +16,7 @@ public class Enums : MonoBehaviour
         
     }
 }
-public enum Color
+public enum Hue
 {
     Red,
     Orange,

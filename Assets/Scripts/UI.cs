@@ -448,42 +448,42 @@ public class UI : MonoBehaviour
     {
         bool isUseable = false;
         //Checks to see if the attack has a color component
-        if (attack.attackColor != Color.Neutral)
+        if (attack.attackColor != Hue.Neutral)
         {
             //if it does, checks to see which color so can take from the environment
             switch(attack.attackColor)
             {
-                case Color.Red:
+                case Hue.Red:
                     if(attack.colorCost <= envManaScript.currentRed && player.currentStamina >= attack.staminaCost)
                     {
                         isUseable = true;
                     }
                     break;
-                case Color.Orange:
+                case Hue.Orange:
                     if (attack.colorCost <= envManaScript.currentOrange && player.currentStamina >= attack.staminaCost)
                     {
                         isUseable = true;
                     }
                     break;
-                case Color.Yellow:
+                case Hue.Yellow:
                     if (attack.colorCost <= envManaScript.currentYellow && player.currentStamina >= attack.staminaCost)
                     {
                         isUseable = true;
                     }
                     break;
-                case Color.Green:
+                case Hue.Green:
                     if (attack.colorCost <= envManaScript.currentGreen && player.currentStamina >= attack.staminaCost)
                     {
                         isUseable = true;
                     }
                     break;
-                case Color.Blue:
+                case Hue.Blue:
                     if (attack.colorCost <= envManaScript.currentBlue && player.currentStamina >= attack.staminaCost)
                     {
                         isUseable = true;
                     }
                     break;
-                case Color.Violet:
+                case Hue.Violet:
                     if (attack.colorCost <= envManaScript.currentViolet && player.currentStamina >= attack.staminaCost)
                     {
                         isUseable = true;
@@ -511,37 +511,37 @@ public class UI : MonoBehaviour
         {
             switch(kvp.Value.attackColor)
             {
-                case Color.Red:
+                case Hue.Red:
                     if(player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentRed)
                     {
                         _fireBallButton.interactable = true;
                     }
                     break;
-                case Color.Orange:
+                case Hue.Orange:
                     if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentOrange)
                     {
                         _orangeSpike.interactable = true;
                     }
                     break;
-                case Color.Yellow:
+                case Hue.Yellow:
                     if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentYellow)
                     {
                         _yellowSplash.interactable = true;
                     }
                     break;
-                case Color.Green:
+                case Hue.Green:
                     if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentGreen)
                     {
                         _greenPunch.interactable = true;
                     }
                     break;
-                case Color.Blue:
+                case Hue.Blue:
                     if (player.currentStamina >= kvp.Value.staminaCost && kvp.Value.colorCost <= envManaScript.currentBlue)
                     {
                         _blueCrush.interactable = true;
                     }
                     break;
-                case Color.Violet:
+                case Hue.Violet:
                     break;
                 default:
                     break;

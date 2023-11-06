@@ -124,6 +124,7 @@ public class CombatFunctions : MonoBehaviour
             }
         }
         attacker.hadATurn = true;
+        attack.AttackFunction();
     }
     public void IsDefending(Unit unit)
     {
@@ -386,24 +387,24 @@ public class CombatFunctions : MonoBehaviour
         
         switch (attack.attackColor)
         {
-            case Color.Red:
+            case Hue.Red:
                 
                 envManaScript.currentRed -= attack.colorCost;
                 
                 break;
-            case Color.Orange:
+            case Hue.Orange:
                 envManaScript.currentOrange -= attack.colorCost;
                 break;
-            case Color.Yellow:
+            case Hue.Yellow:
                 envManaScript.currentYellow -= attack.colorCost;
                 break;
-            case Color.Green:
+            case Hue.Green:
                 envManaScript.currentGreen -= attack.colorCost;
                 break;
-            case Color.Blue:
+            case Hue.Blue:
                 envManaScript.currentBlue -= attack.colorCost;
                 break;
-            case Color.Violet:
+            case Hue.Violet:
                 envManaScript.currentViolet -= attack.colorCost;
                 break;
             default:
@@ -416,42 +417,42 @@ public class CombatFunctions : MonoBehaviour
 
         switch (attack.attackColor)
         {
-            case Color.Red:
+            case Hue.Red:
                 envManaScript.currentOrange += attack.colorCost;
                 if (envManaScript.currentOrange > envManaScript.maxOrange)
                 {
                     envManaScript.maxOrange = envManaScript.currentOrange;
                 }
                 break;
-            case Color.Orange:
+            case Hue.Orange:
                 envManaScript.currentYellow += attack.colorCost;
                 if (envManaScript.currentYellow > envManaScript.maxYellow)
                 {
                     envManaScript.maxYellow = envManaScript.currentYellow;
                 }
                 break;
-            case Color.Yellow:
+            case Hue.Yellow:
                 envManaScript.currentGreen += attack.colorCost;
                 if (envManaScript.currentGreen > envManaScript.maxGreen)
                 {
                     envManaScript.maxGreen = envManaScript.currentGreen;
                 }
                 break;
-            case Color.Green:
+            case Hue.Green:
                 envManaScript.currentBlue += attack.colorCost;
                 if (envManaScript.currentBlue > envManaScript.maxBlue)
                 {
                     envManaScript.maxBlue = envManaScript.currentBlue;
                 }
                 break;
-            case Color.Blue:
+            case Hue.Blue:
                 envManaScript.currentViolet += attack.colorCost;
                 if (envManaScript.currentViolet > envManaScript.maxViolet)
                 {
                     envManaScript.maxViolet = envManaScript.currentViolet;
                 }
                 break;
-            case Color.Violet:
+            case Hue.Violet:
                 envManaScript.currentRed += attack.colorCost;
                 if (envManaScript.currentRed > envManaScript.maxRed)
                 {

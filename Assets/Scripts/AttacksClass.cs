@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
+
 [System.Serializable]
 public class Attack
 {
@@ -16,7 +18,7 @@ public class Attack
 
     public int colorCost;
 
-    public Color attackColor;
+    public Hue attackColor;
 
     public AttackType attackType;
 
@@ -42,7 +44,7 @@ public class Attack
     }
 
     //Using this method, I can do things once. 
-    public Attack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, Color attackColor, AttackType attackType ,WeaponType weaponType)
+    public Attack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, Hue attackColor, AttackType attackType ,WeaponType weaponType)
     {
         this.attackName = attackName;
         this.animationName = animationName;
@@ -62,6 +64,14 @@ public class Attack
         //learned to initialize an object in a class
     }
 
-
+    public void AttackFunction()
+    {
+        Debug.Log("Attack Function");
+    }
 
 }
+
+//TODO: Decide what/if attacks should have special functionality 
+//TODO: and what should they do?
+//TODO: Figure out how to make an attack have its own functionality
+//TODO: IE: How to make fireball burn on its own

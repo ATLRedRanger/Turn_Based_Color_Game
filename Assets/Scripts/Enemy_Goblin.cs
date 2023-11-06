@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy_Goblin : Unit
 {
     
-
+    
     //public Dictionary<string, Attack> goblinDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class Enemy_Goblin : Unit
     {
         
         base.Start();
-
+        
     }
 
     public override void EnemyAttacks()
@@ -27,6 +27,23 @@ public class Enemy_Goblin : Unit
     public override void EnemyAi()
     {
        base.EnemyAi();
+    }
+
+    public override void  SpecialAbility()
+    {
+        int baseAttack = 2;
+        if (envManaScript.currentGreen > envManaScript.currentBlue)
+        {
+            spriteRenderer.color = Color.red;
+            physicalAttack = 5;
+            
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
+            physicalAttack = baseAttack;
+        }
+        
     }
 
 }
