@@ -1,57 +1,14 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Unit : MonoBehaviour
+public class Player : Unit
 {
-    //Unit Attributes
-    public string unitName;
-
-    public int maxHealth;
-
-    public int currentHealth;
-
-    public int physicalAttack;
-
-    public int physicalDefense;
-
-    public int magicAttack;
-
-    public int magicDefense;
-
-    public int currentSpeed;
-
-    public int maxStamina;
-
-    public int currentStamina;
-
-    public int staminaRegenModifier;
-
-    public int baseAccuracy;
-
-    public bool isDefending;
-
-    public int moneyGiven;
-
-    //Status Effects
-    public bool isBurning;
-
-    public int burnTimer = 3;
-
-    public bool isExhausted;
-
-
-
     [SerializeField] private int currentLevel;
 
     public int currentExp;
 
     [SerializeField] private int expToLevel;
-
-    public int expGiven;
 
     //Inventory related variables
     public List<Item> itemList = new List<Item>();
@@ -91,51 +48,20 @@ public class Unit : MonoBehaviour
 
     public int bowMastery;
 
-    //Turn related variables
-    public bool isPlayer;
-
-    public bool hadATurn;
-
-    public bool myTurn;
-
-    public GameObject gameOrganizer;
-
-    //Scripts
-    public AttacksDatabase attacksDatabase;
-
-    public Turn_Manager turnManagerScript;
-
-    public Enemy_Combat_Functions enemyCombatScript;
-
-    public ENV_Mana envManaScript;
-
-    public Unit_Spawner unit_SpawnerScript;
-
     //Dictionaries
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
     public Dictionary<string, Attack> unitSpellsDictionary = new Dictionary<string, Attack>();
 
-    public Dictionary<string, Attack> enemyAttackDictionary = new Dictionary<string, Attack>();
-
-    public SpriteRenderer spriteRenderer;
-
-    private IEnumerator coroutine;
-    public virtual void Start()
+    // Start is called before the first frame update
+    public override void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
-        attacksDatabase = FindObjectOfType<AttacksDatabase>();
-        enemyCombatScript = FindObjectOfType<Enemy_Combat_Functions>();
-        envManaScript = FindObjectOfType<ENV_Mana>();
-        turnManagerScript = FindObjectOfType<Turn_Manager>();
-        unit_SpawnerScript = FindObjectOfType<Unit_Spawner>();
+        base.Start();
         LearnAbilities();
-        EnemyAttacks();
-        //LearnSpells();
+        LearnSpells();
 
     }
-
     //Adding attacks to an attack dictionary
     private void LearnAbilities()
     {
@@ -145,18 +71,26 @@ public class Unit : MonoBehaviour
             case 1:
                 unitAttackDictionary["Punch"] = attacksDatabase._punch;
                 unitAttackDictionary["Kick"] = attacksDatabase._kick;
-                unitAttackDictionary["Fireball"] = attacksDatabase._fireBall;
-                unitAttackDictionary["Yellow Splash"] = attacksDatabase._yellowSplash;
-                unitAttackDictionary["Orange Spike"] = attacksDatabase._orangeSpike;
-                unitAttackDictionary["Blue Crush"] = attacksDatabase._blueCrush;
-                unitAttackDictionary["Green Punch"] = attacksDatabase._greenPunch;
+                //unitAttackDictionary["Fireball"] = attacksDatabase._fireBall;
 
+
+
+
+
+                break;
+            case 2:
+                unitAttackDictionary["Green Punch"] = attacksDatabase._greenPunch;
+                break;
+            case 3:
+                unitAttackDictionary["Blue Crush"] = attacksDatabase._blueCrush;
+                unitAttackDictionary["Orange Spike"] = attacksDatabase._orangeSpike;
                 break;
         }
         switch (axeMastery)
         {
             case 1:
-                unitAttackDictionary["Chop"] = attacksDatabase._chop;
+                //unitAttackDictionary["Chop"] = attacksDatabase._chop;
+                unitAttackDictionary.Add("Chop", attacksDatabase._chop);
                 break;
         }
         switch (staffMastery)
@@ -183,93 +117,33 @@ public class Unit : MonoBehaviour
                 unitAttackDictionary["Quick Shot"] = attacksDatabase._quickShot;
                 break;
         }
-    }
+        /*foreach (KeyValuePair<string, Attack> kvp in unitAttackDictionary)
+        {
+            //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            Debug.Log( string.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
+        }*/
 
-    public virtual void EnemyAttacks()
-    {
-        enemyAttackDictionary["Slash"] = attacksDatabase._slash;
-        enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
     }
-
     private void LearnSpells()
     {
+        Debug.Log("Learn Spells");
         switch (currentLevel)
         {
             case 1:
-                break;
-            case 2:
-                break;
-            default:
                 unitAttackDictionary["Fireball"] = attacksDatabase._fireBall;
                 break;
+            case 2:
+                unitAttackDictionary["Yellow Splash"] = attacksDatabase._yellowSplash;
+                break;
+            default:
+
+
+                //unitAttackDictionary.Add("Fireball", attacksDatabase._fireBall);
+
+                break;
         }
 
     }
-
-    public bool AmIDeadYet()
-    {
-        bool amIDead = false;
-
-        if (currentHealth <= 0 && isPlayer == true)
-        {
-
-            turnManagerScript.playersAlive--;
-            Debug.Log(unitName + "is DEAD!");
-
-            amIDead = true;
-        }
-
-        if (currentHealth < 1 && isPlayer != true && turnManagerScript.enemiesAlive >= 1)
-        {
-            Debug.Log("ENEMY HAS DIED");
-            turnManagerScript.enemiesAlive--;
-            unit_SpawnerScript.listOfCombatants.Remove(this);
-
-            Destroy(this.gameObject);
-            amIDead = true;
-        }
-
-        return amIDead;
-    }
-
-    public virtual void EnemyAi()
-    {
-
-
-
-        enemyCombatScript.EnemyAttacking();
-
-
-
-
-    }
-
-    /*IEnumerator Waiting(float waitTime)
-    {
-        
-        
-        yield return new WaitForSeconds(waitTime);
-        
-        turnManagerScript.PlayerTurn();
-    }*/
-
-
-
-    /*private void OnEnable()
-    {
-        //Subscribes to the isBurned event
-        StatusEffects.isBurned += Burning;
-    }
-
-    private void OnDisable()
-    {
-        //Unsubscribes from the isBurned event
-        StatusEffects.isBurned -= Burning;
-    }*/
-
-    //Status Effects
-
-
     public void DidILevelUp()
     {
 
@@ -283,7 +157,6 @@ public class Unit : MonoBehaviour
         }
 
     }
-
     public void DidWeaponLevelUp()
     {
         switch (equippedWeapon.weaponType)
@@ -366,14 +239,4 @@ public class Unit : MonoBehaviour
         DidILevelUp();
         DidWeaponLevelUp();
     }
-
-    public virtual void SpecialAbility()
-    {
-        Debug.Log("Special Ability");
-        ;
-    }
 }
-
-//TODO: Make a base Unit with things every unit should have
-//TODO: Then make a player unit with stuff only the player should have
-//TODO: To help make things more legible

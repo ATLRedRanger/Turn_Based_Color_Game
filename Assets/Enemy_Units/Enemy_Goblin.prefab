@@ -98,12 +98,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Slimlin
-  maxHealth: 12
-  currentHealth: 12
-  physicalAttack: 2
-  physicalDefense: 3
-  magicAttack: 2
-  magicDefense: 3
+  maxHealth: 50
+  currentHealth: 50
+  physicalAttack: 5
+  physicalDefense: 0
+  magicAttack: 5
+  magicDefense: 0
   currentSpeed: 7
   maxStamina: 7
   currentStamina: 7

@@ -35,6 +35,8 @@ public class Consumable : Item
         {
             player.currentStamina += refillAmount;
         }
+
+        itemAmount -= 1;
     }
 
 }

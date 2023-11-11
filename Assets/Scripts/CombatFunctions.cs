@@ -255,6 +255,7 @@ public class CombatFunctions : MonoBehaviour
                     
                     break;*/
                 default:
+                    Debug.Log(unit.unitName + " HAS " + unit.physicalAttack + " AND IS EQUIPPED WITH " + unit.equippedWeapon.itemName + "THAT HAS " + unit.equippedWeapon.weaponDamage + "DAMAGE AND THE ATTACK HAS" + attack.attackDamage + "DAMAGE");
                     attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
                     break;
             }
@@ -316,67 +317,75 @@ public class CombatFunctions : MonoBehaviour
     }
     public void ReduceHealth(int damage, Unit defender, Unit attacker)
     {
-
-
-        //If the defender is not defending, deal full damage
-        if (defender.isDefending != true)
+        //Thinking about putting a for loop here so that I can have multi-attacking attacks
+        //If I ever have multiple enemies I could use a for loop here too and loop through the targets
+        //for(int i = 0; i < 3; i++)
         {
-            switch (uiScript.chosenAttack.attackType)
+            //If the defender is not defending, deal full damage
+            if (defender.isDefending != true)
             {
-                case AttackType.Physical:
-                    defender.currentHealth -= (damage - defender.physicalDefense);
-
-                    break;
-                case AttackType.Special:
-                    defender.currentHealth -= (damage - defender.magicDefense);
-
-                    //Debug.Log(defender.currentHealth + "CUCUMBER");
-                    break;
-            }
-
-
-
-
-        }
-        else
-        {
-            //If they are defending and the attacker is using a weapon that modifies damage based on if 
-            //they are defending
-            if (attacker.isWeaponEquipped != false)
-            {
-                switch (attacker.equippedWeapon.weaponType)
+                Debug.Log("DEFENDER IS NOT DEFENDING");
+                switch (uiScript.chosenAttack.attackType)
                 {
-                    case WeaponType.Axe:
-                        //Debug.Log(defender.unitName + " has " + defender.currentHealth);
-                        defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
-                        defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
-                        //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+                    case AttackType.Physical:
+                        defender.currentHealth -= (damage - defender.physicalDefense);
 
                         break;
-                    case WeaponType.Hammer:
-                        //Debug.Log(defender.unitName + " has " + defender.currentHealth);
-                        defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
-                        defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
-                        //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+                    case AttackType.Special:
+                        defender.currentHealth -= (damage - defender.magicDefense);
 
-                        break;
-                    default:
-                        defender.currentHealth -= (int)(damage * .5);
-
+                        //Debug.Log(defender.currentHealth + "CUCUMBER");
                         break;
                 }
+
+
+
+
             }
             else
-            //If defending, attacker isn't equipped, defender takes half damage
             {
+                //If they are defending and the attacker is using a weapon that modifies damage based on if 
+                //they are defending
+                Debug.Log("DEFENDER IS DEFENDING");
+                if (attacker.isWeaponEquipped != false)
+                {
+                    switch (attacker.equippedWeapon.weaponType)
+                    {
+                        case WeaponType.Axe:
+                            //Debug.Log(defender.unitName + " has " + defender.currentHealth);
+                            defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
+                            defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
+                            //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
 
-                defender.currentHealth -= (int)(damage * .5);
+                            break;
+                        case WeaponType.Hammer:
+                            //Debug.Log(defender.unitName + " has " + defender.currentHealth);
+                            defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
+                            defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
+                            //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
+
+                            break;
+                        default:
+                            defender.currentHealth -= (int)(damage * .5);
+
+                            break;
+                    }
+                }
+                else
+                //If defending, attacker isn't equipped, defender takes half damage
+                {
+                    Debug.Log("DEFENDER IS DEFENDING AND ATTACKER ISN'T EQUIPPED");
+                    Debug.Log(defender.name + " HAS " + defender.currentHealth + " HEALTH!");
+                    Debug.Log("DAMAGE = " + damage);
+                    defender.currentHealth -= (int)(damage * .5);
+                    Debug.Log(defender.name + " HAS " + defender.currentHealth + " HEALTH!");
 
 
+                }
 
             }
-
         }
+        
 
     }
     public void ReduceColorFromEnv(Attack attack)

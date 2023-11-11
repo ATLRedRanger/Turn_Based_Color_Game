@@ -10,6 +10,7 @@ public class Animations : MonoBehaviour
     public Animator vertical_Slash;
     public GameObject vert_Slash;
     public GameObject yellow_Splash;
+    public GameObject fireball;
 
     private Unit_Spawner unitSpawnerScript;
 
@@ -33,8 +34,8 @@ public class Animations : MonoBehaviour
         switch (attack.attackName)
         {
             case "Fireball":
-                redSlash.Play("Base Layer."+attack.animationName); 
-                
+                clone = Instantiate(fireball, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
+                Destroy(clone, 2);
                 break;
             case "Yellow Splash":
                 //bubble.Play("Base Layer.Bubble");

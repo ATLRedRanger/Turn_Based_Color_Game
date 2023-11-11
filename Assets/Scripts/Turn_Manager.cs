@@ -68,7 +68,7 @@ public class Turn_Manager : MonoBehaviour
         //TurnOrder is the local copy and UnitReferences is the real objects. 
 
         //TODO: Add time between events. Add a pause after animations, turns, events, etc.
-        while(IsBattleWonOrLost() == false)
+        while(IsBattleWonOrLost() == false && player.AmIDeadYet() == false)
         {
             BeginRound();
             turnIndex = 0;
@@ -300,7 +300,10 @@ public class Turn_Manager : MonoBehaviour
     public void PlayerWon()
     {
         state = BattleState.WON;
-        player.GainExperience(enemyOne.expGiven, 10);
+        //player.GainExperience(enemyOne.expGiven, 10);
+        //Testing values for leveling up
+        //Above is the OG
+        player.GainExperience(100, 100);
         ui_Script.EndBattleUI();
         ui_Script._fightButton.SetActive(false);
         player.DidILevelUp();

@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour
 {
     
     public Unit player;
+
+    public GameObject _inventoryPanel;
 
     private Unit_Spawner unitSpawnerScript;
 
@@ -15,6 +18,12 @@ public class Inventory : MonoBehaviour
     public List<Weapon> playerWeaponList = new List<Weapon>();
 
     public List<Consumable> playerConsumableList = new List<Consumable>();
+
+    public List<Item> playerInventory = new List<Item>();
+
+    public List<Button> buttonList = new List<Button>();
+
+    public List<TMP_Text> buttonTextList = new List<TMP_Text>();
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +45,11 @@ public class Inventory : MonoBehaviour
         playerConsumableList.Add(itemScript._healthPotion);
         player.equippedWeapon = playerWeaponList[0];
         player.isWeaponEquipped = true;
-
+        playerInventory.Add(itemScript._basicSword);
+        playerInventory.Add(itemScript._basicBow);
+        playerInventory.Add(itemScript._basicHammer);
+        playerInventory.Add(itemScript._healthPotion);
+        
     }
     
 
@@ -53,6 +66,8 @@ public class Inventory : MonoBehaviour
         //playerWeaponList = player.weaponList;
 
         AddToInventory();
+
+        UpdateInventoryUI();
     }
 
     public void EquipWeapon(Weapon weapon)
@@ -100,5 +115,16 @@ public class Inventory : MonoBehaviour
 
     }
 
-
+    public void UpdateInventoryUI()
+    {
+        
+        for(int i = 0; i < playerInventory.Count; i++)
+        {
+            buttonList[i].gameObject.SetActive(true);
+            buttonTextList[i].text = playerInventory[i].itemName;
+        }
+        
+    }
 }
+//TODO: Make an inventory panel that has all the items in the player inventory
+//Actually use the Use() function on the items instead of what i'm doing in CombatFunctions

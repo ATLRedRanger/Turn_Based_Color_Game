@@ -1,0 +1,59 @@
+1) Spellbook
+	-When I think of a spellbook I think:
+	1) It holds spells
+	2) It can hold multiple spells
+	3) It's limited in scope. 
+	4) What would make someone want to use a spellbook instead of a staff?
+	5) Spellbooks can be generic
+	6) Spellbooks only have so many pages
+2) What makes a staff special?
+	-When I think of a staff I think:
+	1) Staves channel the power of spells
+	2) Staves are usually specific
+	3) You can use a staff to hit someone physically
+3) Status Effects?
+	1) Burn - A dot that deals damage based on % of total health
+	2) How should I implement status effects? 
+		-Pokemon style where there's a % chance to be afflicted
+		-Souls style where you build up the status and then you are afflicted
+4) Weapons?
+	1) Weapons should feel different
+	2) One thing I've implemented is that weapons can deal stamina damage
+	   when defending. 
+	3) Axes deal a little bit of stamina damage when the OP is defending
+	4) Hammers deal a lot of stamina damage when the OP is defending
+	5) I think I want swords to have 2 stances and their abilities be based
+	   on those stances.
+		-One stance can be offensive and the other defensive
+	6) Why would someone want to use a bow over a spell?
+		-What if bows were a stamina based weapon?
+5) Stamina
+	1) So far stamina only affects accuracy
+	2) Stamina should affect critical hits
+6) Items
+	1) Health potions - Recovers an amount of health to the user
+	2) Stamina potions - Recovers an amount of stamina to the user
+	3) Color potions - Add more of a specific color to the mana pool
+7) Armor
+	1) Types of armor
+		1) Head
+		2) Chest
+		3) Legs
+		4) Arms 
+	2) Armor should increase defensive values
+	3) Armor could increase/decrease color in the environment
+	4) Armor could affect stamina values
+8) Enemies
+	1) Enemies should have abilities based on the environment
+	2) Should feel very different from one another
+	3) Enemy identifiers:
+		-Enemies having abilities based on their tier
+		-Ex. Tier 1 enemies have only 1 ability, Tier 2 enemies have 2, etc. 
+		-This way, when checking for enemy abilities I can make a switch statement using enemyTier as the switch and using 
+		 their tiers as the cases to check for all of their abilities.
+		-Boss would be the highest tier and it'll check for boss type abilities (like an additional attack before or after their regular attack or something)
+9) Shared Mana
+	1) What makes my game different is the shared mana pool
+	2) What makes the shared mana pool different?
+	3) What are the advantages and disadvantages of a shared mana pool?
+	4) How does everything interact with this pool?
