@@ -17,7 +17,7 @@ public class Item
     public Unit player;
     void Start()
     {
-        //StartCoroutine(LoadingScripts());
+        
     }
 
     /*IEnumerator LoadingScripts()
@@ -41,10 +41,10 @@ public class Item
         
     }
     
-    public virtual void Use()
+    public virtual void Use(Unit player)
     {
         //Debug.Log("Overide This");
     }
     
-
+  
 }

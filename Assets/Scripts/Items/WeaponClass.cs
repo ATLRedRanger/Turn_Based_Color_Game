@@ -16,6 +16,10 @@ public class Weapon : Item
 
     public WeaponType weaponType;
 
+    public Weapon()
+    {
+    }
+
     public Weapon(string itemName, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, WeaponType weaponType)
     {
         this.itemName = itemName;
@@ -28,7 +32,7 @@ public class Weapon : Item
     }
     
 
-    public override void Use()
+    public override void Use(Unit player)
     {
         Debug.Log("This is the weapon overriding");
     }

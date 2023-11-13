@@ -319,7 +319,7 @@ public class CombatFunctions : MonoBehaviour
     {
         //Thinking about putting a for loop here so that I can have multi-attacking attacks
         //If I ever have multiple enemies I could use a for loop here too and loop through the targets
-        //for(int i = 0; i < 3; i++)
+        //for(int i = 0; i < attack.attackInstances; i++)
         {
             //If the defender is not defending, deal full damage
             if (defender.isDefending != true)
@@ -472,25 +472,6 @@ public class CombatFunctions : MonoBehaviour
         }
     }
 }
-//TODO: Accuracy? I would like to tie in stamina, health or both into accuracy. Concerned that it could snowball.
-//Ie: You are dealing damage to OP, meaning they're accuracy drops and therefor open the door for you to deal more damage.
-//Maybe just stamina then. 
+//TODO: Accuracy? Should it play a part in criticals?
 
 
-//Need to refactor the code in an observer pattern kind of way.
-//Untap: 
-//Upkeep: The gaining of stamina and status effects should happen here.
-//Draw
-//MP1
-//Combat: 
-    //Choose an attack
-    //Choose an enemy
-    //Accuracy
-    //Amount of damage being dealt
-    //Health being reduced
-//Mp2: Check to see if the opp is still alive
-//End:
-    //Is everyone still alive?
-        //Yes?
-            //The end of buffs/debuffs should happen here.
-        //No? End of combat happens. Experience, loot, etc. D

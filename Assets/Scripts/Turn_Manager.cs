@@ -346,7 +346,7 @@ public class Turn_Manager : MonoBehaviour
         
         
 
-        //Happens when the event for isBurned is triggered
+        
         if (unitReferences[turnIndex].isBurning)
         {
             //Debug.Log("PLAYER IS BURNING!");

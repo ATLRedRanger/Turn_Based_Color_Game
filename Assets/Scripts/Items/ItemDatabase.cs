@@ -16,6 +16,8 @@ public class ItemDatabase : MonoBehaviour
 
     public Weapon _basicStaff;
 
+    public Spellbook _basicSpellbook;
+
     public GameObject itemDatabase;
 
     // Start is called before the first frame update
@@ -34,6 +36,8 @@ public class ItemDatabase : MonoBehaviour
         _basicBow = new Weapon("Basic Bow", "A basic bow", 1, 2, 1, 1, WeaponType.Bow);
 
         _basicStaff = new Weapon("Basic Staff", "A basic staff", 1, 2, 1, 1, WeaponType.Staff);
+
+        _basicSpellbook = new Spellbook(_basicAxe, 1, 1, "Basic Spellbook", WeaponType.Spellbook);
     }
 
     // Update is called once per frame

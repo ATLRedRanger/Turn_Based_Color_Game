@@ -365,7 +365,7 @@ public class UI : MonoBehaviour
     public void OnFireballClick()
     {
         chosenAttack = player.unitAttackDictionary["Fireball"];
-        enemyOne.isBurning = true;
+        
         OpenEnemiesPanel();
         
     }
@@ -753,7 +753,7 @@ public class UI : MonoBehaviour
         _enemiesPanel.SetActive(false);
     }
 
-    private void ClosePanels()
+    public void ClosePanels()
     {
         _fightPanel.SetActive(false);
         _abilitiesPanel.SetActive(false);

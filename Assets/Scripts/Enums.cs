@@ -40,6 +40,7 @@ public enum WeaponType
 {
     Axe,
     Staff,
+    Spellbook,
     Sword,
     Hammer,
     Bow,

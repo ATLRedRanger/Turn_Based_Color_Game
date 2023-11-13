@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class Inventory : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Inventory : MonoBehaviour
     private Unit_Spawner unitSpawnerScript;
 
     private ItemDatabase itemScript;
+
+    private UI ui_Script;
     
     public List<Weapon> playerWeaponList = new List<Weapon>();
 
@@ -45,10 +48,10 @@ public class Inventory : MonoBehaviour
         playerConsumableList.Add(itemScript._healthPotion);
         player.equippedWeapon = playerWeaponList[0];
         player.isWeaponEquipped = true;
-        playerInventory.Add(itemScript._basicSword);
-        playerInventory.Add(itemScript._basicBow);
         playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
+        playerInventory.Add(itemScript._basicSpellbook);
+        playerInventory.Add(itemScript._basicStaff);
         
     }
     
@@ -60,6 +63,8 @@ public class Inventory : MonoBehaviour
         unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
 
         itemScript = FindObjectOfType<ItemDatabase>();
+
+        ui_Script = FindObjectOfType<UI>();
 
         player = unitSpawnerScript.player;
 
@@ -124,6 +129,17 @@ public class Inventory : MonoBehaviour
             buttonTextList[i].text = playerInventory[i].itemName;
         }
         
+    }
+
+    public void UseItem()
+    {
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+
+        playerInventory[stringButtonNum - 1].Use(player);
+
+        ui_Script.UpdateUI();
+        ui_Script.ClosePanels();
     }
 }
 //TODO: Make an inventory panel that has all the items in the player inventory
