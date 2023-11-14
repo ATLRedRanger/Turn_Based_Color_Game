@@ -7,7 +7,9 @@ public class Staff : Weapon
 
     public int statusEffectChance;
 
-    public Staff(string itemName, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, WeaponType weaponType, int statusEffectChance)
+    public Hue affinity;
+
+    public Staff(string itemName, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, WeaponType weaponType, int statusEffectChance, Hue affinity)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -17,6 +19,7 @@ public class Staff : Weapon
         this.weaponStaminaModifier = weaponStaminaModifier;
         this.weaponType = weaponType;
         this.statusEffectChance = statusEffectChance;
+        this.affinity = affinity;
     }
 
     public override void Use(Unit player)

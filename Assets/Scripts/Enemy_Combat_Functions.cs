@@ -63,7 +63,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
         EnemyAttackChoice();
 
         
-        if (combatFunctionsScript.HitorMiss(chosenAttack, enemyOne) == true)
+        if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
 
         {
             

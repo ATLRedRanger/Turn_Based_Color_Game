@@ -46,7 +46,7 @@ public class Inventory : MonoBehaviour
         
         playerWeaponList.Add(itemScript._basicAxe);
         playerConsumableList.Add(itemScript._healthPotion);
-        player.equippedWeapon = playerWeaponList[0];
+        player.equippedWeapon = itemScript._basicStaff;
         player.isWeaponEquipped = true;
         playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
@@ -137,6 +137,12 @@ public class Inventory : MonoBehaviour
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
 
         playerInventory[stringButtonNum - 1].Use(player);
+
+        playerInventory[stringButtonNum - 1].itemAmount -= 1;
+        if (playerInventory[stringButtonNum - 1].itemAmount < 1)
+        {
+            playerInventory.Remove(playerInventory[stringButtonNum - 1]);
+        }
 
         ui_Script.UpdateUI();
         ui_Script.ClosePanels();

@@ -1048,8 +1048,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 373.00006, y: -454.8568}
-  m_SizeDelta: {x: 427.0138, y: 77.3413}
+  m_AnchoredPosition: {x: 372, y: -457}
+  m_SizeDelta: {x: 496.4591, y: 77.3413}
   m_Pivot: {x: 0.50000006, y: 0.49999976}
 --- !u!114 &208535280
 MonoBehaviour:
@@ -2204,6 +2204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 0}
+  attackDatabase: {fileID: 0}
 --- !u!4 &477431591
 Transform:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class ItemDatabase : MonoBehaviour
 
     public GameObject itemDatabase;
 
+    public AttacksDatabase attackDatabase;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,9 +37,10 @@ public class ItemDatabase : MonoBehaviour
 
         _basicBow = new Weapon("Basic Bow", "A basic bow", 1, 2, 1, 1, WeaponType.Bow);
 
-        _basicStaff = new Weapon("Basic Staff", "A basic staff", 1, 2, 1, 1, WeaponType.Staff);
+        _basicStaff = new Staff("Basic Staff", "A basic staff", 1, 2, 1, 1, WeaponType.Staff, 1, Hue.Neutral);
 
-        _basicSpellbook = new Spellbook(_basicAxe, 1, 1, "Basic Spellbook", WeaponType.Spellbook);
+        _basicSpellbook = new Spellbook(_basicAxe, 1, 1, "Basic Spellbook", WeaponType.Spellbook, Hue.Neutral);
+        _basicSpellbook.AddSpellToSpellbook(attackDatabase._fireBall);
     }
 
     // Update is called once per frame

@@ -23,6 +23,10 @@ public class CombatFunctions : MonoBehaviour
 
     public int attackDamage;
 
+    private int potentialAttackDamage;
+
+    private int damageAfterReductions;
+
     public Unit chosenEnemy;
 
 
@@ -93,22 +97,12 @@ public class CombatFunctions : MonoBehaviour
         
         
     }
-
-    /*public bool EnoughStaminaForAttack(Attack attack, Unit unit)
-    {
-        if(unit.currentStamina >= attack.staminaCost)
-        {
-            return true;
-        }
-        else return false;
-    }*/
-
     public void Combat(Attack attack, Unit attacker, Unit defender)
     {
         //Chosen Attack: The chosen attack is dictated by the UI script. 
         //Chosen Enemy: The chosen enemy is dictated by the UI script. 
         //Do I have enough stamina for the attack?
-        if (HitorMiss(attack, attacker) == true)
+        if (DidAttackHit(attack, attacker) == true)
         {
             switch (attack.attackType)
             {
@@ -158,11 +152,11 @@ public class CombatFunctions : MonoBehaviour
         int dieRoll;
         int currentAccuracy = (int)(unit.baseAccuracy * accuracyMultiple);
 
-        dieRoll = Random.Range(currentAccuracy, 100);
+        dieRoll = Random.Range(currentAccuracy, 101);
 
         return dieRoll;
     }
-    public bool HitorMiss(Attack attack, Unit unit)
+    public bool DidAttackHit(Attack attack, Unit unit)
     {
         //I want stamina to affect accuracy
         //I want to have 4 levels of affecting accuracy
@@ -210,7 +204,7 @@ public class CombatFunctions : MonoBehaviour
     }
     public void UseSpecialAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-
+        PotentialDamage(attack, player);
         DamageFromSpell(attack, player);
         ReduceStamina(attack, player);
         ReduceHealth(attackDamage, chosenEnemy, player);
@@ -220,7 +214,7 @@ public class CombatFunctions : MonoBehaviour
     }
     public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
     {
-
+        
         DamageFromAttack(attack, player);
         ReduceStamina(attack, player);
         ReduceHealth(attackDamage, chosenEnemy, player);
@@ -471,7 +465,210 @@ public class CombatFunctions : MonoBehaviour
                 break;
         }
     }
+
+    public void CombatSteps(Attack attack, Unit attacker, Unit defender)
+    {
+        
+        if(DidAttackHit(attack, attacker) == true)
+        {
+            CheckForSpecialWeaponProperties(attacker);
+            PotentialDamage(attack, defender);
+            CheckForCrit(attacker);
+            //Damage After Damage and Resistances
+            DamageAfterDmgandRes(attack, defender);
+            ReduceHealthOfDefender(attack, defender);
+        }
+        attacker.hadATurn = true;
+    }
+
+    private void CheckForSpecialWeaponProperties(Unit attacker)
+    {
+        attacker.equippedWeapon.SpecialProperty();
+    }
+
+    public int PotentialDamage(Attack attack, Unit attacker)
+    {
+        
+        switch (attack.attackType)
+        {
+            case AttackType.Special:
+                if (IsAttackerEquipped(attacker) != false)
+                {
+                    if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
+                    {
+                        Staff equippedStaff = player.equippedWeapon as Staff;
+                        if (equippedStaff.affinity == attack.attackColor)
+                        {
+                            //Let's use Fireball and Player as an example
+                            //(5 * 1.3) + 3 + 1 = 10.5
+                            potentialAttackDamage = (int)(attack.attackDamage * 1.3) + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
+                        }
+
+                    }
+                    else
+                    {
+                        potentialAttackDamage = attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
+                    }
+                    
+                }
+                break;
+            default:
+                if (IsAttackerEquipped(attacker) != false)
+                {
+                    potentialAttackDamage = attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponDamage;
+                }
+                else
+                {
+                    potentialAttackDamage = attack.attackDamage + attacker.physicalAttack;
+                }
+                break;
+        }
+        
+
+        return potentialAttackDamage;
+    }
+    
+    private bool IsAttackerEquipped(Unit attacker)
+    {
+        bool isEquipped = false;
+        if(attacker.equippedWeapon != null) { isEquipped = true; }
+        return isEquipped;
+    }
+
+    private bool CheckForCrit(Unit attacker)
+    {
+        //The thought process behind this is:
+        //The higher your base accuracy, the more likely you are to crit
+        //(The better you are at hitting your target, the more likely you are to hit critical points)
+        //Having a high base accuracy should reward you with easier crits
+        //Stamina management should also reward/punish your crits
+        //If you're in the midst of battle and you're dying, you might get lucky, but not overly so. 
+        //I want crits to feel rewarding, but shouldn't really decide the battle
+
+        bool crit = false;
+        int dieRoll = Random.Range(0, 101);
+        int critChance = (int)(100 - (attacker.baseAccuracy * .10));
+        int critCalc = (int)(dieRoll + (attacker.baseAccuracy * .10));
+
+        StaminaLevels critThreshold = StaminaConversion(attacker);
+
+        switch (critThreshold)
+        {
+            case StaminaLevels.Full:
+                if((critCalc * 1.25) > critChance)
+                {
+                    crit = true;
+                }
+                break;
+            case StaminaLevels.ThreeQuarters:
+                if ((critCalc * 1.15) > critChance)
+                {
+                    crit = true;
+                }
+                break;
+            case StaminaLevels.Half:
+                if ((critCalc * 1.05) > critChance)
+                {
+                    crit = true;
+                }
+                break;
+            case StaminaLevels.OneQuarter:
+                if ((critCalc * 1) > critChance)
+                {
+                    crit = true;
+                }
+                break;
+        }
+        if(crit)
+        {
+            potentialAttackDamage = (int)(potentialAttackDamage * 1.25);
+            Debug.Log("YOU'VE LANDED A CRITICAL HIT!");
+        }
+        return crit;
+    }
+
+    private void DamageAfterDmgandRes(Attack attack, Unit defender)
+    {
+        int defenderMagicDefense = defender.magicDefense;
+        int defenderPhysicalDefense = defender.physicalDefense;
+
+        //Thought process behind this:
+        //I want the player to manage stamina on both sides of the battle
+        //If the player is being very aggressive and 
+        StaminaLevels defenderStamina = StaminaConversion(defender);
+        if(attack.attackType == AttackType.Special)
+        {
+            
+            switch (defenderStamina)
+            {
+                case StaminaLevels.Full:
+                    defenderMagicDefense = (int)(defender.magicDefense * 1.75);
+                    break;
+                case StaminaLevels.ThreeQuarters:
+                    defenderMagicDefense = (int)(defender.magicDefense * 1.5);
+                    break;
+                case StaminaLevels.Half:
+                    defenderMagicDefense = (int)(defender.magicDefense * 1.25);
+                    break;
+                case StaminaLevels.OneQuarter:
+                    defenderMagicDefense = (int)(defender.magicDefense * 1.15);
+                    break;
+                default:
+                    defenderMagicDefense = defender.magicDefense * 1;
+                    break;
+            }
+
+            damageAfterReductions = potentialAttackDamage - defenderMagicDefense;
+        }
+        else
+        {
+            switch (defenderStamina)
+            {
+                case StaminaLevels.Full:
+                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.75);
+                    break;
+                case StaminaLevels.ThreeQuarters:
+                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.5);
+                    break;
+                case StaminaLevels.Half:
+                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.25);
+                    break;
+                case StaminaLevels.OneQuarter:
+                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.15);
+                    break;
+                default:
+                    defenderPhysicalDefense = defender.physicalDefense * 1;
+                    break;
+            }
+
+            damageAfterReductions = potentialAttackDamage - defender.physicalDefense;
+        }
+        
+
+        
+    }
+
+    private void ReduceHealthOfDefender(Attack attack, Unit defender)
+    {
+        for(int i = 0; i < attack.numOfAttacks; i++)
+        {
+            defender.currentHealth -= damageAfterReductions;
+        }
+    }
+
 }
 //TODO: Accuracy? Should it play a part in criticals?
+//TODO: Restructure the way combat is handled so that way it happens in a step by step way
+//Combat In Steps:
+// 1) How many times does the chosen attack hit if it hits?
+// 2) Roll for accuracy on each attempt at a hit
+// 3) If an attack is successful, how much damage is it potentially doing?
+//    -Check for crits in this stage
+//    -Check for weapon special abilities or modifiers
+// 4) How much damage is the attack doing after defenses and resistances?
+// 5) How much health damage does the defender take?
+// 6) How much stamina damage does the defender take?
+// 7) Are there any secondary effects of the attack?
 
+//TODO: Come up with a damage calculation that takes into account Attack Damage, Weapon Damage, Critials, Base Defenses, Armor Defenses and other miscellaneous values. 
 

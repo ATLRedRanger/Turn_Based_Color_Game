@@ -9,7 +9,13 @@ public class Spellbook : Weapon
 
     public int spellBookLevel;
 
-    public Spellbook(Weapon weapon, int spellBookTier, int spellBookLevel, string itemName, WeaponType weaponType)
+    public int spellBookExperience;
+
+    public Hue affinity;
+
+    public Dictionary<string, Attack> spellBookSpells = new Dictionary<string, Attack>();
+
+    public Spellbook(Weapon weapon, int spellBookTier, int spellBookLevel, string itemName, WeaponType weaponType, Hue affinity)
     {
         this.itemName = itemName;
         itemDescription = weapon.itemDescription;
@@ -20,5 +26,25 @@ public class Spellbook : Weapon
         this.weaponType = weaponType;
         this.spellBookTier = spellBookTier;
         this.spellBookLevel = spellBookLevel;
+        this.affinity = affinity;
+    }
+
+    public void AddSpellToSpellbook(Attack attack)
+    {
+        //Adds a spell to the spellbook
+        //If there are less spells in the book than the tier of the spellbook
+        if (spellBookSpells.Count < spellBookTier)
+        {
+            spellBookSpells.Add(attack.attackName, attack);
+        }
+        else
+        {
+            Debug.Log("This spellbook can only hold " + spellBookTier + " spells.");
+        }
+    }
+
+    public void GainExperience(int experience)
+    {
+        spellBookExperience += experience;
     }
 }

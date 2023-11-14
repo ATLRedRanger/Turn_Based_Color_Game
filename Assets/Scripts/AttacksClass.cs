@@ -18,6 +18,8 @@ public class Attack
 
     public int colorCost;
 
+    public int numOfAttacks;
+
     public Hue attackColor;
 
     public AttackType attackType;
@@ -44,7 +46,7 @@ public class Attack
     }
 
     //Using this method, I can do things once. 
-    public Attack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, Hue attackColor, AttackType attackType ,WeaponType weaponType)
+    public Attack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, int numOfAttacks, Hue attackColor, AttackType attackType ,WeaponType weaponType)
     {
         this.attackName = attackName;
         this.animationName = animationName;
@@ -52,6 +54,7 @@ public class Attack
         this.staminaCost = staminaCost;
         this.colorCost = colorCost;
         this.attackAccuracy = attackAccuracy;
+        this.numOfAttacks = numOfAttacks;
         this.attackColor = attackColor;
         this.attackType = attackType;
         this.weaponType = weaponType;  

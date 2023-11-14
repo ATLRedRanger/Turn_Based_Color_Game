@@ -37,5 +37,9 @@ public class Weapon : Item
         Debug.Log("This is the weapon overriding");
     }
 
-    
+    public override void SpecialProperty()
+    {
+        base.SpecialProperty();
+    }
+
 }

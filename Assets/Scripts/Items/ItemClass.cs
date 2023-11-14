@@ -46,5 +46,9 @@ public class Item
         //Debug.Log("Overide This");
     }
     
+    public virtual void SpecialProperty() 
+    {
+        Debug.Log("ITEM'S SPECIAL PROPERTY!");
+    }
   
 }
