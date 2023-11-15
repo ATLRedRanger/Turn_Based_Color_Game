@@ -95,9 +95,10 @@ public class Turn_Manager : MonoBehaviour
                     unitReferences[turnIndex].enemyCombatScript.EnemyAttacking();
 
                 }
-                
+                yield return new WaitForSeconds(1f);
                 AfterCombatPhase();
                 EndTurn();
+                yield return new WaitForSeconds(1f);
                 turnIndex++;
                 if(turnIndex >= turnOrder.Count)
                 {

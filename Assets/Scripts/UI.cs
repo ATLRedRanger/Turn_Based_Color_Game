@@ -116,10 +116,13 @@ public class UI : MonoBehaviour
 
     public GameObject _endBattlePanel;
 
-    //Animations
-    public Animator redSlash;
-
-    public Animator bubble;
+    //UI Bars
+    public Image redBar;
+    public Image orangeBar;
+    public Image yellowBar;
+    public Image greenBar;
+    public Image blueBar;
+    public Image violetBar;
 
     //Scripts
     public ENV_Mana envManaScript;
@@ -228,9 +231,19 @@ public class UI : MonoBehaviour
         HealthText();
         StaminaText();
         EnvironmentText();
-       
+        GraphicalBars();
     }
 
+    private void GraphicalBars()
+    {
+        Debug.Log($"RedBar.FillAmount SHOULD BE: {envManaScript.currentRed} / {envManaScript.maxRed}");
+        redBar.fillAmount = (float)((float)envManaScript.currentRed / (float)envManaScript.maxRed);
+        orangeBar.fillAmount = (float)((float)envManaScript.currentOrange / (float)envManaScript.maxOrange);
+        yellowBar.fillAmount = (float)((float)envManaScript.currentYellow / (float)envManaScript.maxYellow);
+        greenBar.fillAmount = (float)((float)envManaScript.currentGreen / (float)envManaScript.maxGreen);
+        blueBar.fillAmount = (float)((float)envManaScript.currentBlue / (float)envManaScript.maxBlue);
+        violetBar.fillAmount = (float)((float)envManaScript.currentViolet / (float)envManaScript.maxViolet);
+    }
     
     public void EndBattleUI()
     {
@@ -335,21 +348,12 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-
-
-        //combatFunctions.Combat(chosenAttack, player, enemyOne);
         combatFunctions.CombatSteps(chosenAttack, player, enemyOne);
         
         ClosePanels();
 
         //Calls the function to play animations from the animation script. 
         animationScript.PlayAnimation(chosenAttack);
-
-        //Waits x time before moving on. Ideally, it'll be the time the animation needs to finish
-        //Which means i'll need to standardize all of the animations. 
-        
-       
-        
     }
     
     //Color.Neutral Attack Buttons

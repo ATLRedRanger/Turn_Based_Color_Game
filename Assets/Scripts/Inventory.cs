@@ -145,6 +145,7 @@ public class Inventory : MonoBehaviour
             playerInventory.Remove(playerInventory[stringButtonNum - 1]);
         }
 
+        UpdateInventoryUI();
         ui_Script.UpdateUI();
         ui_Script.ClosePanels();
     }

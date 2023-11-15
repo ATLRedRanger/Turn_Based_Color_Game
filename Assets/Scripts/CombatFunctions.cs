@@ -97,28 +97,6 @@ public class CombatFunctions : MonoBehaviour
         
         
     }
-    public void Combat(Attack attack, Unit attacker, Unit defender)
-    {
-        //Chosen Attack: The chosen attack is dictated by the UI script. 
-        //Chosen Enemy: The chosen enemy is dictated by the UI script. 
-        //Do I have enough stamina for the attack?
-        if (DidAttackHit(attack, attacker) == true)
-        {
-            switch (attack.attackType)
-            {
-                case AttackType.Physical:
-                    UseAttack(attack, attacker, defender);
-                    break;
-                case AttackType.Special: 
-                    UseSpecialAttack(attack, attacker, defender);
-                    break;
-                default:
-                    break;
-            }
-        }
-        attacker.hadATurn = true;
-        attack.AttackFunction();
-    }
     public void IsDefending(Unit unit)
     {
         unit.isDefending = true;
@@ -202,101 +180,6 @@ public class CombatFunctions : MonoBehaviour
         return hit;
 
     }
-    public void UseSpecialAttack(Attack attack, Unit player, Unit chosenEnemy)
-    {
-        PotentialDamage(attack, player);
-        DamageFromSpell(attack, player);
-        ReduceStamina(attack, player);
-        ReduceHealth(attackDamage, chosenEnemy, player);
-        ReduceColorFromEnv(attack);
-        ColorReturn(attack);
-
-    }
-    public void UseAttack(Attack attack, Unit player, Unit chosenEnemy)
-    {
-        
-        DamageFromAttack(attack, player);
-        ReduceStamina(attack, player);
-        ReduceHealth(attackDamage, chosenEnemy, player);
-        ReduceColorFromEnv(attack);
-        ColorReturn(attack);
-
-    }
-    public int DamageFromAttack(Attack attack, Unit unit)
-    {
-
-
-
-        if (unit.isWeaponEquipped != false)
-        {
-            //Debug.Log("Orange");
-            //Debug.Log(unit.equippedWeapon.itemName);
-            switch (unit.equippedWeapon.weaponType)
-            {
-                /*case WeaponType.Axe:
-                    
-                    break;
-                case WeaponType.Staff:
-                    
-                    break;
-                case WeaponType.Sword:
-                    
-                    break;
-                case WeaponType.Hammer:
-                    
-                    break;
-                case WeaponType.Bow:
-                    
-                    break;*/
-                default:
-                    Debug.Log(unit.unitName + " HAS " + unit.physicalAttack + " AND IS EQUIPPED WITH " + unit.equippedWeapon.itemName + "THAT HAS " + unit.equippedWeapon.weaponDamage + "DAMAGE AND THE ATTACK HAS" + attack.attackDamage + "DAMAGE");
-                    attackDamage = unit.physicalAttack + unit.equippedWeapon.weaponDamage + attack.attackDamage;
-                    break;
-            }
-        }
-        else
-        {
-            //Debug.Log("Banana");
-            attackDamage = unit.physicalAttack + attack.attackDamage;
-        }
-
-
-        Debug.Log(attackDamage + "is the amount of damage dealt by" + unit.unitName);
-        
-        return attackDamage;
-
-    }
-    public int DamageFromSpell(Attack attack, Unit unit)
-    {
-        if (unit.isWeaponEquipped != false)
-        {
-            if (unit.equippedWeapon.weaponType == WeaponType.Staff)
-            {
-                attackDamage = unit.magicAttack + attack.attackDamage + unit.equippedWeapon.weaponDamage;
-            }
-            else
-            {
-                attackDamage = unit.magicAttack + attack.attackDamage;
-            }
-
-        }
-
-
-        return attackDamage;
-    }
-    public int DamageBeingDealt(Attack chosenAttack, Unit chosenEnemy)
-    {
-        if(chosenAttack.attackType == AttackType.Physical)
-        {
-            DamageFromAttack(chosenAttack, chosenEnemy);
-        }
-        else
-        {
-            DamageFromSpell(chosenAttack, chosenEnemy);
-        }
-
-        return attackDamage;
-    }
     public int ReduceStamina(Attack attack, Unit unit)
     {
         unit.currentStamina -= attack.staminaCost;
@@ -308,79 +191,6 @@ public class CombatFunctions : MonoBehaviour
         }
 
         return unit.currentStamina;
-    }
-    public void ReduceHealth(int damage, Unit defender, Unit attacker)
-    {
-        //Thinking about putting a for loop here so that I can have multi-attacking attacks
-        //If I ever have multiple enemies I could use a for loop here too and loop through the targets
-        //for(int i = 0; i < attack.attackInstances; i++)
-        {
-            //If the defender is not defending, deal full damage
-            if (defender.isDefending != true)
-            {
-                Debug.Log("DEFENDER IS NOT DEFENDING");
-                switch (uiScript.chosenAttack.attackType)
-                {
-                    case AttackType.Physical:
-                        defender.currentHealth -= (damage - defender.physicalDefense);
-
-                        break;
-                    case AttackType.Special:
-                        defender.currentHealth -= (damage - defender.magicDefense);
-
-                        //Debug.Log(defender.currentHealth + "CUCUMBER");
-                        break;
-                }
-
-
-
-
-            }
-            else
-            {
-                //If they are defending and the attacker is using a weapon that modifies damage based on if 
-                //they are defending
-                Debug.Log("DEFENDER IS DEFENDING");
-                if (attacker.isWeaponEquipped != false)
-                {
-                    switch (attacker.equippedWeapon.weaponType)
-                    {
-                        case WeaponType.Axe:
-                            //Debug.Log(defender.unitName + " has " + defender.currentHealth);
-                            defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
-                            defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
-                            //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
-
-                            break;
-                        case WeaponType.Hammer:
-                            //Debug.Log(defender.unitName + " has " + defender.currentHealth);
-                            defender.currentHealth -= (int)(damage * attacker.equippedWeapon.weaponHealthModifier);
-                            defender.currentStamina -= (int)(damage * attacker.equippedWeapon.weaponStaminaModifier);
-                            //Debug.Log(defender.unitName + " has " + defender.currentHealth + "left.");
-
-                            break;
-                        default:
-                            defender.currentHealth -= (int)(damage * .5);
-
-                            break;
-                    }
-                }
-                else
-                //If defending, attacker isn't equipped, defender takes half damage
-                {
-                    Debug.Log("DEFENDER IS DEFENDING AND ATTACKER ISN'T EQUIPPED");
-                    Debug.Log(defender.name + " HAS " + defender.currentHealth + " HEALTH!");
-                    Debug.Log("DAMAGE = " + damage);
-                    defender.currentHealth -= (int)(damage * .5);
-                    Debug.Log(defender.name + " HAS " + defender.currentHealth + " HEALTH!");
-
-
-                }
-
-            }
-        }
-        
-
     }
     public void ReduceColorFromEnv(Attack attack)
     {
@@ -465,7 +275,6 @@ public class CombatFunctions : MonoBehaviour
                 break;
         }
     }
-
     public void CombatSteps(Attack attack, Unit attacker, Unit defender)
     {
         
@@ -498,7 +307,9 @@ public class CombatFunctions : MonoBehaviour
         switch (attack.attackType)
         {
             case AttackType.Special:
-                if (IsAttackerEquipped(attacker) == true)
+                if (IsAttackerEquipped(attacker) == true && (attacker.equippedWeapon.weaponType == WeaponType.Staff || attacker.equippedWeapon.weaponType == WeaponType.Spellbook))
+                //(IsAttackerEquipped(attacker) == true && (attacker.equippedWeapon.weaponType == WeaponType.Staff || true))
+                //(IsAttackerEquipped(attacker) == true && (false || true))
                 {
                     Debug.Log("ATTACKER IS EQUIPPED");
                     if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
@@ -507,7 +318,7 @@ public class CombatFunctions : MonoBehaviour
                         Staff equippedStaff = player.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
-                            int damageToBeBoosted = (int)((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3);
+                            int damageToBeBoosted = Mathf.RoundToInt((float)((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3));
                             Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
                             
                             potentialAttackDamage = damageToBeBoosted + attacker.magicAttack;
@@ -612,8 +423,8 @@ public class CombatFunctions : MonoBehaviour
         }
         if(crit)
         {
-            potentialAttackDamage = (int)(potentialAttackDamage * 1.25);
-            Debug.Log("YOU'VE LANDED A CRITICAL HIT!");
+            potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage * 1.25));
+            Debug.Log($"YOU'VE LANDED A CRITICAL HIT! {potentialAttackDamage}");
         }
         
     }
@@ -635,16 +446,16 @@ public class CombatFunctions : MonoBehaviour
             switch (defenderStamina)
             {
                 case StaminaLevels.Full:
-                    defenderMagicDefense = (int)(defender.magicDefense * 1.75);
+                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.75));
                     break;
                 case StaminaLevels.ThreeQuarters:
-                    defenderMagicDefense = (int)(defender.magicDefense * 1.5);
+                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.5));
                     break;
                 case StaminaLevels.Half:
-                    defenderMagicDefense = (int)(defender.magicDefense * 1.25);
+                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.25));
                     break;
                 case StaminaLevels.OneQuarter:
-                    defenderMagicDefense = (int)(defender.magicDefense * 1.15);
+                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.15));
                     break;
                 default:
                     defenderMagicDefense = defender.magicDefense * 1;
@@ -658,16 +469,16 @@ public class CombatFunctions : MonoBehaviour
             switch (defenderStamina)
             {
                 case StaminaLevels.Full:
-                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.75);
+                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.75));
                     break;
                 case StaminaLevels.ThreeQuarters:
-                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.5);
+                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.5));
                     break;
                 case StaminaLevels.Half:
-                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.25);
+                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.25));
                     break;
                 case StaminaLevels.OneQuarter:
-                    defenderPhysicalDefense = (int)(defender.physicalDefense * 1.15);
+                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.15));
                     break;
                 default:
                     defenderPhysicalDefense = defender.physicalDefense * 1;

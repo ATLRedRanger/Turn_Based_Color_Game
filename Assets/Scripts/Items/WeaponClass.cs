@@ -32,7 +32,7 @@ public class Weapon : Item
     }
     
 
-    public override void Use(Unit player)
+    public override void Use(Unit user)
     {
         Debug.Log("This is the weapon overriding");
     }

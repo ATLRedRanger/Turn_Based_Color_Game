@@ -63,18 +63,6 @@ public class Enemy_Combat_Functions : MonoBehaviour
         Debug.Log("ENEMY IS ATTACKING");
         EnemyAttackChoice();
 
-
-        /*if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
-
-        {
-            
-            combatFunctionsScript.DamageFromAttack(chosenAttack, enemyOne);
-            combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
-            combatFunctionsScript.ReduceHealth(combatFunctionsScript.attackDamage, player, enemyOne);
-            combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
-            combatFunctionsScript.ColorReturn(chosenAttack);
-            
-        }*/
         if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
         {
             combatFunctionsScript.CheckForSpecialWeaponProperties(enemyOne);
