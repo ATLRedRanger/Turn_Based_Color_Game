@@ -194,7 +194,7 @@ public class CombatFunctions : MonoBehaviour
         }
         if (finalAccuracy >= attack.attackAccuracy)
         {
-
+            Debug.Log("ATTACK HITS!");
             hit = true;
         }
         //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
@@ -472,70 +472,99 @@ public class CombatFunctions : MonoBehaviour
         if(DidAttackHit(attack, attacker) == true)
         {
             CheckForSpecialWeaponProperties(attacker);
-            PotentialDamage(attack, defender);
+            PotentialDamage(attack, attacker);
             CheckForCrit(attacker);
-            //Damage After Damage and Resistances
-            DamageAfterDmgandRes(attack, defender);
-            ReduceHealthOfDefender(attack, defender);
+            DamageAfterArmorandRes(attack, defender);
+            ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
+            ReduceStamina(attack, attacker);
+            ReduceColorFromEnv(attack);
+            ColorReturn(attack);
         }
         attacker.hadATurn = true;
     }
 
-    private void CheckForSpecialWeaponProperties(Unit attacker)
+    public void CheckForSpecialWeaponProperties(Unit attacker)
     {
-        attacker.equippedWeapon.SpecialProperty();
+        if(attacker.equippedWeapon != null)
+        {
+            attacker.equippedWeapon.SpecialProperty();
+        }
+        
     }
 
     public int PotentialDamage(Attack attack, Unit attacker)
     {
-        
+        potentialAttackDamage = 0;
         switch (attack.attackType)
         {
             case AttackType.Special:
-                if (IsAttackerEquipped(attacker) != false)
+                if (IsAttackerEquipped(attacker) == true)
                 {
+                    Debug.Log("ATTACKER IS EQUIPPED");
                     if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
+                        Debug.Log("STAFF EQUIPPED");
                         Staff equippedStaff = player.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
-                            //Let's use Fireball and Player as an example
-                            //(5 * 1.3) + 3 + 1 = 10.5
-                            potentialAttackDamage = (int)(attack.attackDamage * 1.3) + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
+                            int damageToBeBoosted = (int)((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3);
+                            Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
+                            
+                            potentialAttackDamage = damageToBeBoosted + attacker.magicAttack;
+                            
+                        }
+                        else
+                        {
+                            Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
+                            potentialAttackDamage = attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
                         }
 
                     }
                     else
                     {
+                        Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
                         potentialAttackDamage = attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
                     }
                     
                 }
+                else
+                {
+                    Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack}");
+                    potentialAttackDamage = attack.attackDamage + attacker.magicAttack;
+                }
                 break;
             default:
-                if (IsAttackerEquipped(attacker) != false)
+                if (IsAttackerEquipped(attacker) == true)
                 {
+                    Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponDamage}");
                     potentialAttackDamage = attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponDamage;
                 }
                 else
                 {
+                    Debug.Log($"POTENTIAL ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack}");
                     potentialAttackDamage = attack.attackDamage + attacker.physicalAttack;
                 }
                 break;
         }
-        
 
+        Debug.Log($"FINAL POTENTIAL DAMAGE: {potentialAttackDamage}");
         return potentialAttackDamage;
     }
     
     private bool IsAttackerEquipped(Unit attacker)
     {
-        bool isEquipped = false;
-        if(attacker.equippedWeapon != null) { isEquipped = true; }
+
+        bool isEquipped = true;
+        Debug.Log("IS ATTACKER EQUIPPED" + attacker.equippedWeapon);
+        if(attacker.equippedWeapon == null)
+        {
+
+            isEquipped = false;
+        }
         return isEquipped;
     }
 
-    private bool CheckForCrit(Unit attacker)
+    public void CheckForCrit(Unit attacker)
     {
         //The thought process behind this is:
         //The higher your base accuracy, the more likely you are to crit
@@ -544,6 +573,8 @@ public class CombatFunctions : MonoBehaviour
         //Stamina management should also reward/punish your crits
         //If you're in the midst of battle and you're dying, you might get lucky, but not overly so. 
         //I want crits to feel rewarding, but shouldn't really decide the battle
+
+        
 
         bool crit = false;
         int dieRoll = Random.Range(0, 101);
@@ -584,13 +615,15 @@ public class CombatFunctions : MonoBehaviour
             potentialAttackDamage = (int)(potentialAttackDamage * 1.25);
             Debug.Log("YOU'VE LANDED A CRITICAL HIT!");
         }
-        return crit;
+        
     }
 
-    private void DamageAfterDmgandRes(Attack attack, Unit defender)
+    public void DamageAfterArmorandRes(Attack attack, Unit defender)
     {
         int defenderMagicDefense = defender.magicDefense;
         int defenderPhysicalDefense = defender.physicalDefense;
+
+        
 
         //Thought process behind this:
         //I want the player to manage stamina on both sides of the battle
@@ -648,14 +681,59 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
-    private void ReduceHealthOfDefender(Attack attack, Unit defender)
+    public void ReduceHealthAndStaminaOfDefender(Attack attack, Unit attacker, Unit defender)
     {
-        for(int i = 0; i < attack.numOfAttacks; i++)
+
+        //If the defender is defending and the attacker has a weapon
+        //Reduce the health of the defender by the damage * the weaponModifier
+        //If the the defender is defending and the attacker is weaponless
+        //Reduce the health of the defender by half
+        //If the defender is not defending, defender takes full damage 
+
+        if (defender.isDefending && attacker.equippedWeapon != null)
         {
+            Debug.Log("DEFENDER IS DEFENDING AND ATTACKER HAS A WEAPON");
+            defender.currentHealth -= (int)(damageAfterReductions * attacker.equippedWeapon.weaponHealthModifier);
+            defender.currentStamina -= (int)(damageAfterReductions * attacker.equippedWeapon.weaponStaminaModifier);
+            if(defender.currentStamina < 1)
+            {
+                defender.currentStamina = 0;
+            }
+        }
+        else if(defender.isDefending)
+        {
+            Debug.Log("DEFENDER IS DEFENDING");
+            defender.currentHealth -= damageAfterReductions * 1/2;
+        }
+        else
+        {
+            Debug.Log("DEFENDER ISN'T DEFENDING");
             defender.currentHealth -= damageAfterReductions;
         }
+         
     }
 
+    private void WeaponEffectOnDefenderStamina(Unit attacker)
+    {
+        if(attacker.equippedWeapon != null)
+        {
+            switch (attacker.equippedWeapon.weaponType)
+            {
+                case WeaponType.Axe:
+                    break;
+                case WeaponType.Bow:
+                    break;
+                case WeaponType.Staff:
+                    break;
+                case WeaponType.Sword:
+                    break;
+                case WeaponType.Hammer:
+                    break;
+                case WeaponType.Spellbook:
+                    break;
+            }
+        }
+    }
 }
 //TODO: Accuracy? Should it play a part in criticals?
 //TODO: Restructure the way combat is handled so that way it happens in a step by step way

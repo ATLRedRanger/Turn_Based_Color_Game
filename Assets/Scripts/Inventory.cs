@@ -52,7 +52,8 @@ public class Inventory : MonoBehaviour
         playerInventory.Add(itemScript._healthPotion);
         playerInventory.Add(itemScript._basicSpellbook);
         playerInventory.Add(itemScript._basicStaff);
-        
+
+        Debug.Log(player.equippedWeapon);
     }
     
 

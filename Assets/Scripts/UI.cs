@@ -335,10 +335,10 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-        
 
-        combatFunctions.Combat(chosenAttack, player, enemyOne);
-        
+
+        //combatFunctions.Combat(chosenAttack, player, enemyOne);
+        combatFunctions.CombatSteps(chosenAttack, player, enemyOne);
         
         ClosePanels();
 

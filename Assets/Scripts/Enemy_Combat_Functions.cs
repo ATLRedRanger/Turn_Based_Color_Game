@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Enemy_Combat_Functions : MonoBehaviour
@@ -62,8 +63,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
         Debug.Log("ENEMY IS ATTACKING");
         EnemyAttackChoice();
 
-        
-        if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
+
+        /*if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
 
         {
             
@@ -73,22 +74,26 @@ public class Enemy_Combat_Functions : MonoBehaviour
             combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
             combatFunctionsScript.ColorReturn(chosenAttack);
             
-        }
-        else
+        }*/
+        if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
         {
-            enemyOne.isDefending = true;
+            combatFunctionsScript.CheckForSpecialWeaponProperties(enemyOne);
+            combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
+            combatFunctionsScript.CheckForCrit(enemyOne);
+            combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
+            combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
+            combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
+            combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
+            combatFunctionsScript.ColorReturn(chosenAttack);
         }
-
-
+        
         enemyOne.hadATurn = true;
 
     }
 
     public void EnemyAttackChoice()
     {
-
-        
-
+        canAttack = false;
         //For each key-value pair in the units' dictionary of attacks
         foreach (var kvp in enemyOne.enemyAttackDictionary)
         {
@@ -153,6 +158,10 @@ public class Enemy_Combat_Functions : MonoBehaviour
                     break;
             }
 
+        }
+        if (canAttack == false)
+        {
+            enemyOne.isDefending = true;
         }
     }
 
