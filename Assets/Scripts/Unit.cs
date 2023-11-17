@@ -37,6 +37,8 @@ public class Unit : MonoBehaviour
     public int moneyGiven;
 
     //Status Effects
+    public List<Statuses> statusEffects = new List<Statuses>();
+
     public bool isBurning;
 
     public int burnTimer = 3;

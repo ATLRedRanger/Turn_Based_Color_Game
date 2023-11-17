@@ -67,9 +67,14 @@ public class Attack
         //learned to initialize an object in a class
     }
 
-    public void AttackFunction()
+    public void AttackFunction(Unit defender)
     {
         Debug.Log("Attack Function");
+        if(attackColor == Hue.Red)
+        {
+            defender.isBurning = true;
+            defender.statusEffects.Add(Statuses.Burned);
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class CombatFunctions : MonoBehaviour
@@ -281,6 +282,7 @@ public class CombatFunctions : MonoBehaviour
         if(DidAttackHit(attack, attacker) == true)
         {
             CheckForSpecialWeaponProperties(attacker);
+            CheckForAttackAbilities(attack, defender);
             PotentialDamage(attack, attacker);
             CheckForCrit(attacker);
             DamageAfterArmorandRes(attack, defender);
@@ -522,6 +524,11 @@ public class CombatFunctions : MonoBehaviour
             defender.currentHealth -= damageAfterReductions;
         }
          
+    }
+
+    public void CheckForAttackAbilities(Attack attack, Unit defender)
+    {
+        attack.AttackFunction(defender);
     }
 
     private void WeaponEffectOnDefenderStamina(Unit attacker)

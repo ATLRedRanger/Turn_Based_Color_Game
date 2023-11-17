@@ -1797,7 +1797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9801799, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.7924528, g: 0.6317145, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3178,6 +3178,7 @@ MonoBehaviour:
     attackColor: 0
     attackType: 0
     weaponType: 0
+  fillSmoothness: 0.7
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -4573,11 +4574,11 @@ MonoBehaviour:
   maxViolet: 0
   location: Forest
   forestReds: 0a0000000a0000000a000000
-  forestOranges: 00000000050000000a000000
-  forestYellows: 050000000a0000000f000000
-  forestGreens: 0a0000000f00000014000000
-  forestBlues: 050000000a0000000f000000
-  forestViolets: 050000000a0000000f000000
+  forestOranges: 0a0000000a0000000a000000
+  forestYellows: 0a0000000a0000000a000000
+  forestGreens: 0a0000000a0000000a000000
+  forestBlues: 0a0000000a0000000a000000
+  forestViolets: 0a0000000a0000000a000000
 --- !u!4 &727368243
 Transform:
   m_ObjectHideFlags: 0
@@ -8675,7 +8676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.85647917, a: 1}
+  m_Color: {r: 0.7015796, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10859,6 +10860,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890635931}
   m_CullTransparentMesh: 0
+--- !u!1 &1905405096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905405097}
+  - component: {fileID: 1905405098}
+  m_Layer: 0
+  m_Name: StatusEffects_Script
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1905405097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905405096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1037.8684, y: 460.04608, z: -4.7310176}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1905405098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905405096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b640dd015667f43a2576fc27c39cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1941720803
 GameObject:
   m_ObjectHideFlags: 0

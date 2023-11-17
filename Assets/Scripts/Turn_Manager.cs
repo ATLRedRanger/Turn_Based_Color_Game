@@ -42,6 +42,7 @@ public class Turn_Manager : MonoBehaviour
         statusEffectsScript = FindObjectOfType<StatusEffects>();
         enemyFunctionsScript = FindObjectOfType<Enemy_Combat_Functions>();
         envManaScript = FindObjectOfType<ENV_Mana>();
+        
         state = BattleState.START;
         player = unitSpawnerScript.player;
         
@@ -95,10 +96,10 @@ public class Turn_Manager : MonoBehaviour
                     unitReferences[turnIndex].enemyCombatScript.EnemyAttacking();
 
                 }
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.5f);
                 AfterCombatPhase();
                 EndTurn();
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.5f);
                 turnIndex++;
                 if(turnIndex >= turnOrder.Count)
                 {
@@ -187,7 +188,8 @@ public class Turn_Manager : MonoBehaviour
         {
             player.hadATurn = false;
         }
-        
+
+        ui_Script.UpdateUI();
         ui_Script.MenuVisibile();
         CleanUpStep();
         
@@ -282,9 +284,23 @@ public class Turn_Manager : MonoBehaviour
     private void StatusEffectsCheck()
     {
         //Function for statuses to be applied
+        foreach(Statuses status in unitReferences[turnIndex].statusEffects)
+        {
+            switch (status)
+            {
+                case Statuses.Burned:
+                    statusEffectsScript.Burning();
+                    break;
+                case Statuses.Blinded: 
+                    break;
+                case Statuses.Exhausted: 
+                    break;
+                default: break;
+            }
+        }
 
         //statusEffectsScript.BurningCondition();
-        Burning();
+        
     }
 
     private void SpecialAbilitiesCheck()
@@ -338,30 +354,7 @@ public class Turn_Manager : MonoBehaviour
         
     }
 
-    //Statuses
-    public void Burning()
-    {
-
-        int burnDamage = (int)(Mathf.Round(unitReferences[turnIndex].maxHealth / 5));
-        
-        
-        
-
-        
-        if (unitReferences[turnIndex].isBurning)
-        {
-            //Debug.Log("PLAYER IS BURNING!");
-            unitReferences[turnIndex].currentHealth -= burnDamage;
-
-            unitReferences[turnIndex].burnTimer -= 1;
-        }
-        if (unitReferences[turnIndex].burnTimer < 1)
-        {
-
-            unitReferences[turnIndex].isBurning = false;
-        }
-
-    }
+    
 
     IEnumerator WaitForTime(float time)
     {

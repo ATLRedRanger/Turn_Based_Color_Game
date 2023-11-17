@@ -153,7 +153,8 @@ public class UI : MonoBehaviour
 
     //Attack
     public Attack chosenAttack;
-    
+
+    public float fillSmoothness = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -236,13 +237,15 @@ public class UI : MonoBehaviour
 
     private void GraphicalBars()
     {
-        Debug.Log($"RedBar.FillAmount SHOULD BE: {envManaScript.currentRed} / {envManaScript.maxRed}");
+        
+       
         redBar.fillAmount = (float)((float)envManaScript.currentRed / (float)envManaScript.maxRed);
         orangeBar.fillAmount = (float)((float)envManaScript.currentOrange / (float)envManaScript.maxOrange);
         yellowBar.fillAmount = (float)((float)envManaScript.currentYellow / (float)envManaScript.maxYellow);
         greenBar.fillAmount = (float)((float)envManaScript.currentGreen / (float)envManaScript.maxGreen);
         blueBar.fillAmount = (float)((float)envManaScript.currentBlue / (float)envManaScript.maxBlue);
         violetBar.fillAmount = (float)((float)envManaScript.currentViolet / (float)envManaScript.maxViolet);
+        
     }
     
     public void EndBattleUI()

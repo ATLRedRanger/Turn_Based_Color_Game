@@ -66,6 +66,14 @@ public enum AttackType
     Special
 }
 
+public enum Statuses
+{
+    Burned,
+    Blinded,
+    Exhausted
+
+}
+
 public struct LocationMana
 {
     
