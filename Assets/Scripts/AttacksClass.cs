@@ -70,11 +70,26 @@ public class Attack
     public void AttackFunction(Unit defender)
     {
         Debug.Log("Attack Function");
+        switch (attackColor)
+        {
+            case Hue.Red:
+                defender.isBurning = true;
+                defender.statusEffects.Add(Statuses.Burned);
+                break;
+            case Hue.Blue:
+                defender.isStunned = true;
+                defender.statusEffects.Add(Statuses.Stunned);
+                break;
+        }
+        /*
         if(attackColor == Hue.Red)
         {
             defender.isBurning = true;
             defender.statusEffects.Add(Statuses.Burned);
+            defender.isStunned = true;
+            defender.statusEffects.Add(Statuses.Stunned);
         }
+        */
     }
 
 }

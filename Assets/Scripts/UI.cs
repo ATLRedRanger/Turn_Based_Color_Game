@@ -117,6 +117,12 @@ public class UI : MonoBehaviour
     public GameObject _endBattlePanel;
 
     //UI Bars
+    public Image player_HealthBar;
+    public Image player_StaminaBar;
+    public Image player_StunnedBar;
+    public Image enemy_One_HealthBar;
+    public Image enemy_One_StaminaBar;
+    public Image enemy_One_StunnedBar;
     public Image redBar;
     public Image orangeBar;
     public Image yellowBar;
@@ -124,6 +130,9 @@ public class UI : MonoBehaviour
     public Image blueBar;
     public Image violetBar;
 
+    //Status Effect Icons
+    public Image player_Burn_Sprite;
+    public Image enemyOne_Burn_Sprite;
     //Scripts
     public ENV_Mana envManaScript;
 
@@ -175,7 +184,7 @@ public class UI : MonoBehaviour
     }
     IEnumerator StartStuff()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         unitSpawnerScript = gameOrganizer.GetComponent<Unit_Spawner>();
         turnManagerScript = gameOrganizer.GetComponent<Turn_Manager>();
         envManaScript = FindObjectOfType<ENV_Mana>();
@@ -185,10 +194,7 @@ public class UI : MonoBehaviour
         animationScript = FindObjectOfType<Animations>();
         
         UpdateUI();
-        //NamesText();
-        //StartCoroutine(HealthText());
-        //StartCoroutine(StaminaText());
-        //StartCoroutine(EnvironmentText());
+       
     }
     private void NamesText()
     {
@@ -233,12 +239,23 @@ public class UI : MonoBehaviour
         StaminaText();
         EnvironmentText();
         GraphicalBars();
+        StatusEffectSprites();
+        
     }
+
+  
 
     private void GraphicalBars()
     {
-        
-       
+        //Player
+        player_HealthBar.fillAmount = (float)(float)unitSpawnerScript.player.currentHealth / (float)unitSpawnerScript.player.maxHealth;
+        player_StaminaBar.fillAmount = (float)(float)unitSpawnerScript.player.currentStamina / (float)unitSpawnerScript.player.maxStamina;
+
+        //EnemyOne
+        enemy_One_HealthBar.fillAmount = (float)(float)unitSpawnerScript.enemyOne.currentHealth / (float)unitSpawnerScript.enemyOne.maxHealth;
+        enemy_One_StaminaBar.fillAmount = (float)(float)unitSpawnerScript.enemyOne.currentStamina / (float)unitSpawnerScript.enemyOne.maxStamina;
+
+        //Environment
         redBar.fillAmount = (float)((float)envManaScript.currentRed / (float)envManaScript.maxRed);
         orangeBar.fillAmount = (float)((float)envManaScript.currentOrange / (float)envManaScript.maxOrange);
         yellowBar.fillAmount = (float)((float)envManaScript.currentYellow / (float)envManaScript.maxYellow);
@@ -247,7 +264,46 @@ public class UI : MonoBehaviour
         violetBar.fillAmount = (float)((float)envManaScript.currentViolet / (float)envManaScript.maxViolet);
         
     }
-    
+
+    private void StatusEffectSprites()
+    {
+        
+        //Burning
+        if (unitSpawnerScript.player.isBurning == true)
+        {
+            player_Burn_Sprite.gameObject.SetActive(true);
+        }
+        else
+        {
+            player_Burn_Sprite.gameObject.SetActive(false);
+        }
+        if (unitSpawnerScript.enemyOne.isBurning == true)
+        {
+            enemyOne_Burn_Sprite.gameObject.SetActive(true);
+        }
+        else
+        {
+            enemyOne_Burn_Sprite.gameObject.SetActive(false);
+        }
+        //Stunned
+        if(unitSpawnerScript.player.isStunned  == true)
+        {
+            player_StunnedBar.gameObject.SetActive(true);
+        }
+        else
+        {
+            player_StunnedBar.gameObject.SetActive (false);
+        }
+        if (unitSpawnerScript.enemyOne.isStunned)
+        {
+            enemy_One_StunnedBar.gameObject.SetActive(true);
+        }
+        else
+        {
+            enemy_One_StunnedBar.gameObject.SetActive(false);
+        }
+    }
+
     public void EndBattleUI()
     {
         //This function controls all of the text that happens at the end of a battle
@@ -808,7 +864,7 @@ public class UI : MonoBehaviour
 
     private void EnemyButtonNames()
     {
-        enemyOneButtonNameText.text = enemyOne.unitName;
+       enemyOneButtonNameText.text = enemyOne.unitName;
     }
 
     public void NewBattleStuff()

@@ -98,22 +98,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Player
-  maxHealth: 50
-  currentHealth: 50
-  physicalAttack: 3
-  physicalDefense: 0
-  magicAttack: 3
-  magicDefense: 0
+  maxHealth: 100
+  currentHealth: 100
+  physicalAttack: 10
+  physicalDefense: 1
+  magicAttack: 10
+  magicDefense: 1
   currentSpeed: 10
-  maxStamina: 20
-  currentStamina: 20
-  staminaRegenModifier: 1
+  maxStamina: 100
+  currentStamina: 100
+  staminaRegenModifier: 10
   baseAccuracy: 50
   isDefending: 0
   moneyGiven: 0
+  statusEffects: 
   isBurning: 0
   burnTimer: 3
   isExhausted: 0
+  isStunned: 0
+  stunnedTimer: 3
+  stunnedMaxStamina: 0
+  OgStamina: 0
   currentLevel: 1
   currentExp: 0
   expToLevel: 0

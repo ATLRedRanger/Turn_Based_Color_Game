@@ -70,7 +70,8 @@ public enum Statuses
 {
     Burned,
     Blinded,
-    Exhausted
+    Exhausted,
+    Stunned
 
 }
 

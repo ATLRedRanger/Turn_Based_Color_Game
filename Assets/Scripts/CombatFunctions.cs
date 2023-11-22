@@ -106,20 +106,20 @@ public class CombatFunctions : MonoBehaviour
     private StaminaLevels StaminaConversion(Unit unit)
     {
         //The higher the stamina, the better the accuracy the unit will have
-
-        if (unit.currentStamina <= (unit.maxStamina * 1 / 4))
+        Debug.Log($"STAMINA LEVELS {unit.OgStamina}");
+        if (unit.currentStamina <= (unit.OgStamina * 1 / 4))
         {
             return StaminaLevels.OneQuarter;
         }
-        if (unit.currentStamina > (unit.maxStamina * 1 / 4) && unit.currentStamina <= (unit.maxStamina * (1 / 2)))
+        if (unit.currentStamina > (unit.OgStamina * 1 / 4) && unit.currentStamina <= (unit.OgStamina * (1 / 2)))
         {
             return StaminaLevels.Half;
         }
-        if ((unit.currentStamina > (1 / 2) && unit.currentStamina <= (unit.maxStamina * 3 / 4)))
+        if ((unit.currentStamina > (1 / 2) && unit.currentStamina <= (unit.OgStamina * 3 / 4)))
         {
             return StaminaLevels.ThreeQuarters;
         }
-        if (unit.currentStamina > (unit.maxStamina * 3 / 4))
+        if (unit.currentStamina > (unit.OgStamina * 3 / 4))
         {
             return StaminaLevels.Full;
         }
@@ -286,6 +286,7 @@ public class CombatFunctions : MonoBehaviour
             PotentialDamage(attack, attacker);
             CheckForCrit(attacker);
             DamageAfterArmorandRes(attack, defender);
+            DamageAfterStatusCheck(defender);
             ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
             ReduceStamina(attack, attacker);
             ReduceColorFromEnv(attack);
@@ -494,6 +495,17 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
+    public void DamageAfterStatusCheck(Unit defender)
+    {
+        Debug.Log($"DAMAGE AFTER REDUCTIONS{damageAfterReductions} : {defender.isExhausted}");
+
+        if (defender.isExhausted)
+        {
+            damageAfterReductions = (int)(damageAfterReductions * 1.5);
+        }
+        Debug.Log($"DAMAGE AFTER REDUCTIONS{damageAfterReductions}");
+    }
+
     public void ReduceHealthAndStaminaOfDefender(Attack attack, Unit attacker, Unit defender)
     {
 
@@ -502,7 +514,7 @@ public class CombatFunctions : MonoBehaviour
         //If the the defender is defending and the attacker is weaponless
         //Reduce the health of the defender by half
         //If the defender is not defending, defender takes full damage 
-
+        
         if (defender.isDefending && attacker.equippedWeapon != null)
         {
             Debug.Log("DEFENDER IS DEFENDING AND ATTACKER HAS A WEAPON");
@@ -567,4 +579,6 @@ public class CombatFunctions : MonoBehaviour
 // 7) Are there any secondary effects of the attack?
 
 //TODO: Come up with a damage calculation that takes into account Attack Damage, Weapon Damage, Critials, Base Defenses, Armor Defenses and other miscellaneous values. 
+//TODO: Make sure the damage calcs always make the defender lose health NOT GAIN IT if the defender has more defenses than the attacker has offense. 
+//TODO: Go through all the numbers
 

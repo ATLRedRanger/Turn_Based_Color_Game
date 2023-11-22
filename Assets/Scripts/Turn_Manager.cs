@@ -105,6 +105,7 @@ public class Turn_Manager : MonoBehaviour
                 {
                     turnIndex = 0;
                 }
+                
             }
         }
 
@@ -283,8 +284,9 @@ public class Turn_Manager : MonoBehaviour
     }
     private void StatusEffectsCheck()
     {
+        
         //Function for statuses to be applied
-        foreach(Statuses status in unitReferences[turnIndex].statusEffects)
+        foreach (Statuses status in unitReferences[turnIndex].statusEffects)
         {
             switch (status)
             {
@@ -295,11 +297,13 @@ public class Turn_Manager : MonoBehaviour
                     break;
                 case Statuses.Exhausted: 
                     break;
+                case Statuses.Stunned:
+                    statusEffectsScript.Stunned();
+                    break;
                 default: break;
             }
+           
         }
-
-        //statusEffectsScript.BurningCondition();
         
     }
 

@@ -99,22 +99,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Boblin2
-  maxHealth: 50
-  currentHealth: 50
-  physicalAttack: 3
-  physicalDefense: 2
-  magicAttack: 3
-  magicDefense: 2
+  maxHealth: 100
+  currentHealth: 100
+  physicalAttack: 5
+  physicalDefense: 5
+  magicAttack: 5
+  magicDefense: 5
   currentSpeed: 3
-  maxStamina: 11
-  currentStamina: 11
-  staminaRegenModifier: 3
+  maxStamina: 100
+  currentStamina: 100
+  staminaRegenModifier: 10
   baseAccuracy: 50
   isDefending: 0
   moneyGiven: 100
+  statusEffects: 
   isBurning: 0
   burnTimer: 3
   isExhausted: 0
+  isStunned: 0
+  stunnedTimer: 3
+  stunnedMaxStamina: 0
+  OgStamina: 0
   currentLevel: 0
   currentExp: 0
   expToLevel: 0

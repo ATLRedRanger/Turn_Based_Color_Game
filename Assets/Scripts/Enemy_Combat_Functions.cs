@@ -69,6 +69,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
             combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
             combatFunctionsScript.CheckForCrit(enemyOne);
             combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
+            combatFunctionsScript.DamageAfterStatusCheck(player);
             combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
             combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
             combatFunctionsScript.ReduceColorFromEnv(chosenAttack);

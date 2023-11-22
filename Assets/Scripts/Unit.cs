@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -39,13 +40,16 @@ public class Unit : MonoBehaviour
     //Status Effects
     public List<Statuses> statusEffects = new List<Statuses>();
 
+    //Burning
     public bool isBurning;
-
     public int burnTimer = 3;
-
     public bool isExhausted;
-
-
+    //Stunned
+    public bool isStunned;
+    public int stunnedTimer = 3;
+    public int stunnedMaxStamina;
+    public int OgStamina;
+    
 
     [SerializeField] private int currentLevel;
 
@@ -135,7 +139,9 @@ public class Unit : MonoBehaviour
         LearnAbilities();
         EnemyAttacks();
         //LearnSpells();
-
+        OgStamina = maxStamina;
+        stunnedMaxStamina = maxStamina / 2;
+        
     }
 
     //Adding attacks to an attack dictionary
