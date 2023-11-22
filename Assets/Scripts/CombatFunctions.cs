@@ -60,7 +60,7 @@ public class CombatFunctions : MonoBehaviour
     public void RegenStamina(Unit unit)
     {
         //Regenerate stamina at a rate of 1/5th of their maximum stanima
-
+        //Stamina stunned problem isn't here
         int staminaRegend = ((unit.maxStamina * 1 / 3)*unit.staminaRegenModifier);
 
         unit.currentStamina += staminaRegend;
@@ -68,6 +68,7 @@ public class CombatFunctions : MonoBehaviour
 
         if(unit.currentStamina >= unit.maxStamina)
         {
+            
             unit.currentStamina = unit.maxStamina;
         }
 
@@ -106,7 +107,7 @@ public class CombatFunctions : MonoBehaviour
     private StaminaLevels StaminaConversion(Unit unit)
     {
         //The higher the stamina, the better the accuracy the unit will have
-        Debug.Log($"STAMINA LEVELS {unit.OgStamina}");
+        
         if (unit.currentStamina <= (unit.OgStamina * 1 / 4))
         {
             return StaminaLevels.OneQuarter;
@@ -173,7 +174,7 @@ public class CombatFunctions : MonoBehaviour
         }
         if (finalAccuracy >= attack.attackAccuracy)
         {
-            Debug.Log("ATTACK HITS!");
+            
             hit = true;
         }
         //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);

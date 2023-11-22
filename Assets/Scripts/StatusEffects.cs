@@ -44,28 +44,31 @@ public class StatusEffects : MonoBehaviour
 
     public void Stunned()
     {
-        
 
+        Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
             
-            if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned)
-            {
-                turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedMaxStamina;
+        if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned)
+        {
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedMaxStamina;
 
-                if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina > turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina)
-                {
-                    turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina;
-                }
-                
-            }
-            
-            if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer < 1)
+            if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina > turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina)
             {
-                turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].OgStamina;
-                turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned = false;
-                
+                Debug.Log("IF STUNNED AN CURRENT > MAX");
+                turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina;
             }
+                
+        }
+            
+        if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer < 1)
+        {
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].OgStamina;
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned = false;
+                
+        }
             
             
-            turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer -= 1;
+        turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer -= 1;
+
+        Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
     }
 }

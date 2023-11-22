@@ -20,6 +20,7 @@ public class Staff : Weapon
         this.weaponType = weaponType;
         this.statusEffectChance = statusEffectChance;
         this.affinity = affinity;
+        //this.itemAmount = 1;
     }
 
     public override void Use(Unit player)

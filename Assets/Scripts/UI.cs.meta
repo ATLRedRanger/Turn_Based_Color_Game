@@ -3,7 +3,83 @@ guid: d09dfb5244063c04b8d855af137df37e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemyOneName: {instanceID: 0}
+  - enemyOneHealth: {instanceID: 0}
+  - enemyOneStamina: {instanceID: 0}
+  - enemyOneButton: {instanceID: 0}
+  - playerName: {instanceID: 0}
+  - playerHealth: {instanceID: 0}
+  - playerStamina: {instanceID: 0}
+  - backButtonText: {instanceID: 0}
+  - experienceGained: {instanceID: 0}
+  - weaponExperienceGained: {instanceID: 0}
+  - moneyGained: {instanceID: 0}
+  - victoryText: {instanceID: 0}
+  - defeatText: {instanceID: 0}
+  - environmentRed: {instanceID: 0}
+  - environmentOrange: {instanceID: 0}
+  - environmentYellow: {instanceID: 0}
+  - environmentGreen: {instanceID: 0}
+  - environmentBlue: {instanceID: 0}
+  - environmentViolet: {instanceID: 0}
+  - _itemButton: {instanceID: 0}
+  - _spellsButton: {instanceID: 0}
+  - _attackButton: {instanceID: 0}
+  - _defendButton: {instanceID: 0}
+  - _abilitiesButton: {instanceID: 0}
+  - _fightButton: {instanceID: 0}
+  - _backButton: {instanceID: 0}
+  - _newBattleButton: {instanceID: 0}
+  - _punchButton: {instanceID: 0}
+  - _chopButton: {instanceID: 0}
+  - _violetBallButton: {instanceID: 0}
+  - _slashButton: {instanceID: 0}
+  - _slamButton: {instanceID: 0}
+  - _quickShotButton: {instanceID: 0}
+  - _healthPotion: {instanceID: 0}
+  - _fireBallButton: {instanceID: 0}
+  - _yellowSplash: {instanceID: 0}
+  - _orangeSpike: {instanceID: 0}
+  - _blueCrush: {instanceID: 0}
+  - _greenPunch: {instanceID: 0}
+  - _enemyOneButton: {instanceID: 0}
+  - enemyOneText: {instanceID: 0}
+  - enemyOneButtonNameText: {instanceID: 0}
+  - _enemyOneButtonTwo: {instanceID: 0}
+  - enemyOneTextTwo: {instanceID: 0}
+  - _enemiesPanel: {instanceID: 0}
+  - _enemiesTwoPanel: {instanceID: 0}
+  - _abilitiesPanel: {instanceID: 0}
+  - _itemPanel: {instanceID: 0}
+  - _spellsPanel: {instanceID: 0}
+  - _fightPanel: {instanceID: 0}
+  - _endBattlePanel: {instanceID: 0}
+  - player_HealthBar: {instanceID: 0}
+  - player_StaminaBar: {instanceID: 0}
+  - player_StunnedBar: {instanceID: 0}
+  - enemy_One_HealthBar: {instanceID: 0}
+  - enemy_One_StaminaBar: {instanceID: 0}
+  - enemy_One_StunnedBar: {instanceID: 0}
+  - redBar: {instanceID: 0}
+  - orangeBar: {instanceID: 0}
+  - yellowBar: {instanceID: 0}
+  - greenBar: {instanceID: 0}
+  - blueBar: {instanceID: 0}
+  - violetBar: {instanceID: 0}
+  - player_Burn_Sprite: {instanceID: 0}
+  - enemyOne_Burn_Sprite: {instanceID: 0}
+  - envManaScript: {instanceID: 0}
+  - gameOrganizer: {instanceID: 0}
+  - unitSpawnerScript: {instanceID: 0}
+  - turnManagerScript: {instanceID: 0}
+  - combatFunctions: {instanceID: 0}
+  - attacksDatabase: {instanceID: 0}
+  - inventoryScript: {instanceID: 0}
+  - enemyOne: {instanceID: 0}
+  - statusEffectsScript: {instanceID: 0}
+  - damagePopUp: {fileID: 3185658473937891240, guid: b66089ebf13412d4ea893ac153abe47a,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

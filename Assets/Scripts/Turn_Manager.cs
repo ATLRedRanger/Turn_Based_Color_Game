@@ -13,7 +13,7 @@ public class Turn_Manager : MonoBehaviour
 
     public int playersAlive;
 
-    public Unit player;
+    //public Unit player;
 
     public Unit enemyOne;
 
@@ -37,16 +37,13 @@ public class Turn_Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        unitSpawnerScript = GetComponent<Unit_Spawner>();
+        unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
         statusEffectsScript = FindObjectOfType<StatusEffects>();
         enemyFunctionsScript = FindObjectOfType<Enemy_Combat_Functions>();
         envManaScript = FindObjectOfType<ENV_Mana>();
         
         state = BattleState.START;
-        player = unitSpawnerScript.player;
-        
-        enemyOne = unitSpawnerScript.enemyOne;
         Debug.Log("BattleState is " + state);
 
         StartCoroutine(ControlCenter());
@@ -69,7 +66,7 @@ public class Turn_Manager : MonoBehaviour
         //TurnOrder is the local copy and UnitReferences is the real objects. 
 
         //TODO: Add time between events. Add a pause after animations, turns, events, etc.
-        while(IsBattleWonOrLost() == false && player.AmIDeadYet() == false)
+        while(IsBattleWonOrLost() == false && unitSpawnerScript.player.AmIDeadYet() == false)
         {
             BeginRound();
             turnIndex = 0;
@@ -86,7 +83,7 @@ public class Turn_Manager : MonoBehaviour
                     ui_Script.MenuVisibile();
                     ui_Script.UpdateUI();
                     
-                    yield return new WaitUntil(() => player.hadATurn == true);
+                    yield return new WaitUntil(() => unitSpawnerScript.player.hadATurn == true);
                 }
                 else
                 {
@@ -134,7 +131,7 @@ public class Turn_Manager : MonoBehaviour
     }
     public void BeginRound() //Uses new turn scheme
     {
-        player.hadATurn = false;
+        unitSpawnerScript.player.hadATurn = false;
         Debug.Log("Begin Turn");
         ui_Script.MenuVisibile();
         ui_Script.UpdateUI();
@@ -152,19 +149,13 @@ public class Turn_Manager : MonoBehaviour
         ui_Script.UpdateUI();
 
         unitReferences[turnIndex].isDefending = false;
-
         UnitStaminaRegen();
-
         StatusEffectsCheck();
-
         DeathCheck();
-
         CombatantsCheck();
-        
         ui_Script.UpdateUI();
-        
         //TODO: Make the turn end when someone dies during this phase. 
-        
+
     }
     public void AfterCombatPhase()
     {
@@ -187,7 +178,7 @@ public class Turn_Manager : MonoBehaviour
 
         if(state == BattleState.PLAYERTURN)
         {
-            player.hadATurn = false;
+            unitSpawnerScript.player.hadATurn = false;
         }
 
         ui_Script.UpdateUI();
@@ -309,7 +300,7 @@ public class Turn_Manager : MonoBehaviour
 
     private void SpecialAbilitiesCheck()
     {
-        enemyOne.SpecialAbility();
+        unitSpawnerScript.enemyOne.SpecialAbility();
     }
     public void CleanUpStep()
     {
@@ -324,11 +315,11 @@ public class Turn_Manager : MonoBehaviour
         //player.GainExperience(enemyOne.expGiven, 10);
         //Testing values for leveling up
         //Above is the OG
-        player.GainExperience(100, 100);
+        unitSpawnerScript.player.GainExperience(100, 100);
         ui_Script.EndBattleUI();
         ui_Script._fightButton.SetActive(false);
-        player.DidILevelUp();
-        player.DidWeaponLevelUp();
+        unitSpawnerScript.player.DidILevelUp();
+        unitSpawnerScript.player.DidWeaponLevelUp();
     }
     public void PlayerLost()
     {
@@ -349,7 +340,7 @@ public class Turn_Manager : MonoBehaviour
         ui_Script.NewBattleStuff();
         enemyFunctionsScript.NewBattleStuff();
 
-        ui_Script.enemyOne = enemyOne;
+        ui_Script.unitSpawnerScript.enemyOne = enemyOne;
         StartCoroutine(ControlCenter());
 
         ui_Script.CloseEndBattle();

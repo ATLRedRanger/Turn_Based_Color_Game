@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
+
 public class Inventory : MonoBehaviour
 {
     
@@ -27,6 +28,8 @@ public class Inventory : MonoBehaviour
     public List<Button> buttonList = new List<Button>();
 
     public List<TMP_Text> buttonTextList = new List<TMP_Text>();
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -123,11 +126,22 @@ public class Inventory : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
+
+        for(int i = 0; i < buttonList.Count; i++)
+        {
+            buttonList[i].gameObject.SetActive(false);
+            
+        }
         
+        //Loops through the buttonList to set buttons active to the number of items in the inventory
+        //Sets any extra buttons to false if they're out of the inventory
         for(int i = 0; i < playerInventory.Count; i++)
         {
+            
             buttonList[i].gameObject.SetActive(true);
             buttonTextList[i].text = playerInventory[i].itemName;
+            
+            
         }
         
     }
@@ -139,16 +153,34 @@ public class Inventory : MonoBehaviour
 
         playerInventory[stringButtonNum - 1].Use(player);
 
-        playerInventory[stringButtonNum - 1].itemAmount -= 1;
+        
         if (playerInventory[stringButtonNum - 1].itemAmount < 1)
         {
+            
             playerInventory.Remove(playerInventory[stringButtonNum - 1]);
+            
         }
 
-        UpdateInventoryUI();
+        
         ui_Script.UpdateUI();
         ui_Script.ClosePanels();
     }
+
+    public bool IsSpellbook()
+    {
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+
+        bool isSpellBook = false;
+
+        if (playerInventory[stringButtonNum - 1].itemName.Contains("SpellBook"))
+        {
+            isSpellBook = true;
+        }
+
+        return isSpellBook;
+    }
 }
 //TODO: Make an inventory panel that has all the items in the player inventory
+//TODO: Make it so that the inventory updates so that if the inventory doesn't have an item it doesn't show up in the UI
 //Actually use the Use() function on the items instead of what i'm doing in CombatFunctions

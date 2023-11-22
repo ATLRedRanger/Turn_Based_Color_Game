@@ -29,7 +29,7 @@ public class Item
 
     public Item()
     {
-        //This constructor is here for children classes.
+        this.itemAmount = 1;
     }
 
     public Item(string itemName, string itemDescription, int itemAmount)

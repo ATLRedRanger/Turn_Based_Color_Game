@@ -69,7 +69,7 @@ public class Attack
 
     public void AttackFunction(Unit defender)
     {
-        Debug.Log("Attack Function");
+        
         switch (attackColor)
         {
             case Hue.Red:

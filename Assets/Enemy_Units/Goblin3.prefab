@@ -108,7 +108,7 @@ MonoBehaviour:
   currentSpeed: 2
   maxStamina: 100
   currentStamina: 100
-  staminaRegenModifier: 10
+  staminaRegenModifier: 1
   baseAccuracy: 50
   isDefending: 0
   moneyGiven: 0

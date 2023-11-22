@@ -29,6 +29,7 @@ public class Weapon : Item
         this.weaponHealthModifier = weaponHealthModifier;
         this.weaponStaminaModifier = weaponStaminaModifier;
         this.weaponType = weaponType;
+        //this.itemAmount = 1;
     }
     
 

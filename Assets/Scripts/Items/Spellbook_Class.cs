@@ -27,6 +27,7 @@ public class Spellbook : Weapon
         this.spellBookTier = spellBookTier;
         this.spellBookLevel = spellBookLevel;
         this.affinity = affinity;
+        //this.itemAmount = 1;
     }
 
     public void AddSpellToSpellbook(Attack attack)

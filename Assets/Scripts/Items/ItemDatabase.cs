@@ -39,7 +39,7 @@ public class ItemDatabase : MonoBehaviour
 
         _basicStaff = new Staff("Basic Staff", "A basic staff", 1, 2, 1, 1, WeaponType.Staff, 1, Hue.Red);
 
-        _basicSpellbook = new Spellbook(_basicAxe, 1, 1, "Basic Spellbook", WeaponType.Spellbook, Hue.Neutral);
+        _basicSpellbook = new Spellbook(_basicAxe, 1, 1, "Basic SpellBook", WeaponType.Spellbook, Hue.Neutral);
        // _basicSpellbook.AddSpellToSpellbook(attackDatabase._fireBall);
     }
 
