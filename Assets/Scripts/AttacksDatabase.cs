@@ -29,16 +29,13 @@ public class AttacksDatabase : MonoBehaviour
 
 
     //Magic Defensive
-    
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
         _punch = new Attack("Punch", "Punch", 1, 1, 0, 100, 1, Hue.Neutral, AttackType.Physical, WeaponType.Neutral);
 
         _fireBall = new Attack("Fireball", "Red_Slash", 5, 12, 5, 75, 1, Hue.Red, AttackType.Special, WeaponType.Neutral);
-
+        Debug.Log("FIREBALL NAME = " + _fireBall.attackName);
         _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 7, 7, 75, 1, Hue.Green, AttackType.Physical, WeaponType.Neutral);
 
         _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 6, 4, 75, 1, Hue.Orange, AttackType.Special, WeaponType.Neutral);
@@ -48,7 +45,7 @@ public class AttacksDatabase : MonoBehaviour
         _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 12, 4, 85, 1, Hue.Yellow, AttackType.Special, WeaponType.Neutral);
 
         //I can make private weapons in this way using the createAttack function
-        _kick = createAttack("Kick", "Kick", 3, 3, 0, 100,1, Hue.Neutral, AttackType.Physical, WeaponType.Neutral);
+        _kick = createAttack("Kick", "Kick", 3, 3, 0, 100, 1, Hue.Neutral, AttackType.Physical, WeaponType.Neutral);
 
 
 
@@ -66,6 +63,12 @@ public class AttacksDatabase : MonoBehaviour
 
         //Bow
         _quickShot = new Attack("Quick Shot", "Quick_Shot", 2, 4, 0, 90, 1, Hue.Neutral, AttackType.Physical, WeaponType.Bow);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
 
 
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Runtime.CompilerServices;
+using UnityEngine.EventSystems;
 
 public class UI : MonoBehaviour
 {
@@ -76,7 +77,15 @@ public class UI : MonoBehaviour
     public Button _quickShotButton;
 
 
-
+    //SpellBook Buttons
+    public Button _spellBookButton1;
+    public TMP_Text _spellBookButton1Text;
+    public Button _spellBookButton2;
+    public TMP_Text _spellBookButton2Text;
+    public Button _spellBookButton3;
+    public TMP_Text _spellBookButton3Text;
+    public Button _spellBookButton4;
+    public TMP_Text _spellBookButton4Text;
 
     //UI Item Buttons
     public GameObject _healthPotion;
@@ -116,6 +125,8 @@ public class UI : MonoBehaviour
 
     public GameObject _endBattlePanel;
 
+    public GameObject _spellBookPanel;
+
     //UI Bars
     public Image player_HealthBar;
     public Image player_StaminaBar;
@@ -144,9 +155,9 @@ public class UI : MonoBehaviour
 
     public CombatFunctions combatFunctions;
 
-    public AttacksDatabase attacksDatabase;
+    private AttacksDatabase attacksDatabase;
 
-    public Inventory inventoryScript;
+    private Inventory inventoryScript;
 
     //Player
     public StatusEffects statusEffectsScript;
@@ -408,6 +419,7 @@ public class UI : MonoBehaviour
         combatFunctions.CombatSteps(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne);
         
         ClosePanels();
+        _spellBookPanel.gameObject.SetActive(false);
 
         //Calls the function to play animations from the animation script. 
         animationScript.PlayAnimation(chosenAttack);
@@ -693,11 +705,13 @@ public class UI : MonoBehaviour
         {
 
             _fightPanel.SetActive(!isActive);
+            _spellBookPanel.SetActive(false);
         }
 
         if (_fightPanel.activeSelf == false)
         {
             ClosePanels();
+            _spellBookPanel.SetActive(false);
         }
     }
 
@@ -814,6 +828,41 @@ public class UI : MonoBehaviour
         _enemiesPanel.SetActive(false);
     }
 
+    public void OpenSpellBookPanel()
+    {
+        _spellBookButton1.gameObject.SetActive(false);
+        _spellBookButton2.gameObject.SetActive(false);
+        _spellBookButton3.gameObject.SetActive(false);
+        _spellBookButton4.gameObject.SetActive(false);
+
+        _spellBookPanel.SetActive(true);
+
+        Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
+        
+        //If the button is true, set the text of the button to the spell name
+        if (spellbook.spellBookAttackList.Count >= 1)
+        {
+            _spellBookButton1.gameObject.SetActive(true);
+            _spellBookButton1Text.text = spellbook.spellBookAttackList[0].attackName;
+        }
+        if (spellbook.spellBookAttackList.Count >= 2)
+        {
+            _spellBookButton2.gameObject.SetActive(true);
+            _spellBookButton2Text.text = spellbook.spellBookAttackList[1].attackName;
+        }
+        if (spellbook.spellBookAttackList.Count >= 3)
+        {
+            _spellBookButton3.gameObject.SetActive(true);
+            _spellBookButton3Text.text = spellbook.spellBookAttackList[2].attackName;
+        }
+        if (spellbook.spellBookAttackList.Count >= 4)
+        {
+            _spellBookButton4.gameObject.SetActive(true);
+            _spellBookButton4Text.text = spellbook.spellBookAttackList[3].attackName;
+        }
+
+    }
+
     public void ClosePanels()
     {
         _fightPanel.SetActive(false);
@@ -822,7 +871,7 @@ public class UI : MonoBehaviour
         _itemPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
         _enemiesTwoPanel.SetActive(false);
-        
+       
     }
 
     public void CloseEndBattle()
@@ -865,6 +914,28 @@ public class UI : MonoBehaviour
        enemyOneButtonNameText.text = unitSpawnerScript.enemyOne.unitName;
     }
 
+    public void SpellBookButton1()
+    {
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+
+        if(unitSpawnerScript.player.equippedWeapon.weaponType == WeaponType.Spellbook)
+        {
+            _spellBookButton1.interactable = true;
+            
+            Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
+            chosenAttack = spellbook.spellBookAttackList[stringButtonNum - 1];
+            
+
+            OpenEnemiesPanel();
+        }
+        else
+        {
+            _spellBookButton1.interactable = false;
+            Debug.Log("Must be equipped to use");
+        }
+    }
+
     public void NewBattleStuff()
     {
         enemyOneHealth.enabled = true;
@@ -882,3 +953,4 @@ public class UI : MonoBehaviour
 //TODO: Better button feedback 
 //TODO: Fix the reason why I can't click the Fight button too soon
 //TODO: Figure out a better way to use items. 
+//TODO: Make a function called IsCastable to grey out uncastable spells in SpellBook

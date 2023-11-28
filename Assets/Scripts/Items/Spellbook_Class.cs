@@ -15,10 +15,13 @@ public class Spellbook : Weapon
 
     public Dictionary<string, Attack> spellBookSpells = new Dictionary<string, Attack>();
 
-    public Spellbook(Weapon weapon, int spellBookTier, int spellBookLevel, string itemName, WeaponType weaponType, Hue affinity)
+    public List<Attack> spellBookAttackList = new List<Attack>();
+    
+
+    public Spellbook(Weapon weapon, int spellBookTier, int spellBookLevel, string itemName, string itemDesctiption, WeaponType weaponType, Hue affinity)
     {
         this.itemName = itemName;
-        itemDescription = weapon.itemDescription;
+        this.itemDescription = itemDesctiption;
         weaponLevelRequirement = weapon.weaponLevelRequirement;
         weaponDamage = weapon.weaponDamage;
         weaponHealthModifier = weapon.weaponHealthModifier;
@@ -27,13 +30,16 @@ public class Spellbook : Weapon
         this.spellBookTier = spellBookTier;
         this.spellBookLevel = spellBookLevel;
         this.affinity = affinity;
-        //this.itemAmount = 1;
+        
     }
 
     public void AddSpellToSpellbook(Attack attack)
     {
+        spellBookAttackList.Add(attack);
+        Debug.Log("ATTACK ADDED = " + attack.attackName);
         //Adds a spell to the spellbook
         //If there are less spells in the book than the tier of the spellbook
+        /*
         if (spellBookSpells.Count < spellBookTier)
         {
             spellBookSpells.Add(attack.attackName, attack);
@@ -42,6 +48,15 @@ public class Spellbook : Weapon
         {
             Debug.Log("This spellbook can only hold " + spellBookTier + " spells.");
         }
+        
+        if (spellBookAttackList.Count < spellBookTier)
+        {
+            spellBookAttackList.Add(attack);
+        }
+        else
+        {
+            Debug.Log("This spellbook can only hold " + spellBookTier + " spells.");
+        }*/
     }
 
     public void GainExperience(int experience)

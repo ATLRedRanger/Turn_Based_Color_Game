@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
         
         playerWeaponList.Add(itemScript._basicAxe);
         playerConsumableList.Add(itemScript._healthPotion);
-        player.equippedWeapon = itemScript._basicStaff;
+        player.equippedWeapon = itemScript._basicSpellbook;
         player.isWeaponEquipped = true;
         playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
@@ -137,48 +137,77 @@ public class Inventory : MonoBehaviour
         //Sets any extra buttons to false if they're out of the inventory
         for(int i = 0; i < playerInventory.Count; i++)
         {
-            
+            //Checks to see if the button has "SpellBook" in its name 
+            //If it does, the player can use the spellbook to open the panel
+            //If it doesn't, the button is uninteractable
+            if (buttonTextList[i].text.Contains("SpellBook") && player.equippedWeapon.weaponType != WeaponType.Spellbook)
+            {
+                buttonList[i].interactable = false;
+            }
             buttonList[i].gameObject.SetActive(true);
             buttonTextList[i].text = playerInventory[i].itemName;
             
             
         }
         
+        
+
+    }
+    
+    public bool CheckIfSpellbook()
+    {
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+        Debug.Log(playerInventory[stringButtonNum - 1].itemName);
+        if (playerInventory[stringButtonNum - 1].itemName.Contains("SpellBook"))
+        {
+            
+            return true;
+        }
+
+        return false;
     }
 
     public void UseItem()
     {
+        //TODO: Fix the closePanels timing so that the spellbook panel stays open
+        //      until you cast the spell. 
+
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
 
-        playerInventory[stringButtonNum - 1].Use(player);
+        if (CheckIfSpellbook())
+        {
+            OpenSpellBook();
+        }
+        else
+        {
+            playerInventory[stringButtonNum - 1].Use(player);
+
+
+            if (playerInventory[stringButtonNum - 1].itemAmount < 1)
+            {
+
+                playerInventory.Remove(playerInventory[stringButtonNum - 1]);
+
+            }
+        }
+        
 
         
-        if (playerInventory[stringButtonNum - 1].itemAmount < 1)
-        {
-            
-            playerInventory.Remove(playerInventory[stringButtonNum - 1]);
-            
-        }
 
         
         ui_Script.UpdateUI();
         ui_Script.ClosePanels();
     }
 
-    public bool IsSpellbook()
+    public void OpenSpellBook()
     {
-        string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+        ui_Script.OpenSpellBookPanel();
+        ui_Script.ClosePanels();
+        ui_Script._fightPanel.SetActive(true);
 
-        bool isSpellBook = false;
 
-        if (playerInventory[stringButtonNum - 1].itemName.Contains("SpellBook"))
-        {
-            isSpellBook = true;
-        }
-
-        return isSpellBook;
     }
 }
 //TODO: Make an inventory panel that has all the items in the player inventory

@@ -64,8 +64,8 @@
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\TrackGui\TimelineTrackGUI.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\TimelineWindow_PreviewPlayMode.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Animation\CurvesProxy.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\Drawers\Layers\MarkersLayer.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\TimelineWindowAnalytics.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\Drawers\Layers\MarkersLayer.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\Modes\TimelineInactiveMode.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Animation\BindingTreeViewDataSourceGUI.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Manipulators\TimeIndicator.cs" />
@@ -122,10 +122,10 @@
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\CustomEditors\MarkerTrackEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Utilities\Scopes\HorizontalScope.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Items\ITimelineItem.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Animation\CurveTreeViewNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\State\PlayRange.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\TimelineWindow_Selection.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Manipulators\Move\MovingItems.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Animation\CurveTreeViewNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Manipulators\Utils\PlacementValidity.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Items\MarkerItem.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Recording\TrackAssetRecordingExtensions.cs" />
@@ -178,8 +178,8 @@
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Recording\TimelineRecordingContextualResponder.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\inspectors\MarkerInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\TimelineTreeViewGUI.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\ItemGui\TimelineMarkerClusterGUI.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\DirectorStyles.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\ItemGui\TimelineMarkerClusterGUI.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Actions\MarkerAction.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Utilities\Clipboard.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Utilities\TimelineKeyboardNavigation.cs" />
@@ -272,9 +272,9 @@
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\ViewModel\TimelineAssetViewModel.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Playables\ControlPlayableInspector.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\ViewModel\TimelineAssetViewModel_versions.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\MenuPriority.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\TrackPropertyCurvesDataSource.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Window\TimelineWindow_PlaybackControls.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\MenuPriority.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\Analytics\TimelineAnalytics.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\Drawers\InfiniteTrackDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline@1.7.4\Editor\treeview\Snapping\SnapEngine.cs" />

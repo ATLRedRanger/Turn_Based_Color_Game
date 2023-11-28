@@ -39,8 +39,19 @@ public class ItemDatabase : MonoBehaviour
 
         _basicStaff = new Staff("Basic Staff", "A basic staff", 1, 2, 1, 1, WeaponType.Staff, 1, Hue.Red);
 
-        _basicSpellbook = new Spellbook(_basicAxe, 1, 1, "Basic SpellBook", WeaponType.Spellbook, Hue.Neutral);
-       // _basicSpellbook.AddSpellToSpellbook(attackDatabase._fireBall);
+        _basicSpellbook = new Spellbook(_basicStaff, 1, 1, "Basic SpellBook", "A basic spelbook", WeaponType.Spellbook, Hue.Neutral);
+        
+        
+
+        
+    }
+
+    void Start()
+    {
+        attackDatabase = FindObjectOfType<AttacksDatabase>();
+        Debug.Log("FIREBALL " + attackDatabase._fireBall.attackName);
+        _basicSpellbook.AddSpellToSpellbook(attackDatabase._fireBall);
+        _basicSpellbook.spellBookAttackList.Add(attackDatabase._violetBall);
     }
 
     // Update is called once per frame
