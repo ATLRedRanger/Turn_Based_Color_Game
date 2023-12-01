@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 using UnityEngine.EventSystems;
 
 
@@ -937,18 +938,15 @@ public class UI : MonoBehaviour
             //Grabs the TMP_Text component off the child of the GameObject
             //Destroys the GameObject after a second
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
-            //floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().overrideColorTags = true;
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = combatFunctionsScript.damageAfterReductions.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 128, 0, 255);
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(241, 160, 118, 255);
-            //floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = Color.red;
-
             Destroy(floatingDamageTextClone, 1);
         }
         if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
         {
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = combatFunctionsScript.damageAfterReductions.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(241, 160, 118, 255);
             Destroy(floatingDamageTextClone, 1);
         }
         
