@@ -26,7 +26,7 @@ public class CombatFunctions : MonoBehaviour
 
     private int potentialAttackDamage;
 
-    private int damageAfterReductions;
+    public int damageAfterReductions;
 
     public Unit chosenEnemy;
 
@@ -289,6 +289,7 @@ public class CombatFunctions : MonoBehaviour
             DamageAfterArmorandRes(attack, defender);
             DamageAfterStatusCheck(defender);
             ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
+            uiScript.FloatingDamageText(defender);
             ReduceStamina(attack, attacker);
             ReduceColorFromEnv(attack);
             ColorReturn(attack);
@@ -564,6 +565,12 @@ public class CombatFunctions : MonoBehaviour
                     break;
             }
         }
+    }
+
+    IEnumerator WaitForTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        //Debug.Log("Waiting");
     }
 }
 //TODO: Accuracy? Should it play a part in criticals?

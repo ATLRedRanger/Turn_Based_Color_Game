@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Runtime.CompilerServices;
 using UnityEngine.EventSystems;
+
+
 
 public class UI : MonoBehaviour
 {
@@ -35,6 +36,13 @@ public class UI : MonoBehaviour
 
     public TMP_Text defeatText;
 
+    public GameObject floatingDamageText;
+
+    public GameObject enemyOneDamagePosition;
+
+    public GameObject playerDamagePosition;
+
+    //private GameObject floatingDamageTextClone;
 
     //Environment Text
     public Text environmentRed;
@@ -153,7 +161,7 @@ public class UI : MonoBehaviour
 
     public Turn_Manager turnManagerScript;
 
-    public CombatFunctions combatFunctions;
+    public CombatFunctions combatFunctionsScript;
 
     private AttacksDatabase attacksDatabase;
 
@@ -201,7 +209,7 @@ public class UI : MonoBehaviour
         envManaScript = FindObjectOfType<ENV_Mana>();
         inventoryScript = FindObjectOfType<Inventory>();
         animationScript = FindObjectOfType<Animations>();
-        
+        combatFunctionsScript = FindObjectOfType<CombatFunctions>();
         UpdateUI();
         Debug.Log("UNIT SPAWNER SCRIPT" + unitSpawnerScript.player.maxStamina);
     }
@@ -213,6 +221,15 @@ public class UI : MonoBehaviour
         enemyOneTextTwo.text = enemyOneText.text;
         
         
+    }
+
+    public void FloatingDamageText(Unit unit)
+    {
+
+
+        StartCoroutine(DamageNumbers(unit));
+        
+
     }
 
     private void HealthText()
@@ -389,7 +406,7 @@ public class UI : MonoBehaviour
 
     public void OnDefendClick()
     {
-        combatFunctions.IsDefending(unitSpawnerScript.player);
+        combatFunctionsScript.IsDefending(unitSpawnerScript.player);
         
         ClosePanels();
     }
@@ -416,7 +433,7 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-        combatFunctions.CombatSteps(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne);
+        combatFunctionsScript.CombatSteps(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne);
         
         ClosePanels();
         _spellBookPanel.gameObject.SetActive(false);
@@ -508,7 +525,7 @@ public class UI : MonoBehaviour
     //Use Items 
     public void UseHealthPotion()
     {
-        combatFunctions.UseHealthPotion();
+        combatFunctionsScript.UseHealthPotion();
         UpdateUI();
         StartCoroutine(WaitForTime(1));
         ClosePanels();
@@ -905,8 +922,37 @@ public class UI : MonoBehaviour
 
     IEnumerator WaitForTime(float time)
     {
-        yield return new WaitForSeconds(time);
-        //Debug.Log("Waiting");
+        yield return new WaitForSeconds(2);
+
+    }
+    IEnumerator DamageNumbers(Unit unit)
+    {
+        enemyOneText.faceColor = new Color32(241, 160, 118, 255);
+        //Instantiates the GameObject that has the animations for the damage text
+        yield return new WaitForSeconds(.75f);
+
+        if (unit.isPlayer)
+        {
+            //Instantiates a copy of the gameObject at the specified position
+            //Grabs the TMP_Text component off the child of the GameObject
+            //Destroys the GameObject after a second
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
+            //floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().overrideColorTags = true;
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = combatFunctionsScript.damageAfterReductions.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 128, 0, 255);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(241, 160, 118, 255);
+            //floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = Color.red;
+
+            Destroy(floatingDamageTextClone, 1);
+        }
+        if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
+        {
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = combatFunctionsScript.damageAfterReductions.ToString();
+            Destroy(floatingDamageTextClone, 1);
+        }
+        
+        
     }
 
     private void EnemyButtonNames()
