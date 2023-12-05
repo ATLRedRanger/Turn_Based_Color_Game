@@ -11,13 +11,14 @@ public class StatusEffects : MonoBehaviour
 {
     private Turn_Manager turnManager_Script;
 
-    
+    private UI ui_Script;
+
+    public int burnDamage;
     
     private void Start()
     {
         turnManager_Script = FindObjectOfType<Turn_Manager>();
-
-        
+        ui_Script = FindObjectOfType<UI>();
     }
     
      
@@ -25,12 +26,14 @@ public class StatusEffects : MonoBehaviour
     public void Burning()
     {
 
-        int burnDamage = (int)(Mathf.Round(turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxHealth / 16));
+        burnDamage = (int)(Mathf.Round(turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxHealth / 16));
 
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning)
         {
             //Debug.Log("PLAYER IS BURNING!");
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentHealth -= burnDamage;
+
+            ui_Script.MiscellaneousFloatingNumbers(turnManager_Script.unitReferences[turnManager_Script.turnIndex], burnDamage);
 
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].burnTimer -= 1;
         }

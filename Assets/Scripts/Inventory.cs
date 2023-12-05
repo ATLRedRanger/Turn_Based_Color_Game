@@ -169,17 +169,17 @@ public class Inventory : MonoBehaviour
     }
 
     public void UseItem()
-    {
-        //TODO: Fix the closePanels timing so that the spellbook panel stays open
-        //      until you cast the spell. 
+    { 
 
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
 
+        //If the button pressed is a spellbook, open the spellbook panel
         if (CheckIfSpellbook())
         {
             OpenSpellBook();
         }
+        //Else, use the item of the button that's pressed
         else
         {
             playerInventory[stringButtonNum - 1].Use(player);

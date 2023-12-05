@@ -16,6 +16,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public ENV_Mana envManaScript;
 
+    public UI uiScript;
+
     public Unit enemyOne;
 
     public Unit player;
@@ -45,6 +47,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         envManaScript = FindObjectOfType<ENV_Mana>();
 
+        uiScript = FindObjectOfType<UI>();
+
         enemyOne = unitSpawnerScript.enemyOne;
 
         player = unitSpawnerScript.player;
@@ -71,6 +75,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
             combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
             combatFunctionsScript.DamageAfterStatusCheck(player);
             combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
+            uiScript.FloatingNumbersText(player, chosenAttack);
             combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
             combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
             combatFunctionsScript.ColorReturn(chosenAttack);

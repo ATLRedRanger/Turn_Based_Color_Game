@@ -30,6 +30,7 @@ public class CombatFunctions : MonoBehaviour
 
     public Unit chosenEnemy;
 
+    public int healthLost;
 
     int roll;
     
@@ -289,7 +290,7 @@ public class CombatFunctions : MonoBehaviour
             DamageAfterArmorandRes(attack, defender);
             DamageAfterStatusCheck(defender);
             ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
-            uiScript.FloatingDamageText(defender);
+            uiScript.FloatingNumbersText(defender, attack);
             ReduceStamina(attack, attacker);
             ReduceColorFromEnv(attack);
             ColorReturn(attack);
@@ -516,12 +517,14 @@ public class CombatFunctions : MonoBehaviour
         //If the the defender is defending and the attacker is weaponless
         //Reduce the health of the defender by half
         //If the defender is not defending, defender takes full damage 
-        
+        int preDamage = defender.currentHealth;
         if (defender.isDefending && attacker.equippedWeapon != null)
         {
             Debug.Log("DEFENDER IS DEFENDING AND ATTACKER HAS A WEAPON");
+            
             defender.currentHealth -= (int)(damageAfterReductions * attacker.equippedWeapon.weaponHealthModifier);
             defender.currentStamina -= (int)(damageAfterReductions * attacker.equippedWeapon.weaponStaminaModifier);
+            
             if(defender.currentStamina < 1)
             {
                 defender.currentStamina = 0;
@@ -537,7 +540,8 @@ public class CombatFunctions : MonoBehaviour
             Debug.Log("DEFENDER ISN'T DEFENDING");
             defender.currentHealth -= damageAfterReductions;
         }
-         
+        healthLost = preDamage - defender.currentHealth;
+        
     }
 
     public void CheckForAttackAbilities(Attack attack, Unit defender)

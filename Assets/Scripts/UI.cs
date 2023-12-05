@@ -43,6 +43,18 @@ public class UI : MonoBehaviour
 
     public GameObject playerDamagePosition;
 
+    public GameObject redBarPosition;
+
+    public GameObject orangeBarPosition;
+
+    public GameObject yellowBarPosition;
+
+    public GameObject greenBarPosition;
+
+    public GameObject blueBarPosition;
+
+    public GameObject violetBarPosition;
+
     //private GameObject floatingDamageTextClone;
 
     //Environment Text
@@ -224,13 +236,13 @@ public class UI : MonoBehaviour
         
     }
 
-    public void FloatingDamageText(Unit unit)
+    public void FloatingNumbersText(Unit unit, Attack attack)
     {
 
 
         StartCoroutine(DamageNumbers(unit));
+        StartCoroutine(EnvironmentManaNumbers(attack));
         
-
     }
 
     private void HealthText()
@@ -845,13 +857,66 @@ public class UI : MonoBehaviour
         _spellsPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
     }
-
+    private bool IsAttackUsable(Attack attack)
+    {
+        switch (attack.attackColor)
+        {
+            case (Hue.Red):
+                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentRed)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Orange):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentOrange)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Yellow):
+                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentYellow)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Green):
+                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentGreen)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Blue):
+                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentBlue)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Violet):
+                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentViolet)
+                {
+                    return true;
+                }
+                break;
+            default:
+                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost)
+                {
+                    return true;
+                }
+                break;
+        }
+            
+            return false;
+    }
     public void OpenSpellBookPanel()
     {
         _spellBookButton1.gameObject.SetActive(false);
         _spellBookButton2.gameObject.SetActive(false);
         _spellBookButton3.gameObject.SetActive(false);
         _spellBookButton4.gameObject.SetActive(false);
+        _spellBookButton1.interactable = false;
+        _spellBookButton2.interactable = false;
+        _spellBookButton3.interactable = false;
+        _spellBookButton4.interactable = false;
 
         _spellBookPanel.SetActive(true);
 
@@ -862,21 +927,39 @@ public class UI : MonoBehaviour
         {
             _spellBookButton1.gameObject.SetActive(true);
             _spellBookButton1Text.text = spellbook.spellBookAttackList[0].attackName;
+            if (IsAttackUsable(spellbook.spellBookAttackList[0]))
+            {
+                _spellBookButton1.interactable = true;
+            }
         }
         if (spellbook.spellBookAttackList.Count >= 2)
         {
             _spellBookButton2.gameObject.SetActive(true);
             _spellBookButton2Text.text = spellbook.spellBookAttackList[1].attackName;
+            Debug.Log(IsAttackUsable(spellbook.spellBookAttackList[1]));
+            if (IsAttackUsable(spellbook.spellBookAttackList[1]))
+            {
+                
+                _spellBookButton2.interactable = true;
+            }
         }
         if (spellbook.spellBookAttackList.Count >= 3)
         {
             _spellBookButton3.gameObject.SetActive(true);
             _spellBookButton3Text.text = spellbook.spellBookAttackList[2].attackName;
+            if (IsAttackUsable(spellbook.spellBookAttackList[2]))
+            {
+                _spellBookButton3.interactable = true;
+            }
         }
         if (spellbook.spellBookAttackList.Count >= 4)
         {
             _spellBookButton4.gameObject.SetActive(true);
             _spellBookButton4Text.text = spellbook.spellBookAttackList[3].attackName;
+            if (IsAttackUsable(spellbook.spellBookAttackList[3]))
+            {
+                _spellBookButton4.interactable = true;
+            }
         }
 
     }
@@ -938,48 +1021,106 @@ public class UI : MonoBehaviour
             //Grabs the TMP_Text component off the child of the GameObject
             //Destroys the GameObject after a second
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = combatFunctionsScript.damageAfterReductions.ToString();
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 128, 0, 255);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + combatFunctionsScript.healthLost.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1);
         }
         if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
         {
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = combatFunctionsScript.damageAfterReductions.ToString();
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(241, 160, 118, 255);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + combatFunctionsScript.healthLost.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1);
         }
         
         
     }
+    IEnumerator EnvironmentManaNumbers(Attack attack)
+    {
+        yield return new WaitForSeconds(.75f);
+        switch(attack.attackColor)
+        {
+            case Hue.Red:
+                GameObject floatingDamageTextClone6 = Instantiate(floatingDamageText, redBarPosition.transform.position, Quaternion.identity);
+                floatingDamageTextClone6.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString(); 
+                floatingDamageTextClone6.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 0, 0, 255);
+                Destroy(floatingDamageTextClone6, 1);
+                break;
+            case Hue.Orange:
+                GameObject floatingDamageTextClone1 = Instantiate(floatingDamageText, orangeBarPosition.transform.position, Quaternion.identity);
+                floatingDamageTextClone1.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
+                floatingDamageTextClone1.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 92, 0, 255);
+                Destroy(floatingDamageTextClone1, 1);
+                break;
+            case Hue.Yellow:
+                GameObject floatingDamageTextClone2 = Instantiate(floatingDamageText, yellowBarPosition.transform.position, Quaternion.identity);
+                floatingDamageTextClone2.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
+                floatingDamageTextClone2.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(202, 161, 0, 255);
+                Destroy(floatingDamageTextClone2, 1);
+                break;
+            case Hue.Green:
+                GameObject floatingDamageTextClone3 = Instantiate(floatingDamageText, greenBarPosition.transform.position, Quaternion.identity);
+                floatingDamageTextClone3.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
+                floatingDamageTextClone3.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(0, 161, 13, 255);
+                Destroy(floatingDamageTextClone3, 1);
+                break;
+            case Hue.Blue:
+                GameObject floatingDamageTextClone4 = Instantiate(floatingDamageText, blueBarPosition.transform.position, Quaternion.identity);
+                floatingDamageTextClone4.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
+                floatingDamageTextClone4.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(0, 38, 255, 255);
+                Destroy(floatingDamageTextClone4, 1);
+                break;
+            case Hue.Violet:
+                GameObject floatingDamageTextClone5 = Instantiate(floatingDamageText, violetBarPosition.transform.position, Quaternion.identity);
+                floatingDamageTextClone5.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
+                floatingDamageTextClone5.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(179, 0, 255, 255);
+                Destroy(floatingDamageTextClone5, 1);
+                break;
+            
+        }
+        
 
+    }
+    public void MiscellaneousFloatingNumbers(Unit unit, int damage)
+    {
+        
+        if (unit.isPlayer)
+        {
+            //Instantiates a copy of the gameObject at the specified position
+            //Grabs the TMP_Text component off the child of the GameObject
+            //Destroys the GameObject after a second
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + statusEffectsScript.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1);
+        }
+        if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
+        {
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + damage.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1);
+        }
+    }
     private void EnemyButtonNames()
     {
        enemyOneButtonNameText.text = unitSpawnerScript.enemyOne.unitName;
     }
-
+    
     public void SpellBookButton1()
     {
+        //Finds the button name, so that it matches the list from the spellbook to cast that spell
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
 
-        if(unitSpawnerScript.player.equippedWeapon.weaponType == WeaponType.Spellbook)
-        {
-            _spellBookButton1.interactable = true;
-            
-            Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
-            chosenAttack = spellbook.spellBookAttackList[stringButtonNum - 1];
-            
+        Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
+        chosenAttack = spellbook.spellBookAttackList[stringButtonNum - 1];
 
-            OpenEnemiesPanel();
-        }
-        else
-        {
-            _spellBookButton1.interactable = false;
-            Debug.Log("Must be equipped to use");
-        }
+
+        OpenEnemiesPanel();
+
     }
-
+    
     public void NewBattleStuff()
     {
         enemyOneHealth.enabled = true;
