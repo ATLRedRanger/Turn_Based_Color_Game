@@ -459,7 +459,7 @@ public class UI : MonoBehaviour
     public void OnAttackClick()
     {
         
-        chosenAttack = attacksDatabase._punch;
+        chosenAttack = unitSpawnerScript.player.unitAttackDictionary["Punch"];
         OpenEnemiesPanel();
 
     }
@@ -1037,44 +1037,45 @@ public class UI : MonoBehaviour
     }
     IEnumerator EnvironmentManaNumbers(Attack attack)
     {
-        yield return new WaitForSeconds(.75f);
+        float textDelay = 1.5f;
+        yield return new WaitForSeconds(1);
         switch(attack.attackColor)
         {
             case Hue.Red:
                 GameObject floatingDamageTextClone6 = Instantiate(floatingDamageText, redBarPosition.transform.position, Quaternion.identity);
                 floatingDamageTextClone6.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString(); 
                 floatingDamageTextClone6.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 0, 0, 255);
-                Destroy(floatingDamageTextClone6, 1);
+                Destroy(floatingDamageTextClone6, textDelay);
                 break;
             case Hue.Orange:
                 GameObject floatingDamageTextClone1 = Instantiate(floatingDamageText, orangeBarPosition.transform.position, Quaternion.identity);
                 floatingDamageTextClone1.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
                 floatingDamageTextClone1.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 92, 0, 255);
-                Destroy(floatingDamageTextClone1, 1);
+                Destroy(floatingDamageTextClone1, textDelay);
                 break;
             case Hue.Yellow:
                 GameObject floatingDamageTextClone2 = Instantiate(floatingDamageText, yellowBarPosition.transform.position, Quaternion.identity);
                 floatingDamageTextClone2.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
                 floatingDamageTextClone2.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(202, 161, 0, 255);
-                Destroy(floatingDamageTextClone2, 1);
+                Destroy(floatingDamageTextClone2, textDelay);
                 break;
             case Hue.Green:
                 GameObject floatingDamageTextClone3 = Instantiate(floatingDamageText, greenBarPosition.transform.position, Quaternion.identity);
                 floatingDamageTextClone3.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
                 floatingDamageTextClone3.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(0, 161, 13, 255);
-                Destroy(floatingDamageTextClone3, 1);
+                Destroy(floatingDamageTextClone3, textDelay);
                 break;
             case Hue.Blue:
                 GameObject floatingDamageTextClone4 = Instantiate(floatingDamageText, blueBarPosition.transform.position, Quaternion.identity);
                 floatingDamageTextClone4.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
                 floatingDamageTextClone4.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(0, 38, 255, 255);
-                Destroy(floatingDamageTextClone4, 1);
+                Destroy(floatingDamageTextClone4, textDelay);
                 break;
             case Hue.Violet:
                 GameObject floatingDamageTextClone5 = Instantiate(floatingDamageText, violetBarPosition.transform.position, Quaternion.identity);
                 floatingDamageTextClone5.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + attack.colorCost.ToString();
                 floatingDamageTextClone5.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(179, 0, 255, 255);
-                Destroy(floatingDamageTextClone5, 1);
+                Destroy(floatingDamageTextClone5, textDelay);
                 break;
             
         }
@@ -1092,14 +1093,14 @@ public class UI : MonoBehaviour
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + statusEffectsScript.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
-            Destroy(floatingDamageTextClone, 1);
+            Destroy(floatingDamageTextClone, 1.5f);
         }
         if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
         {
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + damage.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
-            Destroy(floatingDamageTextClone, 1);
+            Destroy(floatingDamageTextClone, 1.5f);
         }
     }
     private void EnemyButtonNames()

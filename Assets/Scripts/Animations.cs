@@ -11,6 +11,7 @@ public class Animations : MonoBehaviour
     public GameObject vert_Slash;
     public GameObject yellow_Splash;
     public GameObject fireball;
+    public GameObject violetBall;
 
     private Unit_Spawner unitSpawnerScript;
 
@@ -41,6 +42,9 @@ public class Animations : MonoBehaviour
                 //bubble.Play("Base Layer.Bubble");
                 clone = Instantiate(yellow_Splash, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
                 Destroy(clone, 2);
+                break;
+            case "Violet Ball":
+                clone = Instantiate(violetBall, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
                 break;
             case "Chop":
                 clone = Instantiate(vert_Slash, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);

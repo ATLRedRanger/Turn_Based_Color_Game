@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9234404}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -422.8501, y: -1054.2194, z: 3.5538898}
+  m_LocalPosition: {x: -422.8501, y: -1029.64, z: 3.5538898}
   m_LocalScale: {x: 1.7438695, y: 2.632454, z: 1.7438695}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3970,7 +3970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558642071}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -422.8501, y: -1264.346, z: 3.5538898}
+  m_LocalPosition: {x: -422.8501, y: -1239.57, z: 3.5538898}
   m_LocalScale: {x: 1.7438695, y: 2.632454, z: 1.7438695}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5289,7 +5289,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764333033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -422.8501, y: -1159.9972, z: 3.5538898}
+  m_LocalPosition: {x: -422.8501, y: -1135.32, z: 3.5538898}
   m_LocalScale: {x: 1.7438695, y: 2.632454, z: 1.7438695}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6423,7 +6423,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938746980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -422.8501, y: -1474.5521, z: 3.5538898}
+  m_LocalPosition: {x: -422.8501, y: -1449.78, z: 3.5538898}
   m_LocalScale: {x: 1.7438695, y: 2.632454, z: 1.7438695}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7731,7 +7731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062300459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -422.85, y: -1580.3298, z: 3.5538898}
+  m_LocalPosition: {x: -422.85, y: -1555.2706, z: 3.5538898}
   m_LocalScale: {x: 1.7438693, y: 2.632454, z: 1.7438693}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8270,6 +8270,8 @@ MonoBehaviour:
   yellow_Splash: {fileID: 8767999566748215541, guid: 06fc468e58687064281ac24c294b6336,
     type: 3}
   fireball: {fileID: 5950073814663705988, guid: 6953f49ac4a551145ac0f8b3f3867777,
+    type: 3}
+  violetBall: {fileID: 3750668626009775058, guid: 0e4110de47328d74fa02d97ae303019e,
     type: 3}
 --- !u!4 &1194046241
 Transform:
@@ -9481,6 +9483,7 @@ MonoBehaviour:
   unitSpawnerScript: {fileID: 0}
   combatFunctionsScript: {fileID: 0}
   envManaScript: {fileID: 0}
+  uiScript: {fileID: 0}
   enemyOne: {fileID: 0}
   player: {fileID: 0}
   chosenAttack:
@@ -9534,7 +9537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352682067}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -422.8501, y: -1370.1237, z: 3.5538898}
+  m_LocalPosition: {x: -422.8501, y: -1345.35, z: 3.5538898}
   m_LocalScale: {x: 1.7438695, y: 2.632454, z: 1.7438695}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13090,6 +13093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b640dd015667f43a2576fc27c39cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  burnDamage: 0
 --- !u!1 &1941720803
 GameObject:
   m_ObjectHideFlags: 0
@@ -13503,6 +13507,7 @@ MonoBehaviour:
   attackDamage: 0
   damageAfterReductions: 0
   chosenEnemy: {fileID: 0}
+  healthLost: 0
 --- !u!4 &1963110896
 Transform:
   m_ObjectHideFlags: 0
