@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using System.Linq;
+
 
 public class Enemy_Combat_Functions : MonoBehaviour
 {
@@ -25,6 +27,8 @@ public class Enemy_Combat_Functions : MonoBehaviour
     private Unit currentEnemy;
 
     public Attack chosenAttack;
+
+   
 
     public bool canAttack;
     // Start is called before the first frame update
@@ -64,101 +68,61 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public void EnemyAttacking()
     {
-        Debug.Log("ENEMY IS ATTACKING");
-        EnemyAttackChoice();
-
-        if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
+        //Debug.Log("ENEMY IS ATTACKING");
+        EnemyAttackDecision();
+        if (enemyOne.isDefending != true)
         {
-            combatFunctionsScript.CheckForSpecialWeaponProperties(enemyOne);
-            combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
-            combatFunctionsScript.CheckForCrit(enemyOne);
-            combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
-            combatFunctionsScript.DamageAfterStatusCheck(player);
-            combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
-            uiScript.FloatingNumbersText(player, chosenAttack);
-            combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
-            combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
-            combatFunctionsScript.ColorReturn(chosenAttack);
+            if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
+            {
+                uiScript.PlayAttackAnimation(chosenAttack, player);
+                combatFunctionsScript.CheckForSpecialWeaponProperties(enemyOne);
+                combatFunctionsScript.CheckForAttackAbilities(chosenAttack, player);
+                combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
+                combatFunctionsScript.CheckForCrit(enemyOne);
+                combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
+                combatFunctionsScript.DamageAfterStatusCheck(player);
+                combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
+                uiScript.FloatingNumbersText(player, chosenAttack);
+                combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);
+                combatFunctionsScript.ReduceColorFromEnv(chosenAttack);
+                combatFunctionsScript.ColorReturn(chosenAttack);
+            }
         }
+        
         
         enemyOne.hadATurn = true;
 
     }
 
-    public void EnemyAttackChoice()
+    private void EnemyAttackDecision()
     {
-        canAttack = false;
-        //For each key-value pair in the units' dictionary of attacks
+        //Made an empty list of attacks
+        //Loops through the enemy's attack dictionary and adds those attacks to the list
+        //Shuffles the list
+        //Loops through the shuffled list
+        //If the attack is usable, break out of the loop to use the attack
+        List<Attack> enemyAttackList = new List<Attack>();
+
         foreach (var kvp in enemyOne.enemyAttackDictionary)
         {
-            switch (kvp.Value.attackType)
-            {
-                case AttackType.Special:
-                    switch (kvp.Value.attackColor)
-                    {
-                        case Hue.Red:
-                            if (kvp.Value.colorCost <= envManaScript.currentRed && enemyOne.currentStamina >= kvp.Value.staminaCost)
-                            {
-                                chosenAttack = kvp.Value;
-                                canAttack = true;
-                            }
-                            break;
-                        case Hue.Orange:
-                            if (kvp.Value.colorCost <= envManaScript.currentOrange && enemyOne.currentStamina >= kvp.Value.staminaCost)
-                            {
-                                chosenAttack = kvp.Value;
-                                canAttack = true;
-                            }
-                            break;
-                        case Hue.Yellow:
-                            if (kvp.Value.colorCost <= envManaScript.currentYellow && enemyOne.currentStamina >= kvp.Value.staminaCost)
-                            {
-                                chosenAttack = kvp.Value;
-                                canAttack = true;
-                            }
-                            break;
-                        case Hue.Green:
-                            if (kvp.Value.colorCost <= envManaScript.currentGreen && enemyOne.currentStamina >= kvp.Value.staminaCost)
-                            {
-
-                                chosenAttack = kvp.Value;
-                                canAttack = true;
-                            }
-                            break;
-                        case Hue.Blue:
-                            if (kvp.Value.colorCost <= envManaScript.currentBlue && enemyOne.currentStamina >= kvp.Value.staminaCost)
-                            {
-                                chosenAttack = kvp.Value;
-                                canAttack = true;
-                            }
-                            break;
-                        case Hue.Violet:
-                            if (kvp.Value.colorCost <= envManaScript.currentViolet && enemyOne.currentStamina >= kvp.Value.staminaCost)
-                            {
-                                chosenAttack = kvp.Value;
-                                canAttack = true;
-                            }
-                            break;
-                        default: 
-                            break;
-                    }
-                    break;
-                default:
-                    if (enemyOne.currentStamina >= kvp.Value.staminaCost)
-                    {
-                        chosenAttack = kvp.Value;
-                        canAttack = true;
-                    }
-                    break;
-            }
-
+            enemyAttackList.Add(kvp.Value);
         }
-        if (canAttack == false)
+
+        List<Attack> shuffledList = enemyAttackList.OrderBy(x => Random.value).ToList();
+
+        foreach (var attack in shuffledList)
         {
-            enemyOne.isDefending = true;
+            if (uiScript.IsAttackUsable(attack))
+            {
+                chosenAttack = attack;
+                break;
+            }
+            
         }
-    }
 
+       
+    }
+    
     public void NewBattleStuff()
     {
         

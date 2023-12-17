@@ -52,6 +52,7 @@ public class ItemDatabase : MonoBehaviour
         Debug.Log("FIREBALL " + attackDatabase._fireBall.attackName);
         _basicSpellbook.AddSpellToSpellbook(attackDatabase._fireBall);
         _basicSpellbook.spellBookAttackList.Add(attackDatabase._violetBall);
+        
     }
 
     // Update is called once per frame

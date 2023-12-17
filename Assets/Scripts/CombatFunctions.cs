@@ -75,7 +75,7 @@ public class CombatFunctions : MonoBehaviour
 
         
     }
-    public void UseHealthPotion()
+    /*public void UseHealthPotion()
     {
         foreach (Consumable item in inventoryScript.playerConsumableList)
         {
@@ -99,7 +99,7 @@ public class CombatFunctions : MonoBehaviour
         }
         
         
-    }
+    }*/
     public void IsDefending(Unit unit)
     {
         unit.isDefending = true;

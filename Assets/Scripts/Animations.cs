@@ -11,14 +11,18 @@ public class Animations : MonoBehaviour
     public GameObject vert_Slash;
     public GameObject yellow_Splash;
     public GameObject fireball;
+    public GameObject orange_Spike;
     public GameObject violetBall;
+    public GameObject blueCrush;
 
     private Unit_Spawner unitSpawnerScript;
+    private AttacksDatabase attacksScript;
 
     // Start is called before the first frame update
     void Start()
     {
         unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
+        attacksScript = FindObjectOfType<AttacksDatabase>();
     }
 
     // Update is called once per frame
@@ -27,28 +31,38 @@ public class Animations : MonoBehaviour
         
     }
     
-    public void PlayAnimation(Attack attack)
+    public void PlayAnimation(Attack attack, Unit defender)
     {
         //Instantiates a clone of the GameObject with the desired animation
         //Based off the name of the attack
-        //Destroys the clone when the animation is done. 
+        //Destroys the clone when the animation is done.
+
         switch (attack.attackName)
         {
             case "Fireball":
-                clone = Instantiate(fireball, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
-                Destroy(clone, 2);
+                clone = Instantiate(fireball, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._fireBall.animTimeLength);
                 break;
             case "Yellow Splash":
                 //bubble.Play("Base Layer.Bubble");
-                clone = Instantiate(yellow_Splash, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
-                Destroy(clone, 2);
+                clone = Instantiate(yellow_Splash, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._yellowSplash.animTimeLength);
+                break;
+            case "Orange Spike":
+                clone = Instantiate(orange_Spike, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._orangeSpike.animTimeLength);
+                break;
+            case "Blue Crush":
+                clone = Instantiate(blueCrush, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._blueCrush.animTimeLength);
                 break;
             case "Violet Ball":
-                clone = Instantiate(violetBall, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
+                clone = Instantiate(violetBall, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._violetBall.animTimeLength);
                 break;
             case "Chop":
-                clone = Instantiate(vert_Slash, unitSpawnerScript.enemyOne.transform.position, Quaternion.identity);
-                Destroy(clone, 1);
+                clone = Instantiate(vert_Slash, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._chop.animTimeLength);
                 break;
         }
     }

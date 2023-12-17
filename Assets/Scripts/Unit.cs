@@ -195,7 +195,9 @@ public class Unit : MonoBehaviour
 
     public virtual void EnemyAttacks()
     {
-        enemyAttackDictionary["Slash"] = attacksDatabase._slash;
+        Debug.Log("This is the Enemy Attacks");
+        enemyAttackDictionary["FireBall"] = attacksDatabase._fireBall;
+        enemyAttackDictionary["Chop"] = attacksDatabase._chop;
         enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
     }
 

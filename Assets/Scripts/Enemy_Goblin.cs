@@ -19,8 +19,7 @@ public class Enemy_Goblin : Unit
 
     public override void EnemyAttacks()
     {
-        enemyAttackDictionary["Kick"] = attacksDatabase._kick;
-        enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
+        base.EnemyAttacks();
 
     }
 

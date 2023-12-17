@@ -19,9 +19,9 @@ public class Inventory : MonoBehaviour
 
     private UI ui_Script;
     
-    public List<Weapon> playerWeaponList = new List<Weapon>();
+    //public List<Weapon> playerWeaponList = new List<Weapon>();
 
-    public List<Consumable> playerConsumableList = new List<Consumable>();
+    //public List<Consumable> playerConsumableList = new List<Consumable>();
 
     public List<Item> playerInventory = new List<Item>();
 
@@ -47,8 +47,8 @@ public class Inventory : MonoBehaviour
     public void AddToInventory()
     {
         
-        playerWeaponList.Add(itemScript._basicAxe);
-        playerConsumableList.Add(itemScript._healthPotion);
+        //playerWeaponList.Add(itemScript._basicAxe);
+        //playerConsumableList.Add(itemScript._healthPotion);
         player.equippedWeapon = itemScript._basicSpellbook;
         player.isWeaponEquipped = true;
         playerInventory.Add(itemScript._basicHammer);

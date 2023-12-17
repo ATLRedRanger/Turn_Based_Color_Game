@@ -15,7 +15,7 @@ C:/Users/vince/OneDrive/Desktop/Turn_Based_Color_Game
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-59804
+54831
 Successfully changed project path to: C:/Users/vince/OneDrive/Desktop/Turn_Based_Color_Game
 C:/Users/vince/OneDrive/Desktop/Turn_Based_Color_Game
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -49,11 +49,11 @@ C:/Users/vince/OneDrive/Desktop/Turn_Based_Color_Game
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [25228] Host "[IP] 10.0.0.77 [Port] 0 [Flags] 2 [Guid] 928531496 [EditorId] 928531496 [Version] 1048832 [Id] WindowsEditor(7,AtlRedRanger_ti) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [92800] Host "[IP] 10.0.0.77 [Port] 0 [Flags] 2 [Guid] 813622898 [EditorId] 813622898 [Version] 1048832 [Id] WindowsEditor(7,AtlRedRanger_ti) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [25228] Host "[IP] 10.0.0.77 [Port] 0 [Flags] 2 [Guid] 928531496 [EditorId] 928531496 [Version] 1048832 [Id] WindowsEditor(7,AtlRedRanger_ti) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [92800] Host "[IP] 10.0.0.77 [Port] 0 [Flags] 2 [Guid] 813622898 [EditorId] 813622898 [Version] 1048832 [Id] WindowsEditor(7,AtlRedRanger_ti) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 7.80 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 15.73 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.2f1 (d74737c6db50)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.2f1/Editor/Data/Resources/UnitySubsystems
@@ -69,46 +69,46 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.2f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.2f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.2f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56972
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56020
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.2f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.2f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.004682 seconds.
-- Loaded All Assemblies, in  0.239 seconds
+Registered in 0.006550 seconds.
+- Loaded All Assemblies, in  0.253 seconds
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.186 seconds
-Domain Reload Profiling: 424ms
-	BeginReloadAssembly (69ms)
+- Finished resetting the current domain, in  0.203 seconds
+Domain Reload Profiling: 455ms
+	BeginReloadAssembly (84ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (25ms)
+	RebuildCommonClasses (23ms)
 	RebuildNativeTypeToScriptingClass (7ms)
-	initialDomainReloadingComplete (40ms)
-	LoadAllAssembliesAndSetupDomain (96ms)
-		LoadAssemblies (68ms)
+	initialDomainReloadingComplete (41ms)
+	LoadAllAssembliesAndSetupDomain (97ms)
+		LoadAssemblies (82ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (93ms)
+		AnalyzeDomain (94ms)
 			TypeCache.Refresh (93ms)
-				TypeCache.ScanAssembly (84ms)
+				TypeCache.ScanAssembly (86ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
 			ResolveRequiredComponents (0ms)
-	FinalizeReload (187ms)
+	FinalizeReload (203ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (145ms)
+		SetupLoadedEditorAssemblies (158ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (7ms)
-			SetLoadedEditorAssemblies (4ms)
+			InitializePlatformSupportModulesInManaged (11ms)
+			SetLoadedEditorAssemblies (6ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (1ms)
-			ProcessInitializeOnLoadAttributes (97ms)
-			ProcessInitializeOnLoadMethodAttributes (35ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (105ms)
+			ProcessInitializeOnLoadMethodAttributes (34ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -117,52 +117,52 @@ Domain Reload Profiling: 424ms
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0.490 seconds
-Refreshing native plugins compatible for Editor in 4.70 ms, found 2 plugins.
+- Loaded All Assemblies, in  0.547 seconds
+Refreshing native plugins compatible for Editor in 4.07 ms, found 2 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.427 seconds
-Domain Reload Profiling: 916ms
-	BeginReloadAssembly (96ms)
+- Finished resetting the current domain, in  0.409 seconds
+Domain Reload Profiling: 954ms
+	BeginReloadAssembly (93ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (4ms)
+		DisableScriptedObjects (5ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (16ms)
-	RebuildCommonClasses (22ms)
-	RebuildNativeTypeToScriptingClass (9ms)
+	RebuildCommonClasses (21ms)
+	RebuildNativeTypeToScriptingClass (7ms)
 	initialDomainReloadingComplete (30ms)
-	LoadAllAssembliesAndSetupDomain (331ms)
-		LoadAssemblies (207ms)
+	LoadAllAssembliesAndSetupDomain (394ms)
+		LoadAssemblies (266ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (171ms)
-			TypeCache.Refresh (157ms)
-				TypeCache.ScanAssembly (148ms)
-			ScanForSourceGeneratedMonoScriptInfo (11ms)
+		AnalyzeDomain (165ms)
+			TypeCache.Refresh (149ms)
+				TypeCache.ScanAssembly (139ms)
+			ScanForSourceGeneratedMonoScriptInfo (14ms)
 			ResolveRequiredComponents (2ms)
-	FinalizeReload (428ms)
+	FinalizeReload (409ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (321ms)
+		SetupLoadedEditorAssemblies (309ms)
 			LogAssemblyErrors (0ms)
 			InitializePlatformSupportModulesInManaged (5ms)
 			SetLoadedEditorAssemblies (2ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (39ms)
-			ProcessInitializeOnLoadAttributes (172ms)
-			ProcessInitializeOnLoadMethodAttributes (99ms)
-			AfterProcessingInitializeOnLoad (3ms)
+			BeforeProcessingInitializeOnLoad (40ms)
+			ProcessInitializeOnLoadAttributes (167ms)
+			ProcessInitializeOnLoadMethodAttributes (91ms)
+			AfterProcessingInitializeOnLoad (4ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (5ms)
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 3.79 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 8.84 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2478 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 61 unused Assets / (68.2 KB). Loaded Objects now: 2927.
 Memory consumption went from 107.6 MB to 107.6 MB.
-Total: 5.328900 ms (FindLiveObjects: 0.168100 ms CreateObjectMapping: 0.074800 ms MarkObjects: 4.977900 ms  DeleteObjects: 0.106700 ms)
+Total: 4.352400 ms (FindLiveObjects: 0.143400 ms CreateObjectMapping: 0.056200 ms MarkObjects: 4.058900 ms  DeleteObjects: 0.093300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
@@ -178,237 +178,468 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 195620.327952 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00032.png
-  artifactKey: Guid(652138099d67fd846b38ec4392261edb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00032.png using Guid(652138099d67fd846b38ec4392261edb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '748dd853fcb714a07d806d95e68cb04c') in 0.096384 seconds
+  Time since last request: 90018.481292 seconds.
+  path: Assets/Animations/Orange_Spike
+  artifactKey: Guid(84ffe225991b02e4e9d2996c1fcbe02a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike using Guid(84ffe225991b02e4e9d2996c1fcbe02a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8591e2681020b7c6bf9a1582476060d1') in 0.002155 seconds
 Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
+Number of asset objects unloaded after import = 0
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000018 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00043.png
-  artifactKey: Guid(72e5629facd77ca449dfc8d7ac22a8a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00043.png using Guid(72e5629facd77ca449dfc8d7ac22a8a8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aaeb6455fa51d74477810e1d949ab230') in 0.023439 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00053.png
-  artifactKey: Guid(e31e075f72f182343851f460ad1ca3b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00053.png using Guid(e31e075f72f182343851f460ad1ca3b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f855946652094f0972eea9e2746dec76') in 0.020048 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000046 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00035.png
-  artifactKey: Guid(91aa5ede57fb9ab45bce378bb5f0f614) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00035.png using Guid(91aa5ede57fb9ab45bce378bb5f0f614) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '757ab04c603d09a01d537b4020d81a5e') in 0.016267 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00054.png
-  artifactKey: Guid(f5801f96775f24143a10fd854b8a18d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00054.png using Guid(f5801f96775f24143a10fd854b8a18d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31f33f28387ed95207d034db30ff744d') in 0.015789 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00044.png
-  artifactKey: Guid(15691900966f2b741882f5f459e73ba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00044.png using Guid(15691900966f2b741882f5f459e73ba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8a702d4938a8c16c17ec108c2154dc3') in 0.018932 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00042.png
-  artifactKey: Guid(d795c8237b68c5746a07533f7038a75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00042.png using Guid(d795c8237b68c5746a07533f7038a75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f6deeaf4102f8af88b531262bfe30eb') in 0.026503 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00046.png
-  artifactKey: Guid(1593f3337d35faf43bca7fd643a2c39e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00046.png using Guid(1593f3337d35faf43bca7fd643a2c39e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b14f93fe601db1626ebd742d0de474b5') in 0.022402 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000045 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00041.png
-  artifactKey: Guid(59dcabdd58a7a5040b8058b696a2b953) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00041.png using Guid(59dcabdd58a7a5040b8058b696a2b953) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4fb0638a1d9d24cb129c9bbaa8a8828a') in 0.016421 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00037.png
-  artifactKey: Guid(bfe82703a87c03348b0fca5ffb92da65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00037.png using Guid(bfe82703a87c03348b0fca5ffb92da65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3564f1e96da93701f9b10940186abe1f') in 0.034987 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00052.png
-  artifactKey: Guid(349ded54a8f8353489c2c4877f973f3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00052.png using Guid(349ded54a8f8353489c2c4877f973f3c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9ce4403de6962c545f3058088f8a00a') in 0.015112 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000016 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00055.png
-  artifactKey: Guid(2dc8f030be37ece4487d0b7472a27338) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00055.png using Guid(2dc8f030be37ece4487d0b7472a27338) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '274298117de6c02387a16c42c79f9888') in 0.007997 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00034.png
-  artifactKey: Guid(047bbeb948de7264cb87938ca86afd2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00034.png using Guid(047bbeb948de7264cb87938ca86afd2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4af1661bb18db1aaf5985b95fb400d24') in 0.012239 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 2.147819 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00017.png
-  artifactKey: Guid(a7fa1020247c8fd46a03ec9b709b1ef2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00017.png using Guid(a7fa1020247c8fd46a03ec9b709b1ef2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f73ae3baf0e8b2f534fb643232f69f5e') in 0.034687 seconds
+  Time since last request: 78.086235 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00016.png
+  artifactKey: Guid(6eaf4cf280a11c146b7c04966c452218) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00016.png using Guid(6eaf4cf280a11c146b7c04966c452218) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32e7cc35e9ddc1d0dd5aa8304f225ee3') in 0.092020 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
   Time since last request: 0.000020 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00021.png
-  artifactKey: Guid(da1d936b33238314b9f36bee41f712fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00021.png using Guid(da1d936b33238314b9f36bee41f712fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d0683751fd114d09ae6f2c8b852f686') in 0.014314 seconds
+  path: Assets/Animations/Orange_Spike/Comp 1_00035.png
+  artifactKey: Guid(c032548138ee0fb43bc418904f4289b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00035.png using Guid(c032548138ee0fb43bc418904f4289b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27d8ea4245ece8420b3676be38b8242c') in 0.034827 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00020.png
-  artifactKey: Guid(ca4ff66500b432f4f8001f2278f43191) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00020.png using Guid(ca4ff66500b432f4f8001f2278f43191) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9d577368c1184e93b05ee64639a60ca') in 0.015647 seconds
+  Time since last request: 0.000087 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00031.png
+  artifactKey: Guid(0eab0599d4a1cb64a8367ccdebc71924) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00031.png using Guid(0eab0599d4a1cb64a8367ccdebc71924) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88f8e9a1dc347a98009b23906da2813f') in 0.019070 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000050 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00022.png
+  artifactKey: Guid(1348d8650122f76429a46ced188ad957) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00022.png using Guid(1348d8650122f76429a46ced188ad957) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0909a7d670cc65b21b05100e8d332d22') in 0.029305 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00018.png
+  artifactKey: Guid(311cfd483b8c07542811bbbe127e247e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00018.png using Guid(311cfd483b8c07542811bbbe127e247e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb0d3aab39f5f5acf9ce100838512fb9') in 0.030647 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00023.png
+  artifactKey: Guid(79f6924279213f848acd33fde15774fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00023.png using Guid(79f6924279213f848acd33fde15774fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '348197c23f3398844bf0701803385d3d') in 0.015456 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000099 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00032.png
+  artifactKey: Guid(f58cf2d73f0f19642bfb71bed90c68db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00032.png using Guid(f58cf2d73f0f19642bfb71bed90c68db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '293325a7bd2e27c3b6e480e2436fa59d') in 0.017491 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00033.png
+  artifactKey: Guid(e6cf4d3fbd3c2d244942379e8267c665) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00033.png using Guid(e6cf4d3fbd3c2d244942379e8267c665) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07ecc51d3e39911b73adfb1cbc22a5d0') in 0.015137 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000058 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00019.png
+  artifactKey: Guid(bbded22609c566342a312af09ab1eb63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00019.png using Guid(bbded22609c566342a312af09ab1eb63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b3b6dc5dc298ccd6a9dbca9ebb99007') in 0.016593 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00020.png
+  artifactKey: Guid(becfa4938f97fea43a79ba920b58f45e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00020.png using Guid(becfa4938f97fea43a79ba920b58f45e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61b9836eacb09c67ccb6cacd2636ebd8') in 0.016036 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00037.png
+  artifactKey: Guid(b4d0c7ecc0cde4248b96f71e672c582a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00037.png using Guid(b4d0c7ecc0cde4248b96f71e672c582a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e41f6476191121300ecab7da72deedc') in 0.016054 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00030.png
+  artifactKey: Guid(96a7a42c2b533ef46814712ab4e9297c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00030.png using Guid(96a7a42c2b533ef46814712ab4e9297c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20255087e168aeabfcb155175bf06b74') in 0.011646 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.678269 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00000.png
+  artifactKey: Guid(6672fc7cff9b2e64296b48c1cdad76e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00000.png using Guid(6672fc7cff9b2e64296b48c1cdad76e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f0cd3e17e90af2ccdbd1ccd31641388') in 0.017023 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
   Time since last request: 0.000023 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00023.png
-  artifactKey: Guid(cceb25415f1adcc4c8ef2136c7cc20ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00023.png using Guid(cceb25415f1adcc4c8ef2136c7cc20ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '345558205d067332c9789449a50fa7ca') in 0.014142 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000047 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00025.png
-  artifactKey: Guid(0aeee414168d8024bb983a2d38c6be75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00025.png using Guid(0aeee414168d8024bb983a2d38c6be75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a11df5e1271fceda02c4acddf26cd22d') in 0.013980 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.000084 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00022.png
-  artifactKey: Guid(5c3c9e87f5ea035439898f583a55893e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00022.png using Guid(5c3c9e87f5ea035439898f583a55893e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a70fc03e334c00b8ea5a7ab57cf1739') in 0.014170 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 0.235313 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00001.png
-  artifactKey: Guid(e0db04a6cf3603544a763b75d05da1a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00001.png using Guid(e0db04a6cf3603544a763b75d05da1a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24fa32088aacf71278ff65ec1cabf85e') in 0.012353 seconds
+  path: Assets/Animations/Orange_Spike/Comp 1_00006.png
+  artifactKey: Guid(00609ecc4380eff43bdf03c04edc670a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00006.png using Guid(00609ecc4380eff43bdf03c04edc670a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0206671f6b2c52f0f19ada4ae195e190') in 0.013783 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
   Time since last request: 0.000017 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00013.png
-  artifactKey: Guid(eb16c40f7551a7f41a1d80c8a65d66ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00013.png using Guid(eb16c40f7551a7f41a1d80c8a65d66ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '448a0e1563fa0479be211593f55c7706') in 0.014234 seconds
+  path: Assets/Animations/Orange_Spike/Comp 1_00010.png
+  artifactKey: Guid(38c88cc433d065644aeb65d1ec9b76b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00010.png using Guid(38c88cc433d065644aeb65d1ec9b76b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '58c4b7cc244595dcd65257c8f8404d12') in 0.012652 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00009.png
-  artifactKey: Guid(0594eb2f3cbad014d9c39692ff9d9817) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00009.png using Guid(0594eb2f3cbad014d9c39692ff9d9817) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7ee077f6cb097adbc7f8f8feb6a1e0b') in 0.015260 seconds
+  Time since last request: 0.000035 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00009.png
+  artifactKey: Guid(83609749927ee9544aaa17d0225f4cee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00009.png using Guid(83609749927ee9544aaa17d0225f4cee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '789f2e29f711143defeb84e88ca821dc') in 0.013525 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000014 seconds.
-  path: Assets/Animations/Violet_Ball/Violet_Ball_00005.png
-  artifactKey: Guid(0a48ecb4cd730c947974718d6c1b1792) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Animations/Violet_Ball/Violet_Ball_00005.png using Guid(0a48ecb4cd730c947974718d6c1b1792) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01b9dafe2c3e72a9c6110de36d56eba8') in 0.013779 seconds
+  Time since last request: 0.000032 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00004.png
+  artifactKey: Guid(0b38eda3b92ac3e4eaea6d2fb91ceaec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00004.png using Guid(0b38eda3b92ac3e4eaea6d2fb91ceaec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce941607a3f24da306041612c25ff799') in 0.012076 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000054 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00015.png
+  artifactKey: Guid(f53f0ff0e97173744bd52e38d1dd14f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00015.png using Guid(f53f0ff0e97173744bd52e38d1dd14f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8898df609734b1f7cd76434de313506b') in 0.012495 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000059 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00002.png
+  artifactKey: Guid(77bc01bf6506a4e45b21c01f378845f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00002.png using Guid(77bc01bf6506a4e45b21c01f378845f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cba0382f0399e5c7ae9e29571a7f971') in 0.011826 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00013.png
+  artifactKey: Guid(1c8b315db2551824ca0e444fa1142fbd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00013.png using Guid(1c8b315db2551824ca0e444fa1142fbd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '755fb3fb21478cc7e3640b00e98465e9') in 0.012053 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 3
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0.585 seconds
-Refreshing native plugins compatible for Editor in 7.80 ms, found 2 plugins.
+- Loaded All Assemblies, in  0.763 seconds
+Refreshing native plugins compatible for Editor in 4.18 ms, found 2 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.682 seconds
-Domain Reload Profiling: 1267ms
-	BeginReloadAssembly (203ms)
+- Finished resetting the current domain, in  0.781 seconds
+Domain Reload Profiling: 1542ms
+	BeginReloadAssembly (369ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (6ms)
+		DisableScriptedObjects (4ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (26ms)
-	RebuildCommonClasses (24ms)
+		CreateAndSetChildDomain (30ms)
+	RebuildCommonClasses (21ms)
 	RebuildNativeTypeToScriptingClass (7ms)
-	initialDomainReloadingComplete (20ms)
-	LoadAllAssembliesAndSetupDomain (330ms)
-		LoadAssemblies (197ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (340ms)
+		LoadAssemblies (237ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (176ms)
-			TypeCache.Refresh (170ms)
-				TypeCache.ScanAssembly (159ms)
+		AnalyzeDomain (149ms)
+			TypeCache.Refresh (147ms)
+				TypeCache.ScanAssembly (136ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (5ms)
-	FinalizeReload (682ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (781ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (361ms)
+		SetupLoadedEditorAssemblies (336ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (5ms)
-			SetLoadedEditorAssemblies (4ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			SetLoadedEditorAssemblies (2ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (49ms)
-			ProcessInitializeOnLoadAttributes (189ms)
-			ProcessInitializeOnLoadMethodAttributes (110ms)
+			BeforeProcessingInitializeOnLoad (43ms)
+			ProcessInitializeOnLoadAttributes (179ms)
+			ProcessInitializeOnLoadMethodAttributes (101ms)
 			AfterProcessingInitializeOnLoad (4ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (8ms)
-Refreshing native plugins compatible for Editor in 5.79 ms, found 2 plugins.
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 4.45 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2458 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 52 unused Assets / (42.7 KB). Loaded Objects now: 2936.
-Memory consumption went from 107.4 MB to 107.4 MB.
-Total: 4.532000 ms (FindLiveObjects: 0.165400 ms CreateObjectMapping: 0.062600 ms MarkObjects: 4.235300 ms  DeleteObjects: 0.067700 ms)
+Memory consumption went from 107.4 MB to 107.3 MB.
+Total: 4.977800 ms (FindLiveObjects: 0.196200 ms CreateObjectMapping: 0.055000 ms MarkObjects: 4.669100 ms  DeleteObjects: 0.056400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1677.104405 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00000.controller
+  artifactKey: Guid(528ece5956d46aa47ac406f0b3eac76c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00000.controller using Guid(528ece5956d46aa47ac406f0b3eac76c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55a6877c35460fe88246679be80cd4e5') in 0.016028 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 25.443246 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00016.png
+  artifactKey: Guid(6eaf4cf280a11c146b7c04966c452218) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00016.png using Guid(6eaf4cf280a11c146b7c04966c452218) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72765716a5b3a47dcc38321e594c0397') in 0.048440 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00035.png
+  artifactKey: Guid(c032548138ee0fb43bc418904f4289b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00035.png using Guid(c032548138ee0fb43bc418904f4289b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17a3c52ad39e22e851109588fdd49b8c') in 0.014409 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00034.png
+  artifactKey: Guid(5a6bffd622fccd448b06dfe0a77be385) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00034.png using Guid(5a6bffd622fccd448b06dfe0a77be385) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97a13da5bc5fb569a44b66346d275bb4') in 0.069761 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000012 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00027.png
+  artifactKey: Guid(5980d84a6c9263b489d1750e827ce109) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00027.png using Guid(5980d84a6c9263b489d1750e827ce109) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8c208ea27b5b52460a0bd68136aced5') in 0.040669 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00042.png
+  artifactKey: Guid(bd95ad349637e58419b0dd7fdaac83b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00042.png using Guid(bd95ad349637e58419b0dd7fdaac83b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7746da9e71ac2d8823009ba66901a5ef') in 0.024808 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000052 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00022.png
+  artifactKey: Guid(1348d8650122f76429a46ced188ad957) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00022.png using Guid(1348d8650122f76429a46ced188ad957) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b5be1f98deec2bc3b3cb4418efa9ccfc') in 0.030286 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00026.png
+  artifactKey: Guid(be8dca7c454bc714684eb0b369f973aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00026.png using Guid(be8dca7c454bc714684eb0b369f973aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab925ff046c75825fe817c2880ec275c') in 0.024866 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00028.png
+  artifactKey: Guid(6ed8f5385ef02b1429089a08af10b5cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00028.png using Guid(6ed8f5385ef02b1429089a08af10b5cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e67e6c9b6efef4aa7b294267a3006aa') in 0.013014 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000087 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00024.png
+  artifactKey: Guid(a6bc72d30da98cf46ba1d32c38983f2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00024.png using Guid(a6bc72d30da98cf46ba1d32c38983f2e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e810b44c06a4b4bc6e3901c7f57d130c') in 0.013420 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00025.png
+  artifactKey: Guid(73d1720040124ef4fac99be7829f2425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00025.png using Guid(73d1720040124ef4fac99be7829f2425) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '027a0b9e311f04f4c093aea44fcf046d') in 0.013153 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00019.png
+  artifactKey: Guid(bbded22609c566342a312af09ab1eb63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00019.png using Guid(bbded22609c566342a312af09ab1eb63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2cdf99f8079bd34a1e354c50186712f') in 0.013555 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00021.png
+  artifactKey: Guid(06b9e152f975a2b44a34a159d39dc9f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00021.png using Guid(06b9e152f975a2b44a34a159d39dc9f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72b0334bd8e476b540e3de8ccbf23971') in 0.012516 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00041.png
+  artifactKey: Guid(f7ae9441fcaa1ca4caab8a882e125269) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00041.png using Guid(f7ae9441fcaa1ca4caab8a882e125269) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c99012da735db38736d98b3379733d0') in 0.015084 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00036.png
+  artifactKey: Guid(37b63fb631b260d47b94b9751a4fe70f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00036.png using Guid(37b63fb631b260d47b94b9751a4fe70f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '124a2249706cdb8aa065dc57d4535fa5') in 0.015147 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00029.png
+  artifactKey: Guid(f0d2feace96244744a2962b9f863fdf6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00029.png using Guid(f0d2feace96244744a2962b9f863fdf6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90f0f1c689edb4570fac7614f75e56a7') in 0.013092 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00030.png
+  artifactKey: Guid(96a7a42c2b533ef46814712ab4e9297c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00030.png using Guid(96a7a42c2b533ef46814712ab4e9297c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56b0b71dfd39f45fd6d150d6c2c38d96') in 0.012290 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 2.583889 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00002.png
+  artifactKey: Guid(77bc01bf6506a4e45b21c01f378845f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00002.png using Guid(77bc01bf6506a4e45b21c01f378845f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62bdf70c9a69cfa05044fcdebf1ce01e') in 0.019530 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00006.png
+  artifactKey: Guid(00609ecc4380eff43bdf03c04edc670a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00006.png using Guid(00609ecc4380eff43bdf03c04edc670a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f0afa89bad81d12f9094aef45776218') in 0.014505 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00009.png
+  artifactKey: Guid(83609749927ee9544aaa17d0225f4cee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00009.png using Guid(83609749927ee9544aaa17d0225f4cee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '015b3349377c5533019220a01e544c91') in 0.014195 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00014.png
+  artifactKey: Guid(00a780ed011b9be4e9475f8b78e83ac0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00014.png using Guid(00a780ed011b9be4e9475f8b78e83ac0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b61d391448510de0b71275db41cfcbdb') in 0.013894 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00007.png
+  artifactKey: Guid(91e2eb7f9ea13ee44a66812becdd2ab5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00007.png using Guid(91e2eb7f9ea13ee44a66812becdd2ab5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40eea728e428876df6124949e23e8a5f') in 0.014903 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000169 seconds.
+  path: Assets/Animations/Orange_Spike/Comp 1_00008.png
+  artifactKey: Guid(284d2b60c6bd0ed42843a7dcb00c6ba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Orange_Spike/Comp 1_00008.png using Guid(284d2b60c6bd0ed42843a7dcb00c6ba8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34b510e9a5b4ca1517692c4ca2e2fa78') in 0.017691 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0.577 seconds
+Refreshing native plugins compatible for Editor in 3.77 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.568 seconds
+Domain Reload Profiling: 1144ms
+	BeginReloadAssembly (204ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (36ms)
+	RebuildCommonClasses (28ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (20ms)
+	LoadAllAssembliesAndSetupDomain (316ms)
+		LoadAssemblies (199ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (157ms)
+			TypeCache.Refresh (155ms)
+				TypeCache.ScanAssembly (144ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (569ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (342ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (46ms)
+			ProcessInitializeOnLoadAttributes (178ms)
+			ProcessInitializeOnLoadMethodAttributes (106ms)
+			AfterProcessingInitializeOnLoad (4ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 4.05 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2458 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 52 unused Assets / (42.6 KB). Loaded Objects now: 2939.
+Memory consumption went from 107.9 MB to 107.9 MB.
+Total: 4.730300 ms (FindLiveObjects: 0.131200 ms CreateObjectMapping: 0.057500 ms MarkObjects: 4.481200 ms  DeleteObjects: 0.059700 ms)
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):

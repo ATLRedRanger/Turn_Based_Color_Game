@@ -452,9 +452,12 @@ public class UI : MonoBehaviour
         _spellBookPanel.gameObject.SetActive(false);
 
         //Calls the function to play animations from the animation script. 
-        animationScript.PlayAnimation(chosenAttack);
+        PlayAttackAnimation(chosenAttack, unitSpawnerScript.enemyOne);
     }
-    
+    public void PlayAttackAnimation(Attack chosenAttack, Unit defender)
+    {
+        animationScript.PlayAnimation(chosenAttack, defender);
+    }
     //Color.Neutral Attack Buttons
     public void OnAttackClick()
     {
@@ -534,16 +537,6 @@ public class UI : MonoBehaviour
     {
         chosenAttack =unitSpawnerScript.player.unitAttackDictionary["Quick Shot"];
         OpenEnemiesPanel();
-    }
-    //Use Items 
-    public void UseHealthPotion()
-    {
-        combatFunctionsScript.UseHealthPotion();
-        UpdateUI();
-        StartCoroutine(WaitForTime(1));
-        ClosePanels();
-       unitSpawnerScript.player.hadATurn = true;
-        
     }
 
     //Attack Functions
@@ -857,7 +850,7 @@ public class UI : MonoBehaviour
         _spellsPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
     }
-    private bool IsAttackUsable(Attack attack)
+    public bool IsAttackUsable(Attack attack)
     {
         switch (attack.attackColor)
         {
@@ -1091,7 +1084,7 @@ public class UI : MonoBehaviour
             //Grabs the TMP_Text component off the child of the GameObject
             //Destroys the GameObject after a second
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + statusEffectsScript.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + damage.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1.5f);
         }
