@@ -199,6 +199,7 @@ public class Unit : MonoBehaviour
         enemyAttackDictionary["FireBall"] = attacksDatabase._fireBall;
         enemyAttackDictionary["Chop"] = attacksDatabase._chop;
         enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
+        enemyAttackDictionary["Orange Spike"] = attacksDatabase._orangeSpike;
     }
 
     private void LearnSpells()

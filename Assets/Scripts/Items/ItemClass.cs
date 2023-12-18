@@ -8,9 +8,13 @@ public class Item
 
     public string itemName;
 
+    public ItemType itemType;
+
     public string itemDescription;
 
     public int itemAmount;
+
+    
 
     public Unit_Spawner unitSpawnerScript;
 
@@ -32,9 +36,10 @@ public class Item
         this.itemAmount = 1;
     }
 
-    public Item(string itemName, string itemDescription, int itemAmount)
+    public Item(string itemName, ItemType itemType, string itemDescription, int itemAmount)
     {
         this.itemName = itemName;
+        this.itemType = itemType;
         this.itemDescription = itemDescription;
         this.itemAmount = itemAmount;
 

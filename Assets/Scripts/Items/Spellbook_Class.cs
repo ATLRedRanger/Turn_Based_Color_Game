@@ -19,9 +19,10 @@ public class Spellbook : Weapon
     public List<Attack> spellBookAttackList = new List<Attack>();
     
 
-    public Spellbook(Weapon weapon, int spellBookTier, int spellBookLevel, string itemName, string itemDesctiption, WeaponType weaponType, Hue affinity)
+    public Spellbook(Weapon weapon, ItemType itemType, int spellBookTier, int spellBookLevel, string itemName, string itemDesctiption, WeaponType weaponType, Hue affinity)
     {
         this.itemName = itemName;
+        this.itemType = itemType;
         this.itemDescription = itemDesctiption;
         weaponLevelRequirement = weapon.weaponLevelRequirement;
         weaponDamage = weapon.weaponDamage;

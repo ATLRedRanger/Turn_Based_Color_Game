@@ -9,9 +9,10 @@ public class Staff : Weapon
 
     public Hue affinity;
 
-    public Staff(string itemName, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, WeaponType weaponType, int statusEffectChance, Hue affinity)
+    public Staff(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, WeaponType weaponType, int statusEffectChance, Hue affinity)
     {
         this.itemName = itemName;
+        this.itemType = itemType;  
         this.itemDescription = itemDescription;
         this.weaponLevelRequirement = weaponLevelRequirement;
         this.weaponDamage = weaponDamage;

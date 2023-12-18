@@ -18,10 +18,11 @@ public class Consumable : Item
         
     }
 
-    public Consumable(string itemName, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount)
+    public Consumable(string itemName, ItemType itemType, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount)
     {
         
         this.itemName = itemName;
+        this.itemType = itemType;
         this.itemDescription = itemDescription;
         this.itemAmount = itemAmount;
         this.consumableType = consumableType;

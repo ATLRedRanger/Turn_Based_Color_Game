@@ -17,6 +17,8 @@ public class Inventory : MonoBehaviour
 
     private ItemDatabase itemScript;
 
+    private Item itemBeingPressed;
+
     private UI ui_Script;
     
     //public List<Weapon> playerWeaponList = new List<Weapon>();
@@ -59,7 +61,6 @@ public class Inventory : MonoBehaviour
         Debug.Log(player.equippedWeapon);
     }
     
-
     IEnumerator LoadingScripts()
     {
         yield return new WaitForSeconds(.2f);
@@ -79,49 +80,49 @@ public class Inventory : MonoBehaviour
         UpdateInventoryUI();
     }
 
-    public void EquipWeapon(Weapon weapon)
+    public void EquipWeapon()
     {
-        if(player.equippedWeapon == null)
+        Debug.Log($"Player equipped weapon is {player.equippedWeapon.itemName}");
+
+        if (player.equippedWeapon == null && itemBeingPressed.itemType == ItemType.Weapon)
         {
-            switch (weapon.weaponType)
+            Weapon equippableWeapon = itemBeingPressed as Weapon;
+            if (CheckIfSpellbook())
             {
-                case WeaponType.Axe:
-                    if (weapon.weaponLevelRequirement >= player.axeMastery)
-                    {
-                        player.equippedWeapon = weapon;
-                    }
-                    break;
-                case WeaponType.Staff:
-                    if (weapon.weaponLevelRequirement >= player.staffMastery)
-                    {
-                        player.equippedWeapon = weapon;
-                    }
-                    break;
-                case WeaponType.Sword:
-                    if (weapon.weaponLevelRequirement >= player.swordMastery)
-                    {
-                        player.equippedWeapon = weapon;
-                    }
-                    break;
-                case WeaponType.Hammer:
-                    if (weapon.weaponLevelRequirement >= player.hammerMastery)
-                    {
-                        player.equippedWeapon = weapon;
-                    }
-                    break;
-                case WeaponType.Bow:
-                    if (weapon.weaponLevelRequirement >= player.bowMastery)
-                    {
-                        player.equippedWeapon = weapon;
-                    }
-                    break;
+                player.equippedWeapon = itemBeingPressed as Spellbook;
+                
+            }
+            else if(equippableWeapon.weaponType == WeaponType.Staff)
+            {
+                player.equippedWeapon = itemBeingPressed as Staff;
+                
+            }
+            else
+            {
+                player.equippedWeapon = equippableWeapon;
             }
         }
-        else
-        {
-            //Debug.Log("You have " + player.equippedWeapon.itemName + " equipped. Would you like to unequip?");
-        }
 
+        if(player.equippedWeapon != null)
+        {
+            Weapon equippableWeapon = itemBeingPressed as Weapon;
+            if (CheckIfSpellbook())
+            {
+                player.equippedWeapon = itemBeingPressed as Spellbook;
+
+            }
+            else if (equippableWeapon.weaponType == WeaponType.Staff)
+            {
+                player.equippedWeapon = itemBeingPressed as Staff;
+
+            }
+            else
+            {
+                player.equippedWeapon = equippableWeapon;
+            }
+        }
+        
+        Debug.Log($"Player equipped weapon is {player.equippedWeapon.itemName}");
     }
 
     public void UpdateInventoryUI()
@@ -137,29 +138,18 @@ public class Inventory : MonoBehaviour
         //Sets any extra buttons to false if they're out of the inventory
         for(int i = 0; i < playerInventory.Count; i++)
         {
-            //Checks to see if the button has "SpellBook" in its name 
-            //If it does, the player can use the spellbook to open the panel
-            //If it doesn't, the button is uninteractable
-            if (buttonTextList[i].text.Contains("SpellBook") && player.equippedWeapon.weaponType != WeaponType.Spellbook)
-            {
-                buttonList[i].interactable = false;
-            }
+            
             buttonList[i].gameObject.SetActive(true);
             buttonTextList[i].text = playerInventory[i].itemName;
-            
-            
+               
         }
-        
-        
-
+       
     }
     
     public bool CheckIfSpellbook()
     {
-        string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
-        Debug.Log(playerInventory[stringButtonNum - 1].itemName);
-        if (playerInventory[stringButtonNum - 1].itemName.Contains("SpellBook"))
+        
+        if (itemBeingPressed.itemName.Contains("SpellBook"))
         {
             
             return true;
@@ -171,36 +161,24 @@ public class Inventory : MonoBehaviour
     public void UseItem()
     { 
 
-        string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
-
-        //If the button pressed is a spellbook, open the spellbook panel
-        if (CheckIfSpellbook())
-        {
-            OpenSpellBook();
-        }
-        //Else, use the item of the button that's pressed
-        else
-        {
-            playerInventory[stringButtonNum - 1].Use(player);
-
-
-            if (playerInventory[stringButtonNum - 1].itemAmount < 1)
-            {
-
-                playerInventory.Remove(playerInventory[stringButtonNum - 1]);
-
-            }
-        }
+        //string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        //int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
         
+        itemBeingPressed.Use(player);
 
-        
 
+        if (itemBeingPressed.itemAmount < 1)
+        {
+
+            playerInventory.Remove(itemBeingPressed);
+
+        }
+       
         
         ui_Script.UpdateUI();
         ui_Script.ClosePanels();
     }
-
+    
     public void OpenSpellBook()
     {
         ui_Script.OpenSpellBookPanel();
@@ -209,7 +187,25 @@ public class Inventory : MonoBehaviour
 
 
     }
+
+    public void ItemBeingInteractedWth()
+    {
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+        itemBeingPressed = playerInventory[stringButtonNum - 1];
+        ui_Script._useButton.SetActive(true);
+        if(itemBeingPressed.itemType == ItemType.Weapon)
+        {
+            ui_Script._equipButton.SetActive(true);
+        }
+        
+    }
 }
 //TODO: Make an inventory panel that has all the items in the player inventory
 //TODO: Make it so that the inventory updates so that if the inventory doesn't have an item it doesn't show up in the UI
 //Actually use the Use() function on the items instead of what i'm doing in CombatFunctions
+
+//Equipping an Item:
+//Press the button corresponding to the Item you want to equip
+//If you are not equipped with an item, bring up the Equip button
+//When you press the Equip button, the item is equipped

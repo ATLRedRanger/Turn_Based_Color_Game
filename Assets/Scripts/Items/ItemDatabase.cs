@@ -27,19 +27,19 @@ public class ItemDatabase : MonoBehaviour
     {
        
 
-        _healthPotion = new Consumable("Health Potion", "Heals a small amount of health.", 5, ConsumableType.Health, 10);
+        _healthPotion = new Consumable("Health Potion", ItemType.Consumable, "Heals a small amount of health.", 5, ConsumableType.Health, 10);
 
-        _basicSword = new Weapon("Basic Sword", "A basic sword", 1, 2, 0.6f, 0.4f, WeaponType.Sword);
+        _basicSword = new Weapon("Basic Sword", ItemType.Weapon, "A basic sword", 1, 2, 0.6f, 0.4f, WeaponType.Sword);
 
-        _basicHammer = new Weapon("Basic Hammer", "A basic hammer", 1, 2, 0.2f, 0.8f, WeaponType.Hammer);
+        _basicHammer = new Weapon("Basic Hammer", ItemType.Weapon, "A basic hammer", 1, 2, 0.2f, 0.8f, WeaponType.Hammer);
 
-        _basicAxe = new Weapon("Basic Axe", "A basic axe", 1, 2, 0.8f, 0.2f, WeaponType.Axe);
+        _basicAxe = new Weapon("Basic Axe", ItemType.Weapon, "A basic axe", 1, 2, 0.8f, 0.2f, WeaponType.Axe);
 
-        _basicBow = new Weapon("Basic Bow", "A basic bow", 1, 2, 1, 1, WeaponType.Bow);
+        _basicBow = new Weapon("Basic Bow", ItemType.Weapon, "A basic bow", 1, 2, 1, 1, WeaponType.Bow);
 
-        _basicStaff = new Staff("Basic Staff", "A basic staff", 1, 2, 1, 1, WeaponType.Staff, 1, Hue.Red);
+        _basicStaff = new Staff("Basic Staff", ItemType.Weapon, "A basic staff", 1, 2, 1, 1, WeaponType.Staff, 1, Hue.Red);
 
-        _basicSpellbook = new Spellbook(_basicStaff, 1, 1, "Basic SpellBook", "A basic spelbook", WeaponType.Spellbook, Hue.Neutral);
+        _basicSpellbook = new Spellbook(_basicStaff, ItemType.Weapon, 1, 1, "Basic SpellBook", "A basic spelbook", WeaponType.Spellbook, Hue.Neutral);
         
         
 
@@ -61,9 +61,9 @@ public class ItemDatabase : MonoBehaviour
         
     }
 
-    private Item CreateItem(string itemName, string itemDescription, int itemAmount)
+    private Item CreateItem(string itemName, ItemType itemType, string itemDescription, int itemAmount)
     {
-        var item = new Item(itemName, itemDescription, itemAmount);
+        var item = new Item(itemName, itemType, itemDescription, itemAmount);
         return item;
     }
 }

@@ -99,6 +99,7 @@ public class UI : MonoBehaviour
 
 
     //SpellBook Buttons
+    public GameObject _spellBookButtonMain;
     public Button _spellBookButton1;
     public TMP_Text _spellBookButton1Text;
     public Button _spellBookButton2;
@@ -110,6 +111,8 @@ public class UI : MonoBehaviour
 
     //UI Item Buttons
     public GameObject _healthPotion;
+    public GameObject _equipButton;
+    public GameObject _useButton;
 
     
     //UI Spells Buttons
@@ -721,7 +724,14 @@ public class UI : MonoBehaviour
     public void OpenFightPanel()
     {
         EnemyButtonNames();
-
+        if(unitSpawnerScript.player.equippedWeapon.weaponType == WeaponType.Spellbook)
+        {
+            _spellBookButtonMain.gameObject.SetActive(true);
+        }
+        else
+        {
+            _spellBookButtonMain.gameObject.SetActive(false);
+        }
         bool isActive = _fightPanel.activeSelf;
 
         if (_fightPanel != null)
@@ -741,6 +751,9 @@ public class UI : MonoBehaviour
     public void OpenItemsPanel()
     {
         bool isActive = _itemPanel.activeSelf;
+
+        _equipButton.gameObject.SetActive(false);
+        _useButton.gameObject.SetActive(false);
         
         if (_itemPanel != null)
         {
@@ -755,6 +768,7 @@ public class UI : MonoBehaviour
                 _abilitiesPanel.SetActive(false);
                 _spellsPanel.SetActive(false);
                 _enemiesPanel.SetActive(false);
+                _spellBookPanel.SetActive(false);
                 inventoryScript.UpdateInventoryUI();
             }
         }
@@ -778,7 +792,7 @@ public class UI : MonoBehaviour
                 _abilitiesPanel.SetActive(false);
                 _itemPanel.SetActive(false);
                 _enemiesPanel.SetActive(false);
-
+                _spellBookPanel.SetActive(false);
             }
         }
         if(_spellsPanel.activeSelf == false)
@@ -786,7 +800,7 @@ public class UI : MonoBehaviour
             _abilitiesPanel.SetActive(false);
             _itemPanel.SetActive(false);
             _enemiesPanel.SetActive(false);
-
+            _spellBookPanel.SetActive(false);
         }
     }
 
@@ -808,6 +822,7 @@ public class UI : MonoBehaviour
                 _itemPanel.SetActive(false);
                 _spellsPanel.SetActive(false);
                 _enemiesPanel.SetActive(false);
+                _spellBookPanel.SetActive(false);
             }
         }
         if(_abilitiesPanel.activeSelf == false)
@@ -816,6 +831,7 @@ public class UI : MonoBehaviour
             _spellsPanel.SetActive(false);
             _itemPanel.SetActive(false);
             _enemiesPanel.SetActive(false);
+            _spellBookPanel.SetActive(false);
         }
 
     }
@@ -826,6 +842,7 @@ public class UI : MonoBehaviour
         _spellsPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
         _itemPanel.SetActive(false);
+        _spellBookPanel.SetActive(false);
 
         if (_enemiesPanel != null)
         {
@@ -849,57 +866,9 @@ public class UI : MonoBehaviour
         _itemPanel.SetActive(false);
         _spellsPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
+        _spellBookPanel.SetActive(false);
     }
-    public bool IsAttackUsable(Attack attack)
-    {
-        switch (attack.attackColor)
-        {
-            case (Hue.Red):
-                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentRed)
-                {
-                    return true;
-                }
-                break;
-            case (Hue.Orange):
-                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentOrange)
-                {
-                    return true;
-                }
-                break;
-            case (Hue.Yellow):
-                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentYellow)
-                {
-                    return true;
-                }
-                break;
-            case (Hue.Green):
-                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentGreen)
-                {
-                    return true;
-                }
-                break;
-            case (Hue.Blue):
-                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentBlue)
-                {
-                    return true;
-                }
-                break;
-            case (Hue.Violet):
-                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentViolet)
-                {
-                    return true;
-                }
-                break;
-            default:
-                if(unitSpawnerScript.player.currentStamina >= attack.staminaCost)
-                {
-                    return true;
-                }
-                break;
-        }
-            
-            return false;
-    }
+    
     public void OpenSpellBookPanel()
     {
         _spellBookButton1.gameObject.SetActive(false);
@@ -929,7 +898,7 @@ public class UI : MonoBehaviour
         {
             _spellBookButton2.gameObject.SetActive(true);
             _spellBookButton2Text.text = spellbook.spellBookAttackList[1].attackName;
-            Debug.Log(IsAttackUsable(spellbook.spellBookAttackList[1]));
+            
             if (IsAttackUsable(spellbook.spellBookAttackList[1]))
             {
                 
@@ -955,6 +924,10 @@ public class UI : MonoBehaviour
             }
         }
 
+        _spellsPanel.SetActive(false);
+        _enemiesPanel.SetActive(false);
+        _itemPanel.SetActive(false);
+        _abilitiesPanel.SetActive(false);
     }
 
     public void ClosePanels()
@@ -1124,7 +1097,72 @@ public class UI : MonoBehaviour
         UpdateUI();
         
     }
+    public bool IsAttackUsable(Attack attack)
+    {
+        switch (attack.attackColor)
+        {
+            case (Hue.Red):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentRed)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Orange):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentOrange)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Yellow):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentYellow)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Green):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentGreen)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Blue):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentBlue)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Violet):
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentViolet)
+                {
+                    return true;
+                }
+                break;
+            default:
+                if (unitSpawnerScript.player.currentStamina >= attack.staminaCost)
+                {
+                    return true;
+                }
+                break;
+        }
 
+        return false;
+    }
+
+    //Inventory Buttons
+    public void EquipButton()
+    {
+        
+        inventoryScript.EquipWeapon();
+        ClosePanels();
+        OpenFightPanel();
+    }
+    public void UseButton()
+    {
+        
+        inventoryScript.UseItem();
+        unitSpawnerScript.player.hadATurn = true;
+        ClosePanels();
+    }
 }
 //KEYBOARD SHORTCUTS
 //HIGHLIGHT INSTANCES - SHIFT+ALT+. (Highlights instances of a word)

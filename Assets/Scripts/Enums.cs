@@ -51,7 +51,8 @@ public enum WeaponType
 public enum ItemType
 {
     Consumable, 
-    Equipment
+    Equipment,
+    Weapon
 }
 
 public enum ConsumableType
