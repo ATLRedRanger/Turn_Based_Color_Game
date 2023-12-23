@@ -36,11 +36,11 @@ public class AttacksDatabase : MonoBehaviour
 
         _fireBall = new Attack("Fireball", "Red_Slash", 5, 12, 5, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral);
         Debug.Log("FIREBALL NAME = " + _fireBall.attackName);
-        _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 7, 7, 75, 1, 2, Hue.Green, AttackType.Physical, WeaponType.Neutral);
+        _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 10, 7, 75, 1, 2, Hue.Green, AttackType.Special, WeaponType.Neutral);
 
-        _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 6, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral);
+        _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 8, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral);
 
-        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 3, 3, 8, 50, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral);
+        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 3, 3, 8, 5, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral);
 
         _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 12, 4, 85, 1, 2, Hue.Yellow, AttackType.Special, WeaponType.Neutral);
 
@@ -59,10 +59,10 @@ public class AttacksDatabase : MonoBehaviour
         _slash = new Attack("Slash", "Slash", 2, 4, 0, 95, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Sword);
 
         //Hammer
-        _slam = new Attack("Slam", "Slam", 2, 4, 0, 95, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Hammer);
+        _slam = new Attack("Slam", "Slam", 7, 4, 0, 95, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Hammer);
 
         //Bow
-        _quickShot = new Attack("Quick Shot", "Quick_Shot", 2, 4, 0, 90, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Bow);
+        _quickShot = new Attack("Quick Shot", "Quick_Shot", 1, 15, 0, 90, 2, 2, Hue.Neutral, AttackType.Physical, WeaponType.Bow);
     }
 
     // Start is called before the first frame update

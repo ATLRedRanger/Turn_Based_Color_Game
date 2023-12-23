@@ -101,10 +101,10 @@ MonoBehaviour:
   unitName: Boblin2
   maxHealth: 100
   currentHealth: 100
-  physicalAttack: 5
+  physicalAttack: 10
   physicalDefense: 5
-  magicAttack: 5
-  magicDefense: 5
+  magicAttack: 18
+  magicDefense: 10
   currentSpeed: 3
   maxStamina: 100
   currentStamina: 100

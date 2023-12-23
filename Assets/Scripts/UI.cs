@@ -391,7 +391,9 @@ public class UI : MonoBehaviour
         
         if (_fightButton != null && turnManagerScript.state == BattleState.PLAYERTURN)
         {
+            
             _fightButton.SetActive(true);
+
             
         }
         else
@@ -449,13 +451,18 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-        combatFunctionsScript.CombatSteps(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne);
-        
+        _fightButton.SetActive(false);
         ClosePanels();
         _spellBookPanel.gameObject.SetActive(false);
+        
+
+        StartCoroutine(combatFunctionsScript.CombatStepsTwo(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne));
+        
+        
 
         //Calls the function to play animations from the animation script. 
         PlayAttackAnimation(chosenAttack, unitSpawnerScript.enemyOne);
+        
     }
     public void PlayAttackAnimation(Attack chosenAttack, Unit defender)
     {
@@ -843,6 +850,7 @@ public class UI : MonoBehaviour
         _enemiesPanel.SetActive(false);
         _itemPanel.SetActive(false);
         _spellBookPanel.SetActive(false);
+        _abilitiesPanel.SetActive(false);
 
         if (_enemiesPanel != null)
         {
@@ -867,6 +875,7 @@ public class UI : MonoBehaviour
         _spellsPanel.SetActive(false);
         _enemiesPanel.SetActive(false);
         _spellBookPanel.SetActive(false);
+        _abilitiesPanel.SetActive(false);
     }
     
     public void OpenSpellBookPanel()
@@ -983,19 +992,36 @@ public class UI : MonoBehaviour
 
         if (unit.isPlayer)
         {
+            
             //Instantiates a copy of the gameObject at the specified position
             //Grabs the TMP_Text component off the child of the GameObject
             //Destroys the GameObject after a second
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + combatFunctionsScript.healthLost.ToString();
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            if (combatFunctionsScript.crit)
+            {
+                floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 0, 255);
+            }
+            else
+            {
+                floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            }
+            
             Destroy(floatingDamageTextClone, 1);
         }
         if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
         {
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + combatFunctionsScript.healthLost.ToString();
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
+            if (combatFunctionsScript.crit)
+            {
+                floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 0, 255);
+            }
+            else
+            {
+                floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            }
+            
             Destroy(floatingDamageTextClone, 1);
         }
         

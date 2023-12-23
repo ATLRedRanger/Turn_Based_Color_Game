@@ -101,9 +101,9 @@ MonoBehaviour:
   unitName: Goblin_3
   maxHealth: 100
   currentHealth: 100
-  physicalAttack: 5
-  physicalDefense: 5
-  magicAttack: 5
+  physicalAttack: 10
+  physicalDefense: 10
+  magicAttack: 20
   magicDefense: 5
   currentSpeed: 2
   maxStamina: 100

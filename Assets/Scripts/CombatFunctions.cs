@@ -8,6 +8,8 @@ public class CombatFunctions : MonoBehaviour
 
     public AttacksDatabase attackDatabase;
 
+    public bool inCombat;
+
     //public Unit unit;
 
     public ENV_Mana envManaScript;
@@ -31,6 +33,8 @@ public class CombatFunctions : MonoBehaviour
     public Unit chosenEnemy;
 
     public int healthLost;
+
+    public bool crit;
 
     int roll;
     
@@ -62,7 +66,7 @@ public class CombatFunctions : MonoBehaviour
     {
         //Regenerate stamina at a rate of 1/5th of their maximum stanima
         //Stamina stunned problem isn't here
-        int staminaRegend = ((unit.maxStamina * 1 / 3)*unit.staminaRegenModifier);
+        int staminaRegend = ((unit.maxStamina * 1 / 10)*unit.staminaRegenModifier);
 
         unit.currentStamina += staminaRegend;
 
@@ -278,38 +282,107 @@ public class CombatFunctions : MonoBehaviour
                 break;
         }
     }
+    public IEnumerator CombatStepsTwo(Attack attack, Unit attacker, Unit defender)
+    {
+        inCombat = true;
+        for (int i = 0; i < attack.numOfAttacks; i++)
+        {
+            yield return new WaitForSeconds(.8f);
+            
+            if (DidAttackHit(attack, attacker) == true)
+            {
+                potentialAttackDamage = 0;
+                CheckForSpecialWeaponProperties(attack, attacker);
+                CheckForAttackAbilities(attack, defender);
+                PotentialDamage(attack, attacker);
+                CheckForCrit(attacker);
+                DamageAfterArmorandRes(attack, defender);
+                DamageAfterStatusCheck(defender);
+                ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
+                uiScript.FloatingNumbersText(defender, attack);
+                ReduceStamina(attack, attacker);
+                ReduceColorFromEnv(attack);
+                ColorReturn(attack);
+                yield return new WaitForSeconds(.7f);
+                uiScript.UpdateUI();
+            }
+            if(defender.currentHealth < 1)
+            {
+                break;
+            }
+        }
+
+        attacker.hadATurn = true;
+        inCombat = false;
+    }
     public void CombatSteps(Attack attack, Unit attacker, Unit defender)
     {
-        
-        if(DidAttackHit(attack, attacker) == true)
+        for (int i = 0; i < attack.numOfAttacks; i++)
         {
-            CheckForSpecialWeaponProperties(attacker);
-            CheckForAttackAbilities(attack, defender);
-            PotentialDamage(attack, attacker);
-            CheckForCrit(attacker);
-            DamageAfterArmorandRes(attack, defender);
-            DamageAfterStatusCheck(defender);
-            ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
-            uiScript.FloatingNumbersText(defender, attack);
-            ReduceStamina(attack, attacker);
-            ReduceColorFromEnv(attack);
-            ColorReturn(attack);
+            
+            Debug.Log($"NumOfAttacks = {attack.numOfAttacks}");
+            if (DidAttackHit(attack, attacker) == true)
+            {
+                potentialAttackDamage = 0;
+                CheckForSpecialWeaponProperties(attack, attacker);
+                CheckForAttackAbilities(attack, defender);
+                PotentialDamage(attack, attacker);
+                CheckForCrit(attacker);
+                DamageAfterArmorandRes(attack, defender);
+                DamageAfterStatusCheck(defender);
+                ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
+                uiScript.FloatingNumbersText(defender, attack);
+                ReduceStamina(attack, attacker);
+                ReduceColorFromEnv(attack);
+                ColorReturn(attack);
+                
+            }
+            
         }
+            
         attacker.hadATurn = true;
     }
 
-    public void CheckForSpecialWeaponProperties(Unit attacker)
+    public void CheckForSpecialWeaponProperties(Attack attack, Unit attacker)
     {
-        if(attacker.equippedWeapon != null)
+        //Each weapon should feel different from each other
+        //Hammer: Gets bonus damage from the attacker current stamina level and always deals stamina damage
+        if (attacker.equippedWeapon != null)
         {
-            attacker.equippedWeapon.SpecialProperty();
+            switch (attacker.equippedWeapon.weaponType)
+            {
+                case WeaponType.Axe:
+                    break;
+                case WeaponType.Bow:
+                    break;
+                case WeaponType.Hammer:
+                    if(attack.attackType != AttackType.Special)
+                    {
+                        potentialAttackDamage = attacker.equippedWeapon.Hammer(attacker);
+                    }
+                    break;
+                case WeaponType.Spellbook:
+                    break;
+                case WeaponType.Staff:
+                    break;
+                case WeaponType.Sword:
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        else
+        {
+            potentialAttackDamage = 0;
         }
         
+        Debug.Log($"Potential Attack Damage = {potentialAttackDamage}");
     }
 
     public int PotentialDamage(Attack attack, Unit attacker)
     {
-        potentialAttackDamage = 0;
+        
         switch (attack.attackType)
         {
             case AttackType.Special:
@@ -325,41 +398,46 @@ public class CombatFunctions : MonoBehaviour
                         if (equippedStaff.affinity == attack.attackColor)
                         {
                             int damageToBeBoosted = Mathf.RoundToInt((float)((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3));
+                            
+                            
+                            potentialAttackDamage += damageToBeBoosted + attacker.magicAttack;
                             Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
-                            
-                            potentialAttackDamage = damageToBeBoosted + attacker.magicAttack;
-                            
                         }
                         else
                         {
+                            
+                            potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
                             Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
-                            potentialAttackDamage = attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
                         }
 
                     }
                     else
                     {
+                        
+                        potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
                         Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
-                        potentialAttackDamage = attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
                     }
                     
                 }
                 else
                 {
+                    
+                    potentialAttackDamage += attack.attackDamage + attacker.magicAttack;
                     Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack}");
-                    potentialAttackDamage = attack.attackDamage + attacker.magicAttack;
                 }
                 break;
             default:
                 if (IsAttackerEquipped(attacker) == true)
                 {
+                    
+                    potentialAttackDamage += attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponDamage;
                     Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponDamage}");
-                    potentialAttackDamage = attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponDamage;
                 }
                 else
                 {
+                    
+                    potentialAttackDamage += attack.attackDamage + attacker.physicalAttack;
                     Debug.Log($"POTENTIAL ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack}");
-                    potentialAttackDamage = attack.attackDamage + attacker.physicalAttack;
                 }
                 break;
         }
@@ -391,9 +469,9 @@ public class CombatFunctions : MonoBehaviour
         //If you're in the midst of battle and you're dying, you might get lucky, but not overly so. 
         //I want crits to feel rewarding, but shouldn't really decide the battle
 
-        
 
-        bool crit = false;
+        crit = false;
+        
         int dieRoll = Random.Range(0, 101);
         int critChance = (int)(100 - (attacker.baseAccuracy * .10));
         int critCalc = (int)(dieRoll + (attacker.baseAccuracy * .10));
@@ -402,7 +480,7 @@ public class CombatFunctions : MonoBehaviour
 
         switch (critThreshold)
         {
-            case StaminaLevels.Full:
+            case StaminaLevels.Full: 
                 if((critCalc * 1.25) > critChance)
                 {
                     crit = true;
@@ -429,7 +507,14 @@ public class CombatFunctions : MonoBehaviour
         }
         if(crit)
         {
-            potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage * 1.25));
+            if(attacker.equippedWeapon != null)
+            {
+                potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage * attacker.equippedWeapon.weaponCritModifier));
+            }
+            else
+            {
+                potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage * 1.25f));
+            }
             Debug.Log($"YOU'VE LANDED A CRITICAL HIT! {potentialAttackDamage}");
         }
         
@@ -512,35 +597,38 @@ public class CombatFunctions : MonoBehaviour
     public void ReduceHealthAndStaminaOfDefender(Attack attack, Unit attacker, Unit defender)
     {
 
-        //If the defender is defending and the attacker has a weapon
-        //Reduce the health of the defender by the damage * the weaponModifier
-        //If the the defender is defending and the attacker is weaponless
-        //Reduce the health of the defender by half
-        //If the defender is not defending, defender takes full damage 
-        int preDamage = defender.currentHealth;
-        if (defender.isDefending && attacker.equippedWeapon != null)
+        
+        int healthPreDamage = defender.currentHealth;
+
+        //If the attacker has a weapon and it's a hammer, 
+        //The defender takes stamina damage equal to half of the damage received.
+        if (attacker.equippedWeapon != null)
         {
-            Debug.Log("DEFENDER IS DEFENDING AND ATTACKER HAS A WEAPON");
-            
-            defender.currentHealth -= (int)(damageAfterReductions * attacker.equippedWeapon.weaponHealthModifier);
-            defender.currentStamina -= (int)(damageAfterReductions * attacker.equippedWeapon.weaponStaminaModifier);
-            
-            if(defender.currentStamina < 1)
+            if (attacker.equippedWeapon.weaponType == WeaponType.Hammer)
             {
-                defender.currentStamina = 0;
+
+                defender.currentStamina -= (int)(damageAfterReductions * .5);
+                if (defender.currentStamina < 1)
+                {
+                    defender.currentStamina = 0;
+                }
             }
         }
-        else if(defender.isDefending)
+        
+        //If the defender is defending, they take half damage after reductions
+        //If the defender is not defending, they take full damage
+
+        if (defender.isDefending)
         {
-            Debug.Log("DEFENDER IS DEFENDING");
-            defender.currentHealth -= damageAfterReductions * 1/2;
+            defender.currentHealth -= damageAfterReductions * 1 / 2;
         }
         else
         {
-            Debug.Log("DEFENDER ISN'T DEFENDING");
             defender.currentHealth -= damageAfterReductions;
         }
-        healthLost = preDamage - defender.currentHealth;
+        
+
+        healthLost = healthPreDamage - defender.currentHealth;
         
     }
 

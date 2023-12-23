@@ -75,7 +75,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
             if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
             {
                 uiScript.PlayAttackAnimation(chosenAttack, player);
-                combatFunctionsScript.CheckForSpecialWeaponProperties(enemyOne);
+                combatFunctionsScript.CheckForSpecialWeaponProperties(chosenAttack, enemyOne);
                 combatFunctionsScript.CheckForAttackAbilities(chosenAttack, player);
                 combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
                 combatFunctionsScript.CheckForCrit(enemyOne);

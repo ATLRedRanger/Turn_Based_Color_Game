@@ -81,7 +81,7 @@ public class Turn_Manager : MonoBehaviour
                 
                 if (state == BattleState.PLAYERTURN)
                 {
-                    ui_Script.MenuVisibile();
+                   
                     ui_Script.UpdateUI();
                     
                     yield return new WaitUntil(() => unitSpawnerScript.player.hadATurn == true);
@@ -89,7 +89,6 @@ public class Turn_Manager : MonoBehaviour
                 else
                 {
                     
-                    ui_Script.MenuVisibile();
                     ui_Script.UpdateUI();
                     unitReferences[turnIndex].enemyCombatScript.EnemyAttacking();
 
@@ -134,12 +133,9 @@ public class Turn_Manager : MonoBehaviour
     {
         unitSpawnerScript.player.hadATurn = false;
         Debug.Log("Begin Turn");
-        ui_Script.MenuVisibile();
         ui_Script.UpdateUI();
 
         WhoseTurnIsIt();
-
-        //UntapPhase();
 
         Debug.Log("Begin Turn");
     }
@@ -176,16 +172,13 @@ public class Turn_Manager : MonoBehaviour
     {
         Debug.Log("End Turn");
         
-
         if(state == BattleState.PLAYERTURN)
         {
             unitSpawnerScript.player.hadATurn = false;
         }
 
         ui_Script.UpdateUI();
-        ui_Script.MenuVisibile();
         CleanUpStep();
-        
         
     }
 
@@ -225,19 +218,7 @@ public class Turn_Manager : MonoBehaviour
         {
             state = BattleState.ENEMYTURN;
         }
-        /*if (unitSpawnerScript.listOfCombatants[0].isPlayer == false && enemyOne.hadATurn == false)
-        {
-            state = BattleState.ENEMYTURN;
-            //EnemyTurn();
-
-        }
-        else //(unitSpawnerScript.listOfCombatants[0].isPlayer == true && player.hadATurn == false)
-        {
-            state = BattleState.PLAYERTURN;
-            //PlayerTurn();
-
-        }*/
-        ui_Script.MenuVisibile();
+        
     }
     private void ReduceBuffsAndDebuffs()
     {

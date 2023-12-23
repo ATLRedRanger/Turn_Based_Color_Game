@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Enemy_Goblin : Unit
 {
-    
-    
+
+    private Color spriteColor;
     //public Dictionary<string, Attack> goblinDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
@@ -14,7 +15,7 @@ public class Enemy_Goblin : Unit
     {
         
         base.Start();
-        
+        spriteColor = spriteRenderer.color;
     }
 
     public override void EnemyAttacks()
@@ -39,7 +40,7 @@ public class Enemy_Goblin : Unit
         }
         else
         {
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = spriteColor;
             physicalAttack = baseAttack;
         }
         

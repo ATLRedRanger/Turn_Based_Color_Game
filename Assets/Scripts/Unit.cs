@@ -381,7 +381,7 @@ public class Unit : MonoBehaviour
     public virtual void SpecialAbility()
     {
         Debug.Log("Special Ability");
-        ;
+        
     }
 }
 

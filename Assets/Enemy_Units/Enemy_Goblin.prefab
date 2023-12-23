@@ -100,9 +100,9 @@ MonoBehaviour:
   unitName: Slimlin
   maxHealth: 100
   currentHealth: 100
-  physicalAttack: 5
+  physicalAttack: 12
   physicalDefense: 5
-  magicAttack: 5
+  magicAttack: 20
   magicDefense: 5
   currentSpeed: 7
   maxStamina: 100
