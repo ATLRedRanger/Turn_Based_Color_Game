@@ -67,6 +67,14 @@ public enum AttackType
     Special
 }
 
+public enum AttackBehavior
+{
+    Burn,
+    Stun,
+    Vamp, 
+    None
+}
+
 public enum Statuses
 {
     Burned,

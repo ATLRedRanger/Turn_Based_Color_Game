@@ -37,7 +37,7 @@ public class ItemDatabase : MonoBehaviour
 
         _basicBow = new Weapon("Basic Bow", ItemType.Weapon, "A basic bow", 1, 2, 1, 1, 1.5f, WeaponType.Bow);
 
-        _basicStaff = new Staff("Basic Staff", ItemType.Weapon, "A basic staff", 1, 2, 1, 1, WeaponType.Staff, 1, Hue.Red);
+        _basicStaff = new Staff("Basic Staff", ItemType.Weapon, "A basic staff", 1, 2, 1, 1, 1.10f, WeaponType.Staff, 1, Hue.Red);
 
         _basicSpellbook = new Spellbook(_basicStaff, ItemType.Weapon, 1, 1, "Basic SpellBook", "A basic spelbook", WeaponType.Spellbook, Hue.Neutral);
         

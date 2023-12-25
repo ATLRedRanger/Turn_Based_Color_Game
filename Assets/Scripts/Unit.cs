@@ -49,6 +49,8 @@ public class Unit : MonoBehaviour
     public int stunnedTimer = 3;
     public int stunnedMaxStamina;
     public int OgStamina;
+    //Vampped: Had to make this a status effect because of the way the attack class is written
+    public bool isVampped;
     
 
     [SerializeField] private int currentLevel;

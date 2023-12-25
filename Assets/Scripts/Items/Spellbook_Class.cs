@@ -28,6 +28,7 @@ public class Spellbook : Weapon
         weaponDamage = weapon.weaponDamage;
         weaponHealthModifier = weapon.weaponHealthModifier;
         weaponStaminaModifier = weapon.weaponStaminaModifier;
+        weaponCritModifier = weapon.weaponCritModifier;
         this.weaponType = weaponType;
         this.spellBookTier = spellBookTier;
         this.spellBookLevel = spellBookLevel;
@@ -39,30 +40,29 @@ public class Spellbook : Weapon
     {
         spellBookAttackList.Add(attack);
         Debug.Log("ATTACK ADDED = " + attack.attackName);
-        //Adds a spell to the spellbook
-        //If there are less spells in the book than the tier of the spellbook
-        /*
-        if (spellBookSpells.Count < spellBookTier)
-        {
-            spellBookSpells.Add(attack.attackName, attack);
-        }
-        else
-        {
-            Debug.Log("This spellbook can only hold " + spellBookTier + " spells.");
-        }
-        
-        if (spellBookAttackList.Count < spellBookTier)
-        {
-            spellBookAttackList.Add(attack);
-        }
-        else
-        {
-            Debug.Log("This spellbook can only hold " + spellBookTier + " spells.");
-        }*/
+       
     }
 
     public void GainExperience(int experience)
     {
         spellBookExperience += experience;
+        SpellBookLevelUp();
+    }
+
+    private void SpellBookLevelUp()
+    {
+        if(spellBookExperience >= 125 * spellBookLevel)
+        {
+            spellBookLevel += 1;
+            StrengthenSpells();
+        }
+    }
+
+    private void StrengthenSpells()
+    {
+        for(int i = 0; i < spellBookAttackList.Count; i++)
+        {
+            spellBookAttackList[i].attackDamage += 5;
+        }
     }
 }

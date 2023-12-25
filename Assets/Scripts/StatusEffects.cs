@@ -11,6 +11,8 @@ public class StatusEffects : MonoBehaviour
 {
     private Turn_Manager turnManager_Script;
 
+    private CombatFunctions combatFunctions_Script;
+
     private UI ui_Script;
 
     public int burnDamage;
@@ -18,6 +20,7 @@ public class StatusEffects : MonoBehaviour
     private void Start()
     {
         turnManager_Script = FindObjectOfType<Turn_Manager>();
+        combatFunctions_Script = FindObjectOfType<CombatFunctions>();
         ui_Script = FindObjectOfType<UI>();
     }
     
@@ -48,7 +51,7 @@ public class StatusEffects : MonoBehaviour
     public void Stunned()
     {
 
-        Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
+        //Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
             
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned)
         {
@@ -56,7 +59,7 @@ public class StatusEffects : MonoBehaviour
 
             if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina > turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina)
             {
-                Debug.Log("IF STUNNED AN CURRENT > MAX");
+                //Debug.Log("IF STUNNED AN CURRENT > MAX");
                 turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina;
             }
                 
@@ -72,6 +75,19 @@ public class StatusEffects : MonoBehaviour
             
         turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer -= 1;
 
-        Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
+        //Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
+    }
+
+    public void Vampped(Unit attacker)
+    {
+        //Heals the attacker half of the damage dealt 
+        if (attacker.isVampped)
+        {
+            attacker.currentHealth += (int)(combatFunctions_Script.damageAfterReductions * 1 / 2);
+            
+            attacker.isVampped = false;
+        }
+        
+
     }
 }

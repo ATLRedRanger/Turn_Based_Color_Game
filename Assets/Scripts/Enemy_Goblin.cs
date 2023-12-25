@@ -8,6 +8,8 @@ public class Enemy_Goblin : Unit
 {
 
     private Color spriteColor;
+
+    private int initialAttack;
     //public Dictionary<string, Attack> goblinDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
@@ -16,6 +18,7 @@ public class Enemy_Goblin : Unit
         
         base.Start();
         spriteColor = spriteRenderer.color;
+        initialAttack = physicalAttack;
     }
 
     public override void EnemyAttacks()
@@ -31,17 +34,17 @@ public class Enemy_Goblin : Unit
 
     public override void  SpecialAbility()
     {
-        int baseAttack = 2;
+        
         if (envManaScript.currentGreen > envManaScript.currentBlue)
         {
             spriteRenderer.color = Color.red;
-            physicalAttack = 5;
+            physicalAttack = (int)(physicalAttack * 1.5);
             
         }
         else
         {
             spriteRenderer.color = spriteColor;
-            physicalAttack = baseAttack;
+            physicalAttack = initialAttack;
         }
         
     }

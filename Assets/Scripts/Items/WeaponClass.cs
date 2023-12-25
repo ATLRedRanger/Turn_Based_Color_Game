@@ -73,5 +73,30 @@ public class Weapon : Item
         
         return modifiedDamage;
     }
+
+    public int Axe(Unit attacker, Unit defender)
+    {
+        int modifiedDamage = 0;
+
+        if(defender.physicalDefense > attacker.physicalDefense)
+        {
+            modifiedDamage = (int)(weaponDamage * 3);
+        }
+
+        return modifiedDamage;
+    }
+
+    public void Sword(Unit attacker)
+    {
+        //Really don't know what I want to do for swords to be different
+        //Played around with a switch stance type mechanic, but I don't think I like it
+        //This current mechanic is vanilla and just says if the attacker's stamina is below half
+        //Use their special ability
+        //I haven't given anybody specials except the slime so this is basically a placeholder ability
+        if(attacker.currentStamina < (int)(attacker.maxStamina * 1 / 2))
+        {
+            attacker.SpecialAbility();
+        }
+    }
 }
 //Bows have higher crit modifiers than other weapons, but their attacks have lower damage and stamina reqs. 

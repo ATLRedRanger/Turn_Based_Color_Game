@@ -98,7 +98,8 @@ public class UI : MonoBehaviour
     public Button _quickShotButton;
 
 
-    //SpellBook Buttons
+    //SpellBook Related
+    private Attack currentSpellBookSpell;
     public GameObject _spellBookButtonMain;
     public Button _spellBookButton1;
     public TMP_Text _spellBookButton1Text;
@@ -451,18 +452,24 @@ public class UI : MonoBehaviour
 
     public void EnemyOneButton()
     {
-        _fightButton.SetActive(false);
-        ClosePanels();
+        
         _spellBookPanel.gameObject.SetActive(false);
         
 
         StartCoroutine(combatFunctionsScript.CombatStepsTwo(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne));
         
-        
+        if(chosenAttack == currentSpellBookSpell)
+        {
+            Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
+            spellbook.GainExperience(15);
+            Debug.Log($"SpellBook Experience{spellbook.spellBookExperience}");
+        }
 
         //Calls the function to play animations from the animation script. 
         PlayAttackAnimation(chosenAttack, unitSpawnerScript.enemyOne);
-        
+
+        _fightButton.SetActive(false);
+        ClosePanels();
     }
     public void PlayAttackAnimation(Attack chosenAttack, Unit defender)
     {
@@ -1107,6 +1114,7 @@ public class UI : MonoBehaviour
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
 
         Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
+        currentSpellBookSpell = spellbook.spellBookAttackList[stringButtonNum - 1];
         chosenAttack = spellbook.spellBookAttackList[stringButtonNum - 1];
 
 

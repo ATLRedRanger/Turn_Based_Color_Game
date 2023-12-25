@@ -75,12 +75,12 @@ public class Enemy_Combat_Functions : MonoBehaviour
             if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
             {
                 uiScript.PlayAttackAnimation(chosenAttack, player);
-                combatFunctionsScript.CheckForSpecialWeaponProperties(chosenAttack, enemyOne);
-                combatFunctionsScript.CheckForAttackAbilities(chosenAttack, player);
+                combatFunctionsScript.CheckForSpecialWeaponProperties(chosenAttack, enemyOne, player);
+                combatFunctionsScript.CheckForAttackAbilities(chosenAttack, enemyOne, player);
                 combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
                 combatFunctionsScript.CheckForCrit(enemyOne);
                 combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
-                combatFunctionsScript.DamageAfterStatusCheck(player);
+                combatFunctionsScript.DamageAfterStatusCheck(enemyOne, player);
                 combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
                 uiScript.FloatingNumbersText(player, chosenAttack);
                 combatFunctionsScript.ReduceStamina(chosenAttack, enemyOne);

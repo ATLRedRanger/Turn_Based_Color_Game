@@ -28,6 +28,7 @@ public class Attack
 
     public WeaponType weaponType;
 
+    private AttackBehavior attackBehavior;
     
   
     //These are different ways to *initialize* the attack
@@ -48,7 +49,7 @@ public class Attack
     }
 
     //Using this method, I can do things once. 
-    public Attack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, int numOfAttacks, int animTimeLength, Hue attackColor, AttackType attackType ,WeaponType weaponType)
+    public Attack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, int numOfAttacks, int animTimeLength, Hue attackColor, AttackType attackType ,WeaponType weaponType, AttackBehavior attackBehavior)
     {
         this.attackName = attackName;
         this.animationName = animationName;
@@ -61,7 +62,7 @@ public class Attack
         this.attackColor = attackColor;
         this.attackType = attackType;
         this.weaponType = weaponType;  
-        
+        this.attackBehavior = attackBehavior;
 
             
         //Creating an attack in this way would look like
@@ -84,17 +85,29 @@ public class Attack
                 defender.statusEffects.Add(Statuses.Stunned);
                 break;
         }
-        /*
-        if(attackColor == Hue.Red)
-        {
-            defender.isBurning = true;
-            defender.statusEffects.Add(Statuses.Burned);
-            defender.isStunned = true;
-            defender.statusEffects.Add(Statuses.Stunned);
-        }
-        */
     }
 
+    public void AttackStatusBehavior(Unit attacker, Unit defender)
+    {
+        switch (attackBehavior)
+        {
+            case AttackBehavior.Burn:
+                if(defender.isBurning != true)
+                {
+                    defender.isBurning = true;
+                }
+                break;
+            case AttackBehavior.Stun:
+                if(defender.isStunned != true)
+                {
+                    defender.isStunned = true;
+                }
+                break;
+            case AttackBehavior.Vamp:
+                attacker.isVampped = true;
+                break;
+        } 
+    }
 }
 
 //TODO: Decide what/if attacks should have special functionality 

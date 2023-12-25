@@ -20,6 +20,8 @@ public class CombatFunctions : MonoBehaviour
 
     public Turn_Manager turnManagerScript;
 
+    private StatusEffects statusEffectsScript;
+
     public UI uiScript;
 
     public Unit player;
@@ -52,6 +54,7 @@ public class CombatFunctions : MonoBehaviour
         envManaScript = FindObjectOfType<ENV_Mana>();
         turnManagerScript = FindObjectOfType<Turn_Manager>();  
         inventoryScript = FindObjectOfType<Inventory>();
+        statusEffectsScript = FindObjectOfType<StatusEffects>();
         uiScript = FindObjectOfType<UI>();
         player = unitSpawnerScript.player;
 
@@ -292,13 +295,15 @@ public class CombatFunctions : MonoBehaviour
             if (DidAttackHit(attack, attacker) == true)
             {
                 potentialAttackDamage = 0;
-                CheckForSpecialWeaponProperties(attack, attacker);
-                CheckForAttackAbilities(attack, defender);
+                CheckForSpecialWeaponProperties(attack, attacker, defender);
+                
                 PotentialDamage(attack, attacker);
                 CheckForCrit(attacker);
                 DamageAfterArmorandRes(attack, defender);
-                DamageAfterStatusCheck(defender);
+                
                 ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
+                CheckForAttackAbilities(attack, attacker, defender);
+                DamageAfterStatusCheck(attacker, defender);
                 uiScript.FloatingNumbersText(defender, attack);
                 ReduceStamina(attack, attacker);
                 ReduceColorFromEnv(attack);
@@ -315,22 +320,21 @@ public class CombatFunctions : MonoBehaviour
         attacker.hadATurn = true;
         inCombat = false;
     }
-    public void CombatSteps(Attack attack, Unit attacker, Unit defender)
+    /*public void CombatSteps(Attack attack, Unit attacker, Unit defender)
     {
         for (int i = 0; i < attack.numOfAttacks; i++)
         {
             
-            Debug.Log($"NumOfAttacks = {attack.numOfAttacks}");
             if (DidAttackHit(attack, attacker) == true)
             {
                 potentialAttackDamage = 0;
-                CheckForSpecialWeaponProperties(attack, attacker);
-                CheckForAttackAbilities(attack, defender);
+                CheckForSpecialWeaponProperties(attack, attacker, defender);
                 PotentialDamage(attack, attacker);
                 CheckForCrit(attacker);
                 DamageAfterArmorandRes(attack, defender);
                 DamageAfterStatusCheck(defender);
                 ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
+                CheckForAttackAbilities(attack, attacker, defender);
                 uiScript.FloatingNumbersText(defender, attack);
                 ReduceStamina(attack, attacker);
                 ReduceColorFromEnv(attack);
@@ -341,9 +345,9 @@ public class CombatFunctions : MonoBehaviour
         }
             
         attacker.hadATurn = true;
-    }
+    }*/
 
-    public void CheckForSpecialWeaponProperties(Attack attack, Unit attacker)
+    public void CheckForSpecialWeaponProperties(Attack attack, Unit attacker, Unit defender)
     {
         //Each weapon should feel different from each other
         //Hammer: Gets bonus damage from the attacker current stamina level and always deals stamina damage
@@ -352,6 +356,10 @@ public class CombatFunctions : MonoBehaviour
             switch (attacker.equippedWeapon.weaponType)
             {
                 case WeaponType.Axe:
+                    if (attack.attackType != AttackType.Special)
+                    {
+                        potentialAttackDamage = attacker.equippedWeapon.Axe(attacker, defender);
+                    }
                     break;
                 case WeaponType.Bow:
                     break;
@@ -366,6 +374,7 @@ public class CombatFunctions : MonoBehaviour
                 case WeaponType.Staff:
                     break;
                 case WeaponType.Sword:
+                    attacker.equippedWeapon.Sword(attacker);
                     break;
                 default:
                     break;
@@ -583,15 +592,15 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
-    public void DamageAfterStatusCheck(Unit defender)
+    public void DamageAfterStatusCheck(Unit attacker, Unit defender)
     {
-        Debug.Log($"DAMAGE AFTER REDUCTIONS{damageAfterReductions} : {defender.isExhausted}");
+        //This function is for effects that need to happen inside of the combat step like healing after damage dealt
 
-        if (defender.isExhausted)
+        //isVampped is just a bool that lets me know the attacker used an attack with the AttackBehavior.Vamp enum
+        if(attacker.isVampped)
         {
-            damageAfterReductions = (int)(damageAfterReductions * 1.5);
+            statusEffectsScript.Vampped(attacker);
         }
-        Debug.Log($"DAMAGE AFTER REDUCTIONS{damageAfterReductions}");
     }
 
     public void ReduceHealthAndStaminaOfDefender(Attack attack, Unit attacker, Unit defender)
@@ -632,9 +641,10 @@ public class CombatFunctions : MonoBehaviour
         
     }
 
-    public void CheckForAttackAbilities(Attack attack, Unit defender)
+    public void CheckForAttackAbilities(Attack attack, Unit attacker, Unit defender)
     {
-        attack.AttackFunction(defender);
+        //attack.AttackFunction(defender);
+        attack.AttackStatusBehavior(attacker, defender);
     }
 
     private void WeaponEffectOnDefenderStamina(Unit attacker)
