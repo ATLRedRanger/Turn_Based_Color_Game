@@ -36,7 +36,7 @@ public class AttacksDatabase : MonoBehaviour
 
         _fireBall = new Attack("Fireball", "Red_Slash", 5, 12, 5, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
         Debug.Log("FIREBALL NAME = " + _fireBall.attackName);
-        _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 12, 7, 75, 1, 2, Hue.Green, AttackType.Special, WeaponType.Neutral, AttackBehavior.Vamp);
+        _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 12, 7, 75, 1, 1.3f, Hue.Green, AttackType.Special, WeaponType.Neutral, AttackBehavior.Vamp);
 
         _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 8, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
 
@@ -81,7 +81,7 @@ public class AttacksDatabase : MonoBehaviour
 
     //This is another way of creating an item. I can make new items in this script using this function that will 
     //return a new attack.
-    private Attack createAttack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, int numOfAttacks, int animTimeLength, Hue attackColor, AttackType attackType, WeaponType weaponType, AttackBehavior attackBehavior)
+    private Attack createAttack(string attackName, string animationName, int attackDamage, int staminaCost, int colorCost, int attackAccuracy, int numOfAttacks, float animTimeLength, Hue attackColor, AttackType attackType, WeaponType weaponType, AttackBehavior attackBehavior)
     {
         var attack = new Attack(attackName, animationName, attackDamage, staminaCost, colorCost, attackAccuracy, numOfAttacks, animTimeLength, attackColor, attackType, weaponType, attackBehavior);
 

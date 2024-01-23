@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2890627231294434629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,8 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 723722423
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13efcb1e859c8e54e95d0d7c2bac345e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc0046246c3c90649b5937140f742085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Goblin_3
+  unitName: Skelly
   maxHealth: 100
   currentHealth: 100
   physicalAttack: 10
@@ -120,6 +119,7 @@ MonoBehaviour:
   stunnedTimer: 3
   stunnedMaxStamina: 0
   OgStamina: 0
+  isVampped: 0
   currentLevel: 0
   currentExp: 0
   expToLevel: 0

@@ -37,14 +37,16 @@ public class Enemy_Goblin : Unit
         
         if (envManaScript.currentGreen > envManaScript.currentBlue)
         {
-            spriteRenderer.color = Color.red;
+            //spriteRenderer.color = Color.red;
             physicalAttack = (int)(physicalAttack * 1.5);
+            unitAnimator.SetBool("isRaging", true);
             
         }
         else
         {
-            spriteRenderer.color = spriteColor;
+            //spriteRenderer.color = spriteColor;
             physicalAttack = initialAttack;
+            unitAnimator.SetBool("isRaging", false);
         }
         
     }

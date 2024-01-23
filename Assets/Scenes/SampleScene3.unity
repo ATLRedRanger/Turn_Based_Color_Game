@@ -9038,6 +9038,8 @@ MonoBehaviour:
     type: 3}
   blueCrush: {fileID: 6243608442603892993, guid: 6a2c42b8a86581a4a96ce2cf655d843a,
     type: 3}
+  greenPunch: {fileID: 8490667181077746471, guid: a085405494553ea40b100915c696afaf,
+    type: 3}
 --- !u!4 &1194046241
 Transform:
   m_ObjectHideFlags: 0

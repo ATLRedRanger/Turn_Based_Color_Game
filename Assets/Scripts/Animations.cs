@@ -14,6 +14,7 @@ public class Animations : MonoBehaviour
     public GameObject orange_Spike;
     public GameObject violetBall;
     public GameObject blueCrush;
+    public GameObject greenPunch;
 
     private Unit_Spawner unitSpawnerScript;
     private AttacksDatabase attacksScript;
@@ -51,6 +52,10 @@ public class Animations : MonoBehaviour
             case "Orange Spike":
                 clone = Instantiate(orange_Spike, defender.transform.position, Quaternion.identity);
                 Destroy(clone, attacksScript._orangeSpike.animTimeLength);
+                break;
+            case "Green Punch":
+                clone = Instantiate(greenPunch, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._greenPunch.animTimeLength);
                 break;
             case "Blue Crush":
                 clone = Instantiate(blueCrush, defender.transform.position, Quaternion.identity);

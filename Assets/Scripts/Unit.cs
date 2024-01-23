@@ -37,6 +37,8 @@ public class Unit : MonoBehaviour
 
     public int moneyGiven;
 
+    public Animator unitAnimator;
+
     //Status Effects
     public List<Statuses> statusEffects = new List<Statuses>();
 

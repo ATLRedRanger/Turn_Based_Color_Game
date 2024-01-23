@@ -83,7 +83,7 @@ public class StatusEffects : MonoBehaviour
         //Heals the attacker half of the damage dealt 
         if (attacker.isVampped)
         {
-            attacker.currentHealth += (int)(combatFunctions_Script.damageAfterReductions * 1 / 2);
+            attacker.currentHealth += Mathf.RoundToInt(combatFunctions_Script.damageAfterReductions * 1 / 2);
             
             attacker.isVampped = false;
         }

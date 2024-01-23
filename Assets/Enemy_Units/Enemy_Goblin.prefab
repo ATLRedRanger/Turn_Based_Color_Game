@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7231006272872214606}
   - component: {fileID: 607447662295810309}
   - component: {fileID: 1994576159268737038}
+  - component: {fileID: 6346672120635852251}
   m_Layer: 0
   m_Name: Enemy_Goblin
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &607447662295810309
 SpriteRenderer:
@@ -111,6 +112,7 @@ MonoBehaviour:
   baseAccuracy: 45
   isDefending: 0
   moneyGiven: 4
+  unitAnimator: {fileID: 6346672120635852251}
   statusEffects: 
   isBurning: 0
   burnTimer: 3
@@ -119,6 +121,7 @@ MonoBehaviour:
   stunnedTimer: 3
   stunnedMaxStamina: 0
   OgStamina: 0
+  isVampped: 0
   currentLevel: 1
   currentExp: 0
   expToLevel: 0
@@ -144,3 +147,24 @@ MonoBehaviour:
   envManaScript: {fileID: 0}
   unit_SpawnerScript: {fileID: 0}
   spriteRenderer: {fileID: 0}
+--- !u!95 &6346672120635852251
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955836691194839626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 09e45d84fea224d4c816f6e868b2fd94, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
