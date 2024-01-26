@@ -464,10 +464,7 @@ public class UI : MonoBehaviour
             spellbook.GainExperience(15);
             Debug.Log($"SpellBook Experience{spellbook.spellBookExperience}");
         }
-
-        //Calls the function to play animations from the animation script. 
-        PlayAttackAnimation(chosenAttack, unitSpawnerScript.enemyOne);
-
+        
         _fightButton.SetActive(false);
         ClosePanels();
     }
@@ -1194,8 +1191,8 @@ public class UI : MonoBehaviour
     {
         
         inventoryScript.UseItem();
-        unitSpawnerScript.player.hadATurn = true;
-        ClosePanels();
+        //unitSpawnerScript.player.hadATurn = true;
+        //ClosePanels();
     }
 }
 //KEYBOARD SHORTCUTS

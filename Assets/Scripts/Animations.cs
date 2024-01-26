@@ -5,7 +5,7 @@ using UnityEngine;
 public class Animations : MonoBehaviour
 {
     private GameObject clone;
-    public Animator redSlash;
+    
     public Animator bubble;
     public Animator vertical_Slash;
     public GameObject vert_Slash;
@@ -15,6 +15,7 @@ public class Animations : MonoBehaviour
     public GameObject violetBall;
     public GameObject blueCrush;
     public GameObject greenPunch;
+    public GameObject redSlash;
 
     private Unit_Spawner unitSpawnerScript;
     private AttacksDatabase attacksScript;
@@ -68,6 +69,10 @@ public class Animations : MonoBehaviour
             case "Chop":
                 clone = Instantiate(vert_Slash, defender.transform.position, Quaternion.identity);
                 Destroy(clone, attacksScript._chop.animTimeLength);
+                break;
+            case "Red's Slash":
+                clone = Instantiate(redSlash, defender.transform.position, Quaternion.identity);
+                Destroy(clone, attacksScript._redSlash.animTimeLength);
                 break;
         }
     }

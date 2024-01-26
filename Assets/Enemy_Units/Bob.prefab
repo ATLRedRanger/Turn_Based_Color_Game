@@ -109,9 +109,10 @@ MonoBehaviour:
   maxStamina: 100
   currentStamina: 100
   staminaRegenModifier: 1
-  baseAccuracy: 50
+  baseAccuracy: 40
   isDefending: 0
   moneyGiven: 100
+  unitAnimator: {fileID: -5804213467000581041}
   statusEffects: 
   isBurning: 0
   burnTimer: 3
@@ -156,7 +157,7 @@ Animator:
   m_GameObject: {fileID: 2192196118830537610}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5a478426441306c4ba71ccd3f510fe85, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

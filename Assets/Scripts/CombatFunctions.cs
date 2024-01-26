@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -37,6 +38,8 @@ public class CombatFunctions : MonoBehaviour
     public int healthLost;
 
     public bool crit;
+
+    public bool playAnimation = false;
 
     int roll;
     
@@ -159,6 +162,8 @@ public class CombatFunctions : MonoBehaviour
 
         int finalAccuracy = 0;
         bool hit = false;
+        
+        Debug.Log("Attack Hit " + playAnimation);
         StaminaLevels accuracyLevel = StaminaConversion(unit);
 
         switch (accuracyLevel)
@@ -184,12 +189,14 @@ public class CombatFunctions : MonoBehaviour
         {
             
             hit = true;
+            playAnimation = true;
         }
-        //Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy);
-
+        Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy + "Roll " + roll);
+        Debug.Log("Attack Hit " + playAnimation);
         return hit;
 
     }
+
     public int ReduceStamina(Attack attack, Unit unit)
     {
         unit.currentStamina -= attack.staminaCost;
@@ -294,6 +301,7 @@ public class CombatFunctions : MonoBehaviour
             
             if (DidAttackHit(attack, attacker) == true)
             {
+                uiScript.PlayAttackAnimation(attack, defender);
                 potentialAttackDamage = 0;
                 CheckForSpecialWeaponProperties(attack, attacker, defender);
                 

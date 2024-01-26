@@ -109,7 +109,7 @@ MonoBehaviour:
   maxStamina: 100
   currentStamina: 100
   staminaRegenModifier: 1
-  baseAccuracy: 50
+  baseAccuracy: 40
   isDefending: 0
   moneyGiven: 0
   unitAnimator: {fileID: -3485899192453137430}

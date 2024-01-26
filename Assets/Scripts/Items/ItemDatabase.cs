@@ -16,6 +16,8 @@ public class ItemDatabase : MonoBehaviour
 
     public Weapon _basicStaff;
 
+    public Weapon _redsDarkGreatsword;
+
     public Spellbook _basicSpellbook;
 
     public GameObject itemDatabase;
@@ -29,18 +31,19 @@ public class ItemDatabase : MonoBehaviour
 
         _healthPotion = new Consumable("Health Potion", ItemType.Consumable, "Heals a small amount of health.", 5, ConsumableType.Health, 10);
 
-        _basicSword = new Weapon("Basic Sword", ItemType.Weapon, "A basic sword", 1, 2, 0.6f, 0.4f, 1.10f, WeaponType.Sword);
+        _basicSword = new Weapon("Basic Sword", ItemType.Weapon, "A basic sword", 1, 2, 0.6f, 0.4f, 1.10f, WeaponType.Sword, null);
 
-        _basicHammer = new Weapon("Basic Hammer", ItemType.Weapon, "A basic hammer", 1, 5, 0.2f, 0.8f, 1.10f, WeaponType.Hammer);
+        _basicHammer = new Weapon("Basic Hammer", ItemType.Weapon, "A basic hammer", 1, 5, 0.2f, 0.8f, 1.10f, WeaponType.Hammer, null);
 
-        _basicAxe = new Weapon("Basic Axe", ItemType.Weapon, "A basic axe", 1, 2, 0.8f, 0.2f, 1.10f, WeaponType.Axe);
+        _basicAxe = new Weapon("Basic Axe", ItemType.Weapon, "A basic axe", 1, 2, 0.8f, 0.2f, 1.10f, WeaponType.Axe, null);
 
-        _basicBow = new Weapon("Basic Bow", ItemType.Weapon, "A basic bow", 1, 2, 1, 1, 1.5f, WeaponType.Bow);
+        _basicBow = new Weapon("Basic Bow", ItemType.Weapon, "A basic bow", 1, 2, 1, 1, 1.5f, WeaponType.Bow, null);
 
         _basicStaff = new Staff("Basic Staff", ItemType.Weapon, "A basic staff", 1, 2, 1, 1, 1.10f, WeaponType.Staff, 1, Hue.Red);
 
         _basicSpellbook = new Spellbook(_basicStaff, ItemType.Weapon, 1, 1, "Basic SpellBook", "A basic spelbook", WeaponType.Spellbook, Hue.Neutral);
-        
+
+        _redsDarkGreatsword = new Weapon("Red's Dark Greatsword", ItemType.Weapon, "Sword Red used to slaughter many!", 1, 10, 0.6f, 0.4f, 1.10f, WeaponType.Sword, null);
         
 
         
@@ -52,6 +55,7 @@ public class ItemDatabase : MonoBehaviour
         Debug.Log("FIREBALL " + attackDatabase._fireBall.attackName);
         _basicSpellbook.AddSpellToSpellbook(attackDatabase._fireBall);
         _basicSpellbook.spellBookAttackList.Add(attackDatabase._violetBall);
+        _redsDarkGreatsword.weaponAttack = attackDatabase._redSlash;
         
     }
 

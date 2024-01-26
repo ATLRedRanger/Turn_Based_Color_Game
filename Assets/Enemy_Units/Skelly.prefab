@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 8609867392186487996}
   - component: {fileID: 1255798536640787275}
   - component: {fileID: 8660613037176612246}
+  - component: {fileID: 818922341243487471}
   m_Layer: 0
-  m_Name: Goblin3
+  m_Name: Skelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,9 +109,10 @@ MonoBehaviour:
   maxStamina: 100
   currentStamina: 100
   staminaRegenModifier: 1
-  baseAccuracy: 50
+  baseAccuracy: 40
   isDefending: 0
   moneyGiven: 0
+  unitAnimator: {fileID: 818922341243487471}
   statusEffects: 
   isBurning: 0
   burnTimer: 3
@@ -145,3 +147,24 @@ MonoBehaviour:
   envManaScript: {fileID: 0}
   unit_SpawnerScript: {fileID: 0}
   spriteRenderer: {fileID: 0}
+--- !u!95 &818922341243487471
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2890627231294434629}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8484e41b29b8e014680e5b4f40097d0c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

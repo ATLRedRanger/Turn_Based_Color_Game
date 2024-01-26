@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
         playerInventory.Add(itemScript._basicSpellbook);
         playerInventory.Add(itemScript._basicStaff);
         playerInventory.Add(itemScript._basicBow);
+        playerInventory.Add(itemScript._redsDarkGreatsword);
 
         Debug.Log(player.equippedWeapon);
     }
@@ -162,22 +163,24 @@ public class Inventory : MonoBehaviour
     public void UseItem()
     { 
 
-        //string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        //int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
-        
-        itemBeingPressed.Use(player);
-
-
-        if (itemBeingPressed.itemAmount < 1)
+        if(itemBeingPressed.itemType == ItemType.Weapon)
         {
-
-            playerInventory.Remove(itemBeingPressed);
-
+            Weapon selectedWeapon = itemBeingPressed as Weapon;
+            ui_Script.chosenAttack = selectedWeapon.weaponAttack;
+            ui_Script.OpenEnemiesPanel();
         }
-       
-        
-        ui_Script.UpdateUI();
-        ui_Script.ClosePanels();
+        else
+        {
+            itemBeingPressed.Use(player);
+            ui_Script.UpdateUI();
+            ui_Script.ClosePanels();
+            if (itemBeingPressed.itemAmount < 1)
+            {
+
+                playerInventory.Remove(itemBeingPressed);
+
+            }
+        }
     }
     
     public void OpenSpellBook()
@@ -189,15 +192,36 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void ItemBeingInteractedWth()
+    public void ItemBeingInteractedWith()
     {
+        //This function is to decipher which item in the inventory is being interacted with
+        //It first disables the UI buttons
+        //Then it checks the button being clicked using the event system
+        //Then it parses through the button name for the last 2 characters (which are numbers)
+        //Then it assigns the inventory slot at that position to itemBeingPressed
+        //If the item being pressed is not a weapon, it turns on the Use button
+        //If the item being pressed is a weapon, it turns on the Equip button
+        //If the weapon has an attack that can be used, it turns on the Use button
+
+        ui_Script._useButton.SetActive(false);
+        ui_Script._equipButton.SetActive(false);
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
         itemBeingPressed = playerInventory[stringButtonNum - 1];
-        ui_Script._useButton.SetActive(true);
-        if(itemBeingPressed.itemType == ItemType.Weapon)
+        
+        if(itemBeingPressed.itemType != ItemType.Weapon)
+        {
+            ui_Script._useButton.SetActive(true);
+            
+        }
+        else
         {
             ui_Script._equipButton.SetActive(true);
+            Weapon selectedWeapon = itemBeingPressed as Weapon;
+            if (selectedWeapon.weaponAttack != null && ui_Script.IsAttackUsable(selectedWeapon.weaponAttack))
+            {
+                ui_Script._useButton.SetActive(true);
+            }
         }
         
     }

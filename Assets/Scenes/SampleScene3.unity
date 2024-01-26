@@ -7221,7 +7221,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1235651310}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWth
+        m_MethodName: ItemBeingInteractedWith
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8190,7 +8190,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1235651310}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWth
+        m_MethodName: ItemBeingInteractedWith
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9023,7 +9023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd8c0273491b264abb7a9c7087ef0c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redSlash: {fileID: 0}
   bubble: {fileID: 0}
   vertical_Slash: {fileID: 0}
   vert_Slash: {fileID: 2223586163159178532, guid: 12249ff8dc236074dab2a1b5e19e673d,
@@ -9039,6 +9038,8 @@ MonoBehaviour:
   blueCrush: {fileID: 6243608442603892993, guid: 6a2c42b8a86581a4a96ce2cf655d843a,
     type: 3}
   greenPunch: {fileID: 8490667181077746471, guid: a085405494553ea40b100915c696afaf,
+    type: 3}
+  redSlash: {fileID: 9117631437616053966, guid: 6ce18eb0dbb9008479ce382fcdc89b90,
     type: 3}
 --- !u!4 &1194046241
 Transform:
@@ -9631,6 +9632,18 @@ MonoBehaviour:
     attackType: 0
     weaponType: 0
   _blueCrush:
+    attackName: 
+    animationName: 
+    attackDamage: 0
+    staminaCost: 0
+    attackAccuracy: 0
+    colorCost: 0
+    numOfAttacks: 0
+    animTimeLength: 0
+    attackColor: 0
+    attackType: 0
+    weaponType: 0
+  _redSlash:
     attackName: 
     animationName: 
     attackDamage: 0
@@ -11422,7 +11435,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1235651310}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWth
+        m_MethodName: ItemBeingInteractedWith
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12781,7 +12794,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1235651310}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWth
+        m_MethodName: ItemBeingInteractedWith
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13029,7 +13042,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1235651310}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWth
+        m_MethodName: ItemBeingInteractedWith
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14704,7 +14717,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1235651310}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWth
+        m_MethodName: ItemBeingInteractedWith
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

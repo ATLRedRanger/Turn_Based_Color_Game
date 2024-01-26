@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1994576159268737038}
   - component: {fileID: 6346672120635852251}
   m_Layer: 0
-  m_Name: Enemy_Goblin
+  m_Name: Enemy_Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   maxStamina: 100
   currentStamina: 100
   staminaRegenModifier: 1
-  baseAccuracy: 45
+  baseAccuracy: 40
   isDefending: 0
   moneyGiven: 4
   unitAnimator: {fileID: 6346672120635852251}

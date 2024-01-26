@@ -26,6 +26,7 @@ public class AttacksDatabase : MonoBehaviour
     public Attack _orangeSpike;
     public Attack _yellowSplash;
     public Attack _blueCrush;
+    public Attack _redSlash;
 
 
     //Magic Defensive
@@ -40,9 +41,11 @@ public class AttacksDatabase : MonoBehaviour
 
         _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 8, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
 
-        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 3, 3, 8, 5, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral, AttackBehavior.Stun);
+        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 3, 3, 8, 75, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral, AttackBehavior.Stun);
 
-        _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 12, 4, 85, 1, 2, Hue.Yellow, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
+        _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 12, 4, 75, 1, 2, Hue.Yellow, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
+
+        _redSlash = new Attack("Red's Slash", "Reds_Slash", 20, 35, 1, 50, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
 
         //I can make private weapons in this way using the createAttack function
         _kick = createAttack("Kick", "Kick", 3, 3, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
