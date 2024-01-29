@@ -79,3 +79,23 @@
 		   -Would like to take inspiration from the insects:
 			Namib Desert Beetle, dragonflies, etc. 
 		   -Maybe some skeletal-animal construct hybrids or something?
+
+Damage Calcs (from Google Bard):
+
+Here's a basic mathematical function for physical and special damage with attack modifiers, adhering to the safety guidelines you outlined:
+
+D = B * (1 + AM) * (1 - DM) * CHM
+
+Where:
+
+D is the final damage dealt
+B is the base damage (physical or special, based on attack type)
+AM is the sum of all attack modifiers (strength/attack stat bonuses, skills, buffs)
+DM is the sum of all defense modifiers (physical defense, resistances)
+CHM is the critical hit multiplier (1 for no critical hit, 2 or higher for critical hit)
+This is a simplified formula, and you can modify it to suit your specific RPG needs. Remember to:
+
+Adjust the scaling of bonuses and modifiers to ensure balance and engaging gameplay.
+Implement minimum damage thresholds and critical hit chances to avoid frustration.
+Introduce additional parameters for elemental damage types, status effects, armor penetration, etc.
+Feel free to get creative and adapt this formula to create a satisfying and balanced damage system for your RPG!

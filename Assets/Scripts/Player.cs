@@ -117,16 +117,11 @@ public class Player : Unit
                 unitAttackDictionary["Quick Shot"] = attacksDatabase._quickShot;
                 break;
         }
-        /*foreach (KeyValuePair<string, Attack> kvp in unitAttackDictionary)
-        {
-            //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            Debug.Log( string.Format("Key = {0}, Value = {1}", kvp.Key, kvp.Value));
-        }*/
-
+        
     }
     private void LearnSpells()
     {
-        Debug.Log("Learn Spells");
+        
         switch (currentLevel)
         {
             case 1:

@@ -60,7 +60,6 @@ public class Inventory : MonoBehaviour
         playerInventory.Add(itemScript._basicBow);
         playerInventory.Add(itemScript._redsDarkGreatsword);
 
-        Debug.Log(player.equippedWeapon);
     }
     
     IEnumerator LoadingScripts()
@@ -84,49 +83,34 @@ public class Inventory : MonoBehaviour
 
     public void EquipWeapon()
     {
-        Debug.Log($"Player equipped weapon is {player.equippedWeapon.itemName}");
-
-        if (player.equippedWeapon == null && itemBeingPressed.itemType == ItemType.Weapon)
+      
+        Weapon equippableWeapon = itemBeingPressed as Weapon;
+        
+        if (player.equippedWeapon == null || CheckIfSpellbook() || equippableWeapon.weaponType == WeaponType.Staff)
         {
-            Weapon equippableWeapon = itemBeingPressed as Weapon;
-            if (CheckIfSpellbook())
-            {
-                player.equippedWeapon = itemBeingPressed as Spellbook;
-                
-            }
-            else if(equippableWeapon.weaponType == WeaponType.Staff)
-            {
-                player.equippedWeapon = itemBeingPressed as Staff;
-                
-            }
-            else
-            {
-                player.equippedWeapon = equippableWeapon;
-            }
+            player.equippedWeapon = equippableWeapon;
+            player.isWeaponEquipped = true;
+            Debug.Log($"Player equipped weapon is {player.equippedWeapon.itemName} and it's ID is {player.equippedWeapon.itemID}");
         }
-
-        if(player.equippedWeapon != null)
+        else
         {
-            Weapon equippableWeapon = itemBeingPressed as Weapon;
-            if (CheckIfSpellbook())
-            {
-                player.equippedWeapon = itemBeingPressed as Spellbook;
-
-            }
-            else if (equippableWeapon.weaponType == WeaponType.Staff)
-            {
-                player.equippedWeapon = itemBeingPressed as Staff;
-
-            }
-            else
-            {
-                player.equippedWeapon = equippableWeapon;
-            }
+            // Swap weapons if user already has one equipped
+            player.equippedWeapon = equippableWeapon;
+            Debug.Log($"Player swapped weapon to {player.equippedWeapon.itemName} and it's ID is {player.equippedWeapon.itemID}");
         }
         
-        Debug.Log($"Player equipped weapon is {player.equippedWeapon.itemName}");
+        if(player.equippedWeapon.itemID == itemBeingPressed.itemID && player.isWeaponEquipped == true)
+        {
+           
+        }
     }
-
+    public void UnequipWeapon()
+    {
+        
+        player.isWeaponEquipped = false;
+        player.equippedWeapon = null;
+        Debug.Log($"Is player equipped? {player.isWeaponEquipped}");
+    }
     public void UpdateInventoryUI()
     {
 
@@ -205,25 +189,39 @@ public class Inventory : MonoBehaviour
 
         ui_Script._useButton.SetActive(false);
         ui_Script._equipButton.SetActive(false);
+        ui_Script._unequipButton.SetActive(false);
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
         itemBeingPressed = playerInventory[stringButtonNum - 1];
-        
-        if(itemBeingPressed.itemType != ItemType.Weapon)
+
+        if (itemBeingPressed.itemType != ItemType.Weapon)
         {
             ui_Script._useButton.SetActive(true);
-            
+
         }
         else
         {
-            ui_Script._equipButton.SetActive(true);
             Weapon selectedWeapon = itemBeingPressed as Weapon;
+            if (player.isWeaponEquipped == false || player.equippedWeapon.itemID != itemBeingPressed.itemID)
+            {
+                ui_Script._equipButton.SetActive(true);
+            }
+            else
+            {
+                ui_Script._unequipButton.SetActive(true);
+            }
+            
             if (selectedWeapon.weaponAttack != null && ui_Script.IsAttackUsable(selectedWeapon.weaponAttack))
             {
                 ui_Script._useButton.SetActive(true);
             }
         }
         
+        /*if(player.equippedWeapon.itemID == itemBeingPressed.itemID)
+        {
+            ui_Script._equipButton.SetActive(false);
+            ui_Script._unequipButton.SetActive(true);
+        }*/
     }
 }
 //TODO: Make an inventory panel that has all the items in the player inventory

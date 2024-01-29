@@ -158,12 +158,9 @@ public class CombatFunctions : MonoBehaviour
         //Attack Accuracy is out of 100
         //Meet or beat Attack Accuracy to hit
 
-
-
         int finalAccuracy = 0;
         bool hit = false;
         
-        Debug.Log("Attack Hit " + playAnimation);
         StaminaLevels accuracyLevel = StaminaConversion(unit);
 
         switch (accuracyLevel)
@@ -192,7 +189,7 @@ public class CombatFunctions : MonoBehaviour
             playAnimation = true;
         }
         Debug.Log("Final Accuracy is " + finalAccuracy + "Attack Accuracy is " + attack.attackAccuracy + "Roll " + roll);
-        Debug.Log("Attack Hit " + playAnimation);
+        Debug.Log("Attack Hit " + hit);
         return hit;
 
     }
@@ -407,10 +404,10 @@ public class CombatFunctions : MonoBehaviour
                 //(IsAttackerEquipped(attacker) == true && (attacker.equippedWeapon.weaponType == WeaponType.Staff || true))
                 //(IsAttackerEquipped(attacker) == true && (false || true))
                 {
-                    Debug.Log("ATTACKER IS EQUIPPED");
+                    //Debug.Log("ATTACKER IS EQUIPPED");
                     if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
-                        Debug.Log("STAFF EQUIPPED");
+                        //Debug.Log("STAFF EQUIPPED");
                         Staff equippedStaff = player.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
@@ -418,13 +415,13 @@ public class CombatFunctions : MonoBehaviour
                             
                             
                             potentialAttackDamage += damageToBeBoosted + attacker.magicAttack;
-                            Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
+                            //Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
                         }
                         else
                         {
                             
                             potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
-                            Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
+                            //Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
                         }
 
                     }
@@ -432,7 +429,7 @@ public class CombatFunctions : MonoBehaviour
                     {
                         
                         potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
-                        Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
+                        //Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
                     }
                     
                 }
@@ -440,7 +437,7 @@ public class CombatFunctions : MonoBehaviour
                 {
                     
                     potentialAttackDamage += attack.attackDamage + attacker.magicAttack;
-                    Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack}");
+                    //Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack}");
                 }
                 break;
             default:
@@ -448,13 +445,13 @@ public class CombatFunctions : MonoBehaviour
                 {
                     
                     potentialAttackDamage += attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponDamage;
-                    Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponDamage}");
+                    //Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponDamage}");
                 }
                 else
                 {
                     
                     potentialAttackDamage += attack.attackDamage + attacker.physicalAttack;
-                    Debug.Log($"POTENTIAL ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack}");
+                    //Debug.Log($"POTENTIAL ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack}");
                 }
                 break;
         }
@@ -541,63 +538,42 @@ public class CombatFunctions : MonoBehaviour
     {
         int defenderMagicDefense = defender.magicDefense;
         int defenderPhysicalDefense = defender.physicalDefense;
-
+        float staminaMultiplier = GetStaminaMultiplier(defender);
+        int defenderDefense;
         
 
         //Thought process behind this:
         //I want the player to manage stamina on both sides of the battle
         //If the player is being very aggressive and 
-        StaminaLevels defenderStamina = StaminaConversion(defender);
+        //StaminaLevels defenderStamina = StaminaConversion(defender);
         if(attack.attackType == AttackType.Special)
         {
-            
-            switch (defenderStamina)
-            {
-                case StaminaLevels.Full:
-                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.75));
-                    break;
-                case StaminaLevels.ThreeQuarters:
-                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.5));
-                    break;
-                case StaminaLevels.Half:
-                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.25));
-                    break;
-                case StaminaLevels.OneQuarter:
-                    defenderMagicDefense = Mathf.RoundToInt((float)(defender.magicDefense * 1.15));
-                    break;
-                default:
-                    defenderMagicDefense = defender.magicDefense * 1;
-                    break;
-            }
-
-            damageAfterReductions = potentialAttackDamage - defenderMagicDefense;
+            defenderDefense = Mathf.RoundToInt(defenderMagicDefense * staminaMultiplier);
         }
         else
         {
-            switch (defenderStamina)
-            {
-                case StaminaLevels.Full:
-                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.75));
-                    break;
-                case StaminaLevels.ThreeQuarters:
-                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.5));
-                    break;
-                case StaminaLevels.Half:
-                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.25));
-                    break;
-                case StaminaLevels.OneQuarter:
-                    defenderPhysicalDefense = Mathf.RoundToInt((float)(defender.physicalDefense * 1.15));
-                    break;
-                default:
-                    defenderPhysicalDefense = defender.physicalDefense * 1;
-                    break;
-            }
-
-            damageAfterReductions = potentialAttackDamage - defender.physicalDefense;
+            defenderDefense = Mathf.RoundToInt(defenderPhysicalDefense * staminaMultiplier);
         }
-        
 
-        
+        damageAfterReductions = potentialAttackDamage - defenderDefense;
+
+    }
+
+    public float GetStaminaMultiplier(Unit defender)
+    {
+        switch (StaminaConversion(defender))
+        {
+            case StaminaLevels.Full:
+                return 1.75f;
+            case StaminaLevels.ThreeQuarters:
+                return 1.5f;
+            case StaminaLevels.Half:
+                return 1.25f;
+            case StaminaLevels.OneQuarter:
+                return 1.15f;
+            default:
+                return 1f;
+        }
     }
 
     public void DamageAfterStatusCheck(Unit attacker, Unit defender)

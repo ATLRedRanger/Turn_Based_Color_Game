@@ -33,19 +33,19 @@ public class AttacksDatabase : MonoBehaviour
     void Awake()
     {
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
-        _punch = new Attack("Punch", "Punch", 1, 1, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
+        _punch = new Attack("Punch", "Punch", 1, 20, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
 
-        _fireBall = new Attack("Fireball", "Red_Slash", 5, 12, 5, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
-        Debug.Log("FIREBALL NAME = " + _fireBall.attackName);
-        _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 12, 7, 75, 1, 1.3f, Hue.Green, AttackType.Special, WeaponType.Neutral, AttackBehavior.Vamp);
+        _fireBall = new Attack("Fireball", "Red_Slash", 5, 20, 7, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
+        
+        _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 20, 7, 75, 1, 1.3f, Hue.Green, AttackType.Special, WeaponType.Neutral, AttackBehavior.Vamp);
 
-        _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 8, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
+        _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 20, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
 
-        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 3, 3, 8, 75, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral, AttackBehavior.Stun);
+        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 3, 20, 8, 75, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral, AttackBehavior.Stun);
 
-        _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 12, 4, 75, 1, 2, Hue.Yellow, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
+        _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 20, 4, 75, 1, 2, Hue.Yellow, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
 
-        _redSlash = new Attack("Red's Slash", "Reds_Slash", 20, 35, 1, 50, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
+        _redSlash = new Attack("Red's Slash", "Reds_Slash", 20, 75, 1, 50, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
 
         //I can make private weapons in this way using the createAttack function
         _kick = createAttack("Kick", "Kick", 3, 3, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
@@ -53,10 +53,10 @@ public class AttacksDatabase : MonoBehaviour
 
 
         //Axe 
-        _chop = new Attack("Chop", "Vertical_Slash", 2, 5, 0, 95, 1, 1, Hue.Neutral, AttackType.Physical, WeaponType.Axe, AttackBehavior.None);
+        _chop = createAttack("Chop", "Vertical_Slash", 2, 5, 0, 95, 1, 1, Hue.Neutral, AttackType.Physical, WeaponType.Axe, AttackBehavior.None);
 
         //Staff
-        _violetBall = new Attack("Violet Ball", "Violet_Ball", 2, 5, 5, 85, 1, 5, Hue.Violet, AttackType.Special, WeaponType.Staff, AttackBehavior.None);
+        _violetBall = new Attack("Violet Ball", "Violet_Ball", 2, 20, 5, 85, 1, 5, Hue.Violet, AttackType.Special, WeaponType.Staff, AttackBehavior.None);
 
         //Sword
         _slash = new Attack("Slash", "Slash", 2, 4, 0, 95, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Sword, AttackBehavior.None);

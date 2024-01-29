@@ -19,7 +19,7 @@ public class Spellbook : Weapon
     public List<Attack> spellBookAttackList = new List<Attack>();
     
 
-    public Spellbook(Weapon weapon, ItemType itemType, int spellBookTier, int spellBookLevel, string itemName, string itemDesctiption, WeaponType weaponType, Hue affinity)
+    public Spellbook(Weapon weapon, ItemType itemType, int spellBookTier, int spellBookLevel, string itemName, string itemDesctiption, string itemID, WeaponType weaponType, Hue affinity)
     {
         this.itemName = itemName;
         this.itemType = itemType;
@@ -29,6 +29,7 @@ public class Spellbook : Weapon
         weaponHealthModifier = weapon.weaponHealthModifier;
         weaponStaminaModifier = weapon.weaponStaminaModifier;
         weaponCritModifier = weapon.weaponCritModifier;
+        this.itemID = itemID;
         this.weaponType = weaponType;
         this.spellBookTier = spellBookTier;
         this.spellBookLevel = spellBookLevel;
@@ -39,7 +40,7 @@ public class Spellbook : Weapon
     public void AddSpellToSpellbook(Attack attack)
     {
         spellBookAttackList.Add(attack);
-        Debug.Log("ATTACK ADDED = " + attack.attackName);
+        
        
     }
 

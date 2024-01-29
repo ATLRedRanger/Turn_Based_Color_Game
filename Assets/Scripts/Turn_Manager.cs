@@ -44,7 +44,7 @@ public class Turn_Manager : MonoBehaviour
         envManaScript = FindObjectOfType<ENV_Mana>();
         
         state = BattleState.START;
-        Debug.Log("BattleState is " + state);
+        //Debug.Log("BattleState is " + state);
 
         StartCoroutine(ControlCenter());
     }
@@ -131,17 +131,18 @@ public class Turn_Manager : MonoBehaviour
     }
     public void BeginRound() //Uses new turn scheme
     {
+        //Debug.Log("Begin Turn");
         unitSpawnerScript.player.hadATurn = false;
-        Debug.Log("Begin Turn");
+        
         ui_Script.UpdateUI();
 
         WhoseTurnIsIt();
 
-        Debug.Log("Begin Turn");
+        //Debug.Log("Begin Turn");
     }
     private void UntapPhase(Unit unit)
     {
-        Debug.Log("Untap Phase");
+        //Debug.Log("Untap Phase");
         ui_Script.MenuVisibile();
         ui_Script.UpdateUI();
 
@@ -170,7 +171,7 @@ public class Turn_Manager : MonoBehaviour
     }
     public void EndTurn()
     {
-        Debug.Log("End Turn");
+        //Debug.Log("End Turn");
         
         if(state == BattleState.PLAYERTURN)
         {
@@ -198,7 +199,7 @@ public class Turn_Manager : MonoBehaviour
         {
 
             turnOrder.Add(unitSpawnerScript.listOfCombatants[i]);
-            Debug.Log("TURN ORDER COUNT" + turnOrder.Count);
+            //Debug.Log("TURN ORDER COUNT" + turnOrder.Count);
             unitReferences[i] = unitSpawnerScript.listOfCombatants[i];
             //TODO: Verify this is the right unit
         }
@@ -222,7 +223,7 @@ public class Turn_Manager : MonoBehaviour
     }
     private void ReduceBuffsAndDebuffs()
     {
-        Debug.Log("Reduce buffs and debuffs");
+        //Debug.Log("Reduce buffs and debuffs");
     }
     public void CombatantsCheck()
     {

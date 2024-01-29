@@ -26,7 +26,7 @@ public class Weapon : Item
     {
     }
 
-    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, WeaponType weaponType, Attack weaponAttack)
+    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, string itemID, WeaponType weaponType, Attack weaponAttack)
     {
         this.itemName = itemName;
         this.itemType = itemType;
@@ -36,6 +36,7 @@ public class Weapon : Item
         this.weaponHealthModifier = weaponHealthModifier;
         this.weaponStaminaModifier = weaponStaminaModifier;
         this.weaponCritModifier = weaponCritModifier;
+        this.itemID = itemID;
         this.weaponType = weaponType;
         this.weaponAttack = weaponAttack;
         //this.itemAmount = 1;

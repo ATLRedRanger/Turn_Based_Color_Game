@@ -113,6 +113,7 @@ public class UI : MonoBehaviour
     //UI Item Buttons
     public GameObject _healthPotion;
     public GameObject _equipButton;
+    public GameObject _unequipButton;
     public GameObject _useButton;
 
     
@@ -228,7 +229,7 @@ public class UI : MonoBehaviour
         animationScript = FindObjectOfType<Animations>();
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
         UpdateUI();
-        Debug.Log("UNIT SPAWNER SCRIPT" + unitSpawnerScript.player.maxStamina);
+        //Debug.Log("UNIT SPAWNER SCRIPT" + unitSpawnerScript.player.maxStamina);
     }
     private void NamesText()
     {
@@ -462,7 +463,7 @@ public class UI : MonoBehaviour
         {
             Spellbook spellbook = unitSpawnerScript.player.equippedWeapon as Spellbook;
             spellbook.GainExperience(15);
-            Debug.Log($"SpellBook Experience{spellbook.spellBookExperience}");
+            //Debug.Log($"SpellBook Experience{spellbook.spellBookExperience}");
         }
         
         _fightButton.SetActive(false);
@@ -735,14 +736,16 @@ public class UI : MonoBehaviour
     public void OpenFightPanel()
     {
         EnemyButtonNames();
-        if(unitSpawnerScript.player.equippedWeapon.weaponType == WeaponType.Spellbook)
+        if(unitSpawnerScript.player.isWeaponEquipped && unitSpawnerScript.player.equippedWeapon.weaponType == WeaponType.Spellbook) 
         {
             _spellBookButtonMain.gameObject.SetActive(true);
+            
         }
         else
         {
             _spellBookButtonMain.gameObject.SetActive(false);
         }
+
         bool isActive = _fightPanel.activeSelf;
 
         if (_fightPanel != null)
@@ -1187,6 +1190,15 @@ public class UI : MonoBehaviour
         ClosePanels();
         OpenFightPanel();
     }
+    
+    public void UnequipButton()
+    {
+        inventoryScript.UnequipWeapon();
+        ClosePanels();
+        OpenFightPanel();
+    }
+
+   
     public void UseButton()
     {
         
