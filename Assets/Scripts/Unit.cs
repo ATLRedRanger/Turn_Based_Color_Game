@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -39,6 +38,8 @@ public class Unit : MonoBehaviour
 
     public Animator unitAnimator;
 
+    
+
     //Status Effects
     public List<Statuses> statusEffects = new List<Statuses>();
 
@@ -65,6 +66,9 @@ public class Unit : MonoBehaviour
 
     //Inventory related variables
     public List<Item> itemList = new List<Item>();
+
+    //Loot dropped by enemies
+    public List<Item> lootDrops = new List<Item>();
 
     //Equipment related variables
     public Weapon equippedWeapon;
@@ -121,6 +125,8 @@ public class Unit : MonoBehaviour
 
     public Unit_Spawner unit_SpawnerScript;
 
+    public ItemDatabase itemDatabaseScript;
+
     //Dictionaries
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
@@ -140,6 +146,7 @@ public class Unit : MonoBehaviour
         envManaScript = FindObjectOfType<ENV_Mana>();
         turnManagerScript = FindObjectOfType<Turn_Manager>();
         unit_SpawnerScript = FindObjectOfType<Unit_Spawner>();
+        itemDatabaseScript = FindObjectOfType<ItemDatabase>();
         LearnAbilities();
         EnemyAttacks();
         //LearnSpells();
@@ -386,6 +393,21 @@ public class Unit : MonoBehaviour
     {
         Debug.Log("Special Ability");
         
+    }
+
+    public virtual void LootDropItems()
+    {
+        
+    }
+    public virtual int DropLoot()
+    {
+
+
+        int roll;
+        roll = Random.Range(0, lootDrops.Count);
+
+        return roll;
+
     }
 }
 

@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
         //playerConsumableList.Add(itemScript._healthPotion);
         player.equippedWeapon = itemScript._basicSpellbook;
         player.isWeaponEquipped = true;
-        playerInventory.Add(itemScript._basicHammer);
+        //playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
         playerInventory.Add(itemScript._basicSpellbook);
         playerInventory.Add(itemScript._basicStaff);

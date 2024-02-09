@@ -411,7 +411,7 @@ public class CombatFunctions : MonoBehaviour
                         Staff equippedStaff = player.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
-                            int damageToBeBoosted = Mathf.RoundToInt((float)((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3));
+                            int damageToBeBoosted = Mathf.RoundToInt((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3f);
                             
                             
                             potentialAttackDamage += damageToBeBoosted + attacker.magicAttack;
@@ -555,7 +555,8 @@ public class CombatFunctions : MonoBehaviour
             defenderDefense = Mathf.RoundToInt(defenderPhysicalDefense * staminaMultiplier);
         }
 
-        damageAfterReductions = potentialAttackDamage - defenderDefense;
+        //This ensures that the damage will always be at least 1
+        damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
 
     }
 

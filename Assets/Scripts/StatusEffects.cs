@@ -23,12 +23,33 @@ public class StatusEffects : MonoBehaviour
         combatFunctions_Script = FindObjectOfType<CombatFunctions>();
         ui_Script = FindObjectOfType<UI>();
     }
-    
-     
+
+    private StaminaLevels StaminaConversion(Unit unit)
+    {
+        //The higher the stamina, the better the accuracy the unit will have
+
+        if (unit.currentStamina <= (unit.OgStamina * 1 / 4))
+        {
+            return StaminaLevels.OneQuarter;
+        }
+        if (unit.currentStamina > (unit.OgStamina * 1 / 4) && unit.currentStamina <= (unit.OgStamina * (1 / 2)))
+        {
+            return StaminaLevels.Half;
+        }
+        if ((unit.currentStamina > (1 / 2) && unit.currentStamina <= (unit.OgStamina * 3 / 4)))
+        {
+            return StaminaLevels.ThreeQuarters;
+        }
+        if (unit.currentStamina > (unit.OgStamina * 3 / 4))
+        {
+            return StaminaLevels.Full;
+        }
+        return StaminaLevels.Broken;
+    }
 
     public void Burning()
     {
-
+        
         burnDamage = (int)(Mathf.Round(turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxHealth / 16));
 
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning)
@@ -45,7 +66,7 @@ public class StatusEffects : MonoBehaviour
 
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning = false;
         }
-
+        
     }
 
     public void Stunned()
@@ -91,3 +112,15 @@ public class StatusEffects : MonoBehaviour
 
     }
 }
+
+//Something to consider:
+/*
+ * Reassess Stamina Mechanics:
+    Influence status effects or ability cooldowns.
+
+ * Ways to implement Stamina Mechanics into Status Effects
+ * Duration
+ * Damage
+ * Increased stamina costs for actions
+ * Resistances
+ */

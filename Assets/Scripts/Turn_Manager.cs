@@ -30,6 +30,8 @@ public class Turn_Manager : MonoBehaviour
     private ENV_Mana envManaScript;
 
     private Enemy_Combat_Functions enemyFunctionsScript;
+
+    private Inventory inventoryScript;
     
     public Dictionary<int, Unit> unitReferences = new Dictionary<int, Unit>();
 
@@ -42,6 +44,7 @@ public class Turn_Manager : MonoBehaviour
         statusEffectsScript = FindObjectOfType<StatusEffects>();
         enemyFunctionsScript = FindObjectOfType<Enemy_Combat_Functions>();
         envManaScript = FindObjectOfType<ENV_Mana>();
+        inventoryScript = FindObjectOfType<Inventory>();
         
         state = BattleState.START;
         //Debug.Log("BattleState is " + state);
@@ -227,13 +230,13 @@ public class Turn_Manager : MonoBehaviour
     }
     public void CombatantsCheck()
     {
-        if(enemiesAlive == 0)
+        if(enemiesAlive == 0 && state != BattleState.WON)
         {
             PlayerWon();
             
         }
         
-        if(playersAlive == 0)
+        if(playersAlive == 0 && state != BattleState.LOST)
         {
             PlayerLost();
             
@@ -258,26 +261,7 @@ public class Turn_Manager : MonoBehaviour
     }
     private void StatusEffectsCheck()
     {
-        /*
-        //Function for statuses to be applied
-        foreach (Statuses status in unitReferences[turnIndex].statusEffects)
-        {
-            switch (status)
-            {
-                case Statuses.Burned:
-                    statusEffectsScript.Burning();
-                    break;
-                case Statuses.Blinded: 
-                    break;
-                case Statuses.Exhausted: 
-                    break;
-                case Statuses.Stunned:
-                    statusEffectsScript.Stunned();
-                    break;
-                default: break;
-            }
-           
-        }*/
+        
         if(unitReferences[turnIndex].isBurning == true)
         {
             statusEffectsScript.Burning();
@@ -311,6 +295,9 @@ public class Turn_Manager : MonoBehaviour
         ui_Script._fightButton.SetActive(false);
         unitSpawnerScript.player.DidILevelUp();
         unitSpawnerScript.player.DidWeaponLevelUp();
+        Debug.Log("LootDrop");
+        inventoryScript.playerInventory.Add(unitSpawnerScript.enemyOne.lootDrops[unitSpawnerScript.enemyOne.DropLoot()]);
+        
     }
     public void PlayerLost()
     {

@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -10,6 +10,7 @@ public class Enemy_Goblin : Unit
     private Color spriteColor;
 
     private int initialAttack;
+    
     //public Dictionary<string, Attack> goblinDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
@@ -19,6 +20,8 @@ public class Enemy_Goblin : Unit
         base.Start();
         spriteColor = spriteRenderer.color;
         initialAttack = physicalAttack;
+        LootDropItems();
+
     }
 
     public override void EnemyAttacks()
@@ -34,21 +37,37 @@ public class Enemy_Goblin : Unit
 
     public override void  SpecialAbility()
     {
+        if(unitAnimator != null)
+        {
+            if (envManaScript.currentGreen > envManaScript.currentBlue)
+            {
+                //spriteRenderer.color = Color.red;
+                physicalAttack = (int)(physicalAttack * 1.5);
+                unitAnimator.SetBool("isRaging", true);
+
+            }
+            else
+            {
+                //spriteRenderer.color = spriteColor;
+                physicalAttack = initialAttack;
+                unitAnimator.SetBool("isRaging", false);
+            }
+        }   
         
-        if (envManaScript.currentGreen > envManaScript.currentBlue)
-        {
-            //spriteRenderer.color = Color.red;
-            physicalAttack = (int)(physicalAttack * 1.5);
-            unitAnimator.SetBool("isRaging", true);
-            
-        }
-        else
-        {
-            //spriteRenderer.color = spriteColor;
-            physicalAttack = initialAttack;
-            unitAnimator.SetBool("isRaging", false);
-        }
         
     }
 
+    public override void LootDropItems()
+    {
+        lootDrops.Add(itemDatabaseScript._healthPotion);
+        lootDrops.Add(itemDatabaseScript._basicHammer);
+    }
+
+    public override int DropLoot()
+    {
+        int roll = base.DropLoot();
+        
+        return roll;
+
+    }
 }

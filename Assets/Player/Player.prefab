@@ -101,9 +101,9 @@ MonoBehaviour:
   unitName: Player
   maxHealth: 100
   currentHealth: 100
-  physicalAttack: 17
+  physicalAttack: 100
   physicalDefense: 5
-  magicAttack: 25
+  magicAttack: 100
   magicDefense: 5
   currentSpeed: 10
   maxStamina: 100
@@ -146,6 +146,7 @@ MonoBehaviour:
   enemyCombatScript: {fileID: 0}
   envManaScript: {fileID: 0}
   unit_SpawnerScript: {fileID: 0}
+  itemDatabaseScript: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!95 &-3485899192453137430
 Animator:
