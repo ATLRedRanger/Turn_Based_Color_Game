@@ -80,13 +80,48 @@ public class Inventory : MonoBehaviour
 
         UpdateInventoryUI();
     }
-
+    public bool MeetWeaponReqs(Unit unit, Weapon weapon)
+    {
+        bool meets = false;
+        int masteryReq = weapon.weaponLevelRequirement;
+        switch (weapon.weaponType)
+        {
+            case WeaponType.Axe:
+                if(unit.axeMastery >= masteryReq)
+                    meets = true;
+                break;
+            case WeaponType.Bow:
+                if (unit.bowMastery >= masteryReq)
+                    meets = true;
+                break;
+            case WeaponType.Hammer:
+                if (unit.hammerMastery >= masteryReq)
+                    meets = true;
+                break;
+            case WeaponType.Spellbook:
+                //if (unit.spellbookMastery >= masteryReq)
+                    meets = true;
+                break;
+            case WeaponType.Staff:
+                if (unit.staffMastery >= masteryReq)
+                    meets = true;
+                break;
+            case WeaponType.Sword:
+                if (unit.swordMastery >= masteryReq)
+                    meets = true;
+                break;
+        }
+        Debug.Log("Meet Weapon Reqs =" + meets);
+        return meets;
+    }
     public void EquipWeapon()
     {
       
         Weapon equippableWeapon = itemBeingPressed as Weapon;
+
         
-        if (player.equippedWeapon == null || CheckIfSpellbook() || equippableWeapon.weaponType == WeaponType.Staff)
+
+        if ((player.equippedWeapon == null || CheckIfSpellbook() || equippableWeapon.weaponType == WeaponType.Staff))
         {
             player.equippedWeapon = equippableWeapon;
             player.isWeaponEquipped = true;
@@ -187,9 +222,7 @@ public class Inventory : MonoBehaviour
         //If the item being pressed is a weapon, it turns on the Equip button
         //If the weapon has an attack that can be used, it turns on the Use button
 
-        ui_Script._useButton.SetActive(false);
-        ui_Script._equipButton.SetActive(false);
-        ui_Script._unequipButton.SetActive(false);
+        
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         int stringButtonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
         itemBeingPressed = playerInventory[stringButtonNum - 1];
@@ -199,29 +232,27 @@ public class Inventory : MonoBehaviour
             ui_Script._useButton.SetActive(true);
 
         }
-        else
+
+        if (itemBeingPressed.itemType == ItemType.Weapon)
         {
             Weapon selectedWeapon = itemBeingPressed as Weapon;
-            if (player.isWeaponEquipped == false || player.equippedWeapon.itemID != itemBeingPressed.itemID)
+            if(player.isWeaponEquipped == true && selectedWeapon.itemID != player.equippedWeapon.itemID && MeetWeaponReqs(player, selectedWeapon))
             {
                 ui_Script._equipButton.SetActive(true);
             }
-            else
+            else if (player.isWeaponEquipped == true && selectedWeapon.itemID == player.equippedWeapon.itemID && MeetWeaponReqs(player, selectedWeapon))
             {
                 ui_Script._unequipButton.SetActive(true);
             }
-            
             if (selectedWeapon.weaponAttack != null && ui_Script.IsAttackUsable(selectedWeapon.weaponAttack))
             {
                 ui_Script._useButton.SetActive(true);
             }
+
         }
+
         
-        /*if(player.equippedWeapon.itemID == itemBeingPressed.itemID)
-        {
-            ui_Script._equipButton.SetActive(false);
-            ui_Script._unequipButton.SetActive(true);
-        }*/
+
     }
 }
 //TODO: Make an inventory panel that has all the items in the player inventory

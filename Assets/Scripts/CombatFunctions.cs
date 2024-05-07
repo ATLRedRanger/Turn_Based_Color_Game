@@ -411,7 +411,7 @@ public class CombatFunctions : MonoBehaviour
                         Staff equippedStaff = player.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
-                            int damageToBeBoosted = Mathf.RoundToInt((attack.attackDamage + attacker.equippedWeapon.weaponDamage) * 1.3f);
+                            int damageToBeBoosted = Mathf.RoundToInt((attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage) * 1.3f);
                             
                             
                             potentialAttackDamage += damageToBeBoosted + attacker.magicAttack;
@@ -420,16 +420,16 @@ public class CombatFunctions : MonoBehaviour
                         else
                         {
                             
-                            potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
-                            //Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
+                            potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponBaseDamage;
+                            //Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
                         }
 
                     }
                     else
                     {
                         
-                        potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponDamage;
-                        //Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponDamage}");
+                        potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponBaseDamage;
+                        //Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
                     }
                     
                 }
@@ -444,8 +444,8 @@ public class CombatFunctions : MonoBehaviour
                 if (IsAttackerEquipped(attacker) == true)
                 {
                     
-                    potentialAttackDamage += attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponDamage;
-                    //Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponDamage}");
+                    potentialAttackDamage += attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponBaseDamage;
+                    //Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
                 }
                 else
                 {
@@ -677,3 +677,7 @@ public class CombatFunctions : MonoBehaviour
 //TODO: Make sure the damage calcs always make the defender lose health NOT GAIN IT if the defender has more defenses than the attacker has offense. 
 //TODO: Go through all the numbers
 
+
+//I want to simplify my combat functions to be more streamlined. 
+//Goal: To have one function that I can look at that handles all of the combat related stuff like Pokemon (as much as possible)
+//Goal: To have all the SoulsLike stats and attributes taken into account

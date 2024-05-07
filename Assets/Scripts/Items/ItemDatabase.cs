@@ -64,9 +64,9 @@ public class ItemDatabase : MonoBehaviour
 
     }
 
-    private Weapon CreateWeapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, string itemID, WeaponType weaponType, Attack weaponAttack)
+    private Weapon CreateWeapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, string itemID, WeaponType weaponType, Attack weaponAttack)
     {
-        var weapon = new Weapon(itemName, itemType, itemDescription, weaponLevelRequirement, weaponDamage, weaponHealthModifier, weaponStaminaModifier, weaponCritModifier, itemID, weaponType, weaponAttack);
+        var weapon = new Weapon(itemName, itemType, itemDescription, weaponLevelRequirement, weaponBaseDamage, weaponHealthModifier, weaponStaminaModifier, weaponCritModifier, itemID, weaponType, weaponAttack);
         return weapon;
     }
 

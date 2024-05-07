@@ -101,9 +101,9 @@ MonoBehaviour:
   unitName: Player
   maxHealth: 100
   currentHealth: 100
-  physicalAttack: 100
+  physicalAttack: 30
   physicalDefense: 5
-  magicAttack: 100
+  magicAttack: 30
   magicDefense: 5
   currentSpeed: 10
   maxStamina: 100

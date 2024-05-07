@@ -766,8 +766,10 @@ public class UI : MonoBehaviour
     {
         bool isActive = _itemPanel.activeSelf;
 
+        _unequipButton.gameObject.SetActive(false);
         _equipButton.gameObject.SetActive(false);
         _useButton.gameObject.SetActive(false);
+
         
         if (_itemPanel != null)
         {

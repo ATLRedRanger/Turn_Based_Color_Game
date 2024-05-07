@@ -3,14 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental;
 using UnityEngine;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using static UnityEngine.UI.CanvasScaler;
 
+//What attributes do weapons in SoulsLike games have? 
+//Name, Weight, Attack Power (both w/ and w/o the scaling), Critical Damage, Attribute Scaling, Passive Effects, Attribute Requirements, Special Attacks (if applicable) 
+//Name:
+//Description:
+//Weight:
+//Attack Power:
+//Critical Damage:
+//Attribute Scaling:
+//Passive Effects:
+//Attribute Requirements:
+//Special(Weapon) Attacks:
 public class Weapon : Item
 {
 
     public int weaponLevelRequirement;
 
-    public int weaponDamage;
+    public int weaponBaseDamage;
+
+    //private int weaponBonusDamage = 0;
+
+    //public int weaponTotalDamage;
 
     public float weaponHealthModifier;
 
@@ -26,22 +42,55 @@ public class Weapon : Item
     {
     }
 
-    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponDamage, float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, string itemID, WeaponType weaponType, Attack weaponAttack)
+    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, /*int weaponBonusDamage, int weaponTotalDamage,*/ float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, string itemID, WeaponType weaponType, Attack weaponAttack)
     {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemDescription = itemDescription;
         this.weaponLevelRequirement = weaponLevelRequirement;
-        this.weaponDamage = weaponDamage;
+        this.weaponBaseDamage = weaponBaseDamage;
+        //this.weaponBonusDamage = weaponBonusDamage;
+        //this.weaponTotalDamage = weaponTotalDamage;
         this.weaponHealthModifier = weaponHealthModifier;
         this.weaponStaminaModifier = weaponStaminaModifier;
         this.weaponCritModifier = weaponCritModifier;
         this.itemID = itemID;
         this.weaponType = weaponType;
         this.weaponAttack = weaponAttack;
-        //this.itemAmount = 1;
+        
     }
-    
+
+    public void SetWeaponTotalDamage(Unit user) 
+    {
+
+    }
+
+    /*public void SetWeaponBonusDamage(Unit user)
+    {
+
+        int masteryReq = weaponLevelRequirement;
+        switch (weaponType)
+        {
+            case WeaponType.Axe:
+                weaponBonusDamage = weaponTotalDamage + int(user.axeMastery * .10));
+                break;
+            case WeaponType.Bow:
+                weaponBonusDamage = user.bowMastery >= masteryReq);
+                break;
+            case WeaponType.Hammer:
+                weaponBonusDamage = user.hammerMastery >= masteryReq);
+                break;
+            case WeaponType.Spellbook:
+                weaponBonusDamage = user.spellbookMastery >= mastery);
+                break;
+            case WeaponType.Staff:
+                weaponBonusDamage = user.staffMastery >= masteryReq);
+                break;
+            case WeaponType.Sword:
+                weaponBonusDamage = user.swordMastery >= masteryReq);
+                break;
+        }
+    }*/
 
     public override void Use(Unit user)
     {
@@ -60,19 +109,19 @@ public class Weapon : Item
         
         if (attacker.currentStamina <= (attacker.OgStamina * 1 / 4))
         {
-            modifiedDamage = weaponDamage;
+            modifiedDamage = weaponBaseDamage;
         }
         if (attacker.currentStamina > (attacker.OgStamina * 1 / 4) && attacker.currentStamina <= (attacker.OgStamina * (1 / 2)))
         {
-            modifiedDamage = (int)(weaponDamage * 1.2);
+            modifiedDamage = (int)(weaponBaseDamage * 1.2);
         }
         if ((attacker.currentStamina > (1 / 2) && attacker.currentStamina <= (attacker.OgStamina * 3 / 4)))
         {
-            modifiedDamage = (int)(weaponDamage * 1.5);
+            modifiedDamage = (int)(weaponBaseDamage * 1.5);
         }
         if (attacker.currentStamina > (attacker.OgStamina * 3 / 4))
         {
-            modifiedDamage = (int)(weaponDamage * 2);
+            modifiedDamage = (int)(weaponBaseDamage * 2);
         }
         
         return modifiedDamage;
@@ -84,7 +133,7 @@ public class Weapon : Item
 
         if(defender.physicalDefense > attacker.physicalDefense)
         {
-            modifiedDamage = (int)(weaponDamage * 3);
+            modifiedDamage = (int)(weaponBaseDamage * 3);
         }
 
         return modifiedDamage;

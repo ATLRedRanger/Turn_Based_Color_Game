@@ -71,7 +71,7 @@ public class Unit : MonoBehaviour
     public List<Item> lootDrops = new List<Item>();
 
     //Equipment related variables
-    public Weapon equippedWeapon;
+    
 
     public bool isWeaponEquipped = false;
 
@@ -135,6 +135,8 @@ public class Unit : MonoBehaviour
     public Dictionary<string, Attack> enemyAttackDictionary = new Dictionary<string, Attack>();
 
     public SpriteRenderer spriteRenderer;
+
+    public Weapon equippedWeapon;
 
     private IEnumerator coroutine;
     public virtual void Start()
