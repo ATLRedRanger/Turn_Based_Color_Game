@@ -459,7 +459,54 @@ public class CombatFunctions : MonoBehaviour
         Debug.Log($"FINAL POTENTIAL DAMAGE: {potentialAttackDamage}");
         return potentialAttackDamage;
     }
-    
+
+    //Bard used PotentialDamage to make this function. Something to be explored.
+    public int CalculatePotentialDamage(Attack attack, Unit attacker)
+    {
+        int totalPotentialDamage = 0;
+
+        if (!IsAttackerEquipped(attacker))
+        {
+            // Handle unequipped cases
+            totalPotentialDamage += attack.attackDamage;
+            if (attack.attackType != AttackType.Special)
+            {
+                totalPotentialDamage += attacker.physicalAttack;
+            }
+            else
+            {
+                totalPotentialDamage += attacker.magicAttack;
+            }
+        }
+        else
+        {
+            // Handle equipped cases
+            totalPotentialDamage += attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage;
+            if (attack.attackType == AttackType.Special)
+            {
+                totalPotentialDamage += attacker.magicAttack;
+
+                if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
+                {
+                    Staff equippedStaff = attacker.equippedWeapon as Staff;
+                    if (equippedStaff.affinity == attack.attackColor)
+                    {
+                        int boostedDamage = Mathf.RoundToInt((float)(attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage) * 1.3f);
+                        totalPotentialDamage = boostedDamage + attacker.magicAttack;
+                    }
+                }
+            }
+            else
+            {
+                totalPotentialDamage += attacker.physicalAttack;
+            }
+        }
+
+        Debug.Log($"FINAL POTENTIAL DAMAGE: {totalPotentialDamage}");
+        return totalPotentialDamage;
+    }
+
+
     private bool IsAttackerEquipped(Unit attacker)
     {
 

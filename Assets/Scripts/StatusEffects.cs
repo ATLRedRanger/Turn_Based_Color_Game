@@ -57,7 +57,7 @@ public class StatusEffects : MonoBehaviour
             //Debug.Log("PLAYER IS BURNING!");
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentHealth -= burnDamage;
 
-            ui_Script.MiscellaneousFloatingNumbers(turnManager_Script.unitReferences[turnManager_Script.turnIndex], burnDamage);
+            //ui_Script.MiscellaneousFloatingNumbers(turnManager_Script.unitReferences[turnManager_Script.turnIndex], burnDamage, "-");
 
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].burnTimer -= 1;
         }
@@ -66,7 +66,8 @@ public class StatusEffects : MonoBehaviour
 
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning = false;
         }
-        
+
+        Event_Manager.StartPrintEvent();
     }
 
     public void Stunned()
@@ -101,15 +102,25 @@ public class StatusEffects : MonoBehaviour
 
     public void Vampped(Unit attacker)
     {
+        int healthGained = Mathf.RoundToInt(combatFunctions_Script.damageAfterReductions * 1 / 2);
         //Heals the attacker half of the damage dealt 
         if (attacker.isVampped)
         {
-            attacker.currentHealth += Mathf.RoundToInt(combatFunctions_Script.damageAfterReductions * 1 / 2);
+            attacker.currentHealth += healthGained;
+            ui_Script.MiscellaneousFloatingNumbers(attacker, healthGained, "+");
+            if(attacker.currentHealth >= attacker.maxHealth)
+            {
+                attacker.currentHealth = attacker.maxHealth;
+            }
             
             attacker.isVampped = false;
         }
         
+    }
 
+    public void Healing(Unit unit)
+    {
+        unit.isHealing = false;
     }
 }
 

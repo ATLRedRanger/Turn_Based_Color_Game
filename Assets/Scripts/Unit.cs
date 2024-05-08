@@ -38,7 +38,8 @@ public class Unit : MonoBehaviour
 
     public Animator unitAnimator;
 
-    
+    public int regenHealthInt;
+
 
     //Status Effects
     public List<Statuses> statusEffects = new List<Statuses>();
@@ -54,7 +55,8 @@ public class Unit : MonoBehaviour
     public int OgStamina;
     //Vampped: Had to make this a status effect because of the way the attack class is written
     public bool isVampped;
-    
+    //Healing
+    public bool isHealing;
 
     [SerializeField] private int currentLevel;
 
@@ -364,6 +366,18 @@ public class Unit : MonoBehaviour
                 break;
             default: break;
         }
+    }
+
+    public void GainHealth(int health)
+    {
+        isHealing = true;   
+        currentHealth += health;
+        if(currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        Debug.Log("GAINING HEALTH!");
+        Event_Manager.StartPrintEvent();
     }
 
     public void GainExperience(int enemyExp, int weaponExp)

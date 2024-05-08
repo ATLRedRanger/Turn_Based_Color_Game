@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 using UnityEngine.EventSystems;
 
 
@@ -196,7 +197,7 @@ public class UI : MonoBehaviour
     //Attack
     public Attack chosenAttack;
 
-
+  
 
     //Damage Popup
     
@@ -205,15 +206,64 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       StartCoroutine(StartStuff());
+        StartCoroutine(StartStuff());
         _backButton.SetActive(false);
         statusEffectsScript = FindObjectOfType<StatusEffects>();
+        Event_Manager.PrintNumbersEvent += PrintNumbers;
 
-        
-       
+
+
+
 
     }
 
+    private void PrintNumbers()
+    {
+        if (unitSpawnerScript.player.isHealing)
+        {
+            Debug.Log("You've Gained Health");
+            //Instantiates a copy of the gameObject at the specified position
+            //Grabs the TMP_Text component off the child of the GameObject
+            //Destroys the GameObject after a second
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "+" + unitSpawnerScript.player.regenHealthInt.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1.5f);
+        }
+        if (unitSpawnerScript.enemyOne.isHealing)
+        {
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "+" + unitSpawnerScript.enemyOne.regenHealthInt.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1.5f);
+        }
+        if (unitSpawnerScript.player.isBurning)
+        {
+           
+            //Instantiates a copy of the gameObject at the specified position
+            //Grabs the TMP_Text component off the child of the GameObject
+            //Destroys the GameObject after a second
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + statusEffectsScript.burnDamage.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1.5f);
+        }
+        Debug.Log("ENEMY IS BURNING?" + unitSpawnerScript.enemyOne.isBurning);
+        if (unitSpawnerScript.enemyOne.isBurning)
+        {
+            Debug.Log("Is Burning!");
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + statusEffectsScript.burnDamage.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1.5f);
+        }
+
+    }
+
+    private void OnDisable()
+    {
+        Event_Manager.PrintNumbersEvent -= PrintNumbers;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -287,7 +337,7 @@ public class UI : MonoBehaviour
         
     }
 
-  
+    
 
     private void GraphicalBars()
     {
@@ -1083,7 +1133,7 @@ public class UI : MonoBehaviour
         
 
     }
-    public void MiscellaneousFloatingNumbers(Unit unit, int damage)
+    public void MiscellaneousFloatingNumbers(Unit unit, int change, string pOm)
     {
         
         if (unit.isPlayer)
@@ -1092,14 +1142,14 @@ public class UI : MonoBehaviour
             //Grabs the TMP_Text component off the child of the GameObject
             //Destroys the GameObject after a second
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + damage.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = pOm + change.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1.5f);
         }
         if (unit.unitName == unitSpawnerScript.enemyOne.unitName)
         {
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
-            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + damage.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = pOm + change.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1.5f);
         }

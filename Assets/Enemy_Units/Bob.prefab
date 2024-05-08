@@ -113,6 +113,7 @@ MonoBehaviour:
   isDefending: 0
   moneyGiven: 100
   unitAnimator: {fileID: -5804213467000581041}
+  regenHealthInt: 2
   statusEffects: 
   isBurning: 0
   burnTimer: 3
@@ -122,6 +123,7 @@ MonoBehaviour:
   stunnedMaxStamina: 0
   OgStamina: 0
   isVampped: 0
+  isHealing: 0
   currentLevel: 0
   currentExp: 0
   expToLevel: 0
@@ -146,6 +148,7 @@ MonoBehaviour:
   enemyCombatScript: {fileID: 0}
   envManaScript: {fileID: 0}
   unit_SpawnerScript: {fileID: 0}
+  itemDatabaseScript: {fileID: 0}
   spriteRenderer: {fileID: 0}
 --- !u!95 &-5804213467000581041
 Animator:

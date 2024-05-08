@@ -152,6 +152,7 @@ public class Turn_Manager : MonoBehaviour
         unitReferences[turnIndex].isDefending = false;
         UnitStaminaRegen();
         StatusEffectsCheck();
+        Debug.Log("STATUS EFFECTS CHECK!");
         DeathCheck();
         CombatantsCheck();
         ui_Script.UpdateUI();
@@ -270,12 +271,16 @@ public class Turn_Manager : MonoBehaviour
         {
             statusEffectsScript.Stunned();
         }
-        
+        if (unitReferences[turnIndex].isHealing == true)
+        {
+            statusEffectsScript.Healing(unitReferences[turnIndex]);
+        }
     }
 
     private void SpecialAbilitiesCheck()
     {
         unitSpawnerScript.enemyOne.SpecialAbility();
+        
     }
     public void CleanUpStep()
     {

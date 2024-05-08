@@ -10,6 +10,7 @@ public class Enemy_Goblin : Unit
     private Color spriteColor;
 
     private int initialAttack;
+
     
     //public Dictionary<string, Attack> goblinDictionary = new Dictionary<string, Attack>();
 
@@ -54,6 +55,13 @@ public class Enemy_Goblin : Unit
             }
         }   
         
+        //Just playing around with different color based abilities
+        //Would need to figure out a system so the UI knows to put the healing
+        //numbers on screen
+        if(envManaScript.currentBlue > envManaScript.currentGreen)
+        {
+            GainHealth(regenHealthInt);
+        }
         
     }
 
