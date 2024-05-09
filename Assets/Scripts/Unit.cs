@@ -46,10 +46,14 @@ public class Unit : MonoBehaviour
 
     //Burning
     public bool isBurning;
+    public int burnAmount = 0;
+    private int burnTimeAmount = 3;
     public int burnTimer = 3;
     public bool isExhausted;
     //Stunned
     public bool isStunned;
+    public int stunAmount = 0;
+    private int stunnedTimeAmount = 3;
     public int stunnedTimer = 3;
     public int stunnedMaxStamina;
     public int OgStamina;
@@ -380,6 +384,14 @@ public class Unit : MonoBehaviour
         Event_Manager.StartPrintEvent();
     }
 
+    public void SetBurnTimer()
+    {
+        burnTimer = burnTimeAmount;
+    }
+    public void SetStunnedTimer()
+    {
+        stunnedTimer = stunnedTimeAmount;
+    }
     public void GainExperience(int enemyExp, int weaponExp)
     {
         currentExp += enemyExp;

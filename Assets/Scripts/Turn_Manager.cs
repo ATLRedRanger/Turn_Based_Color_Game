@@ -228,6 +228,20 @@ public class Turn_Manager : MonoBehaviour
     private void ReduceBuffsAndDebuffs()
     {
         //Debug.Log("Reduce buffs and debuffs");
+        //This is for status effects, until I put them somewhere else
+        //This is status decay. So the status bars will naturally go down, like in a souls game. 
+
+        for (int i = 0; i < turnOrder.Count; i++)
+        {
+            if(unitReferences[i].burnAmount > 0)
+            {
+                unitReferences[i].burnAmount -= 5;
+            }
+            if (unitReferences[i].stunAmount > 0)
+            {
+                unitReferences[i].stunAmount -= 5;
+            }
+        }
     }
     public void CombatantsCheck()
     {

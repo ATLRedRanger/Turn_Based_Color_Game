@@ -92,15 +92,23 @@ public class Attack
         switch (attackBehavior)
         {
             case AttackBehavior.Burn:
-                if(defender.isBurning != true)
+                if(defender.burnAmount < 100)
                 {
-                    defender.isBurning = true;
+                    defender.burnAmount += 40;
+                    if (defender.burnAmount >= 100)
+                    {
+                        defender.isBurning = true;
+                    }
                 }
                 break;
             case AttackBehavior.Stun:
-                if(defender.isStunned != true)
+                if (defender.stunAmount < 100)
                 {
-                    defender.isStunned = true;
+                    defender.stunAmount += 40;
+                    if (defender.stunAmount >= 100)
+                    {
+                        defender.isStunned = true;
+                    }
                 }
                 break;
             case AttackBehavior.Vamp:
@@ -114,3 +122,4 @@ public class Attack
 //TODO: and what should they do?
 //TODO: Figure out how to make an attack have its own functionality
 //TODO: IE: How to make fireball burn on its own
+

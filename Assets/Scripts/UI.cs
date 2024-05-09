@@ -239,16 +239,11 @@ public class UI : MonoBehaviour
         }
         if (unitSpawnerScript.player.isBurning)
         {
-           
-            //Instantiates a copy of the gameObject at the specified position
-            //Grabs the TMP_Text component off the child of the GameObject
-            //Destroys the GameObject after a second
             GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "-" + statusEffectsScript.burnDamage.ToString();
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1.5f);
         }
-        Debug.Log("ENEMY IS BURNING?" + unitSpawnerScript.enemyOne.isBurning);
         if (unitSpawnerScript.enemyOne.isBurning)
         {
             Debug.Log("Is Burning!");
@@ -257,7 +252,21 @@ public class UI : MonoBehaviour
             floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
             Destroy(floatingDamageTextClone, 1.5f);
         }
-
+        if (unitSpawnerScript.player.isVampped)
+        {
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, playerDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "+" + statusEffectsScript.healthGained.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().faceColor = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1.5f);
+        }
+        if (unitSpawnerScript.enemyOne.isVampped)
+        {
+           
+            GameObject floatingDamageTextClone = Instantiate(floatingDamageText, enemyOneDamagePosition.transform.position, Quaternion.identity);
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().text = "+" + statusEffectsScript.healthGained.ToString();
+            floatingDamageTextClone.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color32(255, 255, 255, 255);
+            Destroy(floatingDamageTextClone, 1.5f);
+        }
     }
 
     private void OnDisable()

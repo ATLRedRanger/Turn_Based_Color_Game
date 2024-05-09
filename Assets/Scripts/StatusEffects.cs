@@ -6,6 +6,11 @@ using UnityEditorInternal;
 using UnityEngine;
 using static UnityEngine.UI.CanvasScaler;
 
+//In a SoulsLike, the status builds up, then procs. I need to replicate that. 
+//What should happen is:
+// 1) An attack should build up the status effect
+// 2) If the units threshold is met or exceeded, the status procs
+// 3) After a certain amount of time, the build up should reset to 0
 
 public class StatusEffects : MonoBehaviour
 {
@@ -16,6 +21,8 @@ public class StatusEffects : MonoBehaviour
     private UI ui_Script;
 
     public int burnDamage;
+
+    public int healthGained;
     
     private void Start()
     {
@@ -52,19 +59,22 @@ public class StatusEffects : MonoBehaviour
         
         burnDamage = (int)(Mathf.Round(turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxHealth / 16));
 
+        
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning)
         {
             //Debug.Log("PLAYER IS BURNING!");
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentHealth -= burnDamage;
-
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].burnAmount = 0;
             //ui_Script.MiscellaneousFloatingNumbers(turnManager_Script.unitReferences[turnManager_Script.turnIndex], burnDamage, "-");
 
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].burnTimer -= 1;
         }
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].burnTimer < 1)
         {
-
+            
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning = false;
+            
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].SetBurnTimer();
         }
 
         Event_Manager.StartPrintEvent();
@@ -78,31 +88,31 @@ public class StatusEffects : MonoBehaviour
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned)
         {
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedMaxStamina;
-
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunAmount = 0;
             if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina > turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina)
             {
                 //Debug.Log("IF STUNNED AN CURRENT > MAX");
                 turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina;
             }
-                
+
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer -= 1;
         }
-            
+
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer < 1)
         {
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina = turnManager_Script.unitReferences[turnManager_Script.turnIndex].OgStamina;
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].isStunned = false;
-                
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].SetStunnedTimer();
         }
             
             
-        turnManager_Script.unitReferences[turnManager_Script.turnIndex].stunnedTimer -= 1;
-
+       
         //Debug.Log($"{turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentStamina} / {turnManager_Script.unitReferences[turnManager_Script.turnIndex].maxStamina}");
     }
 
     public void Vampped(Unit attacker)
     {
-        int healthGained = Mathf.RoundToInt(combatFunctions_Script.damageAfterReductions * 1 / 2);
+        healthGained = Mathf.RoundToInt(combatFunctions_Script.damageAfterReductions * 1 / 2);
         //Heals the attacker half of the damage dealt 
         if (attacker.isVampped)
         {
@@ -134,4 +144,5 @@ public class StatusEffects : MonoBehaviour
  * Damage
  * Increased stamina costs for actions
  * Resistances
- */
+ 
+*/
