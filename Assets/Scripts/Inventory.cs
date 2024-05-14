@@ -59,6 +59,7 @@ public class Inventory : MonoBehaviour
         playerInventory.Add(itemScript._basicStaff);
         playerInventory.Add(itemScript._basicBow);
         playerInventory.Add(itemScript._redsDarkGreatsword);
+        playerInventory.Add(itemScript._redTintPotion);
 
     }
     

@@ -6,6 +6,8 @@ public class ItemDatabase : MonoBehaviour
 {
     public Consumable _healthPotion;
 
+    public Consumable _redTintPotion;
+
     public Weapon _basicHammer;
 
     public Weapon _basicSword;
@@ -29,7 +31,7 @@ public class ItemDatabase : MonoBehaviour
     {
        
 
-        _healthPotion = new Consumable("Health Potion", ItemType.Consumable, "Heals a small amount of health.", 5, ConsumableType.Health, 10);
+        _healthPotion = new Consumable("Health Potion", ItemType.Consumable, "Heals a small amount of health.", 5, ConsumableType.Health, 10, Hue.Neutral);
 
         _basicSword = new Weapon("Basic Sword", ItemType.Weapon, "A basic sword", 1, 2, 0.6f, 0.4f, 1.10f, ItemIDMaker(), WeaponType.Sword, null);
 
@@ -43,6 +45,7 @@ public class ItemDatabase : MonoBehaviour
 
         _basicSpellbook = new Spellbook(_basicStaff, ItemType.Weapon, 1, 1, "Basic SpellBook", "A basic spelbook", ItemIDMaker(), WeaponType.Spellbook, Hue.Neutral);
 
+        _redTintPotion = CreateConsumable("Red Potion", ItemType.Consumable, "Tints the user Red.", 2, ConsumableType.Tint, 0, Hue.Red);
         //_redsDarkGreatsword = new Weapon("Red's Dark Greatsword", ItemType.Weapon, "Sword Red used to slaughter many!", 1, 10, 0.6f, 0.4f, 1.10f, WeaponType.Sword, null);
 
         
@@ -74,6 +77,12 @@ public class ItemDatabase : MonoBehaviour
     {
         var item = new Item(itemName, itemType, itemDescription, itemAmount, ItemIDMaker());
         return item;
+    }
+
+    private Consumable CreateConsumable(string itemName, ItemType itemType, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount, Hue tint)
+    {
+        var consumable = new Consumable(itemName, itemType, itemDescription, itemAmount, consumableType, refillAmount, tint);
+        return consumable;
     }
 
     private string ItemIDMaker()

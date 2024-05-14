@@ -40,9 +40,16 @@ public class Unit : MonoBehaviour
 
     public int regenHealthInt;
 
+    [SerializeField] public Hue weakness = Hue.Red;
 
     //Status Effects
     public List<Statuses> statusEffects = new List<Statuses>();
+
+    [SerializeField] private Hue startingTint;
+    public Hue tintColor = Hue.Neutral;
+    public bool isTinted = false;
+    private int tintTimeAmount = 3;
+    public int tintTimer = 3;
 
     //Burning
     public bool isBurning;
@@ -53,7 +60,7 @@ public class Unit : MonoBehaviour
     //Stunned
     public bool isStunned;
     public int stunAmount = 0;
-    private int stunnedTimeAmount = 3;
+    public int stunnedTimeAmount = 3;
     public int stunnedTimer = 3;
     public int stunnedMaxStamina;
     public int OgStamina;
@@ -160,7 +167,9 @@ public class Unit : MonoBehaviour
         //LearnSpells();
         OgStamina = maxStamina;
         stunnedMaxStamina = maxStamina / 2;
-        
+        SetBurnTimer();
+        SetStunnedTimer();
+        SetTintTimer();
     }
 
     //Adding attacks to an attack dictionary
@@ -383,6 +392,10 @@ public class Unit : MonoBehaviour
         Debug.Log("GAINING HEALTH!");
         Event_Manager.StartPrintEvent();
     }
+    public void LoseHealth(int damage)
+    {
+        currentHealth -= damage;
+    }
 
     public void SetBurnTimer()
     {
@@ -391,6 +404,20 @@ public class Unit : MonoBehaviour
     public void SetStunnedTimer()
     {
         stunnedTimer = stunnedTimeAmount;
+    }
+    public void SetTintTimer()
+    {
+        tintTimer = tintTimeAmount;
+    }
+    public void SetTintToOriginal()
+    {
+        tintColor = startingTint;
+    }
+    public void IsTinted(Hue tempTintColor)
+    {
+        tintColor = tempTintColor;
+        isTinted = true;
+        SetTintTimer();
     }
     public void GainExperience(int enemyExp, int weaponExp)
     {

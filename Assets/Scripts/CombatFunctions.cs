@@ -7,25 +7,17 @@ using UnityEngine;
 public class CombatFunctions : MonoBehaviour
 {
 
-    public AttacksDatabase attackDatabase;
-
     public bool inCombat;
-
-    //public Unit unit;
 
     public ENV_Mana envManaScript;
 
     public Unit_Spawner unitSpawnerScript;
-
-    public Inventory inventoryScript;
 
     public Turn_Manager turnManagerScript;
 
     private StatusEffects statusEffectsScript;
 
     public UI uiScript;
-
-    public Unit player;
 
     public int attackDamage;
 
@@ -56,10 +48,8 @@ public class CombatFunctions : MonoBehaviour
         unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
         envManaScript = FindObjectOfType<ENV_Mana>();
         turnManagerScript = FindObjectOfType<Turn_Manager>();  
-        inventoryScript = FindObjectOfType<Inventory>();
         statusEffectsScript = FindObjectOfType<StatusEffects>();
         uiScript = FindObjectOfType<UI>();
-        player = unitSpawnerScript.player;
 
     }
     // Update is called once per frame
@@ -301,7 +291,7 @@ public class CombatFunctions : MonoBehaviour
                 uiScript.PlayAttackAnimation(attack, defender);
                 potentialAttackDamage = 0;
                 CheckForSpecialWeaponProperties(attack, attacker, defender);
-                
+                //CalculateFinalDamage(attack, attacker, defender);
                 PotentialDamage(attack, attacker);
                 CheckForCrit(attacker);
                 DamageAfterArmorandRes(attack, defender);
@@ -408,7 +398,7 @@ public class CombatFunctions : MonoBehaviour
                     if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
                         //Debug.Log("STAFF EQUIPPED");
-                        Staff equippedStaff = player.equippedWeapon as Staff;
+                        Staff equippedStaff = attacker.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
                             int damageToBeBoosted = Mathf.RoundToInt((attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage) * 1.3f);
@@ -460,53 +450,6 @@ public class CombatFunctions : MonoBehaviour
         return potentialAttackDamage;
     }
 
-    //Bard used PotentialDamage to make this function. Something to be explored.
-    public int CalculatePotentialDamage(Attack attack, Unit attacker)
-    {
-        int totalPotentialDamage = 0;
-
-        if (!IsAttackerEquipped(attacker))
-        {
-            // Handle unequipped cases
-            totalPotentialDamage += attack.attackDamage;
-            if (attack.attackType != AttackType.Special)
-            {
-                totalPotentialDamage += attacker.physicalAttack;
-            }
-            else
-            {
-                totalPotentialDamage += attacker.magicAttack;
-            }
-        }
-        else
-        {
-            // Handle equipped cases
-            totalPotentialDamage += attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage;
-            if (attack.attackType == AttackType.Special)
-            {
-                totalPotentialDamage += attacker.magicAttack;
-
-                if (attacker.equippedWeapon.weaponType == WeaponType.Staff)
-                {
-                    Staff equippedStaff = attacker.equippedWeapon as Staff;
-                    if (equippedStaff.affinity == attack.attackColor)
-                    {
-                        int boostedDamage = Mathf.RoundToInt((float)(attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage) * 1.3f);
-                        totalPotentialDamage = boostedDamage + attacker.magicAttack;
-                    }
-                }
-            }
-            else
-            {
-                totalPotentialDamage += attacker.physicalAttack;
-            }
-        }
-
-        Debug.Log($"FINAL POTENTIAL DAMAGE: {totalPotentialDamage}");
-        return totalPotentialDamage;
-    }
-
-
     private bool IsAttackerEquipped(Unit attacker)
     {
 
@@ -518,6 +461,50 @@ public class CombatFunctions : MonoBehaviour
             isEquipped = false;
         }
         return isEquipped;
+    }
+
+    public int CalculateFinalDamage(Attack attack, Unit attacker, Unit defender)
+    {
+        int baseDamage = attack.attackDamage;
+        int weaponDamage = attacker.equippedWeapon != null ? attacker.equippedWeapon.weaponBaseDamage : 0;
+
+        potentialAttackDamage = baseDamage + weaponDamage;
+
+        if (attack.attackType == AttackType.Special)
+        {
+            potentialAttackDamage += attacker.magicAttack;
+            
+            if (attacker.equippedWeapon != null && attacker.equippedWeapon.weaponType == WeaponType.Staff)
+            {
+                Staff equippedStaff = attacker.equippedWeapon as Staff;
+                if (equippedStaff.affinity == attack.attackColor)
+                {
+                    potentialAttackDamage = Mathf.RoundToInt((float)(baseDamage + weaponDamage) * 1.3f) + attacker.magicAttack;
+                }
+            }
+        }
+        else
+        {
+            potentialAttackDamage += attacker.physicalAttack;
+        }
+
+        // Calculate defense based on attack type and stamina
+        int defenderDefense;
+        float staminaMultiplier = GetStaminaMultiplier(defender);
+        if (attack.attackType == AttackType.Special)
+        {
+            defenderDefense = Mathf.RoundToInt(defender.magicDefense * staminaMultiplier);
+        }
+        else
+        {
+            defenderDefense = Mathf.RoundToInt(defender.physicalDefense * staminaMultiplier);
+        }
+
+        // Ensure minimum damage and consider defense
+        potentialAttackDamage = Mathf.Max(1, potentialAttackDamage - defenderDefense);
+
+        Debug.Log($"NEW POTENTIAL DAMAGE: {potentialAttackDamage}");
+        return potentialAttackDamage;
     }
 
     public void CheckForCrit(Unit attacker)
@@ -602,6 +589,12 @@ public class CombatFunctions : MonoBehaviour
             defenderDefense = Mathf.RoundToInt(defenderPhysicalDefense * staminaMultiplier);
         }
 
+        if(defender.weakness == attack.attackColor)
+        {
+            Debug.Log($"POTENTIAL ATTACK BEFORE: {potentialAttackDamage}");
+            potentialAttackDamage = (int)(potentialAttackDamage * 1.3);
+            Debug.Log($"POTENTIAL ATTACK AFTER: {potentialAttackDamage}");
+        }
         //This ensures that the damage will always be at least 1
         damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
 

@@ -74,17 +74,7 @@ public class Attack
     public void AttackFunction(Unit defender)
     {
         
-        switch (attackColor)
-        {
-            case Hue.Red:
-                defender.isBurning = true;
-                defender.statusEffects.Add(Statuses.Burned);
-                break;
-            case Hue.Blue:
-                defender.isStunned = true;
-                defender.statusEffects.Add(Statuses.Stunned);
-                break;
-        }
+        
     }
 
     public void AttackStatusBehavior(Unit attacker, Unit defender)

@@ -63,7 +63,7 @@ public class StatusEffects : MonoBehaviour
         if (turnManager_Script.unitReferences[turnManager_Script.turnIndex].isBurning)
         {
             //Debug.Log("PLAYER IS BURNING!");
-            turnManager_Script.unitReferences[turnManager_Script.turnIndex].currentHealth -= burnDamage;
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].LoseHealth(burnDamage);
             turnManager_Script.unitReferences[turnManager_Script.turnIndex].burnAmount = 0;
             //ui_Script.MiscellaneousFloatingNumbers(turnManager_Script.unitReferences[turnManager_Script.turnIndex], burnDamage, "-");
 
@@ -131,6 +131,21 @@ public class StatusEffects : MonoBehaviour
     public void Healing(Unit unit)
     {
         unit.isHealing = false;
+    }
+
+    public void Tinted()
+    {
+        
+        if(turnManager_Script.unitReferences[turnManager_Script.turnIndex].tintTimer == 0) 
+        {
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].isTinted = false;
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].SetTintToOriginal();
+        }
+        else
+        {
+            turnManager_Script.unitReferences[turnManager_Script.turnIndex].tintTimer -= 1;
+        }
+        
     }
 }
 

@@ -289,6 +289,10 @@ public class Turn_Manager : MonoBehaviour
         {
             statusEffectsScript.Healing(unitReferences[turnIndex]);
         }
+        if (unitReferences[turnIndex].isTinted == true)
+        {
+            statusEffectsScript.Tinted();
+        }
     }
 
     private void SpecialAbilitiesCheck()

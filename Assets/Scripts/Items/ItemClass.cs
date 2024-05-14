@@ -52,6 +52,7 @@ public class Item
     public virtual void Use(Unit player)
     {
         //Debug.Log("Overide This");
+        Debug.Log($"ITEM ID: {itemID}");
     }
     
     public virtual void SpecialProperty() 

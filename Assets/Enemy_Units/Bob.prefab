@@ -114,11 +114,19 @@ MonoBehaviour:
   moneyGiven: 100
   unitAnimator: {fileID: -5804213467000581041}
   regenHealthInt: 2
+  weakness: 0
   statusEffects: 
+  startingTint: 6
+  tintColor: 6
+  isTinted: 0
+  tintTimer: 3
   isBurning: 0
+  burnAmount: 0
   burnTimer: 3
   isExhausted: 0
   isStunned: 0
+  stunAmount: 0
+  stunnedTimeAmount: 3
   stunnedTimer: 3
   stunnedMaxStamina: 0
   OgStamina: 0

@@ -58,7 +58,8 @@ public enum ItemType
 public enum ConsumableType
 {
     Health,
-    Stamina
+    Stamina,
+    Tint
 }
 
 public enum AttackType

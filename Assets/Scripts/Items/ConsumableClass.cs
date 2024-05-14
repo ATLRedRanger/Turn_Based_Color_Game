@@ -10,7 +10,7 @@ public class Consumable : Item
 
     public int refillAmount;
 
-    
+    public Hue tintColor;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class Consumable : Item
         
     }
 
-    public Consumable(string itemName, ItemType itemType, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount)
+    public Consumable(string itemName, ItemType itemType, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount, Hue tintColor)
     {
         
         this.itemName = itemName;
@@ -27,28 +27,33 @@ public class Consumable : Item
         this.itemAmount = itemAmount;
         this.consumableType = consumableType;
         this.refillAmount = refillAmount;
+        this.tintColor = tintColor;
     }
 
     public override void Use(Unit player)
     {
-        
-        if(consumableType == ConsumableType.Health)
+        switch (consumableType)
         {
-            player.currentHealth += refillAmount;  
-            if(player.currentHealth > player.maxHealth)
-            {
-                player.currentHealth = player.maxHealth;
-            }
+            case ConsumableType.Health:
+                player.currentHealth += refillAmount;
+                if (player.currentHealth > player.maxHealth)
+                {
+                    player.currentHealth = player.maxHealth;
+                }
+                break;
+            case ConsumableType.Stamina:
+                player.currentStamina += refillAmount;
+                if (player.currentStamina > player.maxStamina)
+                {
+                    player.currentStamina = player.maxStamina;
+                }
+                break;
+            case ConsumableType.Tint:
+                player.IsTinted(tintColor);
+                Debug.Log($"PLAYER tintCOLOR: {player.tintColor}");
+                break;
         }
-        if(consumableType != ConsumableType.Stamina)
-        {
-            player.currentStamina += refillAmount;
-            if (player.currentStamina > player.maxStamina)
-            {
-                player.currentStamina = player.maxStamina;
-            }
-        }
-
+       
         itemAmount -= 1;
         
         player.hadATurn = true;
