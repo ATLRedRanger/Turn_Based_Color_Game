@@ -24,15 +24,11 @@ public class Weapon : Item
 
     public int weaponBaseDamage;
 
-    //private int weaponBonusDamage = 0;
+    private int weaponBonusDamage = 0;
 
-    //public int weaponTotalDamage;
+    private int weaponSpecialBonusDamage = 0;
 
-    public float weaponHealthModifier;
-
-    public float weaponStaminaModifier;
-
-    public float weaponCritModifier;
+    public int weaponTotalDamage;
 
     public WeaponType weaponType;
 
@@ -42,64 +38,77 @@ public class Weapon : Item
     {
     }
 
-    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, /*int weaponBonusDamage, int weaponTotalDamage,*/ float weaponHealthModifier, float weaponStaminaModifier, float weaponCritModifier, string itemID, WeaponType weaponType, Attack weaponAttack)
+    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, int weaponBonusDamage, int weaponSpecialBonusDamage, int weaponTotalDamage, string itemID, WeaponType weaponType, Attack weaponAttack)
     {
         this.itemName = itemName;
         this.itemType = itemType;
         this.itemDescription = itemDescription;
         this.weaponLevelRequirement = weaponLevelRequirement;
         this.weaponBaseDamage = weaponBaseDamage;
-        //this.weaponBonusDamage = weaponBonusDamage;
-        //this.weaponTotalDamage = weaponTotalDamage;
-        this.weaponHealthModifier = weaponHealthModifier;
-        this.weaponStaminaModifier = weaponStaminaModifier;
-        this.weaponCritModifier = weaponCritModifier;
+        this.weaponBonusDamage = weaponBonusDamage;
+        this.weaponSpecialBonusDamage = weaponSpecialBonusDamage;
+        this.weaponTotalDamage = weaponTotalDamage;
         this.itemID = itemID;
         this.weaponType = weaponType;
         this.weaponAttack = weaponAttack;
         
     }
 
-    public void SetWeaponTotalDamage(Unit user) 
+    public int GetWeaponTotalDamage(Unit unit)
     {
 
+        SetWeaponBonusDamage(unit);
+        SpecialProperty(unit);
+        weaponTotalDamage = weaponTotalDamage + weaponBaseDamage + weaponBonusDamage + weaponSpecialBonusDamage;
+
+        return weaponTotalDamage;
     }
-
-    /*public void SetWeaponBonusDamage(Unit user)
+    public int GetWeaponBonusDamage()
     {
-
-        int masteryReq = weaponLevelRequirement;
+        return weaponBonusDamage;
+    }
+    public void SetWeaponBonusDamage(Unit user)
+    {
         switch (weaponType)
         {
             case WeaponType.Axe:
-                weaponBonusDamage = weaponTotalDamage + int(user.axeMastery * .10));
+                weaponBonusDamage = (user.axeMastery * weaponBaseDamage) / 5;
                 break;
             case WeaponType.Bow:
-                weaponBonusDamage = user.bowMastery >= masteryReq);
+                weaponBonusDamage = (user.bowMastery * weaponBaseDamage) / 5;
                 break;
             case WeaponType.Hammer:
-                weaponBonusDamage = user.hammerMastery >= masteryReq);
+                weaponBonusDamage = (user.hammerMastery * weaponBaseDamage) / 5;
                 break;
             case WeaponType.Spellbook:
-                weaponBonusDamage = user.spellbookMastery >= mastery);
+                weaponBonusDamage = 0;
                 break;
             case WeaponType.Staff:
-                weaponBonusDamage = user.staffMastery >= masteryReq);
+                weaponBonusDamage = 0;
                 break;
             case WeaponType.Sword:
-                weaponBonusDamage = user.swordMastery >= masteryReq);
+                weaponBonusDamage = (user.swordMastery * weaponBaseDamage) / 5;
                 break;
         }
-    }*/
+    }
 
     public override void Use(Unit user)
     {
         Debug.Log("This is the weapon overriding");
     }
 
-    public override void SpecialProperty()
+    public override void SpecialProperty(Unit unit)
     {
-        base.SpecialProperty();
+        base.SpecialProperty(unit);
+        switch (itemName)
+        {
+            case "Red's Dark Greatsword":
+                if(unit.magicAttack > unit.physicalAttack)
+                {
+                    weaponSpecialBonusDamage += Mathf.RoundToInt(unit.magicAttack * .5f);
+                }
+                break;
+        }
     }
 
     public int Hammer(Unit attacker)

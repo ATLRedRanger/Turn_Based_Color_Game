@@ -14311,6 +14311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   burnDamage: 0
+  healthGained: 0
 --- !u!1 &1941720803
 GameObject:
   m_ObjectHideFlags: 0
@@ -14714,14 +14715,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 522e81e4866179b4a8a43e4a5c35757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDatabase: {fileID: 1239664326}
   inCombat: 0
   envManaScript: {fileID: 727368242}
   unitSpawnerScript: {fileID: 0}
-  inventoryScript: {fileID: 0}
   turnManagerScript: {fileID: 0}
   uiScript: {fileID: 0}
-  player: {fileID: 0}
   attackDamage: 0
   damageAfterReductions: 0
   chosenEnemy: {fileID: 0}

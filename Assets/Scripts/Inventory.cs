@@ -52,6 +52,7 @@ public class Inventory : MonoBehaviour
         //playerWeaponList.Add(itemScript._basicAxe);
         //playerConsumableList.Add(itemScript._healthPotion);
         player.equippedWeapon = itemScript._basicSpellbook;
+        player.equippedWeapon.SetWeaponBonusDamage(player);
         player.isWeaponEquipped = true;
         //playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
@@ -126,6 +127,7 @@ public class Inventory : MonoBehaviour
         {
             player.equippedWeapon = equippableWeapon;
             player.isWeaponEquipped = true;
+            
             Debug.Log($"Player equipped weapon is {player.equippedWeapon.itemName} and it's ID is {player.equippedWeapon.itemID}");
         }
         else
@@ -139,6 +141,7 @@ public class Inventory : MonoBehaviour
         {
            
         }
+        player.equippedWeapon.SetWeaponBonusDamage(player);
     }
     public void UnequipWeapon()
     {

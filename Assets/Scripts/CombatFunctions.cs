@@ -184,17 +184,9 @@ public class CombatFunctions : MonoBehaviour
 
     }
 
-    public int ReduceStamina(Attack attack, Unit unit)
+    public void ReduceStamina(Attack attack, Unit unit)
     {
-        unit.currentStamina -= attack.staminaCost;
-
-        if (unit.currentStamina < 1)
-        {
-            unit.currentStamina = 0;
-            unit.isExhausted = true;
-        }
-
-        return unit.currentStamina;
+        unit.LoseStamina(attack.staminaCost);
     }
     public void ReduceColorFromEnv(Attack attack)
     {
@@ -557,7 +549,7 @@ public class CombatFunctions : MonoBehaviour
         {
             if(attacker.equippedWeapon != null)
             {
-                potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage * attacker.equippedWeapon.weaponCritModifier));
+                potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage));
             }
             else
             {
@@ -589,14 +581,18 @@ public class CombatFunctions : MonoBehaviour
             defenderDefense = Mathf.RoundToInt(defenderPhysicalDefense * staminaMultiplier);
         }
 
-        if(defender.weakness == attack.attackColor)
+        if(defender.GetWeakness() == attack.attackColor)
         {
-            Debug.Log($"POTENTIAL ATTACK BEFORE: {potentialAttackDamage}");
+            
             potentialAttackDamage = (int)(potentialAttackDamage * 1.3);
-            Debug.Log($"POTENTIAL ATTACK AFTER: {potentialAttackDamage}");
+            
         }
-        //This ensures that the damage will always be at least 1
-        damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
+        if (defender.GetResistance() == attack.attackColor)
+        {
+            potentialAttackDamage = (int)(potentialAttackDamage * .7f);
+        }
+            //This ensures that the damage will always be at least 1
+            damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
 
     }
 
@@ -654,11 +650,11 @@ public class CombatFunctions : MonoBehaviour
 
         if (defender.isDefending)
         {
-            defender.currentHealth -= damageAfterReductions * 1 / 2;
+            defender.LoseHealth(damageAfterReductions / 2);
         }
         else
         {
-            defender.currentHealth -= damageAfterReductions;
+            defender.LoseHealth(damageAfterReductions);
         }
         
 

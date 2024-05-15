@@ -26,9 +26,6 @@ public class Spellbook : Weapon
         this.itemDescription = itemDesctiption;
         weaponLevelRequirement = weapon.weaponLevelRequirement;
         weaponBaseDamage = weapon.weaponBaseDamage;
-        weaponHealthModifier = weapon.weaponHealthModifier;
-        weaponStaminaModifier = weapon.weaponStaminaModifier;
-        weaponCritModifier = weapon.weaponCritModifier;
         this.itemID = itemID;
         this.weaponType = weaponType;
         this.spellBookTier = spellBookTier;

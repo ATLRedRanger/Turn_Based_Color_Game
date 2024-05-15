@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\StatusEffects.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\Unit.cs" />
+    <Compile Include="Assets\Scripts\Failed_Scripts\Combat_Function_Fixed.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Assets\Scripts\Turn_Manager.cs" />
     <Compile Include="Assets\Scripts\Items\ConsumableClass.cs" />
     <Compile Include="Assets\Scripts\Enemy_Combat_Functions.cs" />
-    <Compile Include="Assets\Scripts\Combat_Function_Fixed.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />

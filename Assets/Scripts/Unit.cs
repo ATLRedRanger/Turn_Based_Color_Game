@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Unit : MonoBehaviour
 {
@@ -40,7 +41,9 @@ public class Unit : MonoBehaviour
 
     public int regenHealthInt;
 
-    [SerializeField] public Hue weakness = Hue.Red;
+    [SerializeField] private Hue weakness = Hue.Red;
+
+    [SerializeField] private Hue resistance = Hue.Green;
 
     //Status Effects
     public List<Statuses> statusEffects = new List<Statuses>();
@@ -306,9 +309,14 @@ public class Unit : MonoBehaviour
         StatusEffects.isBurned -= Burning;
     }*/
 
-    //Status Effects
-
-
+    public Hue GetWeakness()
+    {
+        return weakness;
+    }
+    public Hue GetResistance()
+    {
+        return resistance; 
+    }
     public void DidILevelUp()
     {
 
@@ -396,7 +404,18 @@ public class Unit : MonoBehaviour
     {
         currentHealth -= damage;
     }
+    public void LoseStamina(int number)
+    {
+        currentStamina -= number;
 
+        if (currentStamina < 1)
+        {
+            currentStamina = 0;
+            isExhausted = true;
+        }
+    }
+
+    //Status Effects
     public void SetBurnTimer()
     {
         burnTimer = burnTimeAmount;

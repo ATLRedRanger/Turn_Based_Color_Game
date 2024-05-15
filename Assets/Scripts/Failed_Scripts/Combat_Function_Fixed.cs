@@ -18,9 +18,9 @@ public class Combat_Function_Fixed : MonoBehaviour
 
     public UI uiScript;
 
-    private int potentialAttackDamage;
-
     public Unit chosenEnemy;
+
+    private int totalDamage;
 
     public int healthLost;
 
@@ -54,11 +54,6 @@ public class Combat_Function_Fixed : MonoBehaviour
 
     }
 
-   
-    
-    
-    
-    
     //Combat In Steps:
     public IEnumerator CombatStepsTwo(Attack attack, Unit attacker, Unit defender)
     {
@@ -74,11 +69,22 @@ public class Combat_Function_Fixed : MonoBehaviour
                 // 3) If an attack is successful, how much damage is it potentially doing?
                 //    -Check for crits in this stage
                 //    -Check for weapon special abilities or modifiers
-                int totalDamage = CalculateTotalDamage(attack, attacker, defender);
-                // 4) How much damage is the attack doing after defenses and resistances?
+                totalDamage = CalculateTotalDamage(attack, attacker, defender);
+                // 4) How much damage is the attack doing after defenses and resistances/weaknesses?
                 // 5) How much health damage does the defender take?
+                if (defender.isDefending)
+                {
+                    totalDamage = totalDamage / 2;
+                }
+                defender.LoseHealth(totalDamage);
                 // 6) How much stamina damage does the defender take?
                 // 7) Are there any secondary effects of the attack?
+                CheckForAttackAbilities(attack, attacker, defender);
+                ReduceStamina(attack, attacker);
+                ReduceColorFromEnv(attack);
+                ColorReturn(attack);
+                uiScript.FloatingNumbersText(defender, attack);
+                yield return new WaitForSeconds(.7f);
                 uiScript.UpdateUI();
             }
             if (defender.currentHealth < 1)
@@ -122,7 +128,7 @@ public class Combat_Function_Fixed : MonoBehaviour
 
         return dieRoll;
     }
-    public bool DidAttackHit(Attack attack, Unit unit)
+    private bool DidAttackHit(Attack attack, Unit unit)
     {
         //I want stamina to affect accuracy
         //I want to have 4 levels of affecting accuracy
@@ -168,38 +174,12 @@ public class Combat_Function_Fixed : MonoBehaviour
         return hit;
 
     }
-    private int CalcWeaponTotalDamage(Unit unit)
+    private int CalcTotalWeaponDamage(Unit unit)
     {
-        int weaponDamage = 0;
-        int weaponBonusDamage = 0;
-        if (unit.isWeaponEquipped)
-        {
-            switch (unit.equippedWeapon.weaponType)
-            {
-                case WeaponType.Axe:
-                    weaponBonusDamage = (unit.axeMastery * weaponDamage) / 5;
-                    break;
-                case WeaponType.Bow:
-                    weaponBonusDamage = (unit.bowMastery * weaponDamage) / 5;
-                    break;
-                case WeaponType.Hammer:
-                    weaponBonusDamage = (unit.hammerMastery * weaponDamage) / 5;
-                    break;
-                case WeaponType.Spellbook:
-                    break;
-                case WeaponType.Staff:
-                    break;
-                case WeaponType.Sword:
-                    weaponBonusDamage = Mathf.RoundToInt((unit.swordMastery * weaponDamage) / 5);
-                    break;
-            }
-            Debug.Log($"WEAPON_DAMAGE: {weaponDamage} and WEAPON_BONUS_DAMAGE: {weaponBonusDamage}");
-            weaponDamage += weaponBonusDamage;
-            
-        }
-            return weaponDamage;
+       
+        return unit.equippedWeapon.GetWeaponTotalDamage(unit); ;
     }
-    public bool CheckForCrit(Unit attacker)
+    private bool CheckForCrit(Unit attacker)
     {
         //The thought process behind this is:
         //The higher your base accuracy, the more likely you are to crit
@@ -248,31 +228,139 @@ public class Combat_Function_Fixed : MonoBehaviour
         
         return crit;
     }
-    public bool CheckForWeakness(Attack attack, Unit defender)
+    private bool CheckForWeakness(Attack attack, Unit defender)
     {
         bool weak = false;
-        if(defender.weakness == attack.attackColor)
+        if(defender.GetWeakness() == attack.attackColor)
         {
             weak = true;
         }
         return weak;
     }
+    private bool CheckForResistance(Attack attack, Unit defender)
+    {
+        bool resist = false;
+        if (defender.GetResistance() == attack.attackColor)
+        {
+            resist = true;
+        }
+        return resist;
+    }
     private int CalculateTotalDamage(Attack attack, Unit attacker, Unit defender)
     {
-        int totalDamage = 0;
+        totalDamage = 0;
         int unitBaseDamage = (attack.attackType == AttackType.Special) ? attacker.magicAttack : attacker.physicalAttack;
-        int weaponTotalDamage = CalcWeaponTotalDamage(attacker);
+        int weaponTotalDamage = CalcTotalWeaponDamage(attacker);
         int totalAttackDamage = (CheckForCrit(attacker) == true) ? Mathf.RoundToInt((float)(attack.attackDamage * 1.5)) : attack.attackDamage;
+        int totalDefenses = (attack.attackType == AttackType.Special) ? defender.magicDefense : defender.physicalDefense;
+
         Debug.Log($"UNIT_BASE_DMG: {unitBaseDamage} + WEAPON_TOTAL_DMG: {weaponTotalDamage} + TOTAL_ATTACK_DMG: {totalAttackDamage}");
         totalDamage = unitBaseDamage + weaponTotalDamage + totalAttackDamage;
+
         if (CheckForWeakness(attack, defender))
         {
             totalDamage = Mathf.RoundToInt(totalDamage * 1.5f);
         }
 
+        if (CheckForResistance(attack, defender))
+        {
+            totalDamage = Mathf.RoundToInt(totalDamage * .7f);
+        }
 
+        Debug.Log($"TOTAL_DAMAGE: {totalDamage} - TOTAL_DEFENSES: {totalDefenses}");
+        totalDamage = totalDamage - totalDefenses;
+        Debug.Log($"TOTAL_DAMAGE: {totalDamage}");
         return totalDamage;
     }
+    public void CheckForAttackAbilities(Attack attack, Unit attacker, Unit defender)
+    {
+        //attack.AttackFunction(defender);
+        attack.AttackStatusBehavior(attacker, defender);
+    }
+    public void ReduceStamina(Attack attack, Unit unit)
+    {
+        unit.LoseStamina(attack.staminaCost);
 
-    
+    }
+    public void ReduceColorFromEnv(Attack attack)
+    {
+
+        switch (attack.attackColor)
+        {
+            case Hue.Red:
+
+                envManaScript.currentRed -= attack.colorCost;
+
+                break;
+            case Hue.Orange:
+                envManaScript.currentOrange -= attack.colorCost;
+                break;
+            case Hue.Yellow:
+                envManaScript.currentYellow -= attack.colorCost;
+                break;
+            case Hue.Green:
+                envManaScript.currentGreen -= attack.colorCost;
+                break;
+            case Hue.Blue:
+                envManaScript.currentBlue -= attack.colorCost;
+                break;
+            case Hue.Violet:
+                envManaScript.currentViolet -= attack.colorCost;
+                break;
+            default:
+                break;
+        }
+    }
+    public void ColorReturn(Attack attack)
+    {
+        //int roll = Random.Range(0, 5);
+
+        switch (attack.attackColor)
+        {
+            case Hue.Red:
+                envManaScript.currentOrange += attack.colorCost;
+                if (envManaScript.currentOrange > envManaScript.maxOrange)
+                {
+                    envManaScript.maxOrange = envManaScript.currentOrange;
+                }
+                break;
+            case Hue.Orange:
+                envManaScript.currentYellow += attack.colorCost;
+                if (envManaScript.currentYellow > envManaScript.maxYellow)
+                {
+                    envManaScript.maxYellow = envManaScript.currentYellow;
+                }
+                break;
+            case Hue.Yellow:
+                envManaScript.currentGreen += attack.colorCost;
+                if (envManaScript.currentGreen > envManaScript.maxGreen)
+                {
+                    envManaScript.maxGreen = envManaScript.currentGreen;
+                }
+                break;
+            case Hue.Green:
+                envManaScript.currentBlue += attack.colorCost;
+                if (envManaScript.currentBlue > envManaScript.maxBlue)
+                {
+                    envManaScript.maxBlue = envManaScript.currentBlue;
+                }
+                break;
+            case Hue.Blue:
+                envManaScript.currentViolet += attack.colorCost;
+                if (envManaScript.currentViolet > envManaScript.maxViolet)
+                {
+                    envManaScript.maxViolet = envManaScript.currentViolet;
+                }
+                break;
+            case Hue.Violet:
+                envManaScript.currentRed += attack.colorCost;
+                if (envManaScript.currentRed > envManaScript.maxRed)
+                {
+                    envManaScript.maxRed = envManaScript.currentRed;
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }

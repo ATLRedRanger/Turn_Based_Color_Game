@@ -55,7 +55,7 @@ public class Item
         Debug.Log($"ITEM ID: {itemID}");
     }
     
-    public virtual void SpecialProperty() 
+    public virtual void SpecialProperty(Unit unit) 
     {
         Debug.Log("ITEM'S SPECIAL PROPERTY!");
     }
