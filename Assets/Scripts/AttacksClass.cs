@@ -84,7 +84,7 @@ public class Attack
             case AttackBehavior.Burn:
                 if(defender.burnAmount < 100)
                 {
-                    defender.burnAmount += 40;
+                    defender.burnAmount += 45;
                     if (defender.burnAmount >= 100)
                     {
                         defender.isBurning = true;

@@ -28,7 +28,7 @@ public class Weapon : Item
 
     private int weaponSpecialBonusDamage = 0;
 
-    public int weaponTotalDamage;
+    public int totalWeaponDamage;
 
     public WeaponType weaponType;
 
@@ -38,7 +38,7 @@ public class Weapon : Item
     {
     }
 
-    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, int weaponBonusDamage, int weaponSpecialBonusDamage, int weaponTotalDamage, string itemID, WeaponType weaponType, Attack weaponAttack)
+    public Weapon(string itemName, ItemType itemType, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, int weaponBonusDamage, int weaponSpecialBonusDamage, int totalWeaponDamage, string itemID, WeaponType weaponType, Attack weaponAttack)
     {
         this.itemName = itemName;
         this.itemType = itemType;
@@ -47,21 +47,22 @@ public class Weapon : Item
         this.weaponBaseDamage = weaponBaseDamage;
         this.weaponBonusDamage = weaponBonusDamage;
         this.weaponSpecialBonusDamage = weaponSpecialBonusDamage;
-        this.weaponTotalDamage = weaponTotalDamage;
+        this.totalWeaponDamage = totalWeaponDamage;
         this.itemID = itemID;
         this.weaponType = weaponType;
         this.weaponAttack = weaponAttack;
         
     }
 
-    public int GetWeaponTotalDamage(Unit unit)
+    public int GetTotalWeaponDamage(Unit unit)
     {
 
         SetWeaponBonusDamage(unit);
         SpecialProperty(unit);
-        weaponTotalDamage = weaponTotalDamage + weaponBaseDamage + weaponBonusDamage + weaponSpecialBonusDamage;
+        Debug.Log($"TOTAL_WEAPON_DMG = {totalWeaponDamage} + WPN_BSE: {weaponBaseDamage} + WPN_BNS: {weaponBonusDamage} + WPN_SPCL: {weaponSpecialBonusDamage}");
+        totalWeaponDamage = totalWeaponDamage + weaponBaseDamage + weaponBonusDamage + weaponSpecialBonusDamage;
 
-        return weaponTotalDamage;
+        return totalWeaponDamage;
     }
     public int GetWeaponBonusDamage()
     {
@@ -103,14 +104,19 @@ public class Weapon : Item
         switch (itemName)
         {
             case "Red's Dark Greatsword":
-                if(unit.magicAttack > unit.physicalAttack)
-                {
-                    weaponSpecialBonusDamage += Mathf.RoundToInt(unit.magicAttack * .5f);
-                }
+                ApplyRedsDarkGreatsword(unit);
                 break;
         }
     }
-
+    public void ApplyRedsDarkGreatsword(Unit equipped)
+    {
+        if (equipped.magicAttack > equipped.physicalAttack)
+        {
+            //Debug.Log($"REDS_Greatsword: {weaponSpecialBonusDamage}");
+            weaponSpecialBonusDamage += Mathf.RoundToInt(equipped.magicAttack * .1f);
+            
+        }
+    }
     public int Hammer(Unit attacker)
     {
         int modifiedDamage = 0;

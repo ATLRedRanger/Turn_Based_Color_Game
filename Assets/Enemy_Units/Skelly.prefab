@@ -102,9 +102,9 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   physicalAttack: 10
-  physicalDefense: 10
+  physicalDefense: 15
   magicAttack: 20
-  magicDefense: 5
+  magicDefense: 15
   currentSpeed: 2
   maxStamina: 100
   currentStamina: 100
@@ -115,6 +115,7 @@ MonoBehaviour:
   unitAnimator: {fileID: 818922341243487471}
   regenHealthInt: 4
   weakness: 0
+  resistance: 3
   statusEffects: 
   startingTint: 4
   tintColor: 6

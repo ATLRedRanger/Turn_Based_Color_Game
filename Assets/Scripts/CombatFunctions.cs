@@ -21,7 +21,7 @@ public class CombatFunctions : MonoBehaviour
 
     public int attackDamage;
 
-    private int potentialAttackDamage;
+    public int potentialAttackDamage;
 
     public int damageAfterReductions;
 
@@ -282,11 +282,12 @@ public class CombatFunctions : MonoBehaviour
             {
                 uiScript.PlayAttackAnimation(attack, defender);
                 potentialAttackDamage = 0;
-                CheckForSpecialWeaponProperties(attack, attacker, defender);
-                //CalculateFinalDamage(attack, attacker, defender);
-                PotentialDamage(attack, attacker);
+                Debug.Log($"IN_LOOP = {potentialAttackDamage}");
+                CheckForWeaponProperties(attack, attacker, defender);
+                CalculateFinalDamage(attack, attacker, defender);
+                //PotentialDamage(attack, attacker);
                 CheckForCrit(attacker);
-                DamageAfterArmorandRes(attack, defender);
+                DamageAfterArmorResWeakness(attack, defender);
                 
                 ReduceHealthAndStaminaOfDefender(attack, attacker, defender);
                 CheckForAttackAbilities(attack, attacker, defender);
@@ -334,10 +335,11 @@ public class CombatFunctions : MonoBehaviour
         attacker.hadATurn = true;
     }*/
 
-    public void CheckForSpecialWeaponProperties(Attack attack, Unit attacker, Unit defender)
+    public void CheckForWeaponProperties(Attack attack, Unit attacker, Unit defender)
     {
         //Each weapon should feel different from each other
         //Hammer: Gets bonus damage from the attacker current stamina level and always deals stamina damage
+        Debug.Log($"CHECK_WEAPON_PROPERTIES Potential Attack Damage = {potentialAttackDamage}");
         if (attacker.equippedWeapon != null)
         {
             switch (attacker.equippedWeapon.weaponType)
@@ -368,12 +370,7 @@ public class CombatFunctions : MonoBehaviour
             }
 
         }
-        else
-        {
-            potentialAttackDamage = 0;
-        }
-        
-        Debug.Log($"Potential Attack Damage = {potentialAttackDamage}");
+        Debug.Log($"CHECK_WEAPON_PROPERTIES Potential Attack Damage = {potentialAttackDamage}");
     }
 
     public int PotentialDamage(Attack attack, Unit attacker)
@@ -393,25 +390,25 @@ public class CombatFunctions : MonoBehaviour
                         Staff equippedStaff = attacker.equippedWeapon as Staff;
                         if (equippedStaff.affinity == attack.attackColor)
                         {
-                            int damageToBeBoosted = Mathf.RoundToInt((attack.attackDamage + attacker.equippedWeapon.weaponBaseDamage) * 1.3f);
+                            int damageToBeBoosted = Mathf.RoundToInt((attack.attackDamage + attacker.equippedWeapon.GetTotalWeaponDamage(attacker)) * 1.3f);
                             
                             
                             potentialAttackDamage += damageToBeBoosted + attacker.magicAttack;
-                            //Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
+                            Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped + Affinity): {potentialAttackDamage} = {damageToBeBoosted} + {attacker.magicAttack}");
                         }
                         else
                         {
                             
-                            potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponBaseDamage;
-                            //Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
+                            potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.GetTotalWeaponDamage(attacker);
+                            Debug.Log($"POTENTIAL ATTACK DAMAGE (Staff Equipped w/No Affinity): {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.GetTotalWeaponDamage(attacker)}");
                         }
 
                     }
                     else
                     {
                         
-                        potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.weaponBaseDamage;
-                        //Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
+                        potentialAttackDamage += attack.attackDamage + attacker.magicAttack + attacker.equippedWeapon.GetTotalWeaponDamage(attacker);
+                        Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
                     }
                     
                 }
@@ -419,21 +416,21 @@ public class CombatFunctions : MonoBehaviour
                 {
                     
                     potentialAttackDamage += attack.attackDamage + attacker.magicAttack;
-                    //Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack}");
+                    Debug.Log($"POTENTIAL S.ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.magicAttack}");
                 }
                 break;
             default:
                 if (IsAttackerEquipped(attacker) == true)
                 {
-                    
-                    potentialAttackDamage += attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.weaponBaseDamage;
-                    //Debug.Log($"POTENTIAL P.ATTACK DAMAGE (Weapon Equipped): {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack} + {attacker.equippedWeapon.weaponBaseDamage}");
+                    Debug.Log($"POTENTIAL_ATTACK_DMG_W_WEAPON: ATK_DMG: {attack.attackDamage} + ATK.PHYS{attacker.physicalAttack} + ATK.EQP.WPN: {attacker.equippedWeapon.GetTotalWeaponDamage(attacker)}");
+                    potentialAttackDamage += attack.attackDamage + attacker.physicalAttack + attacker.equippedWeapon.GetTotalWeaponDamage(attacker);
+                   
                 }
                 else
                 {
-                    
+                    Debug.Log($"POTENTIAL_ATTACK_DMG: ATK_DMG: {attack.attackDamage} + ATK.PHYS{attacker.physicalAttack}");
                     potentialAttackDamage += attack.attackDamage + attacker.physicalAttack;
-                    //Debug.Log($"POTENTIAL ATTACK DAMAGE: {potentialAttackDamage} = {attack.attackDamage} + {attacker.physicalAttack}");
+                    
                 }
                 break;
         }
@@ -458,8 +455,8 @@ public class CombatFunctions : MonoBehaviour
     public int CalculateFinalDamage(Attack attack, Unit attacker, Unit defender)
     {
         int baseDamage = attack.attackDamage;
-        int weaponDamage = attacker.equippedWeapon != null ? attacker.equippedWeapon.weaponBaseDamage : 0;
-
+        int weaponDamage = attacker.equippedWeapon != null ? attacker.equippedWeapon.GetTotalWeaponDamage(attacker) : 0;
+        Debug.Log($"BaseDamage: ATK_DMG: {baseDamage} + weaponDamage: {weaponDamage}");
         potentialAttackDamage = baseDamage + weaponDamage;
 
         if (attack.attackType == AttackType.Special)
@@ -493,7 +490,7 @@ public class CombatFunctions : MonoBehaviour
         }
 
         // Ensure minimum damage and consider defense
-        potentialAttackDamage = Mathf.Max(1, potentialAttackDamage - defenderDefense);
+        
 
         Debug.Log($"NEW POTENTIAL DAMAGE: {potentialAttackDamage}");
         return potentialAttackDamage;
@@ -547,20 +544,13 @@ public class CombatFunctions : MonoBehaviour
         }
         if(crit)
         {
-            if(attacker.equippedWeapon != null)
-            {
-                potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage));
-            }
-            else
-            {
-                potentialAttackDamage = Mathf.RoundToInt((float)(potentialAttackDamage * 1.25f));
-            }
-            Debug.Log($"YOU'VE LANDED A CRITICAL HIT! {potentialAttackDamage}");
+            potentialAttackDamage = Mathf.RoundToInt(potentialAttackDamage * 1.3f);
+            Debug.Log($"CRIT POTENTIAL DAMAGE: {potentialAttackDamage}");
         }
         
     }
 
-    public void DamageAfterArmorandRes(Attack attack, Unit defender)
+    public void DamageAfterArmorResWeakness(Attack attack, Unit defender)
     {
         int defenderMagicDefense = defender.magicDefense;
         int defenderPhysicalDefense = defender.physicalDefense;
@@ -591,9 +581,10 @@ public class CombatFunctions : MonoBehaviour
         {
             potentialAttackDamage = (int)(potentialAttackDamage * .7f);
         }
-            //This ensures that the damage will always be at least 1
-            damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
-
+        //This ensures that the damage will always be at least 1
+        Debug.Log($"DMG_AFTER_ARM_WEAK: {potentialAttackDamage} - DEFENDER_DEF: {defenderDefense}");
+        damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
+            
     }
 
     public float GetStaminaMultiplier(Unit defender)
@@ -637,27 +628,25 @@ public class CombatFunctions : MonoBehaviour
             if (attacker.equippedWeapon.weaponType == WeaponType.Hammer)
             {
 
-                defender.currentStamina -= (int)(damageAfterReductions * .5);
-                if (defender.currentStamina < 1)
-                {
-                    defender.currentStamina = 0;
-                }
+                defender.LoseStamina((int)(damageAfterReductions * .2f));
+                
             }
         }
-        
+
         //If the defender is defending, they take half damage after reductions
         //If the defender is not defending, they take full damage
-
+        
         if (defender.isDefending)
         {
             defender.LoseHealth(damageAfterReductions / 2);
         }
         else
         {
-            defender.LoseHealth(damageAfterReductions);
+            defender.LoseHealth(damageAfterReductions); 
+            Debug.Log($"HEALTH_LOST = {damageAfterReductions}");
         }
-        
 
+        
         healthLost = healthPreDamage - defender.currentHealth;
         
     }

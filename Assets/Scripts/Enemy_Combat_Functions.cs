@@ -68,6 +68,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
     public void EnemyAttacking()
     {
+        combatFunctionsScript.potentialAttackDamage = 0;
         //Debug.Log("ENEMY IS ATTACKING");
         EnemyAttackDecision();
         if (enemyOne.isDefending != true)
@@ -75,11 +76,11 @@ public class Enemy_Combat_Functions : MonoBehaviour
             if (combatFunctionsScript.DidAttackHit(chosenAttack, enemyOne) == true)
             {
                 uiScript.PlayAttackAnimation(chosenAttack, player);
-                combatFunctionsScript.CheckForSpecialWeaponProperties(chosenAttack, enemyOne, player);
+                combatFunctionsScript.CheckForWeaponProperties(chosenAttack, enemyOne, player);
                 combatFunctionsScript.CheckForAttackAbilities(chosenAttack, enemyOne, player);
                 combatFunctionsScript.PotentialDamage(chosenAttack, enemyOne);
                 combatFunctionsScript.CheckForCrit(enemyOne);
-                combatFunctionsScript.DamageAfterArmorandRes(chosenAttack, player);
+                combatFunctionsScript.DamageAfterArmorResWeakness(chosenAttack, player);
                 combatFunctionsScript.DamageAfterStatusCheck(enemyOne, player);
                 combatFunctionsScript.ReduceHealthAndStaminaOfDefender(chosenAttack, enemyOne, player);
                 uiScript.FloatingNumbersText(player, chosenAttack);

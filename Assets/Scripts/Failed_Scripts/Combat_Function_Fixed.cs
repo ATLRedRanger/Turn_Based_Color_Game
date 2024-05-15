@@ -177,7 +177,7 @@ public class Combat_Function_Fixed : MonoBehaviour
     private int CalcTotalWeaponDamage(Unit unit)
     {
        
-        return unit.equippedWeapon.GetWeaponTotalDamage(unit); ;
+        return unit.equippedWeapon.GetTotalWeaponDamage(unit); ;
     }
     private bool CheckForCrit(Unit attacker)
     {

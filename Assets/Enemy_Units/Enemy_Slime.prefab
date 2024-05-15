@@ -115,6 +115,7 @@ MonoBehaviour:
   unitAnimator: {fileID: 6346672120635852251}
   regenHealthInt: 3
   weakness: 0
+  resistance: 3
   statusEffects: 
   startingTint: 2
   tintColor: 6
