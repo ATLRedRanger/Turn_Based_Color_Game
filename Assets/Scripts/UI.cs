@@ -154,6 +154,8 @@ public class UI : MonoBehaviour
 
     public GameObject _spellBookPanel;
 
+    public GameObject _WeaponDetailsPanel;
+
     //UI Bars
     public Image player_HealthBar;
     public Image player_StaminaBar;
@@ -197,7 +199,13 @@ public class UI : MonoBehaviour
     //Attack
     public Attack chosenAttack;
 
-  
+    //Weapon Detail Panel
+    public TMP_Text weapon_Name;
+    public TMP_Text weapon_Description;
+    public TMP_Text weapon_Total_Damage;
+    public TMP_Text weapon_Base_Damage;
+    public TMP_Text weapon_Bonus_Damage;
+    
 
     //Damage Popup
     
@@ -1007,6 +1015,22 @@ public class UI : MonoBehaviour
         _abilitiesPanel.SetActive(false);
     }
 
+    public void OpenWeaponDetailsPanel()
+    {
+
+        _WeaponDetailsPanel.SetActive(true);
+        
+
+    }
+
+    public void WeaponDetails(string weaponName, string weaponDescription, int wpnTtlDmg, int wpnBseDmg, int wpnBnsDmg)
+    {
+        weapon_Name.text = weaponName;
+        weapon_Description.text = weaponDescription;
+        weapon_Total_Damage.text = wpnTtlDmg.ToString();
+        weapon_Base_Damage.text = wpnBseDmg.ToString();
+        weapon_Bonus_Damage.text = wpnBnsDmg.ToString();
+    }
     public void ClosePanels()
     {
         _fightPanel.SetActive(false);

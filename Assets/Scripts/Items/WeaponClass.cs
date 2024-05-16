@@ -60,10 +60,12 @@ public class Weapon : Item
         SetWeaponBonusDamage(unit);
         SpecialProperty(unit);
         Debug.Log($"TOTAL_WEAPON_DMG = {totalWeaponDamage} + WPN_BSE: {weaponBaseDamage} + WPN_BNS: {weaponBonusDamage} + WPN_SPCL: {weaponSpecialBonusDamage}");
-        totalWeaponDamage = totalWeaponDamage + weaponBaseDamage + weaponBonusDamage + weaponSpecialBonusDamage;
+        totalWeaponDamage = weaponBaseDamage + weaponBonusDamage + weaponSpecialBonusDamage;
 
         return totalWeaponDamage;
     }
+
+    
     public int GetWeaponBonusDamage()
     {
         return weaponBonusDamage;
@@ -108,12 +110,12 @@ public class Weapon : Item
                 break;
         }
     }
-    public void ApplyRedsDarkGreatsword(Unit equipped)
+    private void ApplyRedsDarkGreatsword(Unit equipped)
     {
         if (equipped.magicAttack > equipped.physicalAttack)
         {
             //Debug.Log($"REDS_Greatsword: {weaponSpecialBonusDamage}");
-            weaponSpecialBonusDamage += Mathf.RoundToInt(equipped.magicAttack * .1f);
+            weaponSpecialBonusDamage = Mathf.RoundToInt(equipped.magicAttack * .1f);
             
         }
     }

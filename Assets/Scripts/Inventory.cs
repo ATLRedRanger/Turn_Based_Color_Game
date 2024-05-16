@@ -142,6 +142,7 @@ public class Inventory : MonoBehaviour
            
         }
         player.equippedWeapon.SetWeaponBonusDamage(player);
+        //ui_Script._WeaponDetailsPanel.SetActive(false);
     }
     public void UnequipWeapon()
     {
@@ -233,26 +234,49 @@ public class Inventory : MonoBehaviour
 
         if (itemBeingPressed.itemType != ItemType.Weapon)
         {
+            ui_Script._WeaponDetailsPanel.SetActive(false);
             ui_Script._useButton.SetActive(true);
+            ui_Script._equipButton.SetActive(false);
+            ui_Script._unequipButton.SetActive(false);
 
         }
 
         if (itemBeingPressed.itemType == ItemType.Weapon)
         {
+            
+            
+
             Weapon selectedWeapon = itemBeingPressed as Weapon;
             if(player.isWeaponEquipped == true && selectedWeapon.itemID != player.equippedWeapon.itemID && MeetWeaponReqs(player, selectedWeapon))
             {
+                Debug.Log("EQUIP_BUTTON");
+                ui_Script._useButton.SetActive(false);
+                ui_Script._unequipButton.SetActive(false);
                 ui_Script._equipButton.SetActive(true);
             }
-            else if (player.isWeaponEquipped == true && selectedWeapon.itemID == player.equippedWeapon.itemID && MeetWeaponReqs(player, selectedWeapon))
+            if (player.isWeaponEquipped == true && selectedWeapon.itemID == player.equippedWeapon.itemID && MeetWeaponReqs(player, selectedWeapon))
             {
+                Debug.Log("UNEQUIP_BUTTON");
+                ui_Script._useButton.SetActive(false);
+                ui_Script._equipButton.SetActive(false);
                 ui_Script._unequipButton.SetActive(true);
+                
             }
+            if (player.isWeaponEquipped == false && MeetWeaponReqs(player, selectedWeapon))
+            {
+                ui_Script._useButton.SetActive(false);
+                ui_Script._equipButton.SetActive(true);
+                ui_Script._unequipButton.SetActive(false);
+            }
+            
             if (selectedWeapon.weaponAttack != null && ui_Script.IsAttackUsable(selectedWeapon.weaponAttack))
             {
+                Debug.Log("USE_BUTTON");
                 ui_Script._useButton.SetActive(true);
             }
 
+            ui_Script.OpenWeaponDetailsPanel();
+            ui_Script.WeaponDetails(selectedWeapon.itemName, selectedWeapon.itemDescription, selectedWeapon.GetTotalWeaponDamage(player), selectedWeapon.weaponBaseDamage, selectedWeapon.GetWeaponBonusDamage());
         }
 
         
