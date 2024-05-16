@@ -280,6 +280,7 @@ public class CombatFunctions : MonoBehaviour
             
             if (DidAttackHit(attack, attacker) == true)
             {
+                
                 uiScript.PlayAttackAnimation(attack, defender);
                 potentialAttackDamage = 0;
                 Debug.Log($"IN_LOOP = {potentialAttackDamage}");
@@ -334,7 +335,7 @@ public class CombatFunctions : MonoBehaviour
             
         attacker.hadATurn = true;
     }*/
-
+    
     public void CheckForWeaponProperties(Attack attack, Unit attacker, Unit defender)
     {
         //Each weapon should feel different from each other

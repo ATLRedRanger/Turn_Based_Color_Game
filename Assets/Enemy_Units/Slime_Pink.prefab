@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3906164578942617653}
   - component: {fileID: 1655976847201112183}
-  - component: {fileID: 2357189071139498538}
   - component: {fileID: -5804213467000581041}
+  - component: {fileID: -8441940129446335636}
   m_Layer: 0
-  m_Name: Bob
+  m_Name: Slime_Pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,9 +75,9 @@ SpriteRenderer:
   m_SortingLayerID: 723722423
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ec9d43d37d977fd4d92d3baa8cdb3d80, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 04bc7188d76d99a49a06ce6a92e62fb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -86,7 +86,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2357189071139498538
+--- !u!95 &-5804213467000581041
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192196118830537610}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 09e45d84fea224d4c816f6e868b2fd94, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-8441940129446335636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,29 +116,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 2192196118830537610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc0046246c3c90649b5937140f742085, type: 3}
+  m_Script: {fileID: 11500000, guid: b7edee5f142e8c04a98f03a3f942df83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Boblin2
-  maxHealth: 100
-  currentHealth: 100
-  physicalAttack: 10
-  physicalDefense: 10
-  magicAttack: 18
-  magicDefense: 10
-  currentSpeed: 3
-  maxStamina: 100
-  currentStamina: 100
-  staminaRegenModifier: 1
-  baseAccuracy: 40
+  unitName: Slime_Pink
+  maxHealth: 15
+  currentHealth: 15
+  physicalAttack: 5
+  physicalDefense: 5
+  magicAttack: 5
+  magicDefense: 5
+  currentSpeed: 10
+  maxStamina: 15
+  currentStamina: 15
+  staminaRegenModifier: 2
+  baseAccuracy: 50
   isDefending: 0
-  moneyGiven: 100
+  moneyGiven: 50
   unitAnimator: {fileID: -5804213467000581041}
   regenHealthInt: 2
-  weakness: 0
-  resistance: 3
+  weakness: 5
+  resistance: 4
   statusEffects: 
-  startingTint: 6
+  startingTint: 5
   tintColor: 6
   isTinted: 0
   tintTimer: 3
@@ -136,7 +157,7 @@ MonoBehaviour:
   currentLevel: 0
   currentExp: 0
   expToLevel: 0
-  expGiven: 100
+  expGiven: 22
   isWeaponEquipped: 0
   currentAxeExp: 0
   currentStaffExp: 0
@@ -159,24 +180,3 @@ MonoBehaviour:
   unit_SpawnerScript: {fileID: 0}
   itemDatabaseScript: {fileID: 0}
   spriteRenderer: {fileID: 0}
---- !u!95 &-5804213467000581041
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2192196118830537610}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5a478426441306c4ba71ccd3f510fe85, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

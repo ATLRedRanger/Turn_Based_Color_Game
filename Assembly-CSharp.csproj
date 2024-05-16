@@ -106,6 +106,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Scripts\Enemy_Slime.cs" />
     <Compile Include="Assets\Scripts\Turn_Manager.cs" />
     <Compile Include="Assets\Scripts\Items\ConsumableClass.cs" />
     <Compile Include="Assets\Scripts\Enemy_Combat_Functions.cs" />
