@@ -297,7 +297,7 @@ public class CombatFunctions : MonoBehaviour
                 ReduceStamina(attack, attacker);
                 ReduceColorFromEnv(attack);
                 ColorReturn(attack);
-                yield return new WaitForSeconds(.7f);
+                yield return new WaitForSeconds(1f);
                 uiScript.UpdateUI();
             }
             if(defender.currentHealth < 1)

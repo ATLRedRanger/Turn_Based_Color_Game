@@ -41,7 +41,7 @@ public class AttacksDatabase : MonoBehaviour
 
         _orangeSpike = new Attack("Orange Spike", "Orange_Spike", 5, 20, 4, 75, 1, 2, Hue.Orange, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
 
-        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 1, 20, 1, 75, 1, 3, Hue.Blue, AttackType.Special, WeaponType.Neutral, AttackBehavior.Stun);
+        _blueCrush = new Attack("Blue Crush", "Blue_Crush", 1, 20, 1, 75, 1, 2, Hue.Blue, AttackType.Special, WeaponType.Neutral, AttackBehavior.Stun);
 
         _yellowSplash = new Attack("Yellow Splash", "Yellow_Splash", 6, 20, 4, 75, 1, 2, Hue.Yellow, AttackType.Special, WeaponType.Neutral, AttackBehavior.None);
 

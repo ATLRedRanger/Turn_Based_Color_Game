@@ -18,11 +18,12 @@ public class Consumable : Item
         
     }
 
-    public Consumable(string itemName, ItemType itemType, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount, Hue tintColor)
+    public Consumable(string itemName, ItemType itemType, Sprite itemSprite, string itemDescription, int itemAmount, ConsumableType consumableType, int refillAmount, Hue tintColor)
     {
         
         this.itemName = itemName;
         this.itemType = itemType;
+        this.itemSprite = itemSprite;
         this.itemDescription = itemDescription;
         this.itemAmount = itemAmount;
         this.consumableType = consumableType;

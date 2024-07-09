@@ -16,11 +16,12 @@ public class Item
 
     public string itemID;
 
+    public Sprite itemSprite;
     
-
     public Unit_Spawner unitSpawnerScript;
 
     public Unit player;
+
     void Start()
     {
         
@@ -38,10 +39,11 @@ public class Item
         this.itemAmount = 1;
     }
 
-    public Item(string itemName, ItemType itemType, string itemDescription, int itemAmount, string itemID)
+    public Item(string itemName, ItemType itemType, Sprite itemSprite, string itemDescription, int itemAmount, string itemID)
     {
         this.itemName = itemName;
         this.itemType = itemType;
+        this.itemSprite = itemSprite;
         this.itemDescription = itemDescription;
         this.itemAmount = itemAmount;
         this.itemID = itemID;

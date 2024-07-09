@@ -31,7 +31,6 @@ public class Inventory : MonoBehaviour
 
     public List<TMP_Text> buttonTextList = new List<TMP_Text>();
 
-    
 
     // Start is called before the first frame update
     void Start()
@@ -51,16 +50,17 @@ public class Inventory : MonoBehaviour
         
         //playerWeaponList.Add(itemScript._basicAxe);
         //playerConsumableList.Add(itemScript._healthPotion);
-        player.equippedWeapon = itemScript._basicSpellbook;
+        player.equippedWeapon = itemScript._basicSword;
         player.equippedWeapon.SetWeaponBonusDamage(player);
         player.isWeaponEquipped = true;
         //playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
         playerInventory.Add(itemScript._basicSpellbook);
         playerInventory.Add(itemScript._basicStaff);
-        playerInventory.Add(itemScript._basicBow);
+        playerInventory.Add(itemScript._basicAxe);
         playerInventory.Add(itemScript._redsDarkGreatsword);
         playerInventory.Add(itemScript._redTintPotion);
+        playerInventory.Add(itemScript._basicSword);
 
     }
     
@@ -276,7 +276,7 @@ public class Inventory : MonoBehaviour
             }
 
             ui_Script.OpenWeaponDetailsPanel();
-            ui_Script.WeaponDetails(selectedWeapon.itemName, selectedWeapon.itemDescription, selectedWeapon.GetTotalWeaponDamage(player), selectedWeapon.weaponBaseDamage, selectedWeapon.GetWeaponBonusDamage());
+            ui_Script.WeaponDetails(selectedWeapon.itemName, selectedWeapon.itemDescription, selectedWeapon.GetTotalWeaponDamage(player), selectedWeapon.weaponBaseDamage, selectedWeapon.GetWeaponBonusDamage(), selectedWeapon.itemSprite);
         }
 
         

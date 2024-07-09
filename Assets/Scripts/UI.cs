@@ -205,11 +205,12 @@ public class UI : MonoBehaviour
     public TMP_Text weapon_Total_Damage;
     public TMP_Text weapon_Base_Damage;
     public TMP_Text weapon_Bonus_Damage;
-    
+
 
     //Damage Popup
-    
-    
+
+    //Item GO
+    public GameObject item_Sprite_GO;
 
     // Start is called before the first frame update
     void Start()
@@ -1023,8 +1024,9 @@ public class UI : MonoBehaviour
 
     }
 
-    public void WeaponDetails(string weaponName, string weaponDescription, int wpnTtlDmg, int wpnBseDmg, int wpnBnsDmg)
+    public void WeaponDetails(string weaponName, string weaponDescription, int wpnTtlDmg, int wpnBseDmg, int wpnBnsDmg, Sprite weaponSprite)
     {
+        item_Sprite_GO.gameObject.GetComponent<SpriteRenderer>().sprite = weaponSprite;
         weapon_Name.text = weaponName;
         weapon_Description.text = weaponDescription;
         weapon_Total_Damage.text = wpnTtlDmg.ToString();
@@ -1080,7 +1082,7 @@ public class UI : MonoBehaviour
     {
         enemyOneText.faceColor = new Color32(241, 160, 118, 255);
         //Instantiates the GameObject that has the animations for the damage text
-        yield return new WaitForSeconds(.75f);
+        yield return new WaitForSeconds(1f);
 
         if (unit.isPlayer)
         {
