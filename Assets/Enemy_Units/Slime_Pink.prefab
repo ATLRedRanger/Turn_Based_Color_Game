@@ -122,10 +122,10 @@ MonoBehaviour:
   unitName: Slime_Pink
   maxHealth: 15
   currentHealth: 15
-  physicalAttack: 5
-  physicalDefense: 5
-  magicAttack: 5
-  magicDefense: 5
+  physicalAttack: 15
+  physicalDefense: 15
+  magicAttack: 15
+  magicDefense: 15
   currentSpeed: 10
   maxStamina: 15
   currentStamina: 15

@@ -99,25 +99,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Skelly
-  maxHealth: 100
-  currentHealth: 100
+  maxHealth: 10
+  currentHealth: 10
   physicalAttack: 10
-  physicalDefense: 15
-  magicAttack: 20
-  magicDefense: 15
+  physicalDefense: 10
+  magicAttack: 11
+  magicDefense: 10
   currentSpeed: 2
-  maxStamina: 100
-  currentStamina: 100
-  staminaRegenModifier: 1
+  maxStamina: 10
+  currentStamina: 10
+  staminaRegenModifier: 2
   baseAccuracy: 40
   isDefending: 0
   moneyGiven: 0
   unitAnimator: {fileID: 818922341243487471}
   regenHealthInt: 4
-  weakness: 0
-  resistance: 3
+  weakness: 6
+  resistance: 6
   statusEffects: 
-  startingTint: 4
+  startingTint: 6
   tintColor: 6
   isTinted: 0
   tintTimer: 3

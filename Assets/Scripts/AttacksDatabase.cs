@@ -33,7 +33,7 @@ public class AttacksDatabase : MonoBehaviour
     void Awake()
     {
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
-        _punch = new Attack("Punch", "Punch", 1, 20, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
+        _punch = new Attack("Punch", "Punch", 15, 20, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
 
         _fireBall = new Attack("Fireball", "Red_Slash", 5, 20, 5, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
         

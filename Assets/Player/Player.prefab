@@ -101,10 +101,10 @@ MonoBehaviour:
   unitName: Player
   maxHealth: 100
   currentHealth: 100
-  physicalAttack: 25
-  physicalDefense: 5
-  magicAttack: 30
-  magicDefense: 5
+  physicalAttack: 20
+  physicalDefense: 10
+  magicAttack: 10
+  magicDefense: 10
   currentSpeed: 10
   maxStamina: 100
   currentStamina: 100
@@ -114,10 +114,10 @@ MonoBehaviour:
   moneyGiven: 0
   unitAnimator: {fileID: -3485899192453137430}
   regenHealthInt: 0
-  weakness: 0
-  resistance: 3
+  weakness: 6
+  resistance: 6
   statusEffects: 
-  startingTint: 4
+  startingTint: 6
   tintColor: 6
   isTinted: 0
   tintTimer: 3

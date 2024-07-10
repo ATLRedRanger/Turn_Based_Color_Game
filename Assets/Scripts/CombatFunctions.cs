@@ -271,7 +271,7 @@ public class CombatFunctions : MonoBehaviour
                 break;
         }
     }
-    public IEnumerator CombatStepsTwo(Attack attack, Unit attacker, Unit defender)
+    public IEnumerator CombatSteps(Attack attack, Unit attacker, Unit defender)
     {
         inCombat = true;
         for (int i = 0; i < attack.numOfAttacks; i++)
@@ -356,7 +356,7 @@ public class CombatFunctions : MonoBehaviour
                 case WeaponType.Hammer:
                     if(attack.attackType != AttackType.Special)
                     {
-                        potentialAttackDamage = attacker.equippedWeapon.Hammer(attacker);
+                        potentialAttackDamage = attacker.equippedWeapon.Hammer(attacker, defender);
                     }
                     break;
                 case WeaponType.Spellbook:
@@ -557,8 +557,8 @@ public class CombatFunctions : MonoBehaviour
         int defenderPhysicalDefense = defender.physicalDefense;
         float staminaMultiplier = GetStaminaMultiplier(defender);
         int defenderDefense;
-        
 
+        Debug.Log($"Damage_After_Armor_And_Resistances: {potentialAttackDamage}");
         //Thought process behind this:
         //I want the player to manage stamina on both sides of the battle
         //If the player is being very aggressive and 
@@ -566,25 +566,29 @@ public class CombatFunctions : MonoBehaviour
         if(attack.attackType == AttackType.Special)
         {
             defenderDefense = Mathf.RoundToInt(defenderMagicDefense * staminaMultiplier);
+            Debug.Log($"Defender Magic Defense: {defenderMagicDefense} * Stamina Multiplier: {staminaMultiplier}");
         }
         else
         {
             defenderDefense = Mathf.RoundToInt(defenderPhysicalDefense * staminaMultiplier);
+            Debug.Log($"Defender Magic Defense: {defenderPhysicalDefense} * Stamina Multiplier: {staminaMultiplier}");
         }
 
-        if(defender.GetWeakness() == attack.attackColor)
+        if(defender.GetWeakness() == attack.attackColor && attack.attackColor != Hue.Neutral)
         {
             
             potentialAttackDamage = (int)(potentialAttackDamage * 1.3);
             
         }
-        if (defender.GetResistance() == attack.attackColor)
+        if (defender.GetResistance() == attack.attackColor && attack.attackColor != Hue.Neutral)
         {
             potentialAttackDamage = (int)(potentialAttackDamage * .7f);
+            Debug.Log(potentialAttackDamage);
         }
         //This ensures that the damage will always be at least 1
         Debug.Log($"DMG_AFTER_ARM_WEAK: {potentialAttackDamage} - DEFENDER_DEF: {defenderDefense}");
         damageAfterReductions = Mathf.Max(1, potentialAttackDamage - defenderDefense);
+        Debug.Log(damageAfterReductions);
             
     }
 
@@ -634,12 +638,13 @@ public class CombatFunctions : MonoBehaviour
             }
         }
 
-        //If the defender is defending, they take half damage after reductions
+        //If the defender is defending, they take a % of damage
         //If the defender is not defending, they take full damage
         
         if (defender.isDefending)
         {
-            defender.LoseHealth(damageAfterReductions / 2);
+            defender.LoseHealth(Mathf.Max(1, (int)(damageAfterReductions / 1.5f)));
+            Debug.Log($"HEALTH_LOST = {damageAfterReductions}");
         }
         else
         {
@@ -699,11 +704,5 @@ public class CombatFunctions : MonoBehaviour
 // 6) How much stamina damage does the defender take?
 // 7) Are there any secondary effects of the attack?
 
-//TODO: Come up with a damage calculation that takes into account Attack Damage, Weapon Damage, Critials, Base Defenses, Armor Defenses and other miscellaneous values. 
-//TODO: Make sure the damage calcs always make the defender lose health NOT GAIN IT if the defender has more defenses than the attacker has offense. 
-//TODO: Go through all the numbers
-
-
-//I want to simplify my combat functions to be more streamlined. 
-//Goal: To have one function that I can look at that handles all of the combat related stuff like Pokemon (as much as possible)
-//Goal: To have all the SoulsLike stats and attributes taken into account
+//BugFix (DamageAfterArmorandRes()): Before: If the attack was neutral and the enemy resistance and weakness was neutral, both of the if statements were true so the potentialDamage was being multiplied by 1.3 and then again by .7.
+                                    //After: I added a condition so that it only works if the attack isn't neutral. 

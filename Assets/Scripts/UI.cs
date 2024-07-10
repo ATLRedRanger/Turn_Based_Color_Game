@@ -525,7 +525,7 @@ public class UI : MonoBehaviour
         _spellBookPanel.gameObject.SetActive(false);
         
 
-        StartCoroutine(combatFunctionsScript.CombatStepsTwo(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne));
+        StartCoroutine(combatFunctionsScript.CombatSteps(chosenAttack,unitSpawnerScript.player, unitSpawnerScript.enemyOne));
         
         if(chosenAttack == currentSpellBookSpell)
         {

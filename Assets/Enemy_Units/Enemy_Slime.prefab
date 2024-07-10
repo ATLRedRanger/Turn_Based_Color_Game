@@ -99,16 +99,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Slimlin
-  maxHealth: 100
-  currentHealth: 100
-  physicalAttack: 12
+  maxHealth: 10
+  currentHealth: 10
+  physicalAttack: 5
   physicalDefense: 5
-  magicAttack: 20
+  magicAttack: 5
   magicDefense: 5
-  currentSpeed: 7
-  maxStamina: 100
-  currentStamina: 100
-  staminaRegenModifier: 1
+  currentSpeed: 5
+  maxStamina: 10
+  currentStamina: 10
+  staminaRegenModifier: 2
   baseAccuracy: 40
   isDefending: 0
   moneyGiven: 4

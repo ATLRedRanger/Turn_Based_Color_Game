@@ -50,8 +50,8 @@ public class Inventory : MonoBehaviour
         
         //playerWeaponList.Add(itemScript._basicAxe);
         //playerConsumableList.Add(itemScript._healthPotion);
-        player.equippedWeapon = itemScript._basicSword;
-        player.equippedWeapon.SetWeaponBonusDamage(player);
+        player.equippedWeapon = itemScript._basicHammer;
+        player.equippedWeapon.SetWeaponMasteryBonusDamage(player);
         player.isWeaponEquipped = true;
         //playerInventory.Add(itemScript._basicHammer);
         playerInventory.Add(itemScript._healthPotion);
@@ -141,7 +141,7 @@ public class Inventory : MonoBehaviour
         {
            
         }
-        player.equippedWeapon.SetWeaponBonusDamage(player);
+        player.equippedWeapon.SetWeaponMasteryBonusDamage(player);
         //ui_Script._WeaponDetailsPanel.SetActive(false);
     }
     public void UnequipWeapon()

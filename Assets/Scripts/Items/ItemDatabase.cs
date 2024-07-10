@@ -40,7 +40,7 @@ public class ItemDatabase : MonoBehaviour
 
         _healthPotion = new Consumable("Health Potion", ItemType.Consumable, healthPotionSprite, "Heals a small amount of health.", 5, ConsumableType.Health, 10, Hue.Neutral);
 
-        _basicSword = new Weapon("Basic Sword", ItemType.Weapon, basicSwordSprite, "A basic sword", 1, 2, 0, 0, 0 , ItemIDMaker(), WeaponType.Sword, null);
+        _basicSword = new Weapon("Basic Sword", ItemType.Weapon, basicSwordSprite, "A basic sword", 1, 5, 0, 0, 0 , ItemIDMaker(), WeaponType.Sword, null);
 
         _basicHammer = new Weapon("Basic Hammer", ItemType.Weapon, null, "A basic hammer", 1, 5, 0, 0, 0, ItemIDMaker(), WeaponType.Hammer, null);
 

@@ -10858,9 +10858,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listOfEnemies:
-  - {fileID: 1994576159268737038, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
-  - {fileID: 8660613037176612246, guid: 9f5ccccfc108d074c85250060b862985, type: 3}
   - {fileID: -8441940129446335636, guid: 1b814c22004b7a84b96f986648db2e25, type: 3}
+  - {fileID: 8660613037176612246, guid: 9f5ccccfc108d074c85250060b862985, type: 3}
+  - {fileID: 1994576159268737038, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
   playerUnit: {fileID: 3880475512651158921, guid: a2b2f0991e6b82c49b7182be870f57c3,
     type: 3}
   enemyPositions:

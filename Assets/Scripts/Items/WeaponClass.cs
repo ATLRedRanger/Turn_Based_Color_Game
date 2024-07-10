@@ -24,7 +24,7 @@ public class Weapon : Item
 
     public int weaponBaseDamage;
 
-    private int weaponBonusDamage = 0;
+    private int weaponMasteryBonusDamage = 0;
 
     private int weaponSpecialBonusDamage = 0;
 
@@ -39,7 +39,7 @@ public class Weapon : Item
     {
     }
 
-    public Weapon(string itemName, ItemType itemType, Sprite itemSprite, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, int weaponBonusDamage,
+    public Weapon(string itemName, ItemType itemType, Sprite itemSprite, string itemDescription, int weaponLevelRequirement, int weaponBaseDamage, int weaponMasteryBonusDamage,
         int weaponSpecialBonusDamage, int totalWeaponDamage, string itemID, WeaponType weaponType, Attack weaponAttack)
     {
         this.itemName = itemName;
@@ -48,7 +48,7 @@ public class Weapon : Item
         this.itemDescription = itemDescription;
         this.weaponLevelRequirement = weaponLevelRequirement;
         this.weaponBaseDamage = weaponBaseDamage;
-        this.weaponBonusDamage = weaponBonusDamage;
+        this.weaponMasteryBonusDamage = weaponMasteryBonusDamage;
         this.weaponSpecialBonusDamage = weaponSpecialBonusDamage;
         this.totalWeaponDamage = totalWeaponDamage;
         this.itemID = itemID;
@@ -60,10 +60,10 @@ public class Weapon : Item
     public int GetTotalWeaponDamage(Unit unit)
     {
 
-        SetWeaponBonusDamage(unit);
+        SetWeaponMasteryBonusDamage(unit);
         SpecialProperty(unit);
-        Debug.Log($"TOTAL_WEAPON_DMG = {totalWeaponDamage} + WPN_BSE: {weaponBaseDamage} + WPN_BNS: {weaponBonusDamage} + WPN_SPCL: {weaponSpecialBonusDamage}");
-        totalWeaponDamage = weaponBaseDamage + weaponBonusDamage + weaponSpecialBonusDamage;
+        Debug.Log($"TOTAL_WEAPON_DMG = {totalWeaponDamage} + WPN_BSE: {weaponBaseDamage} + WPN_BNS: {weaponMasteryBonusDamage} + WPN_SPCL: {weaponSpecialBonusDamage}");
+        totalWeaponDamage = weaponBaseDamage + weaponMasteryBonusDamage + weaponSpecialBonusDamage;
 
         return totalWeaponDamage;
     }
@@ -71,29 +71,29 @@ public class Weapon : Item
     
     public int GetWeaponBonusDamage()
     {
-        return weaponBonusDamage;
+        return weaponMasteryBonusDamage;
     }
-    public void SetWeaponBonusDamage(Unit user)
+    public void SetWeaponMasteryBonusDamage(Unit user)
     {
         switch (weaponType)
         {
             case WeaponType.Axe:
-                weaponBonusDamage = (user.axeMastery * weaponBaseDamage) / 5;
+                weaponMasteryBonusDamage = (user.axeMastery * weaponBaseDamage) / 5;
                 break;
             case WeaponType.Bow:
-                weaponBonusDamage = (user.bowMastery * weaponBaseDamage) / 5;
+                weaponMasteryBonusDamage = (user.bowMastery * weaponBaseDamage) / 5;
                 break;
             case WeaponType.Hammer:
-                weaponBonusDamage = (user.hammerMastery * weaponBaseDamage) / 5;
+                weaponMasteryBonusDamage = (user.hammerMastery * weaponBaseDamage) / 5;
                 break;
             case WeaponType.Spellbook:
-                weaponBonusDamage = 0;
+                weaponMasteryBonusDamage = 0;
                 break;
             case WeaponType.Staff:
-                weaponBonusDamage = 0;
+                weaponMasteryBonusDamage = 0;
                 break;
             case WeaponType.Sword:
-                weaponBonusDamage = (user.swordMastery * weaponBaseDamage) / 5;
+                weaponMasteryBonusDamage = (user.swordMastery * weaponBaseDamage) / 5;
                 break;
         }
     }
@@ -122,28 +122,15 @@ public class Weapon : Item
             
         }
     }
-    public int Hammer(Unit attacker)
+    public int Hammer(Unit attacker, Unit defender)
     {
         int modifiedDamage = 0;
-        //Hammer gains bonus damage based on attacker stamina levels
-        
-        if (attacker.currentStamina <= (attacker.OgStamina * 1 / 4))
+
+        if (defender.currentStamina < attacker.currentStamina)
         {
-            modifiedDamage = weaponBaseDamage;
+            modifiedDamage = (int)(weaponBaseDamage * 3);
         }
-        if (attacker.currentStamina > (attacker.OgStamina * 1 / 4) && attacker.currentStamina <= (attacker.OgStamina * (1 / 2)))
-        {
-            modifiedDamage = (int)(weaponBaseDamage * 1.2);
-        }
-        if ((attacker.currentStamina > (1 / 2) && attacker.currentStamina <= (attacker.OgStamina * 3 / 4)))
-        {
-            modifiedDamage = (int)(weaponBaseDamage * 1.5);
-        }
-        if (attacker.currentStamina > (attacker.OgStamina * 3 / 4))
-        {
-            modifiedDamage = (int)(weaponBaseDamage * 2);
-        }
-        
+
         return modifiedDamage;
     }
 
@@ -161,15 +148,7 @@ public class Weapon : Item
 
     public void Sword(Unit attacker)
     {
-        //Really don't know what I want to do for swords to be different
-        //Played around with a switch stance type mechanic, but I don't think I like it
-        //This current mechanic is vanilla and just says if the attacker's stamina is below half
-        //Use their special ability
-        //I haven't given anybody specials except the slime so this is basically a placeholder ability
-        if(attacker.currentStamina < (int)(attacker.maxStamina * 1 / 2))
-        {
-            attacker.SpecialAbility();
-        }
+        
     }
 }
 //Bows have higher crit modifiers than other weapons, but their attacks have lower damage and stamina reqs. 
