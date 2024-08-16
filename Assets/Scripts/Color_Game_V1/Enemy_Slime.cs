@@ -24,7 +24,8 @@ public class Enemy_Slime : Unit
 
     public override void EnemyAttacks()
     {
-        enemyAttackDictionary["Yellow Splash"] = attacksDatabase._yellowSplash;
+        unitAttackDictionary["Yellow Splash"] = attacksDatabase._yellowSplash;
+        unitAttackDictionary["Punch"] = attacksDatabase._punch;
 
     }
 

@@ -148,8 +148,6 @@ public class Unit : MonoBehaviour
 
     public Dictionary<string, Attack> unitSpellsDictionary = new Dictionary<string, Attack>();
 
-    public Dictionary<string, Attack> enemyAttackDictionary = new Dictionary<string, Attack>();
-
     public SpriteRenderer spriteRenderer;
 
     public Weapon equippedWeapon;
@@ -226,11 +224,7 @@ public class Unit : MonoBehaviour
 
     public virtual void EnemyAttacks()
     {
-        
-        enemyAttackDictionary["FireBall"] = attacksDatabase._fireBall;
-        enemyAttackDictionary["Chop"] = attacksDatabase._chop;
-        enemyAttackDictionary["Violet Ball"] = attacksDatabase._violetBall;
-        enemyAttackDictionary["Orange Spike"] = attacksDatabase._orangeSpike;
+      
     }
 
     private void LearnSpells()

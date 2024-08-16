@@ -126,7 +126,7 @@ MonoBehaviour:
   physicalDefense: 15
   magicAttack: 15
   magicDefense: 15
-  currentSpeed: 10
+  currentSpeed: 20
   maxStamina: 15
   currentStamina: 15
   staminaRegenModifier: 2

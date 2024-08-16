@@ -455,22 +455,21 @@ public class CombatFunctions : MonoBehaviour
 
     public int CalculateFinalDamage(Attack attack, Unit attacker, Unit defender)
     {
-        int baseDamage = attack.attackDamage;
+        int attackDamage = attack.attackDamage;
         int weaponDamage = attacker.equippedWeapon != null ? attacker.equippedWeapon.GetTotalWeaponDamage(attacker) : 0;
-        Debug.Log($"BaseDamage: ATK_DMG: {baseDamage} + weaponDamage: {weaponDamage}");
-        potentialAttackDamage = baseDamage + weaponDamage;
+        Debug.Log($"BaseDamage: ATK_DMG: {attackDamage} + weaponDamage: {weaponDamage}");
+        int potentialAttackDamage = attackDamage;
 
         if (attack.attackType == AttackType.Special)
         {
             potentialAttackDamage += attacker.magicAttack;
-            
-            if (attacker.equippedWeapon != null && attacker.equippedWeapon.weaponType == WeaponType.Staff)
+
+            // Apply weapon damage to magic attack for staff and spellbook
+            if (attacker.equippedWeapon != null &&
+                (attacker.equippedWeapon.weaponType == WeaponType.Staff ||
+                 attacker.equippedWeapon.weaponType == WeaponType.Spellbook))
             {
-                Staff equippedStaff = attacker.equippedWeapon as Staff;
-                if (equippedStaff.affinity == attack.attackColor)
-                {
-                    potentialAttackDamage = Mathf.RoundToInt((float)(baseDamage + weaponDamage) * 1.3f) + attacker.magicAttack;
-                }
+                potentialAttackDamage += weaponDamage;
             }
         }
         else

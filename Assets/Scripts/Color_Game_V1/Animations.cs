@@ -33,8 +33,9 @@ public class Animations : MonoBehaviour
         
     }
     
-    public void PlayAnimation(Attack attack, Unit defender)
+    public void PlayAnimation(Attack attack, Unit defender, int v)
     {
+        Vector3 vfxPosition = defender.transform.position;
         //Instantiates a clone of the GameObject with the desired animation
         //Based off the name of the attack
         //Destroys the clone when the animation is done.
@@ -42,36 +43,36 @@ public class Animations : MonoBehaviour
         switch (attack.attackName)
         {
             case "Fireball":
-                clone = Instantiate(fireball, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(fireball, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._fireBall.animTimeLength);
                 break;
             case "Yellow Splash":
                 //bubble.Play("Base Layer.Bubble");
-                clone = Instantiate(yellow_Splash, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(yellow_Splash, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._yellowSplash.animTimeLength);
                 break;
             case "Orange Spike":
-                clone = Instantiate(orange_Spike, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(orange_Spike, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._orangeSpike.animTimeLength);
                 break;
             case "Green Punch":
-                clone = Instantiate(greenPunch, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(greenPunch, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._greenPunch.animTimeLength);
                 break;
             case "Blue Crush":
-                clone = Instantiate(blueCrush, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(blueCrush, (vfxPosition -= new Vector3(0, .5f, 0)), Quaternion.identity);
                 Destroy(clone, attacksScript._blueCrush.animTimeLength);
                 break;
             case "Violet Ball":
-                clone = Instantiate(violetBall, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(violetBall, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._violetBall.animTimeLength);
                 break;
             case "Chop":
-                clone = Instantiate(vert_Slash, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(vert_Slash, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._chop.animTimeLength);
                 break;
             case "Red's Slash":
-                clone = Instantiate(redSlash, defender.transform.position, Quaternion.identity);
+                clone = Instantiate(redSlash, vfxPosition, Quaternion.identity);
                 Destroy(clone, attacksScript._redSlash.animTimeLength);
                 break;
         }

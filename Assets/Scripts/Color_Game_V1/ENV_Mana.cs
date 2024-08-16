@@ -6,6 +6,7 @@ public class ENV_Mana : MonoBehaviour
 {
     
     public int currentRed;
+    public int previousRed;
     public int maxRed;
     public int currentOrange;
     public int maxOrange;
@@ -53,6 +54,7 @@ public class ENV_Mana : MonoBehaviour
 
         StartingLocation();
 
+        previousRed = maxRed;
     }
 
     private LocationMana LocationColors(List<int> locationValues)
@@ -122,6 +124,9 @@ public class ENV_Mana : MonoBehaviour
     }
 
     
-   
+   public void RedChangeHappened()
+    {
+
+    }
 
 }

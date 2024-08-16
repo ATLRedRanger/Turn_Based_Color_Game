@@ -27,8 +27,7 @@ public class Enemy_Goblin : Unit
 
     public override void EnemyAttacks()
     {
-        base.EnemyAttacks();
-
+        unitAttackDictionary["Punch"] = attacksDatabase._punch;
     }
 
     public override void EnemyAi()
@@ -38,22 +37,7 @@ public class Enemy_Goblin : Unit
 
     public override void  SpecialAbility()
     {
-        if(unitAnimator != null)
-        {
-            if (envManaScript.currentGreen > envManaScript.currentBlue)
-            {
-                //spriteRenderer.color = Color.red;
-                physicalAttack = (int)(physicalAttack * 1.5);
-                unitAnimator.SetBool("isRaging", true);
-
-            }
-            else
-            {
-                //spriteRenderer.color = spriteColor;
-                physicalAttack = initialAttack;
-                unitAnimator.SetBool("isRaging", false);
-            }
-        }   
+        
         
         //Just playing around with different color based abilities
         //Would need to figure out a system so the UI knows to put the healing

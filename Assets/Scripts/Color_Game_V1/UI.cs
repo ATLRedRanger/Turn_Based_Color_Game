@@ -186,6 +186,8 @@ public class UI : MonoBehaviour
 
     private AttacksDatabase attacksDatabase;
 
+    private BarFadeEffect barFadeEffectScript;
+
     private Inventory inventoryScript;
 
     //Player
@@ -205,9 +207,7 @@ public class UI : MonoBehaviour
     public TMP_Text weapon_Total_Damage;
     public TMP_Text weapon_Base_Damage;
     public TMP_Text weapon_Bonus_Damage;
-
-
-    //Damage Popup
+    
 
     //Item GO
     public GameObject item_Sprite_GO;
@@ -224,6 +224,11 @@ public class UI : MonoBehaviour
 
 
 
+    }
+
+    private void Awake()
+    {
+        
     }
 
     private void PrintNumbers()
@@ -296,6 +301,7 @@ public class UI : MonoBehaviour
         inventoryScript = FindObjectOfType<Inventory>();
         animationScript = FindObjectOfType<Animations>();
         combatFunctionsScript = FindObjectOfType<CombatFunctions>();
+        barFadeEffectScript = FindObjectOfType<BarFadeEffect>();
         UpdateUI();
         //Debug.Log("UNIT SPAWNER SCRIPT" + unitSpawnerScript.player.maxStamina);
     }
@@ -359,6 +365,7 @@ public class UI : MonoBehaviour
 
     private void GraphicalBars()
     {
+           
         //Player
         player_HealthBar.fillAmount = (float)(float)unitSpawnerScript.player.currentHealth / (float)unitSpawnerScript.player.maxHealth;
         player_StaminaBar.fillAmount = (float)(float)unitSpawnerScript.player.currentStamina / (float)unitSpawnerScript.player.maxStamina;
@@ -374,7 +381,14 @@ public class UI : MonoBehaviour
         greenBar.fillAmount = (float)((float)envManaScript.currentGreen / (float)envManaScript.maxGreen);
         blueBar.fillAmount = (float)((float)envManaScript.currentBlue / (float)envManaScript.maxBlue);
         violetBar.fillAmount = (float)((float)envManaScript.currentViolet / (float)envManaScript.maxViolet);
+
         
+        if(envManaScript.previousRed != envManaScript.currentRed)
+        {
+            Debug.Log($"NEEDS TO FADE! pRed: {envManaScript.previousRed} cRed: {envManaScript.currentRed}");
+            barFadeEffectScript.MatchWhiteBarToRed(1);
+            envManaScript.previousRed = envManaScript.currentRed;
+        }
     }
 
     private void StatusEffectSprites()
@@ -539,7 +553,7 @@ public class UI : MonoBehaviour
     }
     public void PlayAttackAnimation(Attack chosenAttack, Unit defender)
     {
-        animationScript.PlayAnimation(chosenAttack, defender);
+        animationScript.PlayAnimation(chosenAttack, defender, 2);
     }
     //Color.Neutral Attack Buttons
     public void OnAttackClick()
@@ -1170,7 +1184,8 @@ public class UI : MonoBehaviour
     }
     public void MiscellaneousFloatingNumbers(Unit unit, int change, string pOm)
     {
-        
+        //pOm = Plus or Minus
+
         if (unit.isPlayer)
         {
             //Instantiates a copy of the gameObject at the specified position

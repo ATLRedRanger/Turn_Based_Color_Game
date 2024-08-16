@@ -33,9 +33,9 @@ public class AttacksDatabase : MonoBehaviour
     void Awake()
     {
         //I can make attacks by using the name of the attack, then making a new attack with the parameters included
-        _punch = new Attack("Punch", "Punch", 15, 20, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
+        _punch = new Attack("Punch", "Punch", 2, 5, 0, 100, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Neutral, AttackBehavior.None);
 
-        _fireBall = new Attack("Fireball", "Red_Slash", 5, 20, 5, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
+        _fireBall = new Attack("Fireball", "Nothing", 1, 1, 1, 75, 1, 2, Hue.Red, AttackType.Special, WeaponType.Neutral, AttackBehavior.Burn);
         
         _greenPunch = new Attack("Green Punch", "Green_Punch", 5, 20, 7, 75, 1, 1.3f, Hue.Green, AttackType.Special, WeaponType.Neutral, AttackBehavior.Vamp);
 
@@ -56,7 +56,7 @@ public class AttacksDatabase : MonoBehaviour
         _chop = createAttack("Chop", "Vertical_Slash", 2, 5, 0, 95, 1, 1, Hue.Neutral, AttackType.Physical, WeaponType.Axe, AttackBehavior.None);
 
         //Staff
-        _violetBall = new Attack("Violet Ball", "Violet_Ball", 2, 20, 5, 85, 1, 5, Hue.Violet, AttackType.Special, WeaponType.Staff, AttackBehavior.None);
+        _violetBall = new Attack("Violet Ball", "Violet_Ball", 2, 50, 5, 85, 1, 5, Hue.Violet, AttackType.Special, WeaponType.Staff, AttackBehavior.None);
 
         //Sword
         _slash = new Attack("Slash", "Slash", 2, 4, 0, 95, 1, 2, Hue.Neutral, AttackType.Physical, WeaponType.Sword, AttackBehavior.None);

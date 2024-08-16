@@ -71,7 +71,7 @@ public class Turn_Manager : MonoBehaviour
         //TODO: Add time between events. Add a pause after animations, turns, events, etc.
         while(IsBattleWonOrLost() == false && unitSpawnerScript.player.AmIDeadYet() == false)
         {
-            yield return new WaitForSeconds(6);
+            yield return new WaitForSeconds(3);
             BeginRound();
             turnIndex = 0;
             

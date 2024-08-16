@@ -33,6 +33,7 @@ public enum StaminaLevels
     ThreeQuarters,
     Half,
     OneQuarter,
+    Empty,
     Broken
 }
 

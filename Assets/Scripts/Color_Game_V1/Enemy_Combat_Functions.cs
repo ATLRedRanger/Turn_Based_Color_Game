@@ -104,7 +104,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
         //If the attack is usable, break out of the loop to use the attack
         List<Attack> enemyAttackList = new List<Attack>();
 
-        foreach (var kvp in enemyOne.enemyAttackDictionary)
+        foreach (var kvp in enemyOne.unitAttackDictionary)
         {
             enemyAttackList.Add(kvp.Value);
         }
@@ -113,7 +113,7 @@ public class Enemy_Combat_Functions : MonoBehaviour
 
         foreach (var attack in shuffledList)
         {
-            if (uiScript.IsAttackUsable(attack))
+            if (IsAttackUsable(attack))
             {
                 chosenAttack = attack;
                 break;
@@ -138,6 +138,57 @@ public class Enemy_Combat_Functions : MonoBehaviour
         enemyOne = unitSpawnerScript.enemyOne;
 
         player = unitSpawnerScript.player;
+    }
+
+    public bool IsAttackUsable(Attack attack)
+    {
+        switch (attack.attackColor)
+        {
+            case (Hue.Red):
+                if (enemyOne.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentRed)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Orange):
+                if (enemyOne.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentOrange)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Yellow):
+                if (enemyOne.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentYellow)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Green):
+                if (enemyOne.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentGreen)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Blue):
+                if (enemyOne.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentBlue)
+                {
+                    return true;
+                }
+                break;
+            case (Hue.Violet):
+                if (enemyOne.currentStamina >= attack.staminaCost && attack.colorCost <= envManaScript.currentViolet)
+                {
+                    return true;
+                }
+                break;
+            default:
+                if (enemyOne.currentStamina >= attack.staminaCost)
+                {
+                    return true;
+                }
+                break;
+        }
+
+        return false;
     }
 
 }
