@@ -13,7 +13,7 @@ public class Eagle_Eye : MonoBehaviour
     private Unit_V2 enemyTwo;
     private int numOfEnemies;
     private int turnsInRound;
-
+    private string currentLocation = "Cave";
 
     private Unit_Spawner unitSpawnerScript;
     private Environment envManaScript;
@@ -31,6 +31,7 @@ public class Eagle_Eye : MonoBehaviour
     public void Test()
     {
         GenerateEnemies();
+        envManaScript.GenerateEnvironment(currentLocation);
     }
 
     IEnumerator LoadScripts()
@@ -41,10 +42,10 @@ public class Eagle_Eye : MonoBehaviour
         envManaScript = FindObjectOfType<Environment>();
         statusEffectScript = FindObjectOfType<StatusEffectsDatabase_V2>();
 
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
         unitSpawnerScript.SpawnPlayer();
         player = unitSpawnerScript.player;
-
+        Debug.Log("Finished Loading");
         
     }
 
@@ -61,26 +62,30 @@ public class Eagle_Eye : MonoBehaviour
 
     private void GenerateEnemies()
     {
-        
-        int enemiesToGenerate = Random.Range(1, 2);
+        player.gameObject.SetActive(true);
+        int enemiesToGenerate = Random.Range(1, 3);
         Debug.Log(enemiesToGenerate);
-        switch(enemiesToGenerate)
+        for(int i = 0; i < enemiesToGenerate; i++) 
         {
-            case 1:
-                enemyOne = unitSpawnerScript.GenerateEnemy(0);
-                Debug.Log($"EnemyOne is {enemyOne.unitName}");
-                listOfCombatants.Add(enemyOne);
-                
-                break;
-            case 2:
-                enemyTwo = unitSpawnerScript.GenerateEnemy(1);
-                Debug.Log($"EnemyOne is {enemyOne.unitName}");
-                listOfCombatants.Add(enemyTwo);
-                
-                break;
-            default:
-                break;
+            switch (i)
+            {
+                case 0:
+                    enemyOne = unitSpawnerScript.GenerateEnemy(0);
+                    Debug.Log($"EnemyOne is {enemyOne.unitName}");
+                    listOfCombatants.Add(enemyOne);
+
+                    break;
+                case 1:
+                    enemyTwo = unitSpawnerScript.GenerateEnemy(1);
+                    Debug.Log($"EnemyTwo is {enemyTwo.unitName}");
+                    listOfCombatants.Add(enemyTwo);
+
+                    break;
+                default:
+                    break;
+            }
         }
+        
     }
 
     public void Combat()

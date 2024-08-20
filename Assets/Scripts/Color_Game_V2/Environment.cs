@@ -18,7 +18,6 @@ public class Environment : MonoBehaviour
     public int currentViolet;
     public int maxViolet;
 
-    public string location;
 
     //Forest
     public List<int> forestReds = new List<int>();
@@ -27,6 +26,14 @@ public class Environment : MonoBehaviour
     public List<int> forestGreens = new List<int>();
     public List<int> forestBlues = new List<int>();
     public List<int> forestViolets = new List<int>();
+
+    //Cave
+    public List<int> caveReds = new List<int>();
+    public List<int> caveOranges = new List<int>();
+    public List<int> caveYellows = new List<int>();
+    public List<int> caveGreens = new List<int>();
+    public List<int> caveBlues = new List<int>();
+    public List<int> caveViolets = new List<int>();
 
 
     //Dictionary inside of a dictionary 
@@ -52,8 +59,15 @@ public class Environment : MonoBehaviour
         Locations["Forest"][Hue.Blue] = LocationColors(forestBlues);
         Locations["Forest"][Hue.Violet] = LocationColors(forestViolets);
 
+        Locations["Cave"] = new Dictionary<Hue, LocationMana>();
 
-        StartingLocation();
+        Locations["Cave"][Hue.Red] = LocationColors(caveReds);
+        Locations["Cave"][Hue.Orange] = LocationColors(caveOranges);
+        Locations["Cave"][Hue.Yellow] = LocationColors(caveYellows);
+        Locations["Cave"][Hue.Green] = LocationColors(caveGreens);
+        Locations["Cave"][Hue.Blue] = LocationColors(caveBlues);
+        Locations["Cave"][Hue.Violet] = LocationColors(caveViolets);
+        //StartingLocation();
 
         previousRed = maxRed;
     }
@@ -99,32 +113,55 @@ public class Environment : MonoBehaviour
         //random number in the list of numbers in the Dictionary Locations
         //with a key of "Forest" and a second key Color.Red and using the value
         //at that location to set the min (current) red. 
-
+        /*
         if (location != null)
         {
             switch (location)
             {
                 case "Forest":
-                    currentRed = Locations["Forest"][Hue.Red].currentAmount;
-                    maxRed = Locations["Forest"][Hue.Red].colorMax;
-                    currentOrange = Locations["Forest"][Hue.Orange].currentAmount;
-                    maxOrange = Locations["Forest"][Hue.Orange].colorMax;
-                    currentYellow = Locations["Forest"][Hue.Yellow].currentAmount;
-                    maxYellow = Locations["Forest"][Hue.Yellow].colorMax;
-                    currentGreen = Locations["Forest"][Hue.Green].currentAmount;
-                    maxGreen = Locations["Forest"][Hue.Green].colorMax;
-                    currentBlue = Locations["Forest"][Hue.Blue].currentAmount;
-                    maxBlue = Locations["Forest"][Hue.Blue].colorMax;
-                    currentViolet = Locations["Forest"][Hue.Violet].currentAmount;
-                    maxViolet = Locations["Forest"][Hue.Violet].colorMax;
+                    
                     break;
                 default:
                     break;
             }
-        }
+        }*/
     }
 
+    public void GenerateEnvironment(string location)
+    {
+        switch (location)
+        {
+            case "Forest":
+                currentRed = Locations["Forest"][Hue.Red].currentAmount;
+                maxRed = Locations["Forest"][Hue.Red].colorMax;
+                currentOrange = Locations["Forest"][Hue.Orange].currentAmount;
+                maxOrange = Locations["Forest"][Hue.Orange].colorMax;
+                currentYellow = Locations["Forest"][Hue.Yellow].currentAmount;
+                maxYellow = Locations["Forest"][Hue.Yellow].colorMax;
+                currentGreen = Locations["Forest"][Hue.Green].currentAmount;
+                maxGreen = Locations["Forest"][Hue.Green].colorMax;
+                currentBlue = Locations["Forest"][Hue.Blue].currentAmount;
+                maxBlue = Locations["Forest"][Hue.Blue].colorMax;
+                currentViolet = Locations["Forest"][Hue.Violet].currentAmount;
+                maxViolet = Locations["Forest"][Hue.Violet].colorMax;
+                break;
+            case "Cave":
+                currentRed = Locations["Cave"][Hue.Red].currentAmount;
+                maxRed = Locations["Cave"][Hue.Red].colorMax;
+                currentOrange = Locations["Cave"][Hue.Orange].currentAmount;
+                maxOrange = Locations["Cave"][Hue.Orange].colorMax;
+                currentYellow = Locations["Cave"][Hue.Yellow].currentAmount;
+                maxYellow = Locations["Cave"][Hue.Yellow].colorMax;
+                currentGreen = Locations["Cave"][Hue.Green].currentAmount;
+                maxGreen = Locations["Cave"][Hue.Green].colorMax;
+                currentBlue = Locations["Cave"][Hue.Blue].currentAmount;
+                maxBlue = Locations["Cave"][Hue.Blue].colorMax;
+                currentViolet = Locations["Cave"][Hue.Violet].currentAmount;
+                maxViolet = Locations["Cave"][Hue.Violet].colorMax;
+                break;
 
+        }
+    }
     public void RedChangeHappened()
     {
 

@@ -24,6 +24,7 @@ public class Unit_Spawner : MonoBehaviour
     public void SpawnPlayer()
     {
         player = Instantiate(player, playerPosition.transform).GetComponent<Unit_V2>();
+        player.gameObject.SetActive(false);
     }
 
     public void SelectEnemy()
@@ -42,7 +43,7 @@ public class Unit_Spawner : MonoBehaviour
     public Unit_V2 GenerateEnemy(int enemyPosition)
     {
 
-        int whatEnemy = 0;//Random.Range(0, listOfEnemies.Count);
+        int whatEnemy = Random.Range(0, listOfEnemies.Count);
 
         Unit_V2 enemy = (Instantiate(listOfEnemies[whatEnemy], enemyPositions[enemyPosition].transform).GetComponent<Unit_V2>());
         Debug.Log(enemy.unitName);
