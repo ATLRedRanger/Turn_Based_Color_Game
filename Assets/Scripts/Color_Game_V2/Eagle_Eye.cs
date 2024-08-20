@@ -30,8 +30,7 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test()
     {
-        GenerateEnemies();
-        envManaScript.GenerateEnvironment(currentLocation);
+        Combat();
     }
 
     IEnumerator LoadScripts()
@@ -91,26 +90,28 @@ public class Eagle_Eye : MonoBehaviour
     public void Combat()
     {
         GenerateEnemies();
-        Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
+        List<Unit_V2> deadUnits = new List<Unit_V2>();
         theCombatState = CombatState.Active;
         listOfCombatants.Add(player);
-
+        Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
 
         while (theCombatState == CombatState.Active)
         {
             currentRound++;
+            Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
 
             foreach (Unit_V2 unit in listOfCombatants)
             {
+                Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
-                    //PlayerTurn(unit)
+                    PlayerTurn();
                     if (IsPlayerAlive(player))
                     {
-                        continue;
+                        Debug.Log("Player is alive");
                     }
                     else
                     {
@@ -120,21 +121,37 @@ public class Eagle_Eye : MonoBehaviour
                 }
                 else if (unit is EnemyUnit_V2)
                 {
-                     //EnemyTurn(unit)
-                     if (IsPlayerAlive(player))
-                     {
-                         continue;
-                     }
-                     else
-                     {
-                         theCombatState = CombatState.Lost;
-                         break;
-                     }
+                    if (unit.GetCurrentHp() < 1)
+                    {
+                        Debug.Log($"Adding {unit} to DeadUnitList");
+                        deadUnits.Add(unit);
+                        
+                    }
+                    else
+                    {
+                        EnemyTurn(unit);
+                        if (IsPlayerAlive(player))
+                        {
+                            Debug.Log("Player is alive");
+                        }
+                        else
+                        {
+                            theCombatState = CombatState.Lost;
+                            break;
+                        }
+                    }
+                    
                 }
-                   
+                
             }
-
-            if (listOfCombatants.Count == 1)
+            foreach (Unit_V2 unit in listOfCombatants)
+            {
+                if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
+                {
+                   deadUnits.Add(unit);
+                }
+            }
+            if (listOfCombatants.Count - deadUnits.Count == 1)
             {
                 theCombatState = CombatState.Won;
                 break;
@@ -142,7 +159,7 @@ public class Eagle_Eye : MonoBehaviour
             //End of turn stuff
             if (IsPlayerAlive(player))
             {
-                continue;
+                Debug.Log("Player is alive");
             }
             else
             {
@@ -155,11 +172,11 @@ public class Eagle_Eye : MonoBehaviour
 
         if (theCombatState == CombatState.Won)
         {
-            //PlayerWon()
+            PlayerWon();
         }
         else
         {
-            //PlayerLost()
+            PlayerLost();
         }
     }
     
@@ -174,4 +191,37 @@ public class Eagle_Eye : MonoBehaviour
         return false;
     }
 
+    private void PlayerTurn()
+    {
+        Debug.Log("Player Turn");
+        if (enemyOne != null)
+        {
+            enemyOne.TakeDamage(5);
+            Debug.Log("Enemy One Health " + enemyOne.GetCurrentHp());
+        }
+        if (enemyTwo != null)
+        {
+            enemyTwo.TakeDamage(5);
+            Debug.Log("Enemy Two Health " + enemyTwo.GetCurrentHp());
+        }
+    }
+
+    private void EnemyTurn(Unit_V2 unit)
+    {
+        Debug.Log($"{unit.unitName}'s Turn");
+        if (player != null)
+        {
+            player.TakeDamage(5);
+            Debug.Log("Player Health " + player.GetCurrentHp());
+        }
+    }
+
+    private void PlayerWon()
+    {
+        Debug.Log("Player Won");
+    }
+    private void PlayerLost()
+    {
+        Debug.Log("Player Lost");
+    }
 }

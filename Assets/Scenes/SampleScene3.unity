@@ -3293,13 +3293,18 @@ MonoBehaviour:
   maxBlue: 0
   currentViolet: 0
   maxViolet: 0
-  location: Forest
   forestReds: 050000000a000000
   forestOranges: 050000000a000000
   forestYellows: 050000000a000000
   forestGreens: 050000000a000000
   forestBlues: 050000000a000000
   forestViolets: 050000000a000000
+  caveReds: 0300000007000000
+  caveOranges: 0300000007000000
+  caveYellows: 0300000007000000
+  caveGreens: 0300000007000000
+  caveBlues: 0300000007000000
+  caveViolets: 0300000007000000
 --- !u!4 &410633282
 Transform:
   m_ObjectHideFlags: 0
