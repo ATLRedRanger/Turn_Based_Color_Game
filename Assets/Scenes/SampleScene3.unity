@@ -10798,7 +10798,7 @@ MonoBehaviour:
   - {fileID: 236893717}
   - {fileID: 249592960}
   playerPosition: {fileID: 1537446136}
-  player: {fileID: -4328140532292294674, guid: a2b2f0991e6b82c49b7182be870f57c3, type: 3}
+  player: {fileID: 5002846481952680520, guid: a2b2f0991e6b82c49b7182be870f57c3, type: 3}
 --- !u!1 &1310799215
 GameObject:
   m_ObjectHideFlags: 0

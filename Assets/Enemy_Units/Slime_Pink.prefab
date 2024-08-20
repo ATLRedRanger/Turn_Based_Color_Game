@@ -121,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Pink_Slime
   currentHp: 10
-  maxHp: 0
+  maxHp: 10
+  baseSpeed: 3
   unitWeakness: 0
   unitResistance: 0

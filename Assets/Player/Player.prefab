@@ -122,5 +122,6 @@ MonoBehaviour:
   unitName: Huey
   currentHp: 50
   maxHp: 50
+  baseSpeed: 5
   unitWeakness: 0
   unitResistance: 0

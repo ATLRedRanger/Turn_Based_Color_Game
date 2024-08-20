@@ -21,6 +21,7 @@ public class Unit_V2 : MonoBehaviour
 
     private int baseDefense;
 
+    [SerializeField]
     private int baseSpeed;
 
     private int attackTier = 0;
@@ -115,5 +116,10 @@ public class Unit_V2 : MonoBehaviour
     public void AddStatus(StatusEffect_V2 statusEffect)
     {
         unitStatusEffects.Add(statusEffect);
+    }
+
+    public void AddAttackToDictionary(Attack attack)
+    {
+        unitAttackDictionary[attack.attackName] = attack;
     }
 }

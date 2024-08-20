@@ -120,5 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Skelly
+  currentHp: 10
+  maxHp: 10
+  baseSpeed: 7
   unitWeakness: 0
   unitResistance: 0

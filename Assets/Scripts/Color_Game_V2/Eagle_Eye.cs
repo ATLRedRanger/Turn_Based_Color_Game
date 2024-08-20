@@ -56,14 +56,14 @@ public class Eagle_Eye : MonoBehaviour
     
     private void SortCombatants(List<Unit_V2> listOfCombatants)
     {
-        listOfCombatants.Sort((x, y) => x.GetCurrentSpeed().CompareTo(y.GetCurrentSpeed()));
+        listOfCombatants.Sort((y, x) => x.GetCurrentSpeed().CompareTo(y.GetCurrentSpeed()));
     }
 
     private void GenerateEnemies()
     {
         player.gameObject.SetActive(true);
         int enemiesToGenerate = Random.Range(1, 3);
-        Debug.Log(enemiesToGenerate);
+        Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         for(int i = 0; i < enemiesToGenerate; i++) 
         {
             switch (i)
