@@ -1,10 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ENV_Mana : MonoBehaviour
+public class Environment : MonoBehaviour
 {
-    
     public int currentRed;
     public int previousRed;
     public int maxRed;
@@ -33,10 +32,12 @@ public class ENV_Mana : MonoBehaviour
     //Dictionary inside of a dictionary 
     public Dictionary<string, Dictionary<Hue, LocationMana>> Locations = new Dictionary<string, Dictionary<Hue, LocationMana>>();
 
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
 
         //StartingLocation();
         //Locations is a Dictionary that has the key of a string and the value of another Dictionary
@@ -57,6 +58,12 @@ public class ENV_Mana : MonoBehaviour
         previousRed = maxRed;
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
     private LocationMana LocationColors(List<int> locationValues)
     {
         //This is a struct that takes in a List of values
@@ -65,7 +72,7 @@ public class ENV_Mana : MonoBehaviour
         //If the min is greater than the max, it sets the min to the max
         //Then it returns those values
         int roll;
-        
+
 
         roll = Random.Range(0, locationValues.Count);
         int locationMinAmount = locationValues[roll];
@@ -83,12 +90,6 @@ public class ENV_Mana : MonoBehaviour
         return returnLocationMana;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void StartingLocation()
     {
         //This uses the location to set the min and max color values for that location
@@ -98,10 +99,10 @@ public class ENV_Mana : MonoBehaviour
         //random number in the list of numbers in the Dictionary Locations
         //with a key of "Forest" and a second key Color.Red and using the value
         //at that location to set the min (current) red. 
-        
+
         if (location != null)
         {
-            switch(location)
+            switch (location)
             {
                 case "Forest":
                     currentRed = Locations["Forest"][Hue.Red].currentAmount;
@@ -123,8 +124,8 @@ public class ENV_Mana : MonoBehaviour
         }
     }
 
-    
-   public void RedChangeHappened()
+
+    public void RedChangeHappened()
     {
 
     }

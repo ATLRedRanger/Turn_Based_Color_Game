@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Unit_V2 : MonoBehaviour
 {
-    private string unitName;
+
+    public string unitName;
 
     //Base Stats
     [SerializeField]
@@ -28,6 +29,7 @@ public class Unit_V2 : MonoBehaviour
 
     private int speedTier = 0;
 
+   
     //Status Effect Variables
     private int burnAmount = 0;
     private int burnThreshhold;

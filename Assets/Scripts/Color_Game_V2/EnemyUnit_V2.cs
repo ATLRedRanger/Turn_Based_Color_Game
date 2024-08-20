@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityEditor;
 
-public class Event_Manager : MonoBehaviour
+public class EnemyUnit_V2 : Unit_V2
 {
     // Start is called before the first frame update
     void Start()
@@ -16,12 +14,5 @@ public class Event_Manager : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public static event Action PrintNumbersEvent;
-
-    public static void StartPrintEvent()
-    {
-        PrintNumbersEvent?.Invoke();
     }
 }

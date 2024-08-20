@@ -16,6 +16,20 @@ public class Enums : MonoBehaviour
         
     }
 }
+
+public enum WhoseTurn
+{
+    Player,
+    EnemyOne,
+    EnemyTwo,
+    Nobody
+}
+public enum CombatState
+{
+    Won,
+    Lost,
+    Active
+}
 public enum Hue
 {
     Red,

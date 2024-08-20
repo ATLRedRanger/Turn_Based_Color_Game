@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3906164578942617653}
   - component: {fileID: 1655976847201112183}
   - component: {fileID: -5804213467000581041}
-  - component: {fileID: -8441940129446335636}
+  - component: {fileID: 3830047205450419014}
   m_Layer: 0
   m_Name: Slime_Pink
   m_TagString: Untagged
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-8441940129446335636
+--- !u!114 &3830047205450419014
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,67 +116,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2192196118830537610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7edee5f142e8c04a98f03a3f942df83, type: 3}
+  m_Script: {fileID: 11500000, guid: d22838e5003898c40a40524cf0cd2a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Slime_Pink
-  maxHealth: 15
-  currentHealth: 15
-  physicalAttack: 15
-  physicalDefense: 15
-  magicAttack: 15
-  magicDefense: 15
-  currentSpeed: 20
-  maxStamina: 15
-  currentStamina: 15
-  staminaRegenModifier: 2
-  baseAccuracy: 50
-  isDefending: 0
-  moneyGiven: 50
-  unitAnimator: {fileID: -5804213467000581041}
-  regenHealthInt: 2
-  weakness: 5
-  resistance: 4
-  statusEffects: 
-  startingTint: 5
-  tintColor: 6
-  isTinted: 0
-  tintTimer: 3
-  isBurning: 0
-  burnAmount: 0
-  burnTimer: 3
-  isExhausted: 0
-  isStunned: 0
-  stunAmount: 0
-  stunnedTimeAmount: 3
-  stunnedTimer: 3
-  stunnedMaxStamina: 0
-  OgStamina: 0
-  isVampped: 0
-  isHealing: 0
-  currentLevel: 0
-  currentExp: 0
-  expToLevel: 0
-  expGiven: 22
-  isWeaponEquipped: 0
-  currentAxeExp: 0
-  currentStaffExp: 0
-  currentSwordExp: 0
-  currentHammerExp: 0
-  currentBowExp: 0
-  axeMastery: 0
-  staffMastery: 0
-  swordMastery: 0
-  hammerMastery: 0
-  bowMastery: 0
-  isPlayer: 0
-  hadATurn: 0
-  myTurn: 0
-  gameOrganizer: {fileID: 0}
-  attacksDatabase: {fileID: 0}
-  turnManagerScript: {fileID: 0}
-  enemyCombatScript: {fileID: 0}
-  envManaScript: {fileID: 0}
-  unit_SpawnerScript: {fileID: 0}
-  itemDatabaseScript: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  unitName: Pink_Slime
+  unitWeakness: 0
+  unitResistance: 0
