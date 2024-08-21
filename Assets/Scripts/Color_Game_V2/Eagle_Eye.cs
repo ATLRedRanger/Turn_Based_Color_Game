@@ -8,6 +8,7 @@ public class Eagle_Eye : MonoBehaviour
     List<Unit_V2> listOfCombatants = new List<Unit_V2>();
     private CombatState theCombatState = CombatState.Active;
     private WhoseTurn whoseTurnIsIt = WhoseTurn.Nobody;
+    [SerializeField]
     private Unit_V2 player;
     private Unit_V2 enemyOne;
     private Unit_V2 enemyTwo;
@@ -36,7 +37,9 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test()
     {
-        StartCoroutine(WaitForAttackChoice());
+        player.AddAttackToDictionary(attackDatabaseScript._fireball);
+        player.GetAttackDictionary();
+        player.TakeDamage(7);
     }
 
     IEnumerator LoadScripts()
@@ -51,8 +54,8 @@ public class Eagle_Eye : MonoBehaviour
         uiScript = FindObjectOfType<UI_V2>();
 
         //yield return new WaitForSeconds(1);
-        unitSpawnerScript.SpawnPlayer();
-        player = unitSpawnerScript.player;
+        //unitSpawnerScript.SpawnPlayer();
+        player = unitSpawnerScript.SpawnPlayer();
         Debug.Log("Finished Loading");
         
     }

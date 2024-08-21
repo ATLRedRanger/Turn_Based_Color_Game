@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Unit_V2 : MonoBehaviour
 {
+    private Attack_Database attackDatabaseScript;
 
     public string unitName;
 
     //Base Stats
     [SerializeField]
-    private int currentHp = 10;
+    private int currentHp;
     [SerializeField]
-    private int maxHp;
+    private int maxHp = 10;
 
     private int currentStamina;
 
@@ -44,13 +45,17 @@ public class Unit_V2 : MonoBehaviour
 
     private List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
 
-    private Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
+    public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
     void Start()
     {
+        attackDatabaseScript = FindObjectOfType<Attack_Database>();
+
         currentHp = maxHp;
         currentStamina = maxStamina;
+
+        AddAttackToDictionary(attackDatabaseScript._fireball);
     }
 
     // Update is called once per frame
@@ -81,6 +86,12 @@ public class Unit_V2 : MonoBehaviour
     {
         int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
         return speed;
+    }
+
+    public Dictionary<string, Attack> GetAttackDictionary()
+    {
+        Debug.Log(unitAttackDictionary.Count);
+        return unitAttackDictionary;
     }
     public void TakeDamage(int damage)
     {
@@ -139,11 +150,15 @@ public class Unit_V2 : MonoBehaviour
 
     public void AddStatus(StatusEffect_V2 statusEffect)
     {
-        unitStatusEffects.Add(statusEffect);
+        if (!unitStatusEffects.Contains(statusEffect)){
+            unitStatusEffects.Add(statusEffect);
+        }
+        
     }
 
     public void AddAttackToDictionary(Attack attack)
     {
+        Debug.Log("Adding Attack");
         unitAttackDictionary[attack.attackName] = attack;
     }
 }

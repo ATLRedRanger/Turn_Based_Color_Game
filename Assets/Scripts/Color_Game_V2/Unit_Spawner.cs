@@ -16,22 +16,14 @@ public class Unit_Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnPlayer();
-        SelectEnemy();
-
+        
+        
     }
 
-    public void SpawnPlayer()
+    public Unit_V2 SpawnPlayer()
     {
-        player = Instantiate(player, playerPosition.transform).GetComponent<Unit_V2>();
-        player.gameObject.SetActive(false);
-    }
-
-    public void SelectEnemy()
-    {
-
-        int numberofEnemiesToSpawn = 1;//Random.Range(1, enemyPositions.Count);
-
+        var playerObj = Instantiate(player, playerPosition.transform).GetComponent<Unit_V2>();
+        return playerObj;
     }
 
 
