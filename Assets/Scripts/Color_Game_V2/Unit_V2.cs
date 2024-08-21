@@ -16,7 +16,7 @@ public class Unit_V2 : MonoBehaviour
 
     private int currentStamina;
 
-    private int maxStamina;
+    private int maxStamina = 10;
 
     private int baseAttack;
 
@@ -70,10 +70,17 @@ public class Unit_V2 : MonoBehaviour
     {
         return currentHp;
     }
-
+    public int GetMaxHp()
+    {
+        return maxHp;
+    }
     public int GetCurrentStamina()
     {
         return currentStamina;
+    }
+    public int GetMaxStamina()
+    {
+        return maxStamina;
     }
     public int GetCurrentAttack()
     {
@@ -93,7 +100,6 @@ public class Unit_V2 : MonoBehaviour
 
     public Dictionary<string, Attack> GetAttackDictionary()
     {
-        Debug.Log(unitAttackDictionary.Count);
         return unitAttackDictionary;
     }
     public void TakeDamage(int damage)

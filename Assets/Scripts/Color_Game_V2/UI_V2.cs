@@ -18,6 +18,12 @@ public class UI_V2 : MonoBehaviour
     private int currentVioletAmount;
     private int maxVioletAmount;
 
+    //Enemy One
+    public Image enemyOneHealthBar;
+    public Image enemyOneStaminaBar;
+    public Text enemyOneHealthText;
+    public Text enemyOneStaminaText;
+
 
     //Environment Bars
     public Image _redBar;
@@ -43,6 +49,14 @@ public class UI_V2 : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetEnemeyOneHealthAndStamina(int currentHealth, int maxHealth, int currentStamina, int maxStamina)
+    {
+        enemyOneHealthBar.fillAmount = (float)(float)(currentHealth / (float)(maxHealth));
+        enemyOneStaminaBar.fillAmount = (float)(float)(currentStamina / (float)(maxStamina));
+        enemyOneHealthText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
+        enemyOneStaminaText.text = currentStamina.ToString() + " / " + maxStamina.ToString();
     }
 
     public void SetMaxColorAmounts(int maxRed, int maxOrange, int maxYellow, int maxGreen, int maxBlue, int maxViolet)

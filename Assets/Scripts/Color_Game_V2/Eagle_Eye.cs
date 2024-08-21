@@ -45,6 +45,7 @@ public class Eagle_Eye : MonoBehaviour
         CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
         CheckStatuses(listOfCombatants);
         EndOfRoundStatusDamage();
+        uiScript.SetEnemeyOneHealthAndStamina(enemyOne.GetCurrentHp(), enemyOne.GetMaxHp(), enemyOne.GetCurrentStamina(), enemyOne.GetMaxStamina());
     }
 
     IEnumerator LoadScripts()
@@ -279,7 +280,7 @@ public class Eagle_Eye : MonoBehaviour
                         {
                             
                             statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage()});
-                            Debug.Log("Burn Getting Damage: " + status.GetStatusDamage());
+                            Debug.Log("Burn Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
                             i++;
                         }
@@ -297,7 +298,6 @@ public class Eagle_Eye : MonoBehaviour
                     unit.unitStatusEffects.Remove(status);
                 }
             }
-            Debug.Log(unit.unitStatusEffects.Count);
             removeStatus.Clear();
         }
     }

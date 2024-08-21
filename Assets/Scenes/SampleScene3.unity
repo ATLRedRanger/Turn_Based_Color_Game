@@ -17006,6 +17006,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0694d2ae0d9965f4d912e135582e97ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyOneHealthBar: {fileID: 900588897}
+  enemyOneStaminaBar: {fileID: 302994883}
+  enemyOneHealthText: {fileID: 611995661}
+  enemyOneStaminaText: {fileID: 1890635933}
   _redBar: {fileID: 1613037338}
   _redBarText: {fileID: 582186857}
   _orangeBar: {fileID: 2123531516}
