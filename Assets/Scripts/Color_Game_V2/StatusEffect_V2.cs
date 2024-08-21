@@ -5,7 +5,7 @@ using UnityEngine;
 public class StatusEffect_V2
 {
     private string statusName;
-    private int effectLength;
+    private int effectLength = 0;
     public int effectStack = 0;
     private int damageAmount = 0;
 
@@ -33,11 +33,16 @@ public class StatusEffect_V2
     public int GetStatusDamage()
     {
 
-        return damageAmount;
+        return damageAmount + effectStack;
     }
 
     public string GetStatusName()
     {
         return statusName;
+    }
+
+    public int GetEffectLength()
+    {
+        return effectLength;
     }
 }

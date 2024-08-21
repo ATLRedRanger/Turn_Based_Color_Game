@@ -119,9 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22838e5003898c40a40524cf0cd2a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDatabaseScript: {fileID: 0}
   unitName: Skelly
   currentHp: 10
   maxHp: 10
   baseSpeed: 7
+  burnAmount: 0
+  burnThreshhold: 5
+  burnTimer: 0
   unitWeakness: 0
   unitResistance: 0

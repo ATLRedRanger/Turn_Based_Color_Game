@@ -36,7 +36,7 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int burnAmount = 0;
     [SerializeField]
-    private int burnThreshhold;
+    private int burnThreshhold = 5;
     [SerializeField]
     private int burnTimer = 0;
 
@@ -194,6 +194,17 @@ public class Unit_V2 : MonoBehaviour
         burnTimer += amount;
     }
 
+    public void SetBurnTimerToZero()
+    {
+        burnTimer = 0;
+        Debug.Log($"Burn Timer being set to 0: {burnTimer}");
+    }
+
+    public void SetBurnAmountToZero()
+    {
+        burnAmount = 0;
+        Debug.Log($"Burn Amount being set to 0: {burnAmount}");
+    }
     public void AddAttackToDictionary(Attack attack)
     {
         Debug.Log("Adding Attack");

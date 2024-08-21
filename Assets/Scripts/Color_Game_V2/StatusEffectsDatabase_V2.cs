@@ -24,4 +24,6 @@ public class StatusEffectsDatabase_V2 : MonoBehaviour
 
         return status;
     }
+
+    
 }

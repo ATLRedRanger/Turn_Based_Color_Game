@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Eagle_Eye : MonoBehaviour
 {
-    
-    List<Unit_V2> listOfCombatants = new List<Unit_V2>();
+    private List<object> statusDamageQue = new List<object>();
+    private List<Unit_V2> listOfCombatants = new List<Unit_V2>();
     private CombatState theCombatState = CombatState.Active;
     private WhoseTurn whoseTurnIsIt = WhoseTurn.Nobody;
     [SerializeField]
@@ -42,6 +42,8 @@ public class Eagle_Eye : MonoBehaviour
         //player.TakeDamage(7);
         
         CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
+        CheckStatuses(listOfCombatants);
+        EndOfRoundStatusDamage();
     }
 
     IEnumerator LoadScripts()
@@ -59,6 +61,7 @@ public class Eagle_Eye : MonoBehaviour
         //unitSpawnerScript.SpawnPlayer();
         player = unitSpawnerScript.SpawnPlayer();
         enemyOne = unitSpawnerScript.GenerateEnemy(0);
+        listOfCombatants.Add(enemyOne);
         Debug.Log("Finished Loading");
         
     }
@@ -225,7 +228,7 @@ public class Eagle_Eye : MonoBehaviour
         switch(attack.attackBehavior)
         {
             case AttackBehavior.Burn:
-                defender.AddToBurnAmount(10);
+                defender.AddToBurnAmount(1);
                 if (defender.DoesStatusExist(statusEffectScript.burn))
                 {
                     foreach (StatusEffect_V2 status in defender.unitStatusEffects)
@@ -243,10 +246,83 @@ public class Eagle_Eye : MonoBehaviour
                     {
                         Debug.Log($"{defender.unitName} is now burning!");
                         defender.AddStatus(statusEffectScript.burn);
+                        defender.SetBurnAmountToZero();
                     }
                 }
                 
                 break;
+        }
+    }
+
+    private void CheckStatuses(List<Unit_V2> listOfCombatants)
+    {
+        int i = 0;
+        List<StatusEffect_V2> removeStatus = new List<StatusEffect_V2>();
+
+        foreach (Unit_V2 unit in listOfCombatants)
+        {
+            foreach (StatusEffect_V2 status in unit.unitStatusEffects)
+            {
+                Debug.Log("First Foreach");
+                switch (status.GetStatusName())
+                {
+                    case "Burn":
+                        Debug.Log($"{unit.unitName}'s burnTimer: {unit.GetBurnTimer()}");
+                        if (unit.GetBurnTimer() >= status.GetEffectLength())
+                        {
+                            Debug.Log("Testing");
+                            unit.SetBurnTimerToZero();
+                            removeStatus.Add(status);
+                        }
+                        else
+                        {
+                            statusDamageQue.Add(unit);
+                            statusDamageQue.Add(status.GetStatusDamage());
+                            unit.AddToBurnTimer(1);
+                            i++;
+                        }
+                        break;
+                }
+
+            }
+            foreach (StatusEffect_V2 status in removeStatus)
+            {
+                Debug.Log("Second Foreach");
+                Debug.Log($"Trying to remove {status.GetStatusName()}");
+                if (unit.DoesStatusExist(status))
+                {
+                    Debug.Log($"{status.GetStatusName()} has been removed.");
+                    unit.unitStatusEffects.Remove(status);
+                }
+            }
+            Debug.Log(unit.unitStatusEffects.Count);
+            removeStatus.Clear();
+        }
+    }
+
+    public void EndOfRoundStatusDamage()
+    {
+        Unit_V2 unit = null;
+        int damage = 0;
+        //StatusEffect_V2 status = null;
+        if (statusDamageQue.Count != 0)
+        {
+            foreach(object obj in statusDamageQue)
+            {
+                if (obj is Unit_V2)
+                {
+                    unit = (Unit_V2)obj;
+                }
+
+                if (obj is int)
+                {
+                    damage = (int)obj;
+                }
+
+                unit.TakeDamage(damage);
+                unit = null;
+                damage = 0;
+            }
         }
     }
 
