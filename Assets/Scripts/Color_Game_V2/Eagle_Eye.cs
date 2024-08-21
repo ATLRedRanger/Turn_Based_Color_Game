@@ -18,6 +18,9 @@ public class Eagle_Eye : MonoBehaviour
     private Unit_Spawner unitSpawnerScript;
     private Environment envManaScript;
     private StatusEffectsDatabase_V2 statusEffectScript;
+    private Attack_Database attackDatabaseScript;
+    private ButtonsAndPanels buttonsAndPanelsScript;
+    private UI_V2 uiScript;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +33,11 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test()
     {
-        Combat();
+        //Combat();
+        //buttonsAndPanelsScript.ToggleFightPanel();
+        GenerateEnvironment();
+        SetMaxColorAmounts();
+        UpdateEnvironmentColors();
     }
 
     IEnumerator LoadScripts()
@@ -40,6 +47,9 @@ public class Eagle_Eye : MonoBehaviour
         unitSpawnerScript = FindObjectOfType<Unit_Spawner>();
         envManaScript = FindObjectOfType<Environment>();
         statusEffectScript = FindObjectOfType<StatusEffectsDatabase_V2>();
+        attackDatabaseScript = FindObjectOfType<Attack_Database>();
+        buttonsAndPanelsScript = FindObjectOfType<ButtonsAndPanels>();
+        uiScript = FindObjectOfType<UI_V2>();
 
         //yield return new WaitForSeconds(1);
         unitSpawnerScript.SpawnPlayer();
@@ -108,6 +118,8 @@ public class Eagle_Eye : MonoBehaviour
                 Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
+                    whoseTurnIsIt = WhoseTurn.Player;
+                    buttonsAndPanelsScript.ToggleFightPanel();
                     PlayerTurn();
                     if (IsPlayerAlive(player))
                     {
@@ -142,7 +154,6 @@ public class Eagle_Eye : MonoBehaviour
                     }
                     
                 }
-                
             }
             foreach (Unit_V2 unit in listOfCombatants)
             {
@@ -166,10 +177,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-            
-           
         }
-
         if (theCombatState == CombatState.Won)
         {
             PlayerWon();
@@ -186,7 +194,6 @@ public class Eagle_Eye : MonoBehaviour
         {
             return true;
         }
-        
 
         return false;
     }
@@ -197,12 +204,12 @@ public class Eagle_Eye : MonoBehaviour
         if (enemyOne != null)
         {
             enemyOne.TakeDamage(5);
-            Debug.Log("Enemy One Health " + enemyOne.GetCurrentHp());
+            
         }
         if (enemyTwo != null)
         {
             enemyTwo.TakeDamage(5);
-            Debug.Log("Enemy Two Health " + enemyTwo.GetCurrentHp());
+            
         }
     }
 
@@ -212,7 +219,7 @@ public class Eagle_Eye : MonoBehaviour
         if (player != null)
         {
             player.TakeDamage(5);
-            Debug.Log("Player Health " + player.GetCurrentHp());
+            
         }
     }
 
@@ -223,5 +230,23 @@ public class Eagle_Eye : MonoBehaviour
     private void PlayerLost()
     {
         Debug.Log("Player Lost");
+    }
+
+    private void GenerateEnvironment()
+    {
+        currentLocation = "Forest";
+        envManaScript.GenerateEnvironment(currentLocation);
+    }
+
+    private void SetMaxColorAmounts()
+    {
+        uiScript.SetMaxColorAmounts(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,
+                                        envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
+    }
+
+    private void UpdateEnvironmentColors()
+    {
+        uiScript.UpdateEnvironmentColors(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,
+                                        envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
     }
 }

@@ -69,24 +69,29 @@ public class Unit_V2 : MonoBehaviour
     }
     public int GetCurrentAttack()
     {
-        return baseAttack * (attackTier + 1);
+        int attack = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(attackTier))));
+        return attack;
     }
     public int GetCurrentDefense()
     {
-        return baseDefense * (defenseTier + 1); ;
+        int defense = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(defenseTier))));
+        return defense;
     }
     public int GetCurrentSpeed()
     {
-        return baseSpeed * (speedTier + 1);
+        int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
+        return speed;
     }
     public void TakeDamage(int damage)
     {
         currentHp -= damage;
+        Debug.Log($"{unitName} has taken {damage} damage and their currentHP is: {currentHp}");
     }
 
     public void GainHealth(int health)
     {
         currentHp += health;
+        Debug.Log($"{unitName} has gained {health} health and their currentHP is: {currentHp}");
     }
 
     public void ReduceStamina(int staminaCost)
@@ -110,6 +115,25 @@ public class Unit_V2 : MonoBehaviour
                 return StaminaLevels.ThreeQuarters;
             default:
                 return StaminaLevels.Empty;
+        }
+    }
+
+    public float TierBonus(int tier)
+    {
+        switch (tier)
+        {
+            case 1:
+                return 1.2f;
+            case 2:
+                return 1.4f;
+            case 3:
+                return 1.6f;
+            case 4:
+                return 1.8f;
+            case 5:
+                return 2;
+            default:
+                return 1;
         }
     }
 
