@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class ButtonsAndPanels : MonoBehaviour
 {
+    private Eagle_Eye eagleScript;
 
     public Attack chosenAttack = null;
 
@@ -15,16 +16,19 @@ public class ButtonsAndPanels : MonoBehaviour
     public Button _itemsButton;
     public Button _spellsButton;
 
+    public Button _spellPanelCycleButton;
+
     //Panels
     public GameObject _FightPanel;
     public GameObject _SpellsPanel;
+    public GameObject _SpellsPanel2;
     public GameObject _AbilitiesPanel;
     public GameObject _ItemsPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        eagleScript = FindObjectOfType<Eagle_Eye>();
     }
 
     // Update is called once per frame
@@ -75,6 +79,17 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void _FireballClick()
     {
-        
+        eagleScript.AttackChangeNotification("Fireball");
+    }
+
+    public void _SpellPanelCycle()
+    {
+        bool isActive = _SpellsPanel.activeSelf;
+
+        if(_SpellsPanel != null && _SpellsPanel2 != null)
+        {
+            _SpellsPanel2.SetActive(isActive);
+            _SpellsPanel.SetActive(!isActive);
+        }
     }
 }

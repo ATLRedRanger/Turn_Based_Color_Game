@@ -15,6 +15,9 @@ public class Eagle_Eye : MonoBehaviour
     private int turnsInRound;
     private string currentLocation = "Cave";
 
+    private Attack chosenAttack = null;
+
+    //Scripts
     private Unit_Spawner unitSpawnerScript;
     private Environment envManaScript;
     private StatusEffectsDatabase_V2 statusEffectScript;
@@ -33,11 +36,7 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test()
     {
-        //Combat();
-        //buttonsAndPanelsScript.ToggleFightPanel();
-        GenerateEnvironment();
-        SetMaxColorAmounts();
-        UpdateEnvironmentColors();
+        StartCoroutine(WaitForAttackChoice());
     }
 
     IEnumerator LoadScripts()
@@ -201,6 +200,7 @@ public class Eagle_Eye : MonoBehaviour
     private void PlayerTurn()
     {
         Debug.Log("Player Turn");
+        /*
         if (enemyOne != null)
         {
             enemyOne.TakeDamage(5);
@@ -210,9 +210,21 @@ public class Eagle_Eye : MonoBehaviour
         {
             enemyTwo.TakeDamage(5);
             
+        }*/
+        while (chosenAttack == null)
+        {
+
         }
     }
 
+    IEnumerator WaitForAttackChoice()
+    {
+        Debug.Log("Start");
+
+        yield return new WaitUntil(AttackIsChosen);
+
+        Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
+    }
     private void EnemyTurn(Unit_V2 unit)
     {
         Debug.Log($"{unit.unitName}'s Turn");
@@ -248,5 +260,24 @@ public class Eagle_Eye : MonoBehaviour
     {
         uiScript.UpdateEnvironmentColors(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,
                                         envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
+    }
+
+    public void AttackChangeNotification(string attack)
+    {
+        switch(attack)
+        {
+            case "Fireball":
+                chosenAttack = attackDatabaseScript._fireball;
+                break;
+        }
+    }
+
+    private bool AttackIsChosen()
+    {
+        if(chosenAttack != null)
+        {
+            return true;
+        }
+        return false;
     }
 }
