@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Eagle_Eye : MonoBehaviour
 {
-    private List<object> statusDamageQue = new List<object>();
+    private List<List<object>> statusDamageQue = new List<List<object>>();
     private List<Unit_V2> listOfCombatants = new List<Unit_V2>();
     private CombatState theCombatState = CombatState.Active;
     private WhoseTurn whoseTurnIsIt = WhoseTurn.Nobody;
@@ -228,7 +229,6 @@ public class Eagle_Eye : MonoBehaviour
         switch(attack.attackBehavior)
         {
             case AttackBehavior.Burn:
-                defender.AddToBurnAmount(1);
                 if (defender.DoesStatusExist(statusEffectScript.burn))
                 {
                     foreach (StatusEffect_V2 status in defender.unitStatusEffects)
@@ -240,14 +240,15 @@ public class Eagle_Eye : MonoBehaviour
                         }
                     }
                 }
+                else if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
+                {
+                    Debug.Log($"{defender.unitName} is now burning!");
+                    defender.AddStatus(statusEffectScript.burn);
+                    defender.SetBurnAmountToZero();
+                }
                 else
                 {
-                    if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
-                    {
-                        Debug.Log($"{defender.unitName} is now burning!");
-                        defender.AddStatus(statusEffectScript.burn);
-                        defender.SetBurnAmountToZero();
-                    }
+                    defender.AddToBurnAmount(1);
                 }
                 
                 break;
@@ -276,8 +277,9 @@ public class Eagle_Eye : MonoBehaviour
                         }
                         else
                         {
-                            statusDamageQue.Add(unit);
-                            statusDamageQue.Add(status.GetStatusDamage());
+                            
+                            statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage()});
+                            Debug.Log("Burn Getting Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
                             i++;
                         }
@@ -304,26 +306,21 @@ public class Eagle_Eye : MonoBehaviour
     {
         Unit_V2 unit = null;
         int damage = 0;
-        //StatusEffect_V2 status = null;
+
         if (statusDamageQue.Count != 0)
         {
-            foreach(object obj in statusDamageQue)
+            for (int i = 0; i < statusDamageQue.Count; i++)
             {
-                if (obj is Unit_V2)
+                unit = statusDamageQue[i][0] as Unit_V2;
+                if (statusDamageQue[i][1] is int)
                 {
-                    unit = (Unit_V2)obj;
+                    damage = (int)(statusDamageQue[i][1]);
                 }
-
-                if (obj is int)
-                {
-                    damage = (int)obj;
-                }
-
                 unit.TakeDamage(damage);
-                unit = null;
-                damage = 0;
             }
         }
+
+        statusDamageQue.Clear();
     }
 
     IEnumerator WaitForAttackChoice()
