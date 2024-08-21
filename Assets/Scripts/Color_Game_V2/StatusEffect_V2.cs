@@ -6,7 +6,7 @@ public class StatusEffect_V2
 {
     private string statusName;
     private int effectLength;
-    private int effectStack = 0;
+    public int effectStack = 0;
     private int damageAmount = 0;
 
     // Start is called before the first frame update
@@ -34,5 +34,10 @@ public class StatusEffect_V2
     {
 
         return damageAmount;
+    }
+
+    public string GetStatusName()
+    {
+        return statusName;
     }
 }

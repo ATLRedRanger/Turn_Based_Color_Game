@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Unit_V2 : MonoBehaviour
 {
-    private Attack_Database attackDatabaseScript;
+    public Attack_Database attackDatabaseScript;
 
     public string unitName;
 
@@ -31,10 +31,13 @@ public class Unit_V2 : MonoBehaviour
 
     private int speedTier = 0;
 
-   
+
     //Status Effect Variables
+    [SerializeField]
     private int burnAmount = 0;
+    [SerializeField]
     private int burnThreshhold;
+    [SerializeField]
     private int burnTimer = 0;
 
     [SerializeField]
@@ -43,19 +46,19 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private Hue unitResistance;
 
-    private List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
+    public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
 
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
 
         currentHp = maxHp;
         currentStamina = maxStamina;
 
-        AddAttackToDictionary(attackDatabaseScript._fireball);
+        
     }
 
     // Update is called once per frame
@@ -154,6 +157,41 @@ public class Unit_V2 : MonoBehaviour
             unitStatusEffects.Add(statusEffect);
         }
         
+    }
+
+    public bool DoesStatusExist(StatusEffect_V2 statusEffect)
+    {
+        foreach (StatusEffect_V2 status in unitStatusEffects)
+        {
+            if (status.GetStatusName() == statusEffect.GetStatusName())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetBurnAmount()
+    {
+        return burnAmount;
+    }
+
+    public int GetBurnThreshhold()
+    {
+        return burnThreshhold;
+    }
+
+    public int GetBurnTimer()
+    {
+        return burnTimer;
+    }
+    public void AddToBurnAmount(int amount)
+    {
+        burnAmount += amount;
+    }
+    public void AddToBurnTimer(int amount)
+    {
+        burnTimer += amount;
     }
 
     public void AddAttackToDictionary(Attack attack)

@@ -37,9 +37,11 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test()
     {
-        player.AddAttackToDictionary(attackDatabaseScript._fireball);
-        player.GetAttackDictionary();
-        player.TakeDamage(7);
+        //player.AddAttackToDictionary(attackDatabaseScript._fireball);
+        //player.GetAttackDictionary();
+        //player.TakeDamage(7);
+        
+        CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
     }
 
     IEnumerator LoadScripts()
@@ -56,6 +58,7 @@ public class Eagle_Eye : MonoBehaviour
         //yield return new WaitForSeconds(1);
         //unitSpawnerScript.SpawnPlayer();
         player = unitSpawnerScript.SpawnPlayer();
+        enemyOne = unitSpawnerScript.GenerateEnemy(0);
         Debug.Log("Finished Loading");
         
     }
@@ -214,9 +217,36 @@ public class Eagle_Eye : MonoBehaviour
             enemyTwo.TakeDamage(5);
             
         }*/
-        while (chosenAttack == null)
-        {
+        //StartCoroutine(WaitForAttackChoice());
+    }
 
+    private void CheckAttack_StatusBuildupRelationship(Attack attack, Unit_V2 defender)
+    {
+        switch(attack.attackBehavior)
+        {
+            case AttackBehavior.Burn:
+                defender.AddToBurnAmount(10);
+                if (defender.DoesStatusExist(statusEffectScript.burn))
+                {
+                    foreach (StatusEffect_V2 status in defender.unitStatusEffects)
+                    {
+                        if (status.GetStatusName() == "Burn")
+                        {
+                            status.effectStack += 1;
+                            Debug.Log($"{defender.unitName}'s burn stack: {status.effectStack}.");
+                        }
+                    }
+                }
+                else
+                {
+                    if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
+                    {
+                        Debug.Log($"{defender.unitName} is now burning!");
+                        defender.AddStatus(statusEffectScript.burn);
+                    }
+                }
+                
+                break;
         }
     }
 

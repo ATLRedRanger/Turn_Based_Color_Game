@@ -31,9 +31,11 @@ public class Player_V2 : Unit_V2
     private int violetMastery = 0;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         
+        unitAttackDictionary["Fireball"] = attackDatabaseScript._fireball;
     }
 
     // Update is called once per frame
@@ -42,5 +44,9 @@ public class Player_V2 : Unit_V2
         
     }
 
+    public void LearnSpellsAndAbilities()
+    {
+        
+    }
     
 }
