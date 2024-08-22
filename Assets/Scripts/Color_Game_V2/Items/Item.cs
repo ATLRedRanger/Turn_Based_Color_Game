@@ -14,7 +14,7 @@ public class Item
 
     }
 
-    public Item(string itemName, string itemDescription, string itemID, int itemAmount)
+    public Item(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;

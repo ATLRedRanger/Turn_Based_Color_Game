@@ -22,6 +22,8 @@ public class Unit_V2 : MonoBehaviour
 
     private int baseDefense;
 
+    private bool isDefending;
+
     [SerializeField]
     private int baseSpeed;
 
@@ -40,11 +42,13 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int burnTimer = 0;
 
+    //Resist And Weakness
     [SerializeField]
     private Hue unitWeakness;
-
     [SerializeField]
     private Hue unitResistance;
+
+    
 
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
 
@@ -96,6 +100,15 @@ public class Unit_V2 : MonoBehaviour
     {
         int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
         return speed;
+    }
+
+    public bool IsDefending()
+    {
+        if (isDefending)
+        {
+            return true;
+        }
+        return false;
     }
 
     public Dictionary<string, Attack> GetAttackDictionary()

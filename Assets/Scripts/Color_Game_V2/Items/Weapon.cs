@@ -11,7 +11,7 @@ public class Weapon : Item
     {
 
     }
-    public Weapon(string itemName, string itemDescription, string itemID, int itemAmount, WeaponType weaponType, int weaponDamage)
+    public Weapon(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int weaponDamage = 0)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -24,6 +24,11 @@ public class Weapon : Item
     public override void Use(Unit_V2 unit)
     {
         base.Use(unit);
+    }
+
+    public virtual int GetWeaponDamage(Unit_V2 attacker = null, Unit_V2 defender = null)
+    {
+        return weaponDamage;
     }
 }
 

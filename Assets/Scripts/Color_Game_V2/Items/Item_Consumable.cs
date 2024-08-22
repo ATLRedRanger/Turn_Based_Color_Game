@@ -8,7 +8,7 @@ public class Item_Consumable : Item
     public ConsumableType consumableType;
     public int amountToIncrease;
 
-    public Item_Consumable(ConsumableType consumableType, int amountToIncrease)
+    public Item_Consumable(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, ConsumableType consumableType = ConsumableType.Tint, int amountToIncrease = 0)
     {
         this.consumableType = consumableType;
         this.amountToIncrease = amountToIncrease;

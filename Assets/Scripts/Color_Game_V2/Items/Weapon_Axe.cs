@@ -6,7 +6,7 @@ public class Weapon_Axe : Weapon
 {
 
 
-    public Weapon_Axe(string itemName, string itemDescription, string itemID, int itemAmount, WeaponType weaponType, int weaponDamage)
+    public Weapon_Axe(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int weaponDamage = 0)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
