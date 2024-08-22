@@ -108,10 +108,15 @@ public class Unit_V2 : MonoBehaviour
         Debug.Log($"{unitName} has taken {damage} damage and their currentHP is: {currentHp}");
     }
 
-    public void GainHealth(int health)
+    public void GainHealth(int amount)
     {
-        currentHp += health;
-        Debug.Log($"{unitName} has gained {health} health and their currentHP is: {currentHp}");
+        currentHp += amount;
+        Debug.Log($"{unitName} has gained {amount} health and their currentHP is: {currentHp}");
+    }
+
+    public void GainStamina(int amount)
+    {
+        currentHp += amount;
     }
 
     public void ReduceStamina(int staminaCost)
