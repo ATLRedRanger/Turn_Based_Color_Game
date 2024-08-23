@@ -1,7 +1,7 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 public class Eagle_Eye : MonoBehaviour
 {
@@ -45,7 +45,8 @@ public class Eagle_Eye : MonoBehaviour
         CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
         CheckStatuses(listOfCombatants);
         EndOfRoundStatusDamage();
-        uiScript.SetEnemeyOneHealthAndStamina(enemyOne.GetCurrentHp(), enemyOne.GetMaxHp(), enemyOne.GetCurrentStamina(), enemyOne.GetMaxStamina());
+        uiScript.SetPlayerHealthAndStamina(player);
+        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
     }
 
     IEnumerator LoadScripts()
@@ -225,6 +226,43 @@ public class Eagle_Eye : MonoBehaviour
         //StartCoroutine(WaitForAttackChoice());
     }
 
+    private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
+    {
+        float roll = Random.Range(1, 5);
+        switch (roll)
+        {
+            case 1:
+                roll = 1.25f;
+                break;
+            case 2:
+                roll = 1.5f;
+                break;
+            case 3:
+                roll = 1.75f;
+                break;
+            case 4:
+                roll = 2f;
+                break;
+            default:
+                roll = 1;
+                break;
+        }
+
+        int damageBeforeDefenses = Mathf.RoundToInt(attack.attackPower + attacker.GetCurrentAttack() * roll);
+        int damageAfterDefenses = 0; 
+        switch (attack.attackColor)
+        {
+            case Hue.Red:
+                return damageAfterDefenses; // = Mathf.RoundToInt(damageBeforeDefenses - (damageBeforeDefenses * defender.GetColorResistances()[Hue.Red]));
+                break;
+            default:
+                return damageAfterDefenses;
+                break;
+        }
+
+        return damageBeforeDefenses;
+    }
+
     private void CheckAttack_StatusBuildupRelationship(Attack attack, Unit_V2 defender)
     {
         switch(attack.attackBehavior)
@@ -356,13 +394,13 @@ public class Eagle_Eye : MonoBehaviour
         envManaScript.GenerateEnvironment(currentLocation);
     }
 
-    private void SetMaxColorAmounts()
+    private void SetMaxColorAmountsForUI()
     {
         uiScript.SetMaxColorAmounts(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,
                                         envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
     }
 
-    private void UpdateEnvironmentColors()
+    private void UpdateEnvironmentColorsForUI()
     {
         uiScript.UpdateEnvironmentColors(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,
                                         envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);

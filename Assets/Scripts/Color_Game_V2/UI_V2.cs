@@ -18,7 +18,15 @@ public class UI_V2 : MonoBehaviour
     private int currentVioletAmount;
     private int maxVioletAmount;
 
+    //Player
+    public Text playerName;
+    public Image playerHealthBar;
+    public Image playerStaminaBar;
+    public Text playerHealthText;
+    public Text playerStaminaText;
+
     //Enemy One
+    public Text enemyOneName;
     public Image enemyOneHealthBar;
     public Image enemyOneStaminaBar;
     public Text enemyOneHealthText;
@@ -51,12 +59,20 @@ public class UI_V2 : MonoBehaviour
         
     }
 
-    public void SetEnemeyOneHealthAndStamina(int currentHealth, int maxHealth, int currentStamina, int maxStamina)
+    public void SetPlayerHealthAndStamina(Unit_V2 player)
     {
-        enemyOneHealthBar.fillAmount = (float)(float)(currentHealth / (float)(maxHealth));
-        enemyOneStaminaBar.fillAmount = (float)(float)(currentStamina / (float)(maxStamina));
-        enemyOneHealthText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
-        enemyOneStaminaText.text = currentStamina.ToString() + " / " + maxStamina.ToString();
+        playerHealthBar.fillAmount = (float)(float)(player.GetCurrentHp() / (float)(player.GetMaxHp()));
+        playerStaminaBar.fillAmount = (float)(float)(player.GetCurrentStamina() / (float)(player.GetMaxStamina()));
+        playerHealthText.text = player.GetCurrentHp().ToString() + " / " + player.GetMaxHp().ToString();
+        playerStaminaText.text = player.GetCurrentStamina().ToString() + " / " + player.GetMaxStamina().ToString();
+    }
+
+    public void SetEnemeyOneHealthAndStamina(Unit_V2 enemyOne)
+    {
+        enemyOneHealthBar.fillAmount = (float)(float)(enemyOne.GetCurrentHp() / (float)(enemyOne.GetMaxHp()));
+        enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
+        enemyOneHealthText.text = enemyOne.GetCurrentHp().ToString() + " / " + enemyOne.GetMaxHp().ToString();
+        enemyOneStaminaText.text = enemyOne.GetCurrentStamina().ToString() + " / " + enemyOne.GetMaxStamina().ToString();
     }
 
     public void SetMaxColorAmounts(int maxRed, int maxOrange, int maxYellow, int maxGreen, int maxBlue, int maxViolet)

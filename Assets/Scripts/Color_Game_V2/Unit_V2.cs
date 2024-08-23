@@ -48,7 +48,20 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private Hue unitResistance;
 
-    
+    private Dictionary<Hue, float> unitColorResistances = new Dictionary<Hue, float>();
+
+    [SerializeField]
+    private float redResistance;
+    [SerializeField]
+    private float orangeResistance;
+    [SerializeField]
+    private float yellowResistance;
+    [SerializeField]
+    private float greenResistance;
+    [SerializeField]
+    private float blueResistance;
+    [SerializeField]
+    private float violetResistance;
 
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
 
@@ -61,10 +74,20 @@ public class Unit_V2 : MonoBehaviour
 
         currentHp = maxHp;
         currentStamina = maxStamina;
-
+        SetColorResistances();
         
     }
 
+    public virtual void SetColorResistances()
+    {
+        unitColorResistances[Hue.Red] = redResistance;
+        unitColorResistances[Hue.Orange] = orangeResistance;
+        unitColorResistances[Hue.Yellow] = yellowResistance;
+        unitColorResistances[Hue.Green] = greenResistance;
+        unitColorResistances[Hue.Blue] = blueResistance;
+        unitColorResistances[Hue.Violet] = violetResistance;
+        unitColorResistances[Hue.Neutral] = 1;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -100,6 +123,11 @@ public class Unit_V2 : MonoBehaviour
     {
         int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
         return speed;
+    }
+
+    public Dictionary<Hue, float> GetColorResistances()
+    {
+        return unitColorResistances;
     }
 
     public bool IsDefending()

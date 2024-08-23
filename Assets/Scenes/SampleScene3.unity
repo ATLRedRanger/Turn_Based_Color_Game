@@ -16514,6 +16514,12 @@ MonoBehaviour:
   burnTimer: 0
   unitWeakness: 0
   unitResistance: 0
+  redResistance: 0
+  orangeResistance: 0
+  yellowResistance: 0
+  greenResistance: 0
+  blueResistance: 0
+  violetResistance: 0
 --- !u!1 &1866017119
 GameObject:
   m_ObjectHideFlags: 0
@@ -17006,6 +17012,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0694d2ae0d9965f4d912e135582e97ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: {fileID: 0}
+  playerHealthBar: {fileID: 1518989802}
+  playerStaminaBar: {fileID: 1477902370}
+  playerHealthText: {fileID: 1955627899}
+  playerStaminaText: {fileID: 208535280}
+  enemyOneName: {fileID: 0}
   enemyOneHealthBar: {fileID: 900588897}
   enemyOneStaminaBar: {fileID: 302994883}
   enemyOneHealthText: {fileID: 611995661}
