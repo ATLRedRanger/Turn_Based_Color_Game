@@ -310,7 +310,6 @@ public class Eagle_Eye : MonoBehaviour
 
     private void CheckStatuses(List<Unit_V2> listOfCombatants)
     {
-        int i = 0;
         List<StatusEffect_V2> removeStatus = new List<StatusEffect_V2>();
 
         foreach (Unit_V2 unit in listOfCombatants)
@@ -331,10 +330,10 @@ public class Eagle_Eye : MonoBehaviour
                         else
                         {
                             
-                            statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage()});
+                            statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage(), status.timeNeededInQue});
                             Debug.Log("Burn Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
-                            i++;
+                            
                         }
                         break;
                 }
@@ -356,9 +355,19 @@ public class Eagle_Eye : MonoBehaviour
 
     public void EndOfRoundStatusDamage()
     {
+        //This function is for timed damage effects to go off
+        //The timeInQue is so that statusEffects can sit in the que to "cook"
+        //Then when the timer ticks down to 0, the statusEffect goes off
+        //This system was intended for effects like Pokemon's Future Sight
+        //The way it's supposed to work is that you look at each object in the que,
+        //you then iterate over it looking for whichUnit is being affected,
+        //how much damage are they going to take and then when is the damage supposed to happen.
+        //Then when the timeInQue is NOT < 1, you add it to the blank list, clear the status list, 
+        //then put it back in the Que.
+        List <List<object>> blankList = new List<List<object>>();
         Unit_V2 unit = null;
         int damage = 0;
-
+        int timeInQue;
         if (statusDamageQue.Count != 0)
         {
             for (int i = 0; i < statusDamageQue.Count; i++)
@@ -368,11 +377,25 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     damage = (int)(statusDamageQue[i][1]);
                 }
-                unit.TakeDamage(damage);
+                if (statusDamageQue[i][2] is int)
+                {
+                    timeInQue = (int)statusDamageQue[i][2];
+                    if (timeInQue < 1)
+                    {
+                        unit.TakeDamage(damage);
+                        
+                    }
+                    else
+                    {
+                        statusDamageQue[i][2] = timeInQue - 1;
+                        blankList.Add(statusDamageQue[i]);
+                    }
+                }
             }
         }
 
         statusDamageQue.Clear();
+        statusDamageQue = blankList;
     }
 
     IEnumerator WaitForAttackChoice()
