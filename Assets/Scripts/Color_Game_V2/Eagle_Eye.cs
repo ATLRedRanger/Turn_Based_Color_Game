@@ -226,41 +226,55 @@ public class Eagle_Eye : MonoBehaviour
         //StartCoroutine(WaitForAttackChoice());
     }
 
-    private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
+    // Helper function to calculate damage multiplier (replace with your implementation for critical hits, etc.)
+    private float CalculateDamageMultiplier()
     {
-        float roll = Random.Range(1, 5);
-        switch (roll)
+        float roll = Random.Range(1f, 5f);
+
+        switch ((int)roll) // Cast roll to int for case matching
         {
             case 1:
-                roll = 1.25f;
-                break;
+                return 1.25f;
             case 2:
-                roll = 1.5f;
-                break;
+                return 1.5f;
             case 3:
-                roll = 1.75f;
-                break;
+                return 1.75f;
             case 4:
-                roll = 2f;
-                break;
+                return 2.0f;
             default:
-                roll = 1;
-                break;
+                return 1.0f;
         }
+    }
+    private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
+    {
+        // Calculate base damage with potential random variation
+        float baseDamage = attack.attackPower + attacker.GetCurrentAttack();
+        float damageMultiplier = CalculateDamageMultiplier(); // Helper function
 
-        int damageBeforeDefenses = Mathf.RoundToInt(attack.attackPower + attacker.GetCurrentAttack() * roll);
-        int damageAfterDefenses = 0; 
-        switch (attack.attackColor)
+        // Apply damage multiplier for critical hits, etc.
+        int damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
+
+
+        // Apply color resistances based on attack type and color
+        int damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
+
+        return damageAfterDefenses;
+    }
+
+    
+    private int ApplyColorAndWeaponResistances(Hue attackColor, int damage, Unit_V2 attacker, Unit_V2 defender)
+    {
+        float combinedResistances = 0;
+
+        if (attacker.equippedWeapon != null)
         {
-            case Hue.Red:
-                return damageAfterDefenses; // = Mathf.RoundToInt(damageBeforeDefenses - (damageBeforeDefenses * defender.GetColorResistances()[Hue.Red]));
-                break;
-            default:
-                return damageAfterDefenses;
-                break;
+            combinedResistances = defender.GetWeaponResistances()[attacker.equippedWeapon.weaponType];
         }
 
-        return damageBeforeDefenses;
+        combinedResistances += defender.GetColorResistances()[attackColor];
+
+        return damage - Mathf.RoundToInt(damage * combinedResistances);
+        
     }
 
     private void CheckAttack_StatusBuildupRelationship(Attack attack, Unit_V2 defender)

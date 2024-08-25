@@ -22,7 +22,7 @@ public class Unit_V2 : MonoBehaviour
 
     private int baseDefense;
 
-    private bool isDefending;
+    public bool isDefending = false;
 
     [SerializeField]
     private int baseSpeed;
@@ -33,6 +33,7 @@ public class Unit_V2 : MonoBehaviour
 
     private int speedTier = 0;
 
+    public Weapon equippedWeapon = null;
 
     //Status Effect Variables
     [SerializeField]
@@ -42,14 +43,9 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int burnTimer = 0;
 
-    //Resist And Weakness
-    [SerializeField]
-    private Hue unitWeakness;
-    [SerializeField]
-    private Hue unitResistance;
-
+    //Reistances And Weaknesses
     private Dictionary<Hue, float> unitColorResistances = new Dictionary<Hue, float>();
-
+    private Dictionary<WeaponType, float> unitWeaponResistances = new Dictionary<WeaponType, float>();
     [SerializeField]
     private float redResistance;
     [SerializeField]
@@ -62,6 +58,14 @@ public class Unit_V2 : MonoBehaviour
     private float blueResistance;
     [SerializeField]
     private float violetResistance;
+    [SerializeField]
+    private float axeResistance;
+    [SerializeField]
+    private float bowResistance;
+    [SerializeField]
+    private float hammerResistance;
+    [SerializeField]
+    private float swordResistance;
 
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
 
@@ -86,7 +90,16 @@ public class Unit_V2 : MonoBehaviour
         unitColorResistances[Hue.Green] = greenResistance;
         unitColorResistances[Hue.Blue] = blueResistance;
         unitColorResistances[Hue.Violet] = violetResistance;
-        unitColorResistances[Hue.Neutral] = 1;
+        unitColorResistances[Hue.Neutral] = 0;
+    }
+
+    public virtual void SetWeaponResistances()
+    {
+        unitWeaponResistances[WeaponType.Axe] = axeResistance;
+        unitWeaponResistances[WeaponType.Bow] = bowResistance;
+        unitWeaponResistances[WeaponType.Hammer] = hammerResistance;
+        unitWeaponResistances[WeaponType.Sword] = swordResistance;
+        unitWeaponResistances[WeaponType.Neutral] = 0;
     }
     // Update is called once per frame
     void Update()
@@ -130,13 +143,9 @@ public class Unit_V2 : MonoBehaviour
         return unitColorResistances;
     }
 
-    public bool IsDefending()
+    public Dictionary<WeaponType, float> GetWeaponResistances()
     {
-        if (isDefending)
-        {
-            return true;
-        }
-        return false;
+        return unitWeaponResistances;
     }
 
     public Dictionary<string, Attack> GetAttackDictionary()
