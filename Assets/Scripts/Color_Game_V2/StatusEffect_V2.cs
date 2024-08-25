@@ -8,14 +8,14 @@ public class StatusEffect_V2
     private int effectLength = 0;
     public int effectStack = 0;
     private int damageAmount = 0;
-    public int timeNeededInQue = 3;
-    public StatusEffect_V2(string statusName = null, int effectLength = 0, int effectStack = 0, int damageAmount = 0)
+    public int timeNeededInQue;
+    public StatusEffect_V2(string statusName = null, int effectLength = 0, int effectStack = 0, int damageAmount = 0, int timeNeededInQue = 0)
     {
         this.statusName = statusName;
         this.effectLength = effectLength;
         this.effectStack = effectStack;
         this.damageAmount = damageAmount;
-
+        this.timeNeededInQue = timeNeededInQue;
     }
 
     public int GetStatusDamage()

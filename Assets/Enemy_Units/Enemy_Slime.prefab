@@ -123,9 +123,18 @@ MonoBehaviour:
   unitName: Slime
   currentHp: 10
   maxHp: 10
+  isDefending: 0
   baseSpeed: 1
   burnAmount: 0
   burnThreshhold: 5
   burnTimer: 0
-  unitWeakness: 0
-  unitResistance: 0
+  redResistance: 0
+  orangeResistance: 0
+  yellowResistance: 0
+  greenResistance: 0
+  blueResistance: 0
+  violetResistance: 0
+  axeResistance: 0
+  bowResistance: 0
+  hammerResistance: 0
+  swordResistance: 0

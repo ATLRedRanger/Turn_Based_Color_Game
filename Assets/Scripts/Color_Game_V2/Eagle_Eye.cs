@@ -43,7 +43,7 @@ public class Eagle_Eye : MonoBehaviour
         //player.TakeDamage(7);
         
         CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
-        CheckStatuses(listOfCombatants);
+        CheckStatusTimes(listOfCombatants);
         EndOfRoundStatusDamage();
         uiScript.SetPlayerHealthAndStamina(player);
         uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
@@ -308,7 +308,7 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    private void CheckStatuses(List<Unit_V2> listOfCombatants)
+    private void CheckStatusTimes(List<Unit_V2> listOfCombatants)
     {
         List<StatusEffect_V2> removeStatus = new List<StatusEffect_V2>();
 
@@ -323,7 +323,7 @@ public class Eagle_Eye : MonoBehaviour
                         Debug.Log($"{unit.unitName}'s burnTimer: {unit.GetBurnTimer()}");
                         if (unit.GetBurnTimer() >= status.GetEffectLength())
                         {
-                            Debug.Log("Testing");
+                            Debug.Log("Setting Burn Timer To Zero");
                             unit.SetBurnTimerToZero();
                             removeStatus.Add(status);
                         }
@@ -364,10 +364,12 @@ public class Eagle_Eye : MonoBehaviour
         //how much damage are they going to take and then when is the damage supposed to happen.
         //Then when the timeInQue is NOT < 1, you add it to the blank list, clear the status list, 
         //then put it back in the Que.
+
         List <List<object>> blankList = new List<List<object>>();
         Unit_V2 unit = null;
         int damage = 0;
         int timeInQue;
+
         if (statusDamageQue.Count != 0)
         {
             for (int i = 0; i < statusDamageQue.Count; i++)

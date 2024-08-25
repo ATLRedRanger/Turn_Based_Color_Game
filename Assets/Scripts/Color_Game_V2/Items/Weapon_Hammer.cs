@@ -15,7 +15,7 @@ public class Weapon_Hammer : Weapon
 
     public override int GetWeaponDamage(Unit_V2 attacker = null, Unit_V2 defender = null)
     {
-        if ( defender != null && defender.IsDefending())
+        if (defender != null && defender.isDefending)
         {
             return weaponDamage * 2;
         }

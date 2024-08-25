@@ -15,12 +15,12 @@ public class StatusEffectsDatabase_V2 : MonoBehaviour
     // Update is called once per frame
     void Awake()
     {
-        burn = CreateStatus("Burn", 3, 0, 5);
+        burn = CreateStatus("Burn", 3, 0, 5, 0);
     }
 
-    public StatusEffect_V2 CreateStatus(string statusName = null, int effectLength = 0, int effectStack = 0, int damageAmount = 0)
+    public StatusEffect_V2 CreateStatus(string statusName = null, int effectLength = 0, int effectStack = 0, int damageAmount = 0, int timeNeededInQue = 0)
     {
-        var status = new StatusEffect_V2(statusName, effectLength, effectStack, damageAmount);
+        var status = new StatusEffect_V2(statusName, effectLength, effectStack, damageAmount, timeNeededInQue);
 
         return status;
     }
