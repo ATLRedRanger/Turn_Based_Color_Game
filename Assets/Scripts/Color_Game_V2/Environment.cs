@@ -38,7 +38,7 @@ public class Environment : MonoBehaviour
 
     //Dictionary inside of a dictionary 
     public Dictionary<string, Dictionary<Hue, LocationMana>> Locations = new Dictionary<string, Dictionary<Hue, LocationMana>>();
-
+    public Dictionary<Hue, int> environmentColorNums = new Dictionary<Hue, int>();
 
 
     // Start is called before the first frame update
@@ -167,4 +167,14 @@ public class Environment : MonoBehaviour
 
     }
 
+
+    public void UpdateEnvironmentColorDictionary()
+    {
+        environmentColorNums[Hue.Red] = currentRed;
+        environmentColorNums[Hue.Orange] = currentOrange;
+        environmentColorNums[Hue.Yellow] = currentYellow;
+        environmentColorNums[Hue.Green] = currentGreen;
+        environmentColorNums[Hue.Blue] = currentBlue;
+        environmentColorNums[Hue.Violet] = currentViolet;
+    }
 }

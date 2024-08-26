@@ -439,6 +439,11 @@ public class Eagle_Eye : MonoBehaviour
                                         envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
     }
 
+    private void UpdateEnvironmentColros()
+    {
+        envManaScript.UpdateEnvironmentColorDictionary();
+    }
+
     private void UpdateEnvironmentColorsForUI()
     {
         uiScript.UpdateEnvironmentColors(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,

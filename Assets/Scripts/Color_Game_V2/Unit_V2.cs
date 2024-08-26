@@ -138,6 +138,11 @@ public class Unit_V2 : MonoBehaviour
         return speed;
     }
 
+    public void SetSpeedTier(int value)
+    {
+        speedTier += value;
+    }
+
     public Dictionary<Hue, float> GetColorResistances()
     {
         return unitColorResistances;
