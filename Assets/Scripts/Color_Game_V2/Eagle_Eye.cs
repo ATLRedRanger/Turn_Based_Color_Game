@@ -52,6 +52,7 @@ public class Eagle_Eye : MonoBehaviour
 
         GenerateEnemies();
         buttonsAndPanelsScript.SetEnemyOneButtonName(enemyOne.unitName);
+        currentPC = player;
         PlayerTurn();
     }
 
@@ -412,9 +413,13 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log("Start");
         buttonsAndPanelsScript.ToggleFightPanel();
         yield return new WaitUntil(PlayerTurnIsOver);
+        if(chosenAttack != null && chosenEnemyTarget != null)
+        {
+            Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
+            Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
+        }
 
-        Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
-        Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
+        Debug.Log("PLAYER TURN HAS FINISHED!");
         buttonsAndPanelsScript.ToggleFightPanel();
     }
     private void EnemyTurn(Unit_V2 unit)
@@ -490,7 +495,7 @@ public class Eagle_Eye : MonoBehaviour
     public void DefendIsChosen()
     {
         currentPC.isDefending = true;
-        
+        Debug.Log($"{currentPC.unitName} is Defending!");
     }
     private bool PlayerTurnIsOver()
     {
