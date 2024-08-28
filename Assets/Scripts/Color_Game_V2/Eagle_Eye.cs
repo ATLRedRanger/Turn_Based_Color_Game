@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UnityLinker;
 using UnityEngine;
 
 public class Eagle_Eye : MonoBehaviour
@@ -13,11 +14,13 @@ public class Eagle_Eye : MonoBehaviour
     private Unit_V2 player;
     private Unit_V2 enemyOne;
     private Unit_V2 enemyTwo;
+    private Unit_V2 currentPC;
     private int numOfEnemies;
     private int turnsInRound;
-    private string currentLocation = "Cave";
+    private string currentLocation = "Forest";
 
     private Attack chosenAttack = null;
+    private Unit_V2 chosenEnemyTarget = null;
 
     //Scripts
     private Unit_Spawner unitSpawnerScript;
@@ -38,15 +41,18 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test()
     {
-        //player.AddAttackToDictionary(attackDatabaseScript._fireball);
-        //player.GetAttackDictionary();
-        //player.TakeDamage(7);
         
+        /*
         CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
         CheckStatusTimes(listOfCombatants);
         EndOfRoundStatusDamage();
         uiScript.SetPlayerHealthAndStamina(player);
         uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
+        */
+
+        GenerateEnemies();
+        buttonsAndPanelsScript.SetEnemyOneButtonName(enemyOne.unitName);
+        PlayerTurn();
     }
 
     IEnumerator LoadScripts()
@@ -63,8 +69,8 @@ public class Eagle_Eye : MonoBehaviour
         //yield return new WaitForSeconds(1);
         //unitSpawnerScript.SpawnPlayer();
         player = unitSpawnerScript.SpawnPlayer();
-        enemyOne = unitSpawnerScript.GenerateEnemy(0);
-        listOfCombatants.Add(enemyOne);
+        //enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
+        //listOfCombatants.Add(enemyOne);
         Debug.Log("Finished Loading");
         
     }
@@ -90,13 +96,13 @@ public class Eagle_Eye : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    enemyOne = unitSpawnerScript.GenerateEnemy(0);
+                    enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
                     Debug.Log($"EnemyOne is {enemyOne.unitName}");
                     listOfCombatants.Add(enemyOne);
 
                     break;
                 case 1:
-                    enemyTwo = unitSpawnerScript.GenerateEnemy(1);
+                    enemyTwo = unitSpawnerScript.GenerateEnemy(1, currentLocation);
                     Debug.Log($"EnemyTwo is {enemyTwo.unitName}");
                     listOfCombatants.Add(enemyTwo);
 
@@ -130,6 +136,7 @@ public class Eagle_Eye : MonoBehaviour
                 if (unit is Player_V2)
                 {
                     whoseTurnIsIt = WhoseTurn.Player;
+                    currentPC = unit;
                     buttonsAndPanelsScript.ToggleFightPanel();
                     PlayerTurn();
                     if (IsPlayerAlive(player))
@@ -223,7 +230,7 @@ public class Eagle_Eye : MonoBehaviour
             enemyTwo.TakeDamage(5);
             
         }*/
-        //StartCoroutine(WaitForAttackChoice());
+        StartCoroutine(WaitForPlayerDecisions());
     }
 
     // Helper function to calculate damage multiplier (replace with your implementation for critical hits, etc.)
@@ -400,13 +407,15 @@ public class Eagle_Eye : MonoBehaviour
         statusDamageQue = blankList;
     }
 
-    IEnumerator WaitForAttackChoice()
+    IEnumerator WaitForPlayerDecisions()
     {
         Debug.Log("Start");
-
-        yield return new WaitUntil(AttackIsChosen);
+        buttonsAndPanelsScript.ToggleFightPanel();
+        yield return new WaitUntil(PlayerTurnIsOver);
 
         Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
+        Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
+        buttonsAndPanelsScript.ToggleFightPanel();
     }
     private void EnemyTurn(Unit_V2 unit)
     {
@@ -467,5 +476,55 @@ public class Eagle_Eye : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private bool EnemyIsChosen()
+    {
+        if (chosenEnemyTarget != null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void DefendIsChosen()
+    {
+        currentPC.isDefending = true;
+        
+    }
+    private bool PlayerTurnIsOver()
+    {
+        if (AttackIsChosen() && EnemyIsChosen())
+        {
+            return true;
+        }else if (currentPC.isDefending)
+        {
+            return true;
+        }
+        return false;
+    }
+    public void SetAttackTarget(string enemy)
+    {
+        switch (enemy)
+        {
+            case "EnemyOne":
+                chosenEnemyTarget = enemyOne;
+                Debug.Log($"{enemyOne.unitName} is the chosen target!");
+                break;
+            case "EnemeyTwo":
+                chosenEnemyTarget = enemyTwo;
+                Debug.Log($"{enemyTwo.unitName} is the chosen target!");
+                break;
+            default:
+                chosenEnemyTarget = enemyOne;
+                break;
+        }
+        
+    }
+
+    public void ResetAttackAndEnemyTargets()
+    {
+        chosenAttack = null;
+        chosenEnemyTarget = null;
     }
 }

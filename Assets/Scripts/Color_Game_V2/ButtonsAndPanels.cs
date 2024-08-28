@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class ButtonsAndPanels : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public Button _abilitiesButton;
     public Button _itemsButton;
     public Button _spellsButton;
+    public Button _defendButton;
 
     public Button _spellPanelCycleButton;
 
@@ -24,6 +26,12 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _SpellsPanel2;
     public GameObject _AbilitiesPanel;
     public GameObject _ItemsPanel;
+    public GameObject _EnemiesPanel;
+
+    //TargetEnemyButtons
+    public Button _enemyOneButton;
+    public TMP_Text _enemyOneButtonText;
+    public Button _enemyTwoButton;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +63,13 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _AbilitiesPanel.SetActive(!isActive);
         }
+
+        if (_AbilitiesPanel.activeSelf)
+        {
+            _ItemsPanel.SetActive(false);
+            _EnemiesPanel.SetActive(false);
+            _SpellsPanel.SetActive(false);
+        }
     }
 
     public void ToggleSpellsPanel()
@@ -65,21 +80,56 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _SpellsPanel.SetActive(!isActive);
         }
+
+        if (_SpellsPanel.activeSelf)
+        {
+            _ItemsPanel.SetActive(false);
+            _AbilitiesPanel.SetActive(false);
+            _EnemiesPanel.SetActive(false);
+        }
     }
 
     public void ToggleItemPanel()
     {
+        eagleScript.ResetAttackAndEnemyTargets();
+
         bool isActive = _ItemsPanel.activeSelf;
 
         if (_ItemsPanel != null)
         {
             _ItemsPanel.SetActive(!isActive);
         }
+
+        if (_ItemsPanel.activeSelf)
+        {
+            _AbilitiesPanel.SetActive(false);
+            _EnemiesPanel.SetActive(false);
+            _SpellsPanel.SetActive(false);
+        };
+    }
+
+    public void ToggleEnemiesPanel()
+    {
+        bool isActive = _EnemiesPanel.activeSelf;
+
+        if (_EnemiesPanel != null)
+        {
+            _EnemiesPanel.SetActive(!isActive);
+        }
+
+        if (_EnemiesPanel.activeSelf)
+        {
+            _AbilitiesPanel.SetActive(false);
+            _ItemsPanel.SetActive(false);
+            _SpellsPanel.SetActive(false);
+        }
     }
 
     public void _FireballClick()
     {
         eagleScript.AttackChangeNotification("Fireball");
+        ToggleSpellsPanel();
+        ToggleEnemiesPanel();
     }
 
     public void _SpellPanelCycle()
@@ -91,5 +141,23 @@ public class ButtonsAndPanels : MonoBehaviour
             _SpellsPanel2.SetActive(isActive);
             _SpellsPanel.SetActive(!isActive);
         }
+
     }
+
+    public void SetEnemyOneButtonName(string name)
+    {
+        _enemyOneButtonText.text = name;
+    }
+
+    public void OnEnemeyOneButtonClick()
+    {
+        eagleScript.SetAttackTarget("EnemyOne");
+        ToggleEnemiesPanel();
+    }
+
+    public void OnDefendButtonClick()
+    {
+        eagleScript.DefendIsChosen();
+    }
+
 }
