@@ -68,6 +68,7 @@ public class Unit_V2 : MonoBehaviour
     private float swordResistance;
 
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
+    private List<Buffs> unitBuffsList = new List<Buffs>();
 
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
@@ -137,10 +138,15 @@ public class Unit_V2 : MonoBehaviour
         int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
         return speed;
     }
-
+    
     public void SetSpeedTier(int value)
     {
         speedTier += value;
+    }
+    
+    public List<Buffs> GetListOfBuffs()
+    {
+        return unitBuffsList;
     }
 
     public Dictionary<Hue, float> GetColorResistances()
