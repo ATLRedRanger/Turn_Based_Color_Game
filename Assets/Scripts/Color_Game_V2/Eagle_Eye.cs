@@ -174,6 +174,9 @@ public class Eagle_Eye : MonoBehaviour
                     
                 }
             }
+            //End of turn stuff
+            CheckStatusTimes(listOfCombatants);
+            EndOfRoundStatusDamage();
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
@@ -186,7 +189,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Won;
                 break;
             }
-            //End of turn stuff
+            
             if (IsPlayerAlive(player))
             {
                 Debug.Log("Player is alive");
@@ -412,9 +415,12 @@ public class Eagle_Eye : MonoBehaviour
     {
         Debug.Log("Start");
         buttonsAndPanelsScript.ToggleFightPanel();
-        yield return new WaitUntil(PlayerTurnIsOver);
+        yield return new WaitUntil(PlayerChoiceIsMade);
         if(chosenAttack != null && chosenEnemyTarget != null)
         {
+            //Player is attacking target
+            CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
+            CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
             Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
         }
@@ -497,8 +503,9 @@ public class Eagle_Eye : MonoBehaviour
         currentPC.isDefending = true;
         Debug.Log($"{currentPC.unitName} is Defending!");
     }
-    private bool PlayerTurnIsOver()
+    private bool PlayerChoiceIsMade()
     {
+        
         if (AttackIsChosen() && EnemyIsChosen())
         {
             return true;
