@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
 using TMPro;
 
 public class ButtonsAndPanels : MonoBehaviour
@@ -57,6 +58,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleAbilitiesPanel()
     {
+        InteractableAttackButtons();
         bool isActive = _AbilitiesPanel.activeSelf;
 
         if(_AbilitiesPanel != null)
@@ -74,6 +76,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleSpellsPanel()
     {
+        InteractableAttackButtons();
         bool isActive = _SpellsPanel.activeSelf;
 
         if (_SpellsPanel != null)
@@ -160,4 +163,25 @@ public class ButtonsAndPanels : MonoBehaviour
         eagleScript.DefendIsChosen();
     }
 
+    public void InteractableAttackButtons()
+    {
+        SetButtonsToUninteractable();
+
+        List<string> useableAttacks = eagleScript.IsPlayerAttackUseable();
+
+        foreach(string attack in useableAttacks)
+        {
+            switch (attack)
+            {
+                case "Fireball":
+                    _fireBallButton.interactable = true;
+                    break;
+            }
+        }
+    }
+
+    public void SetButtonsToUninteractable()
+    {
+        _fireBallButton.interactable = false;
+    }
 }

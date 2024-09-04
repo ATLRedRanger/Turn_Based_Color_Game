@@ -165,7 +165,14 @@ public class Unit_V2 : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        currentHp -= damage;
+        if(isDefending)
+        {
+            currentHp -= damage / 2;
+        }
+        else
+        {
+            currentHp -= damage;
+        }
         Debug.Log($"{unitName} has taken {damage} damage and their currentHP is: {currentHp}");
     }
 

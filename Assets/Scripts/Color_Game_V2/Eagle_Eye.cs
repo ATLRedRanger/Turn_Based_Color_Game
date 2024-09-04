@@ -416,18 +416,58 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log("Start");
         buttonsAndPanelsScript.ToggleFightPanel();
         yield return new WaitUntil(PlayerChoiceIsMade);
-        if(chosenAttack != null && chosenEnemyTarget != null)
+        //Player is attacking target
+        if (AttackIsChosen() && EnemyIsChosen())
         {
-            //Player is attacking target
-            CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
-            CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
+            PayAttackCost(currentPC, chosenAttack);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
-            Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
+            Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}"); 
+            for (int i = 0; i < chosenAttack.numOfHits; i++)
+            {
+                if (chosenAttack.DoesAttackHit(currentPC))
+                {
+                    int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
+                    CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
+                    chosenEnemyTarget.TakeDamage(damage);
+                }
+                
+            }
         }
-
+        
         Debug.Log("PLAYER TURN HAS FINISHED!");
         buttonsAndPanelsScript.ToggleFightPanel();
     }
+
+    public List<string> IsPlayerAttackUseable()
+    {
+        List<string> useableAttacks = new List<string>();
+
+        foreach(var kvp in currentPC.GetAttackDictionary())
+        {
+            if (currentPC.GetCurrentStamina() >= kvp.Value.staminaCost && envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
+            {
+               useableAttacks.Add(kvp.Key);
+            }
+        }
+        return useableAttacks;
+    }
+
+    private bool IsAttackUseable(Unit_V2 unit, Attack attack)
+    {
+        if (unit.GetCurrentStamina() >= attack.staminaCost && envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void PayAttackCost(Unit_V2 attacker, Attack attack)
+    {
+        attacker.ReduceStamina(attack.staminaCost);
+        envManaScript.GetCurrentColorDictionary()[attack.attackColor] -= attack.colorCost;
+        
+    }
+
     private void EnemyTurn(Unit_V2 unit)
     {
         Debug.Log($"{unit.unitName}'s Turn");
