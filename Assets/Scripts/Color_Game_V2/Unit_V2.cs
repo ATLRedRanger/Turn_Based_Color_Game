@@ -13,13 +13,13 @@ public class Unit_V2 : MonoBehaviour
     private int currentHp;
     [SerializeField]
     private int maxHp = 10;
-
+    [SerializeField]
     private int currentStamina;
-
+    [SerializeField]
     private int maxStamina = 10;
-
+    [SerializeField]
     private int baseAttack;
-
+    [SerializeField]
     private int baseDefense;
 
     public bool isDefending = false;

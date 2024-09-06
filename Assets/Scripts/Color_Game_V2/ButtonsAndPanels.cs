@@ -33,6 +33,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public Button _enemyOneButton;
     public TMP_Text _enemyOneButtonText;
     public Button _enemyTwoButton;
+    public TMP_Text _enemyTwoButtonText;
 
     // Start is called before the first frame update
     void Start()
@@ -158,6 +159,16 @@ public class ButtonsAndPanels : MonoBehaviour
         ToggleEnemiesPanel();
     }
 
+    public void SetEnemyTwoButtonName(string name)
+    {
+        _enemyTwoButtonText.text = name;
+    }
+
+    public void OnEnemyTwoButtonClick()
+    {
+        eagleScript.SetAttackTarget("EnemyTwo");
+        ToggleEnemiesPanel();
+    }
     public void OnDefendButtonClick()
     {
         eagleScript.DefendIsChosen();

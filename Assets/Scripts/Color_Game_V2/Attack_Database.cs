@@ -43,7 +43,7 @@ public class Attack_Database : MonoBehaviour
     private void Awake()
     {
         //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
-        _fireball = CreateAttack("Fireball", 10, 75, 10, 10, 1, AttackType.Physical, Hue.Red, AttackBehavior.Burn);        
+        _fireball = CreateAttack("Fireball", 10, 75, 1, 10, 1, AttackType.Physical, Hue.Red, AttackBehavior.Burn);        
     }
 
     private Attack CreateAttack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,

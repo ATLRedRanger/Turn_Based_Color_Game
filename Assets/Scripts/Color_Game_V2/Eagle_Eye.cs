@@ -52,10 +52,34 @@ public class Eagle_Eye : MonoBehaviour
 
         GenerateEnemies();
         buttonsAndPanelsScript.SetEnemyOneButtonName(enemyOne.unitName);
+        if(enemyTwo != null)
+        {
+            buttonsAndPanelsScript.SetEnemyTwoButtonName(enemyTwo.unitName);
+        }
         currentPC = player;
+        GenerateEnvironment();
+        SetMaxColorAmountsForUI();
+        
+        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
+        uiScript.SetPlayerHealthAndStamina(currentPC);
+        
+       
+        
+
+    }
+
+    public void Test_2()
+    {
         PlayerTurn();
     }
 
+    public void Test_3()
+    {
+        UpdateEnvironmentColorsForUI();
+        UpdateEnvironmentColors();
+        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
+        uiScript.SetPlayerHealthAndStamina(currentPC);
+    }
     IEnumerator LoadScripts()
     {
         yield return new WaitForSeconds(1);
@@ -115,7 +139,7 @@ public class Eagle_Eye : MonoBehaviour
         
     }
 
-    public void Combat()
+    IEnumerator Combat()
     {
         GenerateEnemies();
         List<Unit_V2> deadUnits = new List<Unit_V2>();
@@ -126,6 +150,7 @@ public class Eagle_Eye : MonoBehaviour
 
         while (theCombatState == CombatState.Active)
         {
+            
             currentRound++;
             Debug.Log($"Current Round: {currentRound}");
 
@@ -208,6 +233,8 @@ public class Eagle_Eye : MonoBehaviour
         {
             PlayerLost();
         }
+
+        yield return null;
     }
     
     private bool IsPlayerAlive(Unit_V2 player)
@@ -260,15 +287,16 @@ public class Eagle_Eye : MonoBehaviour
     {
         // Calculate base damage with potential random variation
         float baseDamage = attack.attackPower + attacker.GetCurrentAttack();
+        Debug.Log($"BaseDamage ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
         float damageMultiplier = CalculateDamageMultiplier(); // Helper function
 
         // Apply damage multiplier for critical hits, etc.
         int damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
-
+        Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
 
         // Apply color resistances based on attack type and color
         int damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
-
+        Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
         return damageAfterDefenses;
     }
 
@@ -426,11 +454,15 @@ public class Eagle_Eye : MonoBehaviour
             {
                 if (chosenAttack.DoesAttackHit(currentPC))
                 {
+                    Debug.Log("Attack Hits");
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
                     chosenEnemyTarget.TakeDamage(damage);
                 }
-                
+                else
+                {
+                    Debug.Log("Attack Doesn't Hit");
+                }
             }
         }
         
@@ -464,7 +496,12 @@ public class Eagle_Eye : MonoBehaviour
     private void PayAttackCost(Unit_V2 attacker, Attack attack)
     {
         attacker.ReduceStamina(attack.staminaCost);
-        envManaScript.GetCurrentColorDictionary()[attack.attackColor] -= attack.colorCost;
+        switch (attack.attackColor)
+        {
+            case Hue.Red:
+                envManaScript.currentRed -= attack.colorCost;
+                break;
+        }
         
     }
 
@@ -499,7 +536,7 @@ public class Eagle_Eye : MonoBehaviour
                                         envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
     }
 
-    private void UpdateEnvironmentColros()
+    private void UpdateEnvironmentColors()
     {
         envManaScript.UpdateEnvironmentColorDictionary();
     }
@@ -563,12 +600,12 @@ public class Eagle_Eye : MonoBehaviour
                 chosenEnemyTarget = enemyOne;
                 Debug.Log($"{enemyOne.unitName} is the chosen target!");
                 break;
-            case "EnemeyTwo":
+            case "EnemyTwo":
                 chosenEnemyTarget = enemyTwo;
                 Debug.Log($"{enemyTwo.unitName} is the chosen target!");
                 break;
             default:
-                chosenEnemyTarget = enemyOne;
+                //chosenEnemyTarget = enemyOne;
                 break;
         }
         

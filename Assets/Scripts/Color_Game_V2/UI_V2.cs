@@ -73,6 +73,7 @@ public class UI_V2 : MonoBehaviour
         enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
         enemyOneHealthText.text = enemyOne.GetCurrentHp().ToString() + " / " + enemyOne.GetMaxHp().ToString();
         enemyOneStaminaText.text = enemyOne.GetCurrentStamina().ToString() + " / " + enemyOne.GetMaxStamina().ToString();
+        
     }
 
     public void SetMaxColorAmounts(int maxRed, int maxOrange, int maxYellow, int maxGreen, int maxBlue, int maxViolet)
@@ -87,6 +88,7 @@ public class UI_V2 : MonoBehaviour
 
     public void UpdateEnvironmentColors(int currentRed, int currentOrange, int currentYellow, int currentGreen, int currentBlue, int currentViolet)
     {
+        Debug.Log("TESTING");
         currentRedAmount = currentRed;
         currentOrangeAmount = currentOrange;
         currentYellowAmount = currentYellow;
@@ -99,7 +101,7 @@ public class UI_V2 : MonoBehaviour
 
     public void UpdateEnvironmentBars()
     {
-        _redBar.fillAmount = (float)(currentRedAmount / maxRedAmount);
+        _redBar.fillAmount = (float)((float)currentRedAmount / (float)maxRedAmount);
         _redBarText.text = "Red: " + currentRedAmount.ToString() + " / " + maxRedAmount.ToString(); 
         _orangeBar.fillAmount = (float)(currentOrangeAmount / maxOrangeAmount);
         _orangeBarText.text = "Orange: " + currentOrangeAmount.ToString() + " / " + maxOrangeAmount.ToString();
