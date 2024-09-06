@@ -119,9 +119,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec5eddcff43a9e43a396fd76feb3628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDatabaseScript: {fileID: 0}
   unitName: Huey
   currentHp: 50
   maxHp: 50
+  currentStamina: 0
+  maxStamina: 10
+  baseAttack: 0
+  baseDefense: 0
+  isDefending: 0
   baseSpeed: 5
-  unitWeakness: 0
-  unitResistance: 0
+  burnAmount: 0
+  burnThreshhold: 5
+  burnTimer: 0
+  redResistance: 0
+  orangeResistance: 0
+  yellowResistance: 0
+  greenResistance: 0
+  blueResistance: 0
+  violetResistance: 0
+  axeResistance: 0
+  bowResistance: 0
+  hammerResistance: 0
+  swordResistance: 0

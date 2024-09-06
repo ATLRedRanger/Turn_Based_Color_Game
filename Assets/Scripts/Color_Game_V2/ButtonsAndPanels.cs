@@ -30,9 +30,9 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _EnemiesPanel;
 
     //TargetEnemyButtons
-    public Button _enemyOneButton;
+    public GameObject _enemyOneButton;
     public TMP_Text _enemyOneButtonText;
-    public Button _enemyTwoButton;
+    public GameObject _enemyTwoButton;
     public TMP_Text _enemyTwoButtonText;
 
     // Start is called before the first frame update
@@ -148,6 +148,24 @@ public class ButtonsAndPanels : MonoBehaviour
 
     }
 
+
+    public void ToggleEnemyButtons(Unit_V2 enemyOne = null, Unit_V2 enemyTwo = null)
+    {
+        _enemyOneButton.SetActive(false);
+        _enemyTwoButton.SetActive(false);
+
+        if (enemyOne != null)
+        {
+            _enemyOneButton.SetActive(true);
+            SetEnemyOneButtonName(enemyOne.unitName);
+        }
+        if (enemyTwo != null)
+        {
+            _enemyTwoButton.SetActive(true);
+            SetEnemyTwoButtonName(enemyTwo.unitName);
+        }
+    }
+
     public void SetEnemyOneButtonName(string name)
     {
         _enemyOneButtonText.text = name;
@@ -161,6 +179,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void SetEnemyTwoButtonName(string name)
     {
+        
         _enemyTwoButtonText.text = name;
     }
 

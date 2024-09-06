@@ -51,11 +51,7 @@ public class Eagle_Eye : MonoBehaviour
         */
 
         GenerateEnemies();
-        buttonsAndPanelsScript.SetEnemyOneButtonName(enemyOne.unitName);
-        if(enemyTwo != null)
-        {
-            buttonsAndPanelsScript.SetEnemyTwoButtonName(enemyTwo.unitName);
-        }
+        buttonsAndPanelsScript.ToggleEnemyButtons(enemyOne, enemyTwo);
         currentPC = player;
         GenerateEnvironment();
         SetMaxColorAmountsForUI();

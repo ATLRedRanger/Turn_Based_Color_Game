@@ -13885,7 +13885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1421754595
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16725,9 +16725,9 @@ MonoBehaviour:
   _AbilitiesPanel: {fileID: 1237830480}
   _ItemsPanel: {fileID: 1416767523}
   _EnemiesPanel: {fileID: 1421754594}
-  _enemyOneButton: {fileID: 0}
+  _enemyOneButton: {fileID: 775971296}
   _enemyOneButtonText: {fileID: 1733775277}
-  _enemyTwoButton: {fileID: 0}
+  _enemyTwoButton: {fileID: 1993143389}
   _enemyTwoButtonText: {fileID: 1203772699}
 --- !u!1 &1742098422
 GameObject:

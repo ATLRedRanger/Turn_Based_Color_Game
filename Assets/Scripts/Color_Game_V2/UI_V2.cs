@@ -88,7 +88,7 @@ public class UI_V2 : MonoBehaviour
 
     public void UpdateEnvironmentColors(int currentRed, int currentOrange, int currentYellow, int currentGreen, int currentBlue, int currentViolet)
     {
-        Debug.Log("TESTING");
+        
         currentRedAmount = currentRed;
         currentOrangeAmount = currentOrange;
         currentYellowAmount = currentYellow;
