@@ -32,18 +32,20 @@ public class Attack_Database : MonoBehaviour
     //Wand
 
 
-
+    private StatusEffectsDatabase_V2 _statusEffectsDatabase;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     private void Awake()
     {
+        _statusEffectsDatabase = FindObjectOfType<StatusEffectsDatabase_V2>();
         //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
-        _fireball = CreateAttack("Fireball", 3, 75, 1, 10, 1, AttackType.Physical, Hue.Red, AttackBehavior.Burn);        
+        _fireball = CreateAttack("Fireball", 3, 75, 1, 10, 1, AttackType.Physical, Hue.Red, AttackBehavior.Burn);
+        _fireball.SetAttackDebuff(_statusEffectsDatabase.deBuffington);
     }
 
     private Attack CreateAttack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,

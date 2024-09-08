@@ -46,6 +46,7 @@ public class Unit_V2 : MonoBehaviour
     //Reistances And Weaknesses
     private Dictionary<Hue, float> unitColorResistances = new Dictionary<Hue, float>();
     private Dictionary<WeaponType, float> unitWeaponResistances = new Dictionary<WeaponType, float>();
+
     [SerializeField]
     private float redResistance;
     [SerializeField]
@@ -69,7 +70,7 @@ public class Unit_V2 : MonoBehaviour
 
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
     private List<Buffs> unitBuffsList = new List<Buffs>();
-
+    private List<Debuffs> unitDebuffsList = new List<Debuffs>();
     public Dictionary<string, Attack> unitAttackDictionary = new Dictionary<string, Attack>();
 
     // Start is called before the first frame update
@@ -138,15 +139,34 @@ public class Unit_V2 : MonoBehaviour
         int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
         return speed;
     }
-    
+
+    public void SetDefenseTier(int value)
+    {
+        defenseTier += value;
+    }
+    public void SetAttackTier(int value)
+    {
+        attackTier += value;
+    }
     public void SetSpeedTier(int value)
     {
         speedTier += value;
     }
     
+    public int GetSpeedTier()
+    {
+        return speedTier;
+    }
+
+
     public List<Buffs> GetListOfBuffs()
     {
         return unitBuffsList;
+    }
+
+    public List<Debuffs> GetListOfDebuffs()
+    {
+        return unitDebuffsList;
     }
 
     public Dictionary<Hue, float> GetColorResistances()
@@ -215,6 +235,16 @@ public class Unit_V2 : MonoBehaviour
     {
         switch (tier)
         {
+            case -5:
+                return 0;
+            case -4:
+                return .02f;
+            case -3:
+                return .04f;
+            case -2:
+                return .06f;
+            case -1:
+                return .08f;
             case 1:
                 return 1.2f;
             case 2:

@@ -13,7 +13,8 @@ public class Attack
     public AttackType attackType;
     public Hue attackColor;
     public AttackBehavior attackBehavior;
-
+    public Buffs attackBuff;
+    public Debuffs attackDebuff;
     
     public Attack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,
                     AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
@@ -58,5 +59,15 @@ public class Attack
             return true;
         }
         return false;
+    }
+
+    public void SetAttackBuff(Buffs buff)
+    {
+        attackBuff = buff;
+    }
+
+    public void SetAttackDebuff(Debuffs debuff)
+    {
+        attackDebuff = debuff;
     }
 }

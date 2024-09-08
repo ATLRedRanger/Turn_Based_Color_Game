@@ -20,6 +20,7 @@ public class Eagle_Eye : MonoBehaviour
     private string currentLocation = "Forest";
 
     private Attack chosenAttack = null;
+    private Unit_V2 chosenPCTarget = null;
     private Unit_V2 chosenEnemyTarget = null;
 
     //Scripts
@@ -75,6 +76,9 @@ public class Eagle_Eye : MonoBehaviour
         UpdateEnvironmentColors();
         uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
         uiScript.SetPlayerHealthAndStamina(currentPC);
+        CheckBuffsAndDebuffs(listOfCombatants);
+        Debug.Log(enemyOne.GetSpeedTier());
+        Debug.Log(enemyTwo.GetSpeedTier());
     }
     IEnumerator LoadScripts()
     {
@@ -220,6 +224,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
+
         }
         if (theCombatState == CombatState.Won)
         {
@@ -388,6 +393,74 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
+    private void CheckBuffsAndDebuffs(List<Unit_V2> listOfCombatants)
+    {
+        List<Buffs> removeBuff = new List<Buffs>();
+        List<Debuffs> removeDebuff = new List<Debuffs>();
+        foreach (Unit_V2 unit in listOfCombatants)
+        {
+            foreach (Buffs buff in unit.GetListOfBuffs())
+            {
+                if (buff.GetTimeActive() < 1)
+                {
+                    buff.ActivateBuffEffect(unit);
+                }
+                
+                if (buff.GetTimeActive() > buff.GetEffectLength())
+                {
+                    removeBuff.Add(buff);
+                }
+                else
+                {
+                    buff.SetTimeActive(1);
+                }
+            }
+
+            foreach (Debuffs debuff in unit.GetListOfDebuffs())
+            {
+                if (debuff.GetTimeActive() < 1)
+                {
+                    debuff.ActivateDebuffEffect(unit);
+                }
+
+                if (debuff.GetTimeActive() > debuff.GetEffectLength())
+                {
+                    removeDebuff.Add(debuff);
+                }
+                else
+                {
+                    debuff.SetTimeActive(1);
+                }
+            }
+
+
+            foreach (Buffs buff in removeBuff)
+            {
+                Debug.Log($"Trying to remove {buff.GetStatusName()}");
+                if (unit.DoesStatusExist(buff))
+                {
+                    Debug.Log($"{buff.GetStatusName()} has been removed.");
+                    unit.unitStatusEffects.Remove(buff);
+                }
+            }
+
+            foreach (Debuffs debuff in removeDebuff)
+            {
+                Debug.Log($"Trying to remove {debuff.GetStatusName()}");
+                if (unit.DoesStatusExist(debuff))
+                {
+                    Debug.Log($"{debuff.GetStatusName()} has been removed.");
+                    unit.unitStatusEffects.Remove(debuff);
+                }
+            }
+
+            
+
+            removeBuff.Clear();
+            removeDebuff.Clear();
+        }
+    }
+
     public void EndOfRoundStatusDamage()
     {
         //This function is for timed damage effects to go off
@@ -454,6 +527,15 @@ public class Eagle_Eye : MonoBehaviour
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
                     chosenEnemyTarget.TakeDamage(damage);
+                    if(chosenAttack.attackBuff != null)
+                    {
+                        chosenAttack.attackBuff.ApplyBuff(chosenPCTarget);
+                    }
+                    if(chosenAttack.attackDebuff != null)
+                    {
+                        chosenAttack.attackDebuff.ApplyDebuff(chosenEnemyTarget);
+                    }
+                    
                 }
                 else
                 {
