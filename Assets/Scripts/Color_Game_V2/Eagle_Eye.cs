@@ -54,6 +54,7 @@ public class Eagle_Eye : MonoBehaviour
         */
 
         GenerateEnemies();
+        listOfCombatants.Add(player);
         buttonsAndPanelsScript.ToggleEnemyButtons(enemyOne, enemyTwo);
         currentPC = player;
         GenerateEnvironment();
@@ -63,8 +64,9 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_2()
     {
-        //StartCoroutine(Combat());
-        PlayerTurn();
+        
+        StartCoroutine(Combat());
+        //PlayerTurn();
     }
 
     public void Test_3()
@@ -138,10 +140,10 @@ public class Eagle_Eye : MonoBehaviour
 
     IEnumerator Combat()
     {
-        GenerateEnemies();
+        
         List<Unit_V2> deadUnits = new List<Unit_V2>();
         theCombatState = CombatState.Active;
-        listOfCombatants.Add(player);
+        
         Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
         yield return new WaitForSeconds(1f);
@@ -158,7 +160,8 @@ public class Eagle_Eye : MonoBehaviour
                 Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
-                    whoseTurnIsIt = WhoseTurn.Player;
+                    Debug.Log("Fight Panel");
+                    //whoseTurnIsIt = WhoseTurn.Player;
                     currentPC = unit;
                     buttonsAndPanelsScript.ToggleFightPanel();
                     PlayerTurn();
@@ -173,7 +176,7 @@ public class Eagle_Eye : MonoBehaviour
                         break;
                     }
                 }
-                else if (unit is EnemyUnit_V2)
+                if (unit is EnemyUnit_V2)
                 {
                     if (unit.GetCurrentHp() < 1)
                     {
@@ -201,11 +204,13 @@ public class Eagle_Eye : MonoBehaviour
             yield return new WaitForSeconds (1f);
             CheckStatusTimes(listOfCombatants);
             EndOfRoundStatusDamage();
+            //TODO: Fix the Won and Lost conditions
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
                 {
                    deadUnits.Add(unit);
+                    Debug.Log($"Dead Units Count: {deadUnits.Count}");
                 }
             }
             if (listOfCombatants.Count - deadUnits.Count == 1)
@@ -223,7 +228,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-
+            
         }
         yield return new WaitForSeconds(1f);
         if (theCombatState == CombatState.Won)
@@ -235,7 +240,7 @@ public class Eagle_Eye : MonoBehaviour
             PlayerLost();
         }
 
-        yield return null;
+        //yield return null;
     }
     
     private bool IsPlayerAlive(Unit_V2 player)
@@ -251,6 +256,8 @@ public class Eagle_Eye : MonoBehaviour
     private void PlayerTurn()
     {
         playerTurnIsDone = false;
+        chosenAttack = null;
+        chosenEnemyTarget = null;
         Debug.Log("Player Turn");
         StartCoroutine(WaitForPlayerDecisions());
     }
@@ -510,7 +517,7 @@ public class Eagle_Eye : MonoBehaviour
     IEnumerator WaitForPlayerDecisions()
     {
         Debug.Log("Start");
-        buttonsAndPanelsScript.ToggleFightPanel();
+        
         yield return new WaitUntil(PlayerChoiceIsMade);
         //Player is attacking target
         if (AttackIsChosen() && EnemyIsChosen())

@@ -49,6 +49,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleFightPanel()
     {
+        Debug.Log("Fight Panel");
         bool isActive = _FightPanel.activeSelf;
 
         if (_FightPanel != null)
