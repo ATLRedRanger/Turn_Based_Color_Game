@@ -22,6 +22,8 @@ public class Eagle_Eye : MonoBehaviour
     private Attack chosenAttack = null;
     private Unit_V2 chosenPCTarget = null;
     private Unit_V2 chosenEnemyTarget = null;
+    private bool playerTurnIsDone = false;
+
 
     //Scripts
     private Unit_Spawner unitSpawnerScript;
@@ -57,16 +59,11 @@ public class Eagle_Eye : MonoBehaviour
         GenerateEnvironment();
         SetMaxColorAmountsForUI();
         
-        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
-        uiScript.SetPlayerHealthAndStamina(currentPC);
-        
-       
-        
-
     }
 
     public void Test_2()
     {
+        //StartCoroutine(Combat());
         PlayerTurn();
     }
 
@@ -147,7 +144,7 @@ public class Eagle_Eye : MonoBehaviour
         listOfCombatants.Add(player);
         Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
-
+        yield return new WaitForSeconds(1f);
         while (theCombatState == CombatState.Active)
         {
             
@@ -155,7 +152,7 @@ public class Eagle_Eye : MonoBehaviour
             Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
-
+            yield return new WaitForSeconds(1f);
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 Debug.Log($"Current Unit: {unit.unitName}");
@@ -165,6 +162,7 @@ public class Eagle_Eye : MonoBehaviour
                     currentPC = unit;
                     buttonsAndPanelsScript.ToggleFightPanel();
                     PlayerTurn();
+                    yield return new WaitUntil(PlayerTurnIsDone);
                     if (IsPlayerAlive(player))
                     {
                         Debug.Log("Player is alive");
@@ -200,6 +198,7 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
             //End of turn stuff
+            yield return new WaitForSeconds (1f);
             CheckStatusTimes(listOfCombatants);
             EndOfRoundStatusDamage();
             foreach (Unit_V2 unit in listOfCombatants)
@@ -226,6 +225,7 @@ public class Eagle_Eye : MonoBehaviour
             }
 
         }
+        yield return new WaitForSeconds(1f);
         if (theCombatState == CombatState.Won)
         {
             PlayerWon();
@@ -250,19 +250,18 @@ public class Eagle_Eye : MonoBehaviour
 
     private void PlayerTurn()
     {
+        playerTurnIsDone = false;
         Debug.Log("Player Turn");
-        /*
-        if (enemyOne != null)
-        {
-            enemyOne.TakeDamage(5);
-            
-        }
-        if (enemyTwo != null)
-        {
-            enemyTwo.TakeDamage(5);
-            
-        }*/
         StartCoroutine(WaitForPlayerDecisions());
+    }
+
+    private bool PlayerTurnIsDone()
+    {
+        if (playerTurnIsDone)
+        {
+            return true;
+        }
+        return false;
     }
 
     // Helper function to calculate damage multiplier (replace with your implementation for critical hits, etc.)
@@ -546,6 +545,7 @@ public class Eagle_Eye : MonoBehaviour
         
         Debug.Log("PLAYER TURN HAS FINISHED!");
         buttonsAndPanelsScript.ToggleFightPanel();
+        playerTurnIsDone = true;
     }
 
     public List<string> IsPlayerAttackUseable()
