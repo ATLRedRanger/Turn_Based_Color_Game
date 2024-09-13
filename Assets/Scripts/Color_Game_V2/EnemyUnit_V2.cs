@@ -24,7 +24,7 @@ public class EnemyUnit_V2 : Unit_V2
     {
         if (envColors[tolerantColor] > envColors[sensitiveColor])
         {
-            SetSpeedTier(1);
+            //SetSpeedTier(1);
         }
     }
 

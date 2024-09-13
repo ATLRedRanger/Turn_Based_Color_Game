@@ -37,6 +37,7 @@ public class Debuffs : StatusEffect_V2
  
     public void ApplyDebuff(Unit_V2 target)
     {
+        Debug.Log("Applying Debuff");
         target.GetListOfDebuffs().Add(this);
         
     }
@@ -47,6 +48,16 @@ public class Debuffs : StatusEffect_V2
         {
             case "Debuffington":
                 target.SetSpeedTier(-1);
+                break;
+        }
+    }
+
+    public void RevertDebuffEffect(Unit_V2 target)
+    {
+        switch (statusName)
+        {
+            case "Debuffington":
+                target.SetSpeedTier(1);
                 break;
         }
     }

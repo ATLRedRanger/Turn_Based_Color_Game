@@ -75,9 +75,9 @@ public class Eagle_Eye : MonoBehaviour
         UpdateEnvironmentColors();
         uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
         uiScript.SetPlayerHealthAndStamina(currentPC);
-        CheckBuffsAndDebuffs(listOfCombatants);
-        Debug.Log(enemyOne.GetSpeedTier());
-        Debug.Log(enemyTwo.GetSpeedTier());
+        //CheckBuffsAndDebuffs(listOfCombatants);
+        //Debug.Log(enemyOne.GetSpeedTier());
+        //Debug.Log(enemyTwo.GetSpeedTier());
     }
     IEnumerator LoadScripts()
     {
@@ -202,6 +202,7 @@ public class Eagle_Eye : MonoBehaviour
             }
             //End of turn stuff
             yield return new WaitForSeconds (1f);
+            CheckBuffsAndDebuffs(listOfCombatants);
             CheckStatusTimes(listOfCombatants);
             EndOfRoundStatusDamage();
             //TODO: Fix the Won and Lost conditions
@@ -256,6 +257,7 @@ public class Eagle_Eye : MonoBehaviour
     private void PlayerTurn()
     {
         playerTurnIsDone = false;
+        currentPC.isDefending = false;
         chosenAttack = null;
         chosenEnemyTarget = null;
         Debug.Log("Player Turn");
@@ -354,6 +356,44 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
+    private void CheckAttack_Buff_DebuffBuildupRelationship(Attack attack, Unit_V2 defender)
+    {
+        if(attack.attackBuff != null)
+        {
+            foreach (Buffs buff in defender.GetListOfBuffs())
+            {
+                if (defender.DoesStatusExist(buff))
+                {
+                    continue;
+                }
+                else
+                {
+                    buff.ApplyBuff(defender);
+                }
+            }
+            
+        }
+
+        if(attack.attackDebuff != null)
+        {
+            Debug.Log("Attack Debuff != Null");
+            if (defender.DoesStatusExist(attack.attackDebuff))
+            {
+                Debug.Log($"{attack.attackDebuff.GetStatusName()} is on the {defender.unitName}");
+                
+            }
+            else
+            {
+
+                attack.attackDebuff.ApplyDebuff(defender);
+            }
+           
+        }
+        
+        
+        
+    }
+
     private void CheckStatusTimes(List<Unit_V2> listOfCombatants)
     {
         List<StatusEffect_V2> removeStatus = new List<StatusEffect_V2>();
@@ -405,6 +445,8 @@ public class Eagle_Eye : MonoBehaviour
         List<Debuffs> removeDebuff = new List<Debuffs>();
         foreach (Unit_V2 unit in listOfCombatants)
         {
+            Debug.Log($"{unit.unitName} BuffsCount: {unit.GetListOfBuffs().Count}");
+            Debug.Log($"{unit.unitName} DebuffsCount: {unit.GetListOfDebuffs().Count}");
             foreach (Buffs buff in unit.GetListOfBuffs())
             {
                 if (buff.GetTimeActive() < 1)
@@ -439,26 +481,35 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
 
-
-            foreach (Buffs buff in removeBuff)
+            if (unit.GetListOfDebuffs().Count > 0)
             {
-                Debug.Log($"Trying to remove {buff.GetStatusName()}");
-                if (unit.DoesStatusExist(buff))
+                foreach (Buffs buff in removeBuff)
                 {
-                    Debug.Log($"{buff.GetStatusName()} has been removed.");
-                    unit.unitStatusEffects.Remove(buff);
+                    
+                    if (unit.DoesStatusExist(buff))
+                    {
+                        Debug.Log($"{buff.GetStatusName()} has been removed.");
+                        buff.RevertBuffEffect(unit);
+                        unit.GetListOfBuffs().Remove(buff);
+                    }
                 }
             }
-
-            foreach (Debuffs debuff in removeDebuff)
+            
+            if (unit.GetListOfDebuffs().Count > 0)
             {
-                Debug.Log($"Trying to remove {debuff.GetStatusName()}");
-                if (unit.DoesStatusExist(debuff))
+                foreach (Debuffs debuff in removeDebuff)
                 {
-                    Debug.Log($"{debuff.GetStatusName()} has been removed.");
-                    unit.unitStatusEffects.Remove(debuff);
+                    if (unit.DoesStatusExist(debuff))
+                    {
+                        unit.GetSpeedTier();
+                        Debug.Log($"{debuff.GetStatusName()} has been removed.");
+                        debuff.RevertDebuffEffect(unit);
+                        unit.GetListOfDebuffs().Remove(debuff);
+                        unit.GetSpeedTier();
+                    }
                 }
             }
+            
 
             
 
@@ -524,7 +575,8 @@ public class Eagle_Eye : MonoBehaviour
         {
             PayAttackCost(currentPC, chosenAttack);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
-            Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}"); 
+            Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
+            yield return new WaitForSeconds(1);
             for (int i = 0; i < chosenAttack.numOfHits; i++)
             {
                 if (chosenAttack.DoesAttackHit(currentPC))
@@ -533,14 +585,7 @@ public class Eagle_Eye : MonoBehaviour
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
                     chosenEnemyTarget.TakeDamage(damage);
-                    if(chosenAttack.attackBuff != null)
-                    {
-                        chosenAttack.attackBuff.ApplyBuff(chosenPCTarget);
-                    }
-                    if(chosenAttack.attackDebuff != null)
-                    {
-                        chosenAttack.attackDebuff.ApplyDebuff(chosenEnemyTarget);
-                    }
+                    CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
                     
                 }
                 else

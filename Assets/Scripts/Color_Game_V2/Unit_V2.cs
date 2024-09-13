@@ -126,18 +126,29 @@ public class Unit_V2 : MonoBehaviour
     }
     public int GetCurrentAttack()
     {
-        int attack = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(attackTier))));
+        int attack = 0;
+        if (equippedWeapon != null)
+        {
+            attack = Mathf.RoundToInt((float)((baseAttack + equippedWeapon.GetWeaponDamage()) * (TierBonus(attackTier))));
+        }
+        else
+        {
+            attack = Mathf.RoundToInt((float)(baseAttack * (TierBonus(attackTier))));
+
+        }
+        
         return attack;
     }
     public int GetCurrentDefense()
     {
-        int defense = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(defenseTier))));
+        int defense = Mathf.RoundToInt((float)(baseDefense * (TierBonus(defenseTier))));
         return defense;
     }
     public int GetCurrentSpeed()
     {
-        int speed = Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
-        return speed;
+
+        return Mathf.RoundToInt((float)(baseSpeed * (TierBonus(speedTier))));
+         
     }
 
     public void SetDefenseTier(int value)
@@ -146,15 +157,20 @@ public class Unit_V2 : MonoBehaviour
     }
     public void SetAttackTier(int value)
     {
+        
         attackTier += value;
+        
     }
     public void SetSpeedTier(int value)
     {
+        Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
         speedTier += value;
+        Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
     }
     
     public int GetSpeedTier()
     {
+        Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
         return speedTier;
     }
 
@@ -270,14 +286,42 @@ public class Unit_V2 : MonoBehaviour
 
     public bool DoesStatusExist(StatusEffect_V2 statusEffect)
     {
-        foreach (StatusEffect_V2 status in unitStatusEffects)
+        if(statusEffect is Buffs)
         {
-            if (status.GetStatusName() == statusEffect.GetStatusName())
+            Debug.Log("Checking if Buff");
+            foreach (StatusEffect_V2 status in unitBuffsList)
             {
-                return true;
+                if (status.GetStatusName() == statusEffect.GetStatusName())
+                {
+                    return true;
+                }
             }
         }
+        else if(statusEffect is Debuffs)
+        {
+            Debug.Log("Checking if Debuff");
+            foreach (StatusEffect_V2 status in unitDebuffsList)
+            {
+                if (status.GetStatusName() == statusEffect.GetStatusName())
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Checking if Status");
+            foreach (StatusEffect_V2 status in unitStatusEffects)
+            {
+                if (status.GetStatusName() == statusEffect.GetStatusName())
+                {
+                    return true;
+                }
+            }
+            
+        }
         return false;
+
     }
 
     public int GetBurnAmount()

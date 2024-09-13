@@ -54,4 +54,14 @@ public class Buffs : StatusEffect_V2
                 break;
         }
     }
+
+    public void RevertBuffEffect(Unit_V2 target)
+    {
+        switch (statusName)
+        {
+            case "Buffington":
+                target.SetSpeedTier(-1);
+                break;
+        }
+    }
 }
