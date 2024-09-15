@@ -66,15 +66,13 @@ public class Eagle_Eye : MonoBehaviour
     {
         
         StartCoroutine(Combat());
-        //PlayerTurn();
+        
     }
 
     public void Test_3()
     {
         
-        //CheckBuffsAndDebuffs(listOfCombatants);
-        //Debug.Log(enemyOne.GetSpeedTier());
-        //Debug.Log(enemyTwo.GetSpeedTier());
+
     }
     IEnumerator LoadScripts()
     {
@@ -87,11 +85,8 @@ public class Eagle_Eye : MonoBehaviour
         buttonsAndPanelsScript = FindObjectOfType<ButtonsAndPanels>();
         uiScript = FindObjectOfType<UI_V2>();
 
-        //yield return new WaitForSeconds(1);
-        //unitSpawnerScript.SpawnPlayer();
         player = unitSpawnerScript.SpawnPlayer();
-        //enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
-        //listOfCombatants.Add(enemyOne);
+        
         //Debug.Log("Finished Loading");
         
     }
@@ -135,6 +130,15 @@ public class Eagle_Eye : MonoBehaviour
         
     }
 
+    private void CombatUIUpdates()
+    {
+        uiScript.SetPlayerHealthAndStamina(currentPC);
+        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
+        uiScript.SetEnemeyTwoHealthAndStamina(enemyTwo);
+
+        UpdateEnvironmentColorsForUI();
+    }
+
     IEnumerator Combat()
     {
         
@@ -154,11 +158,8 @@ public class Eagle_Eye : MonoBehaviour
             */
             buttonsAndPanelsScript.ToggleEnemyButtons(enemyOne, enemyTwo);
             UpdateEnvironmentColors();
-            UpdateEnvironmentColorsForUI();
+            CombatUIUpdates();
 
-            uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
-            uiScript.SetPlayerHealthAndStamina(currentPC);
-            
             currentRound++;
             Debug.Log($"Current Round: {currentRound}");
 
@@ -169,8 +170,7 @@ public class Eagle_Eye : MonoBehaviour
                 //Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
-                    Debug.Log("Fight Panel");
-                    //whoseTurnIsIt = WhoseTurn.Player;
+
                     currentPC = unit;
                     buttonsAndPanelsScript.ToggleFightPanel();
                     PlayerTurn();
@@ -211,12 +211,7 @@ public class Eagle_Eye : MonoBehaviour
             }
             //End of turn stuff
             yield return new WaitForSeconds (1f);
-            CheckBuffsAndDebuffs(listOfCombatants);
-            CheckStatusTimes(listOfCombatants);
-            EndOfRoundStatusDamage();
             
-            uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
-            uiScript.SetPlayerHealthAndStamina(currentPC);
             //TODO: Fix the Won and Lost conditions
             foreach (Unit_V2 unit in listOfCombatants)
             {
@@ -226,24 +221,22 @@ public class Eagle_Eye : MonoBehaviour
                    //Debug.Log($"Dead Units Count: {deadUnits.Count}");
                 }
             }
+
             foreach (EnemyUnit_V2 enemy in deadUnits)
             {
                 //Debug.Log($"DeadUnit: {enemy.unitName}");
                 if (enemy == enemyOne)
-                {
-                    
+                {  
                     listOfCombatants.Remove(enemy);
-                    //enemyOne = null;
-                    
                 }
                 else if(enemy == enemyTwo)
                 {
-                    listOfCombatants.Remove(enemy);
-                    //enemyTwo = null;
-                    
+                    listOfCombatants.Remove(enemy); 
                 }
             }
-            
+
+            CombatUIUpdates();
+
             if (listOfCombatants.Count == 1 && listOfCombatants[0] is Player_V2)
             {
                 theCombatState = CombatState.Won;
@@ -270,8 +263,6 @@ public class Eagle_Eye : MonoBehaviour
         {
             PlayerLost();
         }
-
-        //yield return null;
     }
     
     private bool IsPlayerAlive(Unit_V2 player)

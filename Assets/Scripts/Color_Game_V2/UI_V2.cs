@@ -20,18 +20,26 @@ public class UI_V2 : MonoBehaviour
 
     //Player
     public Text playerName;
-    public Image playerHealthBar;
-    public Image playerStaminaBar;
     public Text playerHealthText;
     public Text playerStaminaText;
+    public Image playerHealthBar;
+    public Image playerStaminaBar;
 
     //Enemy One
     public Text enemyOneName;
-    public Image enemyOneHealthBar;
-    public Image enemyOneStaminaBar;
     public Text enemyOneHealthText;
     public Text enemyOneStaminaText;
+    public Image enemyOneHealthBar;
+    public Image enemyOneStaminaBar;
+    
 
+    //Enemy Two
+    public Text enemyTwoName;
+    public Text enemyTwoHealthText;
+    public Text enemyTwoStaminaText;
+    public Image enemyTwoHealthBar;
+    public Image enemyTwoStaminaBar;
+    
 
     //Environment Bars
     public Image _redBar;
@@ -83,6 +91,23 @@ public class UI_V2 : MonoBehaviour
             enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
         }
         
+    }
+
+    public void SetEnemeyTwoHealthAndStamina(Unit_V2 enemyTwo)
+    {
+        if (enemyTwo == null)
+        {
+
+        }
+        else
+        {
+            enemyTwoName.text = enemyTwo.unitName;
+            enemyTwoHealthText.text = enemyTwo.GetCurrentHp().ToString() + " / " + enemyTwo.GetMaxHp().ToString();
+            enemyTwoStaminaText.text = enemyTwo.GetCurrentStamina().ToString() + " / " + enemyTwo.GetMaxStamina().ToString();
+            enemyTwoHealthBar.fillAmount = (float)(float)(enemyTwo.GetCurrentHp() / (float)(enemyTwo.GetMaxHp()));
+            enemyTwoStaminaBar.fillAmount = (float)(float)(enemyTwo.GetCurrentStamina() / (float)(enemyTwo.GetMaxStamina()));
+        }
+
     }
 
     public void SetMaxColorAmounts(int maxRed, int maxOrange, int maxYellow, int maxGreen, int maxBlue, int maxViolet)
