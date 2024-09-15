@@ -61,18 +61,27 @@ public class UI_V2 : MonoBehaviour
 
     public void SetPlayerHealthAndStamina(Unit_V2 player)
     {
-        playerHealthBar.fillAmount = (float)(float)(player.GetCurrentHp() / (float)(player.GetMaxHp()));
-        playerStaminaBar.fillAmount = (float)(float)(player.GetCurrentStamina() / (float)(player.GetMaxStamina()));
+        playerName.text = player.unitName;
         playerHealthText.text = player.GetCurrentHp().ToString() + " / " + player.GetMaxHp().ToString();
         playerStaminaText.text = player.GetCurrentStamina().ToString() + " / " + player.GetMaxStamina().ToString();
+        playerHealthBar.fillAmount = (float)(float)(player.GetCurrentHp() / (float)(player.GetMaxHp()));
+        playerStaminaBar.fillAmount = (float)(float)(player.GetCurrentStamina() / (float)(player.GetMaxStamina()));
     }
 
     public void SetEnemeyOneHealthAndStamina(Unit_V2 enemyOne)
     {
-        enemyOneHealthBar.fillAmount = (float)(float)(enemyOne.GetCurrentHp() / (float)(enemyOne.GetMaxHp()));
-        enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
-        enemyOneHealthText.text = enemyOne.GetCurrentHp().ToString() + " / " + enemyOne.GetMaxHp().ToString();
-        enemyOneStaminaText.text = enemyOne.GetCurrentStamina().ToString() + " / " + enemyOne.GetMaxStamina().ToString();
+        if(enemyOne == null)
+        {
+
+        }
+        else
+        {
+            enemyOneName.text = enemyOne.unitName;
+            enemyOneHealthText.text = enemyOne.GetCurrentHp().ToString() + " / " + enemyOne.GetMaxHp().ToString();
+            enemyOneStaminaText.text = enemyOne.GetCurrentStamina().ToString() + " / " + enemyOne.GetMaxStamina().ToString();
+            enemyOneHealthBar.fillAmount = (float)(float)(enemyOne.GetCurrentHp() / (float)(enemyOne.GetMaxHp()));
+            enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
+        }
         
     }
 
@@ -101,6 +110,7 @@ public class UI_V2 : MonoBehaviour
 
     public void UpdateEnvironmentBars()
     {
+        Debug.Log($"CurrentRed: {currentRedAmount}");
         _redBar.fillAmount = (float)((float)currentRedAmount / (float)maxRedAmount);
         _redBarText.text = "Red: " + currentRedAmount.ToString() + " / " + maxRedAmount.ToString(); 
         _orangeBar.fillAmount = (float)(currentOrangeAmount / maxOrangeAmount);

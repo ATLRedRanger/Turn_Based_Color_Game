@@ -150,20 +150,31 @@ public class ButtonsAndPanels : MonoBehaviour
     }
 
 
-    public void ToggleEnemyButtons(Unit_V2 enemyOne = null, Unit_V2 enemyTwo = null)
+    public void ToggleEnemyButtons(Unit_V2 enemyOne, Unit_V2 enemyTwo)
     {
-        _enemyOneButton.SetActive(false);
-        _enemyTwoButton.SetActive(false);
-
-        if (enemyOne != null)
+        //_enemyOneButton.SetActive(false);
+        //_enemyTwoButton.SetActive(false);
+        
+        if (enemyOne != null && enemyOne.GetCurrentHp() > 0)
         {
+            Debug.Log($"ButtonPanel Test Name: {enemyOne.unitName}");
             _enemyOneButton.SetActive(true);
             SetEnemyOneButtonName(enemyOne.unitName);
+        }
+        else
+        {
+            
+            _enemyOneButton.SetActive(false);
+            SetEnemyOneButtonName("");
         }
         if (enemyTwo != null)
         {
             _enemyTwoButton.SetActive(true);
             SetEnemyTwoButtonName(enemyTwo.unitName);
+        }
+        else
+        {
+            _enemyTwoButton.SetActive(false);
         }
     }
 

@@ -17598,12 +17598,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0694d2ae0d9965f4d912e135582e97ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 0}
+  playerName: {fileID: 1055010570}
   playerHealthBar: {fileID: 1518989802}
   playerStaminaBar: {fileID: 1477902370}
   playerHealthText: {fileID: 1955627899}
   playerStaminaText: {fileID: 208535280}
-  enemyOneName: {fileID: 0}
+  enemyOneName: {fileID: 661723946}
   enemyOneHealthBar: {fileID: 900588897}
   enemyOneStaminaBar: {fileID: 302994883}
   enemyOneHealthText: {fileID: 611995661}

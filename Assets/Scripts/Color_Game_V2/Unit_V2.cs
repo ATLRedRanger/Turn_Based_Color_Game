@@ -201,14 +201,13 @@ public class Unit_V2 : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if(isDefending)
+        
+        currentHp -= damage;
+        if(currentHp < 0)
         {
-            currentHp -= damage / 2;
+            currentHp = 0;
         }
-        else
-        {
-            currentHp -= damage;
-        }
+        
         Debug.Log($"{unitName} has taken {damage} damage and their currentHP is: {currentHp}");
     }
 
@@ -226,6 +225,10 @@ public class Unit_V2 : MonoBehaviour
     public void ReduceStamina(int staminaCost)
     {
         currentStamina -= staminaCost;
+        if(currentStamina < 0)
+        {
+            currentStamina = 0;
+        }
     }
 
     public StaminaLevels StaminaLevelConversion()

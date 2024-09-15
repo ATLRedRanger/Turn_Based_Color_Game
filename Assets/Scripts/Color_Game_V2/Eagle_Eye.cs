@@ -55,7 +55,7 @@ public class Eagle_Eye : MonoBehaviour
 
         GenerateEnemies();
         listOfCombatants.Add(player);
-        buttonsAndPanelsScript.ToggleEnemyButtons(enemyOne, enemyTwo);
+        
         currentPC = player;
         GenerateEnvironment();
         SetMaxColorAmountsForUI();
@@ -71,10 +71,7 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_3()
     {
-        UpdateEnvironmentColorsForUI();
-        UpdateEnvironmentColors();
-        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
-        uiScript.SetPlayerHealthAndStamina(currentPC);
+        
         //CheckBuffsAndDebuffs(listOfCombatants);
         //Debug.Log(enemyOne.GetSpeedTier());
         //Debug.Log(enemyTwo.GetSpeedTier());
@@ -95,7 +92,7 @@ public class Eagle_Eye : MonoBehaviour
         player = unitSpawnerScript.SpawnPlayer();
         //enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
         //listOfCombatants.Add(enemyOne);
-        Debug.Log("Finished Loading");
+        //Debug.Log("Finished Loading");
         
     }
 
@@ -113,8 +110,8 @@ public class Eagle_Eye : MonoBehaviour
     private void GenerateEnemies()
     {
         player.gameObject.SetActive(true);
-        int enemiesToGenerate = Random.Range(1, 3);
-        Debug.Log($"Generated Enemies: {enemiesToGenerate}");
+        int enemiesToGenerate = 2;//Random.Range(1, 3);
+        //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         for(int i = 0; i < enemiesToGenerate; i++) 
         {
             switch (i)
@@ -144,11 +141,23 @@ public class Eagle_Eye : MonoBehaviour
         List<Unit_V2> deadUnits = new List<Unit_V2>();
         theCombatState = CombatState.Active;
         
-        Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
+        
+        //Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
         yield return new WaitForSeconds(1f);
         while (theCombatState == CombatState.Active)
         {
+            /*
+             * Beginning of Turn Operations:
+             * Tell the Buttons and Panels script which enemies are still alive.
+             * 
+            */
+            buttonsAndPanelsScript.ToggleEnemyButtons(enemyOne, enemyTwo);
+            UpdateEnvironmentColors();
+            UpdateEnvironmentColorsForUI();
+
+            uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
+            uiScript.SetPlayerHealthAndStamina(currentPC);
             
             currentRound++;
             Debug.Log($"Current Round: {currentRound}");
@@ -157,7 +166,7 @@ public class Eagle_Eye : MonoBehaviour
             yield return new WaitForSeconds(1f);
             foreach (Unit_V2 unit in listOfCombatants)
             {
-                Debug.Log($"Current Unit: {unit.unitName}");
+                //Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
                     Debug.Log("Fight Panel");
@@ -189,7 +198,7 @@ public class Eagle_Eye : MonoBehaviour
                         EnemyTurn(unit);
                         if (IsPlayerAlive(player))
                         {
-                            Debug.Log("Player is alive");
+                            //Debug.Log("Player is alive");
                         }
                         else
                         {
@@ -205,16 +214,37 @@ public class Eagle_Eye : MonoBehaviour
             CheckBuffsAndDebuffs(listOfCombatants);
             CheckStatusTimes(listOfCombatants);
             EndOfRoundStatusDamage();
+            
+            uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
+            uiScript.SetPlayerHealthAndStamina(currentPC);
             //TODO: Fix the Won and Lost conditions
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
                 {
                    deadUnits.Add(unit);
-                    Debug.Log($"Dead Units Count: {deadUnits.Count}");
+                   //Debug.Log($"Dead Units Count: {deadUnits.Count}");
                 }
             }
-            if (listOfCombatants.Count - deadUnits.Count == 1)
+            foreach (EnemyUnit_V2 enemy in deadUnits)
+            {
+                //Debug.Log($"DeadUnit: {enemy.unitName}");
+                if (enemy == enemyOne)
+                {
+                    
+                    listOfCombatants.Remove(enemy);
+                    //enemyOne = null;
+                    
+                }
+                else if(enemy == enemyTwo)
+                {
+                    listOfCombatants.Remove(enemy);
+                    //enemyTwo = null;
+                    
+                }
+            }
+            
+            if (listOfCombatants.Count == 1 && listOfCombatants[0] is Player_V2)
             {
                 theCombatState = CombatState.Won;
                 break;
@@ -306,6 +336,11 @@ public class Eagle_Eye : MonoBehaviour
         // Apply color resistances based on attack type and color
         int damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
         Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
+
+        if (defender.isDefending)
+        {
+            damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses / 2);
+        }
         return damageAfterDefenses;
     }
 
@@ -337,13 +372,13 @@ public class Eagle_Eye : MonoBehaviour
                         if (status.GetStatusName() == "Burn")
                         {
                             status.effectStack += 1;
-                            Debug.Log($"{defender.unitName}'s burn stack: {status.effectStack}.");
+                            //Debug.Log($"{defender.unitName}'s burn stack: {status.effectStack}.");
                         }
                     }
                 }
                 else if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
                 {
-                    Debug.Log($"{defender.unitName} is now burning!");
+                    //Debug.Log($"{defender.unitName} is now burning!");
                     defender.AddStatus(statusEffectScript.burn);
                     defender.SetBurnAmountToZero();
                 }
@@ -376,10 +411,10 @@ public class Eagle_Eye : MonoBehaviour
 
         if(attack.attackDebuff != null)
         {
-            Debug.Log("Attack Debuff != Null");
+            //Debug.Log("Attack Debuff != Null");
             if (defender.DoesStatusExist(attack.attackDebuff))
             {
-                Debug.Log($"{attack.attackDebuff.GetStatusName()} is on the {defender.unitName}");
+                //Debug.Log($"{attack.attackDebuff.GetStatusName()} is on the {defender.unitName}");
                 
             }
             else
@@ -406,7 +441,7 @@ public class Eagle_Eye : MonoBehaviour
                 switch (status.GetStatusName())
                 {
                     case "Burn":
-                        Debug.Log($"{unit.unitName}'s burnTimer: {unit.GetBurnTimer()}");
+                        //Debug.Log($"{unit.unitName}'s burnTimer: {unit.GetBurnTimer()}");
                         if (unit.GetBurnTimer() >= status.GetEffectLength())
                         {
                             Debug.Log("Setting Burn Timer To Zero");
@@ -417,7 +452,7 @@ public class Eagle_Eye : MonoBehaviour
                         {
                             
                             statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage(), status.timeNeededInQue});
-                            Debug.Log("Burn Damage: " + status.GetStatusDamage());
+                            //Debug.Log("Burn Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
                             
                         }
@@ -427,8 +462,8 @@ public class Eagle_Eye : MonoBehaviour
             }
             foreach (StatusEffect_V2 status in removeStatus)
             {
-                Debug.Log("Second Foreach");
-                Debug.Log($"Trying to remove {status.GetStatusName()}");
+                
+                //Debug.Log($"Trying to remove {status.GetStatusName()}");
                 if (unit.DoesStatusExist(status))
                 {
                     Debug.Log($"{status.GetStatusName()} has been removed.");
@@ -445,8 +480,8 @@ public class Eagle_Eye : MonoBehaviour
         List<Debuffs> removeDebuff = new List<Debuffs>();
         foreach (Unit_V2 unit in listOfCombatants)
         {
-            Debug.Log($"{unit.unitName} BuffsCount: {unit.GetListOfBuffs().Count}");
-            Debug.Log($"{unit.unitName} DebuffsCount: {unit.GetListOfDebuffs().Count}");
+            //Debug.Log($"{unit.unitName} BuffsCount: {unit.GetListOfBuffs().Count}");
+            //Debug.Log($"{unit.unitName} DebuffsCount: {unit.GetListOfDebuffs().Count}");
             foreach (Buffs buff in unit.GetListOfBuffs())
             {
                 if (buff.GetTimeActive() < 1)
@@ -488,7 +523,7 @@ public class Eagle_Eye : MonoBehaviour
                     
                     if (unit.DoesStatusExist(buff))
                     {
-                        Debug.Log($"{buff.GetStatusName()} has been removed.");
+                        //Debug.Log($"{buff.GetStatusName()} has been removed.");
                         buff.RevertBuffEffect(unit);
                         unit.GetListOfBuffs().Remove(buff);
                     }
@@ -502,7 +537,7 @@ public class Eagle_Eye : MonoBehaviour
                     if (unit.DoesStatusExist(debuff))
                     {
                         unit.GetSpeedTier();
-                        Debug.Log($"{debuff.GetStatusName()} has been removed.");
+                        //Debug.Log($"{debuff.GetStatusName()} has been removed.");
                         debuff.RevertDebuffEffect(unit);
                         unit.GetListOfDebuffs().Remove(debuff);
                         unit.GetSpeedTier();
