@@ -5,7 +5,8 @@ using UnityEngine;
 public class Weapon_Axe : Weapon
 {
 
-
+    public float healthPercent = .8f;
+    public float staminaPercent = .2f;
     public Weapon_Axe(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int weaponDamage = 0)
     {
         this.itemName = itemName;

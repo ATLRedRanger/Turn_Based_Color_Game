@@ -6,7 +6,8 @@ public class Weapon : Item
 {
     public WeaponType weaponType;
     public int weaponDamage;
-    
+    public float critChance;
+
     public Weapon()
     {
 
@@ -26,7 +27,7 @@ public class Weapon : Item
         base.Use(unit);
     }
 
-    public virtual int GetWeaponDamage(Unit_V2 attacker = null, Unit_V2 defender = null)
+    public virtual int GetWeaponDamage(Unit_V2 attacker, Unit_V2 defender)
     {
         return weaponDamage;
     }

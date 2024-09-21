@@ -328,6 +328,7 @@ public class Eagle_Eye : MonoBehaviour
         int damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
         Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
+
         if (defender.isDefending)
         {
             damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses / 2);
@@ -336,6 +337,7 @@ public class Eagle_Eye : MonoBehaviour
     }
 
     
+
     private int ApplyColorAndWeaponResistances(Hue attackColor, int damage, Unit_V2 attacker, Unit_V2 defender)
     {
         float combinedResistances = 0;
@@ -609,8 +611,25 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     Debug.Log("Attack Hits");
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
+                    int staminaDamage = 0;
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
+                    if(currentPC.equippedWeapon != null)
+                    {
+                        if(currentPC.equippedWeapon is Weapon_Axe)
+                        {
+                            Weapon_Axe axe = currentPC.equippedWeapon as Weapon_Axe;
+                            damage = Mathf.RoundToInt(damage * axe.healthPercent);
+                            staminaDamage = Mathf.RoundToInt(staminaDamage * axe.staminaPercent);
+                        }
+                        if (currentPC.equippedWeapon is Weapon_Hammer)
+                        {
+                            Weapon_Hammer hammer = currentPC.equippedWeapon as Weapon_Hammer;
+                            damage = Mathf.RoundToInt(damage * hammer.healthPercent);
+                            staminaDamage = Mathf.RoundToInt(staminaDamage * hammer.staminaPercent);
+                        }
+                    }
                     chosenEnemyTarget.TakeDamage(damage);
+                    chosenEnemyTarget.ReduceStamina(staminaDamage);
                     CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
                     
                 }

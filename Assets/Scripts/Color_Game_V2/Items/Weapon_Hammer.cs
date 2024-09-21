@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Weapon_Hammer : Weapon
 {
+
+    public float healthPercent = .6f;
+    public float staminaPercent = .4f;
+
     public Weapon_Hammer(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int weaponDamage = 0)
     {
         this.itemName = itemName;
@@ -13,9 +17,9 @@ public class Weapon_Hammer : Weapon
         this.weaponDamage = weaponDamage;
     }
 
-    public override int GetWeaponDamage(Unit_V2 attacker = null, Unit_V2 defender = null)
+    public override int GetWeaponDamage(Unit_V2 attacker, Unit_V2 defender)
     {
-        if (defender != null && defender.isDefending)
+        if (defender.GetCurrentStamina() < attacker.GetCurrentStamina())
         {
             return weaponDamage * 2;
         }

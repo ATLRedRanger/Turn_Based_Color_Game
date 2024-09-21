@@ -315,7 +315,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 22392
+  m_LastSelectedObjectID: 23228
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -605,7 +605,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Player
+    - Assets/Scripts/Color_Game_V2
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -613,15 +613,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Player
+  - Assets/Scripts/Color_Game_V2
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\vince\OneDrive\Desktop\Turn_Based_Color_Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e65d0000
-    m_LastClickedID: 24038
+    m_SelectedIDs: ec5d0000
+    m_LastClickedID: 24044
     m_ExpandedIDs: 00000000c85d0000ca5d0000cc5d0000ce5d0000d05d0000d25d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -675,8 +675,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 805b0000
-    m_LastClickedInstanceID: 23424
+    m_SelectedInstanceIDs: f6130000
+    m_LastClickedInstanceID: 5110
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000362101006e5b000000000000d65a0000
     m_RenameOverlay:
@@ -792,9 +792,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f6560000
-      m_LastClickedID: 22262
-      m_ExpandedIDs: 20fbffffea550000a4560000785700008c59000090590000245a00005c5a0000fc5a0000
+      m_SelectedIDs: bc5a0000
+      m_LastClickedID: 23228
+      m_ExpandedIDs: b6ecffff20fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1188,9 +1188,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.9410523, y: 0.33555776, z: 7.0016437}
+    m_Target: {x: 0.056496277, y: 1.2994936, z: 2.5168998}
     speed: 2
-    m_Value: {x: 0.9410523, y: 0.33555776, z: 7.0016437}
+    m_Value: {x: 0.056496277, y: 1.2994936, z: 2.5168998}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1240,9 +1240,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 6.41533
+    m_Target: 5.741704
     speed: 2
-    m_Value: 6.41533
+    m_Value: 5.741704
   m_Ortho:
     m_Target: 1
     speed: 2
