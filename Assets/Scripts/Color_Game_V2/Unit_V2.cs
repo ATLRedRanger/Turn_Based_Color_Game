@@ -81,7 +81,8 @@ public class Unit_V2 : MonoBehaviour
         currentHp = maxHp;
         currentStamina = maxStamina;
         SetColorResistances();
-        
+        SetWeaponResistances();
+
     }
 
     public virtual void SetColorResistances()
@@ -124,12 +125,19 @@ public class Unit_V2 : MonoBehaviour
     {
         return maxStamina;
     }
-    public int GetCurrentAttack()
+
+    public int GetBaseAttack()
+    {
+        return baseAttack;
+    }
+
+
+    public int GetCurrentAttack(Unit_V2 attacker, Unit_V2 defender)
     {
         int attack = 0;
         if (equippedWeapon != null)
         {
-            attack = Mathf.RoundToInt((float)((baseAttack + equippedWeapon.GetWeaponDamage()) * (TierBonus(attackTier))));
+            attack = Mathf.RoundToInt((float)((baseAttack + equippedWeapon.GetWeaponDamage(attacker, defender)) * (TierBonus(attackTier))));
         }
         else
         {

@@ -32,7 +32,7 @@ public class Eagle_Eye : MonoBehaviour
     private Attack_Database attackDatabaseScript;
     private ButtonsAndPanels buttonsAndPanelsScript;
     private UI_V2 uiScript;
-
+    private Weapon_Database_V2 weaponDatabaseScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +71,7 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_3()
     {
-        
+        player.equippedWeapon = weaponDatabaseScript.basicAxe;
 
     }
     IEnumerator LoadScripts()
@@ -84,6 +84,7 @@ public class Eagle_Eye : MonoBehaviour
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         buttonsAndPanelsScript = FindObjectOfType<ButtonsAndPanels>();
         uiScript = FindObjectOfType<UI_V2>();
+        weaponDatabaseScript = FindObjectOfType<Weapon_Database_V2>();
 
         player = unitSpawnerScript.SpawnPlayer();
         
@@ -211,8 +212,12 @@ public class Eagle_Eye : MonoBehaviour
             }
             //End of turn stuff
             yield return new WaitForSeconds (1f);
+            CheckStatusTimes(listOfCombatants);
+            CheckBuffsAndDebuffs(listOfCombatants);
+            EndOfRoundStatusDamage();
+            //TODO: Add environment color regen.
+
             
-            //TODO: Fix the Won and Lost conditions
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
@@ -313,19 +318,73 @@ public class Eagle_Eye : MonoBehaviour
                 return 1.0f;
         }
     }
+
+    private bool DoesAttackCrit(Unit_V2 attacker)
+    {
+        //TODO: Attacks only crit if there's a weapon equipped
+        //Is this what I want?
+        int roll = Random.Range(1, 101);
+        if(attacker.equippedWeapon != null)
+        {
+            if (roll < attacker.equippedWeapon.GetWeaponCritChance())
+            {
+                Debug.Log("Attack is Critical!");
+                return true;
+            }
+            
+        }   
+        return false;
+    }
+
     private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
     {
-        // Calculate base damage with potential random variation
-        float baseDamage = attack.attackPower + attacker.GetCurrentAttack();
-        Debug.Log($"BaseDamage ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
+        float baseDamage = attack.attackPower;
+        int damageBeforeDefenses = 0;
+        int damageAfterDefenses = 0;
         float damageMultiplier = CalculateDamageMultiplier(); // Helper function
 
+        // Calculate base damage with potential random variation
+        if(attacker.equippedWeapon != null)
+        {
+            switch (attack.attackType)
+            {
+                case AttackType.Physical:
+                    if (attacker.equippedWeapon.weaponType == WeaponType.Axe || attacker.equippedWeapon.weaponType == WeaponType.Bow || attacker.equippedWeapon.weaponType == WeaponType.Hammer || attacker.equippedWeapon.weaponType == WeaponType.Sword)
+                    {
+                        baseDamage = attack.attackPower + attacker.GetCurrentAttack(attacker, defender);
+                        Debug.Log($"Physical Attack with a physical weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack(attacker, defender)}");
+                    }
+
+                    break;
+                case AttackType.Special:
+                    if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook || attacker.equippedWeapon.weaponType == WeaponType.Staff)
+                    {
+                        baseDamage = attack.attackPower + attacker.GetCurrentAttack(attacker, defender);
+                        Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack(attacker, defender)}");
+                    }
+
+                    break;
+            }
+        }
+        else
+        {
+            baseDamage = attack.attackPower + attacker.GetBaseAttack();
+            Debug.Log($"Base Damage: ({baseDamage}) + ({attacker.GetBaseAttack()})");
+        }
+        
+
         // Apply damage multiplier for critical hits, etc.
-        int damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
+        damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
         Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
 
+        // Apply damage after critical hit.
+        if (DoesAttackCrit(attacker))
+        {
+            damageBeforeDefenses *= Mathf.RoundToInt(damageBeforeDefenses * 1.5f);
+        }
+
         // Apply color resistances based on attack type and color
-        int damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
+        damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
         Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
 
@@ -430,7 +489,7 @@ public class Eagle_Eye : MonoBehaviour
         {
             foreach (StatusEffect_V2 status in unit.unitStatusEffects)
             {
-                Debug.Log("First Foreach");
+                //Debug.Log("First Foreach");
                 switch (status.GetStatusName())
                 {
                     case "Burn":
@@ -613,19 +672,20 @@ public class Eagle_Eye : MonoBehaviour
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
                     int staminaDamage = 0;
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
-                    if(currentPC.equippedWeapon != null)
+                    if (currentPC.equippedWeapon != null)
                     {
-                        if(currentPC.equippedWeapon is Weapon_Axe)
+                        switch (currentPC.equippedWeapon)
                         {
-                            Weapon_Axe axe = currentPC.equippedWeapon as Weapon_Axe;
-                            damage = Mathf.RoundToInt(damage * axe.healthPercent);
-                            staminaDamage = Mathf.RoundToInt(staminaDamage * axe.staminaPercent);
-                        }
-                        if (currentPC.equippedWeapon is Weapon_Hammer)
-                        {
-                            Weapon_Hammer hammer = currentPC.equippedWeapon as Weapon_Hammer;
-                            damage = Mathf.RoundToInt(damage * hammer.healthPercent);
-                            staminaDamage = Mathf.RoundToInt(staminaDamage * hammer.staminaPercent);
+                            case Weapon_Axe axe:
+                                damage = Mathf.RoundToInt(damage * axe.healthPercent);
+                                staminaDamage = Mathf.RoundToInt(staminaDamage * axe.staminaPercent);
+                                break;
+                            case Weapon_Hammer hammer:
+                                damage = Mathf.RoundToInt(damage * hammer.healthPercent);
+                                staminaDamage = Mathf.RoundToInt(staminaDamage * hammer.staminaPercent);
+                                break;
+                            default:
+                                break;
                         }
                     }
                     chosenEnemyTarget.TakeDamage(damage);

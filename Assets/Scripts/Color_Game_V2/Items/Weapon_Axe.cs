@@ -7,13 +7,14 @@ public class Weapon_Axe : Weapon
 
     public float healthPercent = .8f;
     public float staminaPercent = .2f;
-    public Weapon_Axe(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int weaponDamage = 0)
+    private int weaponDamage;
+    public Weapon_Axe(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int baseDamage = 0)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemID = itemID;
         this.weaponType = weaponType;
-        this.weaponDamage = weaponDamage;
+        this.baseDamage = baseDamage;
         
     }
 
@@ -21,4 +22,11 @@ public class Weapon_Axe : Weapon
     {
         base.Use(unit);
     }
+
+    public override int GetWeaponDamage(Unit_V2 attacker, Unit_V2 defender)
+    {
+        return base.GetWeaponDamage(attacker, defender);
+    }
+
 }
+

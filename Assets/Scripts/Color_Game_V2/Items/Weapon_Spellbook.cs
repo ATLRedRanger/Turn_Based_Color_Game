@@ -11,13 +11,13 @@ public class Weapon_Spellbook : Weapon
     private int expNeededToLevel = 100;
     public Dictionary<string, Attack> spellbookAttackDictionary = new Dictionary<string, Attack>();
 
-    public Weapon_Spellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int weaponDamage = 0, int spellbookTier = 1)
+    public Weapon_Spellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemID = itemID;
         this.weaponType = weaponType;
-        this.weaponDamage = weaponDamage;
+        this.baseDamage = baseDamage;
         this.spellbookTier = spellbookTier;
         
     }

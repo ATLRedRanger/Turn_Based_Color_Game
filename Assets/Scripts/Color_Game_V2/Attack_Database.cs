@@ -44,7 +44,7 @@ public class Attack_Database : MonoBehaviour
     {
         _statusEffectsDatabase = FindObjectOfType<StatusEffectsDatabase_V2>();
         //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
-        _fireball = CreateAttack("Fireball", 1, 100, 1, 1, 1, AttackType.Physical, Hue.Red, AttackBehavior.Burn);
+        _fireball = CreateAttack("Fireball", 1, 100, 1, 1, 1, AttackType.Special, Hue.Red, AttackBehavior.Burn);
         _fireball.SetAttackDebuff(_statusEffectsDatabase.deBuffington);
     }
 
