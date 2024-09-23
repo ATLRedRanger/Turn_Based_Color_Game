@@ -138,15 +138,15 @@ public class UI_V2 : MonoBehaviour
         Debug.Log($"CurrentRed: {currentRedAmount}");
         _redBar.fillAmount = (float)((float)currentRedAmount / (float)maxRedAmount);
         _redBarText.text = "Red: " + currentRedAmount.ToString() + " / " + maxRedAmount.ToString(); 
-        _orangeBar.fillAmount = (float)(currentOrangeAmount / maxOrangeAmount);
+        _orangeBar.fillAmount = (float)(float)(currentOrangeAmount / (float)maxOrangeAmount);
         _orangeBarText.text = "Orange: " + currentOrangeAmount.ToString() + " / " + maxOrangeAmount.ToString();
-        _yellowBar.fillAmount = (float)(currentYellowAmount / maxYellowAmount);
+        _yellowBar.fillAmount = (float)(float)(currentYellowAmount / (float)maxYellowAmount);
         _yellowBarText.text = "Yellow: " + currentYellowAmount.ToString() + " / " + maxYellowAmount.ToString();
-        _greenBar.fillAmount = (float)(currentGreenAmount / maxGreenAmount);
+        _greenBar.fillAmount = (float)(float)(currentGreenAmount / (float)maxGreenAmount);
         _greenBarText.text = "Green: " + currentGreenAmount.ToString() + " / " + maxGreenAmount.ToString();
-        _blueBar.fillAmount = (float)(currentBlueAmount / maxBlueAmount);
+        _blueBar.fillAmount = (float)(float)(currentBlueAmount / (float)maxBlueAmount);
         _blueBarText.text = "Blue: " + currentBlueAmount.ToString() + " / " + maxBlueAmount.ToString();
-        _violetBar.fillAmount = (float)(currentVioletAmount / maxVioletAmount);
+        _violetBar.fillAmount = (float)(float)(currentVioletAmount / (float)maxVioletAmount);
         _violetBarText.text = "Violet: " + currentVioletAmount.ToString() + " / " + maxVioletAmount.ToString();
 
 

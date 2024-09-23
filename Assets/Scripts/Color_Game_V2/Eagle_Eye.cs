@@ -323,16 +323,25 @@ public class Eagle_Eye : MonoBehaviour
     {
         //TODO: Attacks only crit if there's a weapon equipped
         //Is this what I want?
+        //Matt Suggestion: The first time a color is at full each combat, that color effect is critical. 
+        //Vincent Respons: Maybe a higher chance so that it's not a guarantee.
         int roll = Random.Range(1, 101);
-        if(attacker.equippedWeapon != null)
+        switch (attacker.StaminaLevelConversion())
         {
-            if (roll < attacker.equippedWeapon.GetWeaponCritChance())
-            {
-                Debug.Log("Attack is Critical!");
-                return true;
-            }
-            
-        }   
+            case StaminaLevels.Full:
+                break;
+            case StaminaLevels.ThreeQuarters: 
+                break;
+            case StaminaLevels.Half: 
+                break;
+            case StaminaLevels.OneQuarter: 
+                break;
+            case StaminaLevels.Empty: 
+                break;
+            case StaminaLevels.Broken:
+                break;
+        }
+        
         return false;
     }
 
@@ -351,16 +360,16 @@ public class Eagle_Eye : MonoBehaviour
                 case AttackType.Physical:
                     if (attacker.equippedWeapon.weaponType == WeaponType.Axe || attacker.equippedWeapon.weaponType == WeaponType.Bow || attacker.equippedWeapon.weaponType == WeaponType.Hammer || attacker.equippedWeapon.weaponType == WeaponType.Sword)
                     {
-                        baseDamage = attack.attackPower + attacker.GetCurrentAttack(attacker, defender);
-                        Debug.Log($"Physical Attack with a physical weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack(attacker, defender)}");
+                        baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
+                        Debug.Log($"Physical Attack with a physical weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
                     }
 
                     break;
                 case AttackType.Special:
                     if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook || attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
-                        baseDamage = attack.attackPower + attacker.GetCurrentAttack(attacker, defender);
-                        Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack(attacker, defender)}");
+                        baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
+                        Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
                     }
 
                     break;
@@ -368,8 +377,8 @@ public class Eagle_Eye : MonoBehaviour
         }
         else
         {
-            baseDamage = attack.attackPower + attacker.GetBaseAttack();
-            Debug.Log($"Base Damage: ({baseDamage}) + ({attacker.GetBaseAttack()})");
+            baseDamage = attack.attackPower + attacker.GetCurrentAttack();
+            Debug.Log($"Base Damage: ({attack.attackPower}) + ({attacker.GetCurrentAttack()})");
         }
         
 
@@ -657,13 +666,14 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log("Start");
         
         yield return new WaitUntil(PlayerChoiceIsMade);
-        //Player is attacking target
+        //Player is attacking single target
         if (AttackIsChosen() && EnemyIsChosen())
         {
             PayAttackCost(currentPC, chosenAttack);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
             Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
             yield return new WaitForSeconds(1);
+
             for (int i = 0; i < chosenAttack.numOfHits; i++)
             {
                 if (chosenAttack.DoesAttackHit(currentPC))
@@ -672,17 +682,20 @@ public class Eagle_Eye : MonoBehaviour
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
                     int staminaDamage = 0;
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
+                    Debug.Log(currentPC.equippedWeapon.itemName);
                     if (currentPC.equippedWeapon != null)
                     {
                         switch (currentPC.equippedWeapon)
                         {
                             case Weapon_Axe axe:
                                 damage = Mathf.RoundToInt(damage * axe.healthPercent);
-                                staminaDamage = Mathf.RoundToInt(staminaDamage * axe.staminaPercent);
+                                staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
+                                Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
                                 break;
                             case Weapon_Hammer hammer:
                                 damage = Mathf.RoundToInt(damage * hammer.healthPercent);
-                                staminaDamage = Mathf.RoundToInt(staminaDamage * hammer.staminaPercent);
+                                staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
+                                Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
                                 break;
                             default:
                                 break;
@@ -736,7 +749,27 @@ public class Eagle_Eye : MonoBehaviour
             case Hue.Red:
                 envManaScript.currentRed -= attack.colorCost;
                 break;
+            case Hue.Orange:
+                envManaScript.currentOrange -= attack.colorCost;
+                break;
+            case Hue.Yellow:
+                envManaScript.currentYellow -= attack.colorCost;
+                break;
+            case Hue.Green:
+                envManaScript.currentGreen -= attack.colorCost;
+                break;
+            case Hue.Blue:
+                envManaScript.currentBlue -= attack.colorCost;
+                break;
+            case Hue.Violet:
+                envManaScript.currentViolet -= attack.colorCost;
+                break;
+            default:
+                break;
         }
+        
+            
+        
         
     }
 
@@ -788,6 +821,39 @@ public class Eagle_Eye : MonoBehaviour
         {
             case "Fireball":
                 chosenAttack = attackDatabaseScript._fireball;
+                break;
+            case "Attack":
+                if(currentPC.equippedWeapon != null)
+                {
+                    switch (currentPC.equippedWeapon.weaponType)
+                    {
+                        case WeaponType.Axe:
+                            chosenAttack = attackDatabaseScript._basicAxeAttack;
+                            break;
+                        case WeaponType.Bow:
+                            chosenAttack = attackDatabaseScript._basicBowAttack;
+                            break;
+                        case WeaponType.Hammer:
+                            chosenAttack = attackDatabaseScript._basicHammerAttack;
+                            break;
+                        case WeaponType.Spellbook:
+                            chosenAttack = attackDatabaseScript._basicSpellbookAttack;
+                            break;
+                        case WeaponType.Staff:
+                            chosenAttack = attackDatabaseScript._basicStaffAttack;
+                            break;
+                        case WeaponType.Sword:
+                            chosenAttack = attackDatabaseScript._basicSwordAttack;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    chosenAttack = attackDatabaseScript._basicAttack;
+                }
+                
                 break;
         }
     }

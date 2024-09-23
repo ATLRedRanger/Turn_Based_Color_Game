@@ -40,34 +40,6 @@ public class Weapon : Item
         return baseDamage;
     }
 
-    public virtual float GetWeaponCritChance()
-    {
-        switch (weaponType)
-        {
-            case WeaponType.Axe:
-                critChance = 10;
-                break;
-            case WeaponType.Bow:
-                critChance = 25;
-                break;
-            case WeaponType.Hammer:
-                critChance = 10;
-                break;
-            case WeaponType.Spellbook:
-                critChance = 10;
-                break;
-            case WeaponType.Staff:
-                critChance = 10;
-                break;
-            case WeaponType.Sword:
-                critChance = 10;
-                break;
-            default:
-                critChance = 0;
-                break;
-        }
-        return critChance;
-    }
 
 }
 

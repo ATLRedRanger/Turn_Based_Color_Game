@@ -12327,9 +12327,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OnAttackClick
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: _AttackClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17373,6 +17373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27559aad7848e3d44bcd79a3cef74f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackButton: {fileID: 1211379656}
   _fireBallButton: {fileID: 1530951495}
   _abilitiesButton: {fileID: 1129678891}
   _itemsButton: {fileID: 1386464849}

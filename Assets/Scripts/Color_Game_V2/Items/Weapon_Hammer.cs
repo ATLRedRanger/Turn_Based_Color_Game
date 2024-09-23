@@ -18,13 +18,4 @@ public class Weapon_Hammer : Weapon
         this.baseDamage = baseDamage;
     }
 
-    public override int GetWeaponDamage(Unit_V2 attacker, Unit_V2 defender)
-    {
-        if(attacker.GetCurrentStamina() > defender.GetCurrentStamina())
-        {
-            weaponDamage = baseDamage * 2;
-        }
-        return weaponDamage;
-    }
-
 }

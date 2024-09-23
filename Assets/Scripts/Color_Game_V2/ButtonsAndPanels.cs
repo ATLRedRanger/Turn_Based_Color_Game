@@ -11,7 +11,9 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public Attack chosenAttack = null;
 
+    public Button _attackButton;
     public Button _fireBallButton;
+    
 
     //Panel Opening Buttons
     public Button _abilitiesButton;
@@ -130,12 +132,7 @@ public class ButtonsAndPanels : MonoBehaviour
         }
     }
 
-    public void _FireballClick()
-    {
-        eagleScript.AttackChangeNotification("Fireball");
-        ToggleSpellsPanel();
-        ToggleEnemiesPanel();
-    }
+   
 
     public void _SpellPanelCycle()
     {
@@ -225,5 +222,25 @@ public class ButtonsAndPanels : MonoBehaviour
     public void SetButtonsToUninteractable()
     {
         _fireBallButton.interactable = false;
+    }
+
+
+
+
+
+
+    //Attack Buttons
+    public void _FireballClick()
+    {
+        eagleScript.AttackChangeNotification("Fireball");
+        ToggleSpellsPanel();
+        ToggleEnemiesPanel();
+    }
+
+    public void _AttackClick()
+    {
+        eagleScript.AttackChangeNotification("Attack");
+        //ToggleSpellsPanel();
+        ToggleEnemiesPanel();
     }
 }

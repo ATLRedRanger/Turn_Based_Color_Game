@@ -132,20 +132,18 @@ public class Unit_V2 : MonoBehaviour
     }
 
 
-    public int GetCurrentAttack(Unit_V2 attacker, Unit_V2 defender)
+    public int GetCurrentAttack()
     {
-        int attack = 0;
-        if (equippedWeapon != null)
+        if(equippedWeapon != null && attackTier != 0)
         {
-            attack = Mathf.RoundToInt((float)((baseAttack + equippedWeapon.GetWeaponDamage(attacker, defender)) * (TierBonus(attackTier))));
+            return Mathf.RoundToInt((baseAttack + equippedWeapon.GetWeaponBaseDamage()) * TierBonus(attackTier));
         }
-        else
+        else if(equippedWeapon != null && attackTier == 0)
         {
-            attack = Mathf.RoundToInt((float)(baseAttack * (TierBonus(attackTier))));
+            return Mathf.RoundToInt(Mathf.RoundToInt(baseAttack + equippedWeapon.GetWeaponBaseDamage()) * TierBonus(attackTier));
+        }
 
-        }
-        
-        return attack;
+        return Mathf.RoundToInt((float)(baseAttack * (TierBonus(attackTier))));
     }
     public int GetCurrentDefense()
     {
@@ -265,13 +263,13 @@ public class Unit_V2 : MonoBehaviour
             case -5:
                 return 0;
             case -4:
-                return .02f;
+                return .2f;
             case -3:
-                return .04f;
+                return .4f;
             case -2:
-                return .06f;
+                return .6f;
             case -1:
-                return .08f;
+                return .8f;
             case 1:
                 return 1.2f;
             case 2:

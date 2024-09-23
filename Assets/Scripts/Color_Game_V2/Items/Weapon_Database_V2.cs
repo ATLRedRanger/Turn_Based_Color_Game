@@ -9,7 +9,7 @@ public class Weapon_Database_V2 : MonoBehaviour
     
     void Awake()
     {
-        basicAxe = CreateAxe("Basic Axe", "A basic axe.", ItemIDMaker(), 1, WeaponType.Axe, 5);
+        basicAxe = CreateAxe("Basic Axe", "A basic axe.", ItemIDMaker(), 1, WeaponType.Axe, 1);
         
     }
 
