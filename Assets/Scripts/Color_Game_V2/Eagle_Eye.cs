@@ -196,7 +196,7 @@ public class Eagle_Eye : MonoBehaviour
                     }
                     else
                     {
-                        EnemyTurn(unit);
+                        EnemyTurn(unit as EnemyUnit_V2);
                         if (IsPlayerAlive(player))
                         {
                             //Debug.Log("Player is alive");
@@ -211,12 +211,15 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
             //End of turn stuff
-            yield return new WaitForSeconds (1f);
+            yield return new WaitForSeconds (.5f);
             CheckStatusTimes(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
             CheckBuffsAndDebuffs(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
             EndOfRoundStatusDamage();
+            yield return new WaitForSeconds(.5f);
             //TODO: Add environment color regen.
-            if(currentRound % 3 ==  0)
+            if (currentRound % 3 ==  0)
             {
                 envManaScript.RegenEnvColors();
             }
@@ -261,7 +264,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-            
+            CombatUIUpdates();
         }
         yield return new WaitForSeconds(1f);
         if (theCombatState == CombatState.Won)
@@ -456,19 +459,19 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    private void CheckAttack_Buff_DebuffBuildupRelationship(Attack attack, Unit_V2 defender)
+    private void CheckAttack_Buff_DebuffBuildupRelationship(Attack attack, Unit_V2 chosenTarget)
     {
         if(attack.attackBuff != null)
         {
-            foreach (Buffs buff in defender.GetListOfBuffs())
+            foreach (Buffs buff in chosenTarget.GetListOfBuffs())
             {
-                if (defender.DoesStatusExist(buff))
+                if (chosenTarget.DoesStatusExist(buff))
                 {
                     continue;
                 }
                 else
                 {
-                    buff.ApplyBuff(defender);
+                    buff.ApplyBuff(chosenTarget);
                 }
             }
             
@@ -477,15 +480,15 @@ public class Eagle_Eye : MonoBehaviour
         if(attack.attackDebuff != null)
         {
             //Debug.Log("Attack Debuff != Null");
-            if (defender.DoesStatusExist(attack.attackDebuff))
+            if (chosenTarget.DoesStatusExist(attack.attackDebuff))
             {
-                //Debug.Log($"{attack.attackDebuff.GetStatusName()} is on the {defender.unitName}");
+                //Debug.Log($"{attack.attackDebuff.GetStatusName()} is on the {chosenTarget.unitName}");
                 
             }
             else
             {
 
-                attack.attackDebuff.ApplyDebuff(defender);
+                attack.attackDebuff.ApplyDebuff(chosenTarget);
             }
            
         }
@@ -674,6 +677,7 @@ public class Eagle_Eye : MonoBehaviour
         //Player is attacking single target
         if (AttackIsChosen() && EnemyIsChosen())
         {
+            buttonsAndPanelsScript.ToggleFightPanel();
             PayAttackCost(currentPC, chosenAttack);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
             Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
@@ -719,7 +723,7 @@ public class Eagle_Eye : MonoBehaviour
         }
         
         Debug.Log("PLAYER TURN HAS FINISHED!");
-        buttonsAndPanelsScript.ToggleFightPanel();
+        
         playerTurnIsDone = true;
     }
 
@@ -770,23 +774,36 @@ public class Eagle_Eye : MonoBehaviour
     }
 
 
-    private bool IsAttackUseable(Unit_V2 unit, Attack attack)
-    {
-        if (unit.GetCurrentStamina() >= attack.staminaCost && envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
-        {
-            return true;
-        }
-        return false;
-    }
+    
 
-    private void EnemyTurn(Unit_V2 unit)
+    private void EnemyTurn(EnemyUnit_V2 unit)
     {
+        Unit_V2 enemyChosenTarget = player;
+        Debug.Log(enemyChosenTarget.unitName);
+        Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
+        if(enemyChosenTarget != null)
+        {
+            for(int i = 0; i < enemyChosenAttack.numOfHits; i++)
+            {
+                if (enemyChosenAttack.DoesAttackHit(unit))
+                {
+                    int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
+                    int staminaDamage = damage / 3;
+                    CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
+                    enemyChosenTarget.TakeDamage(damage);
+                    enemyChosenTarget.ReduceStamina(staminaDamage);
+                    CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
+                }
+            }
+            
+        }
+        /*
         Debug.Log($"{unit.unitName}'s Turn");
         if (player != null)
         {
             player.TakeDamage(5);
             
-        }
+        }*/
     }
 
     private void PlayerWon()

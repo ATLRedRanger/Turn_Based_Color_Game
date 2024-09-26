@@ -7,11 +7,12 @@ public class EnemyUnit_V2 : Unit_V2
 
     private Hue sensitiveColor = Hue.Green;
     private Hue tolerantColor = Hue.Blue;
+    private List<Attack> attackList = new List<Attack>();
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        
+        AddAttackToDictionary(attackDatabaseScript._fireball);
     }
 
     // Update is called once per frame
@@ -28,4 +29,31 @@ public class EnemyUnit_V2 : Unit_V2
         }
     }
 
+    private bool IsAttackUseable(Attack attack, Environment env)
+    {
+        if (this.GetCurrentStamina() >= attack.staminaCost && env.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public Attack EnemyAttackDecision(Environment env)
+    {
+       
+        foreach(var kvp in unitAttackDictionary)
+        {
+            attackList.Add(kvp.Value);
+        }
+
+        foreach (Attack attack in attackList)
+        {
+            if (IsAttackUseable(attack, env))
+            {
+                return attack;
+            }
+        }
+
+        return null;
+    }
 }
