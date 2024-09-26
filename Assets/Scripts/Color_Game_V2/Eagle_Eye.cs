@@ -216,7 +216,11 @@ public class Eagle_Eye : MonoBehaviour
             CheckBuffsAndDebuffs(listOfCombatants);
             EndOfRoundStatusDamage();
             //TODO: Add environment color regen.
-
+            if(currentRound % 3 ==  0)
+            {
+                envManaScript.RegenEnvColors();
+            }
+            
             
             foreach (Unit_V2 unit in listOfCombatants)
             {
@@ -562,6 +566,7 @@ public class Eagle_Eye : MonoBehaviour
 
             foreach (Debuffs debuff in unit.GetListOfDebuffs())
             {
+
                 if (debuff.GetTimeActive() < 1)
                 {
                     debuff.ActivateDebuffEffect(unit);
@@ -597,10 +602,8 @@ public class Eagle_Eye : MonoBehaviour
                 
                 if (unit.DoesStatusExist(debuff))
                 {
-                    Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active debuffs.");
                     unit.GetListOfDebuffs().Remove(debuff);
-                    Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active debuffs.");
-                    //Debug.Log($"{debuff.GetStatusName()} has been removed.");
+                   
                     debuff.RevertDebuffEffect(unit);
                 }
                 
@@ -734,37 +737,28 @@ public class Eagle_Eye : MonoBehaviour
         return useableAttacks;
     }
 
-    private bool IsAttackUseable(Unit_V2 unit, Attack attack)
-    {
-        if (unit.GetCurrentStamina() >= attack.staminaCost && envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
-        {
-            return true;
-        }
-        return false;
-    }
-
     private void PayAttackCost(Unit_V2 attacker, Attack attack)
     {
         attacker.ReduceStamina(attack.staminaCost);
         switch (attack.attackColor)
         {
             case Hue.Red:
-                envManaScript.currentRed -= attack.colorCost;
+                envManaScript.LoseRed(attack.colorCost);
                 break;
             case Hue.Orange:
-                envManaScript.currentOrange -= attack.colorCost;
+                envManaScript.LoseOrange(attack.colorCost);
                 break;
             case Hue.Yellow:
-                envManaScript.currentYellow -= attack.colorCost;
+                envManaScript.LoseYellow(attack.colorCost);
                 break;
             case Hue.Green:
-                envManaScript.currentGreen -= attack.colorCost;
+                envManaScript.LoseGreen(attack.colorCost);
                 break;
             case Hue.Blue:
-                envManaScript.currentBlue -= attack.colorCost;
+                envManaScript.LoseBlue(attack.colorCost);
                 break;
             case Hue.Violet:
-                envManaScript.currentViolet -= attack.colorCost;
+                envManaScript.LoseViolet(attack.colorCost);
                 break;
             default:
                 break;
@@ -773,6 +767,16 @@ public class Eagle_Eye : MonoBehaviour
             
         
         
+    }
+
+
+    private bool IsAttackUseable(Unit_V2 unit, Attack attack)
+    {
+        if (unit.GetCurrentStamina() >= attack.staminaCost && envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void EnemyTurn(Unit_V2 unit)
@@ -802,8 +806,8 @@ public class Eagle_Eye : MonoBehaviour
 
     private void SetMaxColorAmountsForUI()
     {
-        uiScript.SetMaxColorAmounts(envManaScript.currentRed, envManaScript.currentOrange, envManaScript.currentYellow,
-                                        envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
+        uiScript.SetMaxColorAmounts(envManaScript.maxRed, envManaScript.maxOrange, envManaScript.maxYellow,
+                                        envManaScript.maxGreen, envManaScript.maxBlue, envManaScript.maxViolet);
     }
 
     private void UpdateEnvironmentColors()

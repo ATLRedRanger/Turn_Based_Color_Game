@@ -181,4 +181,129 @@ public class Environment : MonoBehaviour
         environmentColorDictionary[Hue.Blue] = currentBlue;
         environmentColorDictionary[Hue.Violet] = currentViolet;
     }
+
+    public void RegenEnvColors()
+    {
+        int maxAmount = 0;
+        
+        List<int> maxColors = new List<int>(){maxRed, maxOrange, maxYellow, maxGreen, maxBlue, maxViolet};
+
+        foreach (int color in maxColors)
+        {
+            if(color > maxAmount)
+            {
+                maxAmount = color;
+            }
+        }
+
+        int amountToRegen = maxAmount / 5;
+        GainRed(amountToRegen);
+        GainOrange(amountToRegen);
+        GainYellow(amountToRegen);
+        GainGreen(amountToRegen);
+        GainBlue(amountToRegen);
+        GainViolet(amountToRegen);
+
+
+    }
+
+
+    public void LoseRed(int amount)
+    {
+        currentRed -= amount;
+        if(currentRed < 0)
+        {
+            currentRed = 0;
+        }
+
+    }
+    public void GainRed(int amount)
+    {
+        currentRed += amount;
+        if (currentRed > maxRed)
+        {
+            currentRed = maxRed;
+        }
+
+    }
+    public void LoseOrange(int amount)
+    {
+        currentOrange-= amount;
+        if (currentOrange < 0)
+        {
+            currentOrange = 0;
+        }
+    }
+    public void GainOrange(int amount)
+    {
+        currentOrange += amount;
+        if (currentOrange > maxOrange)
+        {
+            currentOrange = maxOrange;
+        }
+    }
+    public void LoseYellow(int amount)
+    {
+        currentYellow -= amount;
+        if (currentYellow < 0)
+        {
+            currentYellow = 0;
+        }
+    }
+    public void GainYellow(int amount)
+    {
+        currentYellow += amount;
+        if (currentYellow > maxYellow)
+        {
+            currentYellow = maxYellow;
+        }
+    }
+    public void LoseGreen(int amount)
+    {
+        currentGreen -= amount;
+        if (currentGreen < 0)
+        {
+            currentGreen = 0;
+        }
+    }
+    public void GainGreen(int amount)
+    {
+        currentGreen += amount;
+        if (currentGreen > maxGreen)
+        {
+            currentGreen = maxGreen;
+        }
+    }
+    public void LoseBlue(int amount)
+    {
+        currentBlue -= amount;
+        if (currentBlue < 0)
+        {
+            currentBlue = 0;
+        }
+    }
+    public void GainBlue(int amount)
+    {
+        currentBlue += amount;
+        if (currentBlue > maxBlue)
+        {
+            currentBlue = maxBlue;
+        }
+    }
+    public void LoseViolet(int amount)
+    {
+        currentViolet -= amount;
+        if (currentViolet < 0)
+        {
+            currentViolet = 0;
+        }
+    }
+    public void GainViolet(int amount)
+    {
+        currentViolet += amount;
+        if (currentViolet > maxViolet)
+        {
+            currentViolet = maxViolet;
+        }
+    }
 }

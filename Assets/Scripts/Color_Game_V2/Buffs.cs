@@ -63,5 +63,6 @@ public class Buffs : StatusEffect_V2
                 target.SetSpeedTier(-1);
                 break;
         }
+        this.timeActive = 0;
     }
 }
