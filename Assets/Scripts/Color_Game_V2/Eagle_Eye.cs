@@ -671,13 +671,13 @@ public class Eagle_Eye : MonoBehaviour
 
     IEnumerator WaitForPlayerDecisions()
     {
-        Debug.Log("Start");
         
+        //buttonsAndPanelsScript.ToggleFightPanel();
         yield return new WaitUntil(PlayerChoiceIsMade);
         //Player is attacking single target
         if (AttackIsChosen() && EnemyIsChosen())
         {
-            buttonsAndPanelsScript.ToggleFightPanel();
+            //buttonsAndPanelsScript.ToggleFightPanel();
             PayAttackCost(currentPC, chosenAttack);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
             Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
@@ -711,7 +711,7 @@ public class Eagle_Eye : MonoBehaviour
                         }
                     }
                     chosenEnemyTarget.TakeDamage(damage);
-                    chosenEnemyTarget.ReduceStamina(staminaDamage);
+                    chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
                     CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
                     
                 }
@@ -783,14 +783,16 @@ public class Eagle_Eye : MonoBehaviour
         Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
         if(enemyChosenTarget != null)
         {
+            PayAttackCost(unit, enemyChosenAttack);
             for(int i = 0; i < enemyChosenAttack.numOfHits; i++)
             {
                 if (enemyChosenAttack.DoesAttackHit(unit))
                 {
                     int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
-                    int staminaDamage = damage / 3;
+                    int staminaDamage = Mathf.Clamp(damage / 3, 1, damage/3);
                     CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     enemyChosenTarget.TakeDamage(damage);
+                    Debug.Log($"Stamina Damage: {staminaDamage}");
                     enemyChosenTarget.ReduceStamina(staminaDamage);
                     CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                 }

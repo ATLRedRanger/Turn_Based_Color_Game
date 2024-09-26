@@ -200,6 +200,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public void OnDefendButtonClick()
     {
         eagleScript.DefendIsChosen();
+        ToggleFightPanel();
     }
 
     public void InteractableAttackButtons()
