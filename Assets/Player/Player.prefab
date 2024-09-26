@@ -121,14 +121,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDatabaseScript: {fileID: 0}
   unitName: Huey
-  currentHp: 50
-  maxHp: 50
+  currentHp: 100
+  maxHp: 100
   currentStamina: 0
   maxStamina: 10
-  baseAttack: 5
+  baseAttack: 1
   baseDefense: 0
   isDefending: 0
   baseSpeed: 5
+  speedTier: 0
   burnAmount: 0
   burnThreshhold: 5
   burnTimer: 0

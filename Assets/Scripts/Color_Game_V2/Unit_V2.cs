@@ -30,7 +30,7 @@ public class Unit_V2 : MonoBehaviour
     private int attackTier = 0;
 
     private int defenseTier = 0;
-
+    [SerializeField]
     private int speedTier = 0;
 
     public Weapon equippedWeapon = null;

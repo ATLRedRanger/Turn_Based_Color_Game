@@ -19,7 +19,7 @@ public class StatusEffectsDatabase_V2 : MonoBehaviour
     {
         burn = CreateStatus("Burn", 3, 0, 5, 0);
         buffington = CreateBuff("Buffington", 5);
-        deBuffington = CreateDebuff("Debuffington", 3);
+        deBuffington = CreateDebuff("Debuffington", 1);
     }
 
     public StatusEffect_V2 CreateStatus(string statusName = null, int effectLength = 0, int effectStack = 0, int damageAmount = 0, int timeNeededInQue = 0)

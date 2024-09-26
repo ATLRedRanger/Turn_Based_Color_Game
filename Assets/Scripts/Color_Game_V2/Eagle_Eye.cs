@@ -106,7 +106,7 @@ public class Eagle_Eye : MonoBehaviour
     private void GenerateEnemies()
     {
         player.gameObject.SetActive(true);
-        int enemiesToGenerate = 2;//Random.Range(1, 3);
+        int enemiesToGenerate = 1;//Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         for(int i = 0; i < enemiesToGenerate; i++) 
         {
@@ -566,8 +566,7 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     debuff.ActivateDebuffEffect(unit);
                 }
-
-                if (debuff.GetTimeActive() > debuff.GetEffectLength())
+                if(debuff.GetTimeActive() >= debuff.GetEffectLength())
                 {
                     removeDebuff.Add(debuff);
                 }
@@ -577,7 +576,7 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
 
-            if (unit.GetListOfDebuffs().Count > 0)
+            if (unit.GetListOfBuffs().Count > 0)
             {
                 foreach (Buffs buff in removeBuff)
                 {
@@ -590,21 +589,24 @@ public class Eagle_Eye : MonoBehaviour
                     }
                 }
             }
+
             
-            if (unit.GetListOfDebuffs().Count > 0)
+            
+            foreach (Debuffs debuff in removeDebuff)
             {
-                foreach (Debuffs debuff in removeDebuff)
+                
+                if (unit.DoesStatusExist(debuff))
                 {
-                    if (unit.DoesStatusExist(debuff))
-                    {
-                        unit.GetSpeedTier();
-                        //Debug.Log($"{debuff.GetStatusName()} has been removed.");
-                        debuff.RevertDebuffEffect(unit);
-                        unit.GetListOfDebuffs().Remove(debuff);
-                        unit.GetSpeedTier();
-                    }
+                    Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active debuffs.");
+                    unit.GetListOfDebuffs().Remove(debuff);
+                    Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active debuffs.");
+                    //Debug.Log($"{debuff.GetStatusName()} has been removed.");
+                    debuff.RevertDebuffEffect(unit);
                 }
+                
             }
+            
+
             
 
             
@@ -682,7 +684,7 @@ public class Eagle_Eye : MonoBehaviour
                     int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
                     int staminaDamage = 0;
                     CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
-                    Debug.Log(currentPC.equippedWeapon.itemName);
+                    //Debug.Log(currentPC.equippedWeapon.itemName);
                     if (currentPC.equippedWeapon != null)
                     {
                         switch (currentPC.equippedWeapon)

@@ -47,6 +47,7 @@ public class Debuffs : StatusEffect_V2
         switch (statusName)
         {
             case "Debuffington":
+                Debug.Log("Subtracting 1 from unit speedtier!");
                 target.SetSpeedTier(-1);
                 break;
         }
@@ -57,8 +58,11 @@ public class Debuffs : StatusEffect_V2
         switch (statusName)
         {
             case "Debuffington":
+                Debug.Log("ADDing 1 to unit speedtier!");
                 target.SetSpeedTier(1);
                 break;
         }
+
+        this.timeActive = 0;
     }
 }
