@@ -71,7 +71,13 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_3()
     {
-        player.equippedWeapon = weaponDatabaseScript.basicAxe;
+        if(enemyOne.GetListOfDebuffs().Count != 0)
+        {
+            enemyOne.GetListOfDebuffs()[0].statusName = "TESTING";
+            Debug.Log(enemyOne.GetListOfDebuffs().Count);
+        }
+        
+        Debug.Log($"PLAYER DEBUFF NAME: {player.GetListOfDebuffs()[0].statusName}");
 
     }
     IEnumerator LoadScripts()
@@ -98,6 +104,7 @@ public class Eagle_Eye : MonoBehaviour
         
     }
     
+    //Sorts combatants from fastest to slowest
     private void SortCombatants(List<Unit_V2> listOfCombatants)
     {
         listOfCombatants.Sort((y, x) => x.GetCurrentSpeed().CompareTo(y.GetCurrentSpeed()));
@@ -162,7 +169,7 @@ public class Eagle_Eye : MonoBehaviour
             CombatUIUpdates();
 
             currentRound++;
-            Debug.Log($"Current Round: {currentRound}");
+            //Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
             yield return new WaitForSeconds(1f);
@@ -173,12 +180,12 @@ public class Eagle_Eye : MonoBehaviour
                 {
 
                     currentPC = unit;
-                    buttonsAndPanelsScript.ToggleFightPanel();
+                    
                     PlayerTurn();
                     yield return new WaitUntil(PlayerTurnIsDone);
                     if (IsPlayerAlive(player))
                     {
-                        Debug.Log("Player is alive");
+                        //Debug.Log("Player is alive");
                     }
                     else
                     {
@@ -190,7 +197,7 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     if (unit.GetCurrentHp() < 1)
                     {
-                        Debug.Log($"Adding {unit} to DeadUnitList");
+                        //Debug.Log($"Adding {unit} to DeadUnitList");
                         deadUnits.Add(unit);
                         
                     }
@@ -257,7 +264,7 @@ public class Eagle_Eye : MonoBehaviour
             
             if (IsPlayerAlive(player))
             {
-                Debug.Log("Player is alive");
+                //Debug.Log("Player is alive");
             }
             else
             {
@@ -293,7 +300,8 @@ public class Eagle_Eye : MonoBehaviour
         currentPC.isDefending = false;
         chosenAttack = null;
         chosenEnemyTarget = null;
-        Debug.Log("Player Turn");
+        //Debug.Log("Player Turn");
+        buttonsAndPanelsScript.ToggleFightPanel();
         StartCoroutine(WaitForPlayerDecisions());
     }
 
@@ -368,7 +376,7 @@ public class Eagle_Eye : MonoBehaviour
                     if (attacker.equippedWeapon.weaponType == WeaponType.Axe || attacker.equippedWeapon.weaponType == WeaponType.Bow || attacker.equippedWeapon.weaponType == WeaponType.Hammer || attacker.equippedWeapon.weaponType == WeaponType.Sword)
                     {
                         baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
-                        Debug.Log($"Physical Attack with a physical weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
+                        //Debug.Log($"Physical Attack with a physical weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
                     }
 
                     break;
@@ -376,7 +384,7 @@ public class Eagle_Eye : MonoBehaviour
                     if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook || attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
                         baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
-                        Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
+                        //Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
                     }
 
                     break;
@@ -385,13 +393,13 @@ public class Eagle_Eye : MonoBehaviour
         else
         {
             baseDamage = attack.attackPower + attacker.GetCurrentAttack();
-            Debug.Log($"Base Damage: ({attack.attackPower}) + ({attacker.GetCurrentAttack()})");
+            //Debug.Log($"Base Damage: ({attack.attackPower}) + ({attacker.GetCurrentAttack()})");
         }
         
 
         // Apply damage multiplier for critical hits, etc.
         damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
-        Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
+        //Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
 
         // Apply damage after critical hit.
         if (DoesAttackCrit(attacker))
@@ -401,7 +409,7 @@ public class Eagle_Eye : MonoBehaviour
 
         // Apply color resistances based on attack type and color
         damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
-        Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
+        //Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
 
         if (defender.isDefending)
@@ -447,7 +455,8 @@ public class Eagle_Eye : MonoBehaviour
                 else if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
                 {
                     //Debug.Log($"{defender.unitName} is now burning!");
-                    defender.AddStatus(statusEffectScript.burn);
+                    
+                    defender.AddStatus(statusEffectScript.burn.DeepCopy());
                     defender.SetBurnAmountToZero();
                 }
                 else
@@ -456,6 +465,14 @@ public class Eagle_Eye : MonoBehaviour
                 }
                 
                 break;
+            case AttackBehavior.FutureSight:
+                if (!defender.DoesStatusExist(statusEffectScript.futureSight))
+                {
+                    defender.AddStatus(statusEffectScript.futureSight.DeepCopy());
+                }
+                break;
+
+
         }
     }
 
@@ -463,16 +480,14 @@ public class Eagle_Eye : MonoBehaviour
     {
         if(attack.attackBuff != null)
         {
-            foreach (Buffs buff in chosenTarget.GetListOfBuffs())
+           
+            if (chosenTarget.DoesStatusExist(attack.attackBuff))
             {
-                if (chosenTarget.DoesStatusExist(buff))
-                {
-                    continue;
-                }
-                else
-                {
-                    buff.ApplyBuff(chosenTarget);
-                }
+                
+            }
+            else
+            {
+                attack.attackBuff.ApplyBuff(chosenTarget);
             }
             
         }
@@ -483,18 +498,14 @@ public class Eagle_Eye : MonoBehaviour
             if (chosenTarget.DoesStatusExist(attack.attackDebuff))
             {
                 //Debug.Log($"{attack.attackDebuff.GetStatusName()} is on the {chosenTarget.unitName}");
-                
             }
             else
             {
-
                 attack.attackDebuff.ApplyDebuff(chosenTarget);
             }
            
         }
-        
-        
-        
+
     }
 
     private void CheckStatusTimes(List<Unit_V2> listOfCombatants)
@@ -509,7 +520,8 @@ public class Eagle_Eye : MonoBehaviour
                 switch (status.GetStatusName())
                 {
                     case "Burn":
-                        //Debug.Log($"{unit.unitName}'s burnTimer: {unit.GetBurnTimer()}");
+                        
+                        //Debug.Log($"{unit.unitName}'s burnStack: {status.effectStack}.");
                         if (unit.GetBurnTimer() >= status.GetEffectLength())
                         {
                             Debug.Log("Setting Burn Timer To Zero");
@@ -523,6 +535,16 @@ public class Eagle_Eye : MonoBehaviour
                             //Debug.Log("Burn Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
                             
+                        }
+                        break;
+                    case "Future Sight":
+                        if(status.timeNeededInQue >= status.GetEffectLength())
+                        {
+                            statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue });
+                        }
+                        else
+                        {
+                            status.effectLength += 1;
                         }
                         break;
                 }
@@ -598,11 +620,11 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
 
-            
-            
+
+            Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active Debuffs.");
             foreach (Debuffs debuff in removeDebuff)
             {
-                
+                   
                 if (unit.DoesStatusExist(debuff))
                 {
                     unit.GetListOfDebuffs().Remove(debuff);
@@ -677,7 +699,7 @@ public class Eagle_Eye : MonoBehaviour
         //Player is attacking single target
         if (AttackIsChosen() && EnemyIsChosen())
         {
-            //buttonsAndPanelsScript.ToggleFightPanel();
+            buttonsAndPanelsScript.ToggleFightPanel();
             PayAttackCost(currentPC, chosenAttack);
             Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
             Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
@@ -723,6 +745,7 @@ public class Eagle_Eye : MonoBehaviour
         }
         
         Debug.Log("PLAYER TURN HAS FINISHED!");
+        
         
         playerTurnIsDone = true;
     }

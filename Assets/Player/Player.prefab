@@ -131,7 +131,7 @@ MonoBehaviour:
   baseSpeed: 5
   speedTier: 0
   burnAmount: 0
-  burnThreshhold: 5
+  burnThreshhold: 0
   burnTimer: 0
   redResistance: 0
   orangeResistance: 0

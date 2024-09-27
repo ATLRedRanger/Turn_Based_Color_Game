@@ -1,8 +1,9 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack 
+public class Attack
 {
     public string attackName;
     public int attackPower;

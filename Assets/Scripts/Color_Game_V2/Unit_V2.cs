@@ -68,6 +68,7 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private float swordResistance;
 
+
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
     private List<Buffs> unitBuffsList = new List<Buffs>();
     private List<Debuffs> unitDebuffsList = new List<Debuffs>();

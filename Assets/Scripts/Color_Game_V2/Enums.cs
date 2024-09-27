@@ -88,6 +88,7 @@ public enum AttackBehavior
     Burn,
     Stun,
     Vamp, 
+    FutureSight,
     None
 }
 

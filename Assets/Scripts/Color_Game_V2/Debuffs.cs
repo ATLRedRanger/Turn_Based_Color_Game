@@ -38,12 +38,13 @@ public class Debuffs : StatusEffect_V2
     public void ApplyDebuff(Unit_V2 target)
     {
         Debug.Log("Applying Debuff");
-        target.GetListOfDebuffs().Add(this);
+        target.GetListOfDebuffs().Add(DebuffDeepCopy());
         
     }
 
     public void ActivateDebuffEffect(Unit_V2 target)
     {
+        this.timeActive = 0;
         switch (statusName)
         {
             case "Debuffington":
@@ -64,5 +65,18 @@ public class Debuffs : StatusEffect_V2
         }
 
         this.timeActive = 0;
+    }
+
+    public Debuffs DebuffDeepCopy()
+    {
+        Debuffs status = new Debuffs();
+
+        status.statusName = this.statusName;
+        status.effectLength = this.effectLength;
+        status.effectStack = this.effectStack;
+        status.damageAmount = this.damageAmount;
+        status.timeNeededInQue = this.timeNeededInQue;
+
+        return status;
     }
 }

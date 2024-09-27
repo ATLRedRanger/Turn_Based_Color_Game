@@ -52,7 +52,7 @@ public class Attack_Database : MonoBehaviour
         _statusEffectsDatabase = FindObjectOfType<StatusEffectsDatabase_V2>();
         //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
         _fireball = CreateAttack("Fireball", 1, 100, 1, 1, 1, AttackType.Special, Hue.Red, AttackBehavior.Burn);
-        _basicAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
+        _basicAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, AttackType.Physical, Hue.Neutral, AttackBehavior.FutureSight);
         _basicAxeAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
         _basicBowAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
         _basicHammerAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, AttackType.Physical, Hue.Neutral, AttackBehavior.None);

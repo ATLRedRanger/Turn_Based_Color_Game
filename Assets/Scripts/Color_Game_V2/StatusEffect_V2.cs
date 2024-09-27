@@ -34,4 +34,17 @@ public class StatusEffect_V2
     {
         return effectLength;
     }
+
+    public StatusEffect_V2 DeepCopy()
+    {
+        StatusEffect_V2 status = new StatusEffect_V2();
+
+        status.statusName = this.statusName;
+        status.effectLength = this.effectLength;
+        status.effectStack = this.effectStack;
+        status.damageAmount = this.damageAmount;
+        status.timeNeededInQue = this.timeNeededInQue;
+
+        return status;
+    }
 }

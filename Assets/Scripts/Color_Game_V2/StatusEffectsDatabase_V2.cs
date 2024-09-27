@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatusEffectsDatabase_V2 : MonoBehaviour
 {
     public StatusEffect_V2 burn;
+    public StatusEffect_V2 futureSight;
     public Buffs buffington;
     public Debuffs deBuffington;
 
@@ -18,8 +19,9 @@ public class StatusEffectsDatabase_V2 : MonoBehaviour
     void Awake()
     {
         burn = CreateStatus("Burn", 3, 0, 5, 0);
+        futureSight = CreateStatus("Future Sight", 0, 0, 15, 3);
         buffington = CreateBuff("Buffington", 5);
-        deBuffington = CreateDebuff("Debuffington", 1);
+        deBuffington = CreateDebuff("Debuffington", 3);
     }
 
     public StatusEffect_V2 CreateStatus(string statusName = null, int effectLength = 0, int effectStack = 0, int damageAmount = 0, int timeNeededInQue = 0)

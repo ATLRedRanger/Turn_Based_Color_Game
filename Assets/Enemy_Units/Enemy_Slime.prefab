@@ -129,8 +129,9 @@ MonoBehaviour:
   baseDefense: 0
   isDefending: 0
   baseSpeed: 1
+  speedTier: 0
   burnAmount: 0
-  burnThreshhold: 5
+  burnThreshhold: 4
   burnTimer: 0
   redResistance: 0.5
   orangeResistance: 0
