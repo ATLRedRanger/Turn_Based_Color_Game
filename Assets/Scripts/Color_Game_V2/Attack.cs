@@ -11,6 +11,7 @@ public class Attack
     public int colorCost;
     public int staminaCost;
     public int numOfHits;
+    private int statusBuildUpAmount;
     public AttackType attackType;
     public Hue attackColor;
     public AttackBehavior attackBehavior;
@@ -18,7 +19,7 @@ public class Attack
     public Debuffs attackDebuff;
     
     public Attack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,
-                    AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
+                    int statusBuildUpAmout, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
     {
         this.attackName = attackName;
         this.attackPower = attackPower;
@@ -26,6 +27,7 @@ public class Attack
         this.colorCost = colorCost;
         this.staminaCost = staminaCost;
         this.numOfHits = numOfHits;
+        this.statusBuildUpAmount = statusBuildUpAmout;
         this.attackType = attackType;
         this.attackColor = attackColor;
         this.attackBehavior = attackBehavior;
@@ -70,5 +72,10 @@ public class Attack
     public void SetAttackDebuff(Debuffs debuff)
     {
         attackDebuff = debuff;
+    }
+
+    public int GetStatusBuildUpAmount()
+    {
+        return statusBuildUpAmount;
     }
 }

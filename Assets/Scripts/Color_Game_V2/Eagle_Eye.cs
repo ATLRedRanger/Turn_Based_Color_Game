@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.UnityLinker;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class Eagle_Eye : MonoBehaviour
 {
@@ -156,7 +157,7 @@ public class Eagle_Eye : MonoBehaviour
         
         //Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1);
         while (theCombatState == CombatState.Active)
         {
             /*
@@ -203,7 +204,7 @@ public class Eagle_Eye : MonoBehaviour
                     }
                     else
                     {
-                        EnemyTurn(unit as EnemyUnit_V2);
+                        StartCoroutine(EnemyTurn(unit as EnemyUnit_V2));
                         if (IsPlayerAlive(player))
                         {
                             //Debug.Log("Player is alive");
@@ -461,7 +462,7 @@ public class Eagle_Eye : MonoBehaviour
                 }
                 else
                 {
-                    defender.AddToBurnAmount(1);
+                    defender.AddToBurnAmount(attack.GetStatusBuildUpAmount());
                 }
                 
                 break;
@@ -735,7 +736,12 @@ public class Eagle_Eye : MonoBehaviour
                     chosenEnemyTarget.TakeDamage(damage);
                     chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
                     CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
-                    
+                    yield return new WaitForSeconds(1);
+                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                    uiScript.SetAttackDescriptionText(chosenAttack, player, chosenEnemyTarget, damage.ToString());
+                    yield return new WaitForSeconds(2);
+                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
                 }
                 else
                 {
@@ -799,10 +805,10 @@ public class Eagle_Eye : MonoBehaviour
 
     
 
-    private void EnemyTurn(EnemyUnit_V2 unit)
+    IEnumerator EnemyTurn(EnemyUnit_V2 unit)
     {
         Unit_V2 enemyChosenTarget = player;
-        Debug.Log(enemyChosenTarget.unitName);
+        
         Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
         if(enemyChosenTarget != null)
         {
@@ -818,6 +824,11 @@ public class Eagle_Eye : MonoBehaviour
                     Debug.Log($"Stamina Damage: {staminaDamage}");
                     enemyChosenTarget.ReduceStamina(staminaDamage);
                     CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
+                    yield return new WaitForSeconds(1);
+                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                    uiScript.SetAttackDescriptionText(enemyChosenAttack, unit, enemyChosenTarget, damage.ToString());
+                    yield return new WaitForSeconds(2);
+                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                 }
             }
             

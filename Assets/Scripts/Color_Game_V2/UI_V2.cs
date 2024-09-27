@@ -55,6 +55,9 @@ public class UI_V2 : MonoBehaviour
     public Image _violetBar;
     public Text _violetBarText;
 
+    //Attack Description Panel
+    public Text _attackDescriptionText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -150,5 +153,13 @@ public class UI_V2 : MonoBehaviour
         _violetBarText.text = "Violet: " + currentVioletAmount.ToString() + " / " + maxVioletAmount.ToString();
 
 
+    }
+
+    public void SetAttackDescriptionText(Attack attack, Unit_V2 attacker, Unit_V2 defender, string source)
+    {
+        _attackDescriptionText.text = "";
+        string description = " " + attacker.unitName + " has dealt " + source + " damage to " + defender.unitName + ".";
+        // = attack.attackName;
+        _attackDescriptionText.text = description;
     }
 }

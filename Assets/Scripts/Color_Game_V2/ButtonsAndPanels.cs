@@ -30,6 +30,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _AbilitiesPanel;
     public GameObject _ItemsPanel;
     public GameObject _EnemiesPanel;
+    public GameObject _AttackDescriptionPanel;
 
     //TargetEnemyButtons
     public GameObject _enemyOneButton;
@@ -146,6 +147,17 @@ public class ButtonsAndPanels : MonoBehaviour
 
     }
 
+    public void ToggleAttackDescriptionPanel()
+    {
+       //_AttackDescriptionPanel.SetActive(true);
+        
+        bool isActive = _AttackDescriptionPanel.activeSelf;
+        
+        if (_AttackDescriptionPanel != null)
+        {
+            _AttackDescriptionPanel.SetActive(!isActive);
+        }
+    }
 
     public void ToggleEnemyButtons(Unit_V2 enemyOne, Unit_V2 enemyTwo)
     {

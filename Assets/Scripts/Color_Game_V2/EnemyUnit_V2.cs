@@ -13,6 +13,7 @@ public class EnemyUnit_V2 : Unit_V2
     {
         base.Start();
         AddAttackToDictionary(attackDatabaseScript._fireball);
+        AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
     }
 
     // Update is called once per frame
