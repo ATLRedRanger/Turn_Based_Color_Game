@@ -176,6 +176,7 @@ public class Eagle_Eye : MonoBehaviour
             yield return new WaitForSeconds(1f);
             foreach (Unit_V2 unit in listOfCombatants)
             {
+                CombatUIUpdates();
                 //Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
@@ -215,8 +216,9 @@ public class Eagle_Eye : MonoBehaviour
                             break;
                         }
                     }
-                    
+                    yield return new WaitForSeconds(1);
                 }
+                CombatUIUpdates();
             }
             //End of turn stuff
             yield return new WaitForSeconds (.5f);
@@ -224,15 +226,15 @@ public class Eagle_Eye : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             CheckBuffsAndDebuffs(listOfCombatants);
             yield return new WaitForSeconds(.5f);
-            EndOfRoundStatusDamage();
+            StartCoroutine(EndOfRoundStatusDamage());
             yield return new WaitForSeconds(.5f);
-            //TODO: Add environment color regen.
+            
             if (currentRound % 3 ==  0)
             {
                 envManaScript.RegenEnvColors();
             }
-            
-            
+            CombatUIUpdates();
+
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
@@ -254,8 +256,8 @@ public class Eagle_Eye : MonoBehaviour
                     listOfCombatants.Remove(enemy); 
                 }
             }
+            
 
-            CombatUIUpdates();
 
             if (listOfCombatants.Count == 1 && listOfCombatants[0] is Player_V2)
             {
@@ -272,7 +274,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-            CombatUIUpdates();
+            yield return new WaitForSeconds(1);
         }
         yield return new WaitForSeconds(1f);
         if (theCombatState == CombatState.Won)
@@ -532,7 +534,7 @@ public class Eagle_Eye : MonoBehaviour
                         else
                         {
                             
-                            statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage(), status.timeNeededInQue});
+                            statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage(), status.timeNeededInQue, status});
                             //Debug.Log("Burn Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
                             
@@ -541,7 +543,7 @@ public class Eagle_Eye : MonoBehaviour
                     case "Future Sight":
                         if(status.timeNeededInQue >= status.GetEffectLength())
                         {
-                            statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue });
+                            statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue, status});
                         }
                         else
                         {
@@ -645,7 +647,7 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    public void EndOfRoundStatusDamage()
+    private IEnumerator EndOfRoundStatusDamage()
     {
         //This function is for timed damage effects to go off
         //The timeInQue is so that statusEffects can sit in the que to "cook"
@@ -676,7 +678,12 @@ public class Eagle_Eye : MonoBehaviour
                     timeInQue = (int)statusDamageQue[i][2];
                     if (timeInQue < 1)
                     {
+                        yield return new WaitForSeconds(1);
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                        uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
                         unit.TakeDamage(damage);
+                        yield return new WaitForSeconds(1);
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         
                     }
                     else
@@ -690,6 +697,7 @@ public class Eagle_Eye : MonoBehaviour
 
         statusDamageQue.Clear();
         statusDamageQue = blankList;
+        yield return null;
     }
 
     IEnumerator WaitForPlayerDecisions()
@@ -827,19 +835,12 @@ public class Eagle_Eye : MonoBehaviour
                     yield return new WaitForSeconds(1);
                     buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                     uiScript.SetAttackDescriptionText(enemyChosenAttack, unit, enemyChosenTarget, damage.ToString());
-                    yield return new WaitForSeconds(2);
+                    yield return new WaitForSeconds(1);
                     buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                 }
             }
             
         }
-        /*
-        Debug.Log($"{unit.unitName}'s Turn");
-        if (player != null)
-        {
-            player.TakeDamage(5);
-            
-        }*/
     }
 
     private void PlayerWon()

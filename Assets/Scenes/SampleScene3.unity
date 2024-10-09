@@ -17067,7 +17067,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Type
+  m_Text: 
 --- !u!222 &1723304284
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17467,7 +17467,7 @@ MonoBehaviour:
   _AbilitiesPanel: {fileID: 1237830480}
   _ItemsPanel: {fileID: 1416767523}
   _EnemiesPanel: {fileID: 1421754594}
-  _AttackDescriptionPanel: {fileID: 0}
+  _AttackDescriptionPanel: {fileID: 1991306996}
   _enemyOneButton: {fileID: 775971296}
   _enemyOneButtonText: {fileID: 1733775277}
   _enemyTwoButton: {fileID: 1993143389}
@@ -18369,7 +18369,7 @@ MonoBehaviour:
   _blueBarText: {fileID: 1447227849}
   _violetBar: {fileID: 1426110473}
   _violetBarText: {fileID: 37491808}
-  _attackDescriptionText: {fileID: 0}
+  _attackDescriptionText: {fileID: 1723304283}
 --- !u!4 &1899140612
 Transform:
   m_ObjectHideFlags: 0
@@ -19014,7 +19014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1991306997
 RectTransform:
   m_ObjectHideFlags: 0

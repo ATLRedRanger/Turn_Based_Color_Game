@@ -24,6 +24,7 @@ public class UI_V2 : MonoBehaviour
     public Text playerStaminaText;
     public Image playerHealthBar;
     public Image playerStaminaBar;
+    public Text playerDamageNumberText;
 
     //Enemy One
     public Text enemyOneName;
@@ -31,7 +32,8 @@ public class UI_V2 : MonoBehaviour
     public Text enemyOneStaminaText;
     public Image enemyOneHealthBar;
     public Image enemyOneStaminaBar;
-    
+    public Text enemyOneDamageNumberText;
+
 
     //Enemy Two
     public Text enemyTwoName;
@@ -39,7 +41,8 @@ public class UI_V2 : MonoBehaviour
     public Text enemyTwoStaminaText;
     public Image enemyTwoHealthBar;
     public Image enemyTwoStaminaBar;
-    
+    public Text enemyTwoDamageNumberText;
+
 
     //Environment Bars
     public Image _redBar;
@@ -158,8 +161,23 @@ public class UI_V2 : MonoBehaviour
     public void SetAttackDescriptionText(Attack attack, Unit_V2 attacker, Unit_V2 defender, string source)
     {
         _attackDescriptionText.text = "";
+
         string description = " " + attacker.unitName + " has dealt " + source + " damage to " + defender.unitName + ".";
-        // = attack.attackName;
+    
         _attackDescriptionText.text = description;
+    }
+
+    public void SetStatusDescriptionText(Unit_V2 subject, int damage, string source)
+    {
+        _attackDescriptionText.text = "";
+
+        string description = " " + subject.unitName + " takes " + damage + " from " + source + ".";
+
+        _attackDescriptionText.text = description;
+    }
+
+    public void DisplayDamageNumber()
+    {
+
     }
 }

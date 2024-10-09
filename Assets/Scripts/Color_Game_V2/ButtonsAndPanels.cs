@@ -52,7 +52,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleFightPanel()
     {
-        Debug.Log("Fight Panel");
+        //Debug.Log("Fight Panel");
         bool isActive = _FightPanel.activeSelf;
 
         if (_FightPanel != null)
@@ -166,7 +166,7 @@ public class ButtonsAndPanels : MonoBehaviour
         
         if (enemyOne != null && enemyOne.GetCurrentHp() > 0)
         {
-            Debug.Log($"ButtonPanel Test Name: {enemyOne.unitName}");
+            //Debug.Log($"ButtonPanel Test Name: {enemyOne.unitName}");
             _enemyOneButton.SetActive(true);
             SetEnemyOneButtonName(enemyOne.unitName);
         }
