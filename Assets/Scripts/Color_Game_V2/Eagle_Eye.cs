@@ -165,6 +165,10 @@ public class Eagle_Eye : MonoBehaviour
              * Tell the Buttons and Panels script which enemies are still alive.
              * 
             */
+            if (currentRound % 3 == 0)
+            {
+                envManaScript.RegenEnvColors();
+            }
             buttonsAndPanelsScript.ToggleEnemyButtons(enemyOne, enemyTwo);
             UpdateEnvironmentColors();
             CombatUIUpdates();
@@ -183,10 +187,12 @@ public class Eagle_Eye : MonoBehaviour
 
                     currentPC = unit;
                     
-                    PlayerTurn();
-                    yield return new WaitUntil(PlayerTurnIsDone);
+                    
+                    
                     if (IsPlayerAlive(player))
                     {
+                        PlayerTurn();
+                        yield return new WaitUntil(PlayerTurnIsDone);
                         //Debug.Log("Player is alive");
                     }
                     else
@@ -205,9 +211,10 @@ public class Eagle_Eye : MonoBehaviour
                     }
                     else
                     {
-                        StartCoroutine(EnemyTurn(unit as EnemyUnit_V2));
+                        
                         if (IsPlayerAlive(player))
                         {
+                            StartCoroutine(EnemyTurn(unit as EnemyUnit_V2));
                             //Debug.Log("Player is alive");
                         }
                         else
@@ -221,19 +228,9 @@ public class Eagle_Eye : MonoBehaviour
                 CombatUIUpdates();
             }
             //End of turn stuff
-            yield return new WaitForSeconds (.5f);
-            CheckStatusTimes(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            CheckBuffsAndDebuffs(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            StartCoroutine(EndOfRoundStatusDamage());
-            yield return new WaitForSeconds(.5f);
+           
             
-            if (currentRound % 3 ==  0)
-            {
-                envManaScript.RegenEnvColors();
-            }
-            CombatUIUpdates();
+            
 
             foreach (Unit_V2 unit in listOfCombatants)
             {
@@ -274,6 +271,13 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
+            yield return new WaitForSeconds(.5f);
+            CheckStatusTimes(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            CheckBuffsAndDebuffs(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            StartCoroutine(EndOfRoundStatusDamage());
+            //yield return new WaitForSeconds(.5f);
             yield return new WaitForSeconds(1);
         }
         yield return new WaitForSeconds(1f);
@@ -669,29 +673,33 @@ public class Eagle_Eye : MonoBehaviour
             for (int i = 0; i < statusDamageQue.Count; i++)
             {
                 unit = statusDamageQue[i][0] as Unit_V2;
-                if (statusDamageQue[i][1] is int)
+                if(unit.GetCurrentHp() > 0)
                 {
-                    damage = (int)(statusDamageQue[i][1]);
-                }
-                if (statusDamageQue[i][2] is int)
-                {
-                    timeInQue = (int)statusDamageQue[i][2];
-                    if (timeInQue < 1)
+                    if (statusDamageQue[i][1] is int)
                     {
-                        yield return new WaitForSeconds(1);
-                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-                        uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
-                        unit.TakeDamage(damage);
-                        yield return new WaitForSeconds(1);
-                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-                        
+                        damage = (int)(statusDamageQue[i][1]);
                     }
-                    else
+                    if (statusDamageQue[i][2] is int)
                     {
-                        statusDamageQue[i][2] = timeInQue - 1;
-                        blankList.Add(statusDamageQue[i]);
+                        timeInQue = (int)statusDamageQue[i][2];
+                        if (timeInQue < 1)
+                        {
+                            yield return new WaitForSeconds(1);
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
+                            unit.TakeDamage(damage);
+                            yield return new WaitForSeconds(1);
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
+                        }
+                        else
+                        {
+                            statusDamageQue[i][2] = timeInQue - 1;
+                            blankList.Add(statusDamageQue[i]);
+                        }
                     }
                 }
+                
             }
         }
 

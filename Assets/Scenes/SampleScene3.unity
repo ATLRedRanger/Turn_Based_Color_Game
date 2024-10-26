@@ -18347,16 +18347,19 @@ MonoBehaviour:
   playerStaminaText: {fileID: 208535280}
   playerHealthBar: {fileID: 1518989802}
   playerStaminaBar: {fileID: 1477902370}
+  playerDamageNumberText: {fileID: 0}
   enemyOneName: {fileID: 661723946}
   enemyOneHealthText: {fileID: 611995661}
   enemyOneStaminaText: {fileID: 1890635933}
   enemyOneHealthBar: {fileID: 900588897}
   enemyOneStaminaBar: {fileID: 302994883}
+  enemyOneDamageNumberText: {fileID: 0}
   enemyTwoName: {fileID: 236069617}
   enemyTwoHealthText: {fileID: 317627648}
   enemyTwoStaminaText: {fileID: 272745447}
   enemyTwoHealthBar: {fileID: 1275926018}
   enemyTwoStaminaBar: {fileID: 2114998981}
+  enemyTwoDamageNumberText: {fileID: 0}
   _redBar: {fileID: 1613037338}
   _redBarText: {fileID: 582186857}
   _orangeBar: {fileID: 2123531516}

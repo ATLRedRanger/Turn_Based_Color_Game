@@ -163,7 +163,7 @@ public class UI_V2 : MonoBehaviour
         _attackDescriptionText.text = "";
 
         string description = " " + attacker.unitName + " has dealt " + source + " damage to " + defender.unitName + ".";
-    
+        
         _attackDescriptionText.text = description;
     }
 

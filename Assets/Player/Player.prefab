@@ -125,7 +125,7 @@ MonoBehaviour:
   maxHp: 100
   currentStamina: 0
   maxStamina: 10
-  baseAttack: 1
+  baseAttack: 2
   baseDefense: 0
   isDefending: 0
   baseSpeed: 5
