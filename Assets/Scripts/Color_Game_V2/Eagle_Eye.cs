@@ -114,7 +114,7 @@ public class Eagle_Eye : MonoBehaviour
     private void GenerateEnemies()
     {
         player.gameObject.SetActive(true);
-        int enemiesToGenerate = 1;//Random.Range(1, 3);
+        int enemiesToGenerate = 2;//Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         for(int i = 0; i < enemiesToGenerate; i++) 
         {
@@ -321,12 +321,12 @@ public class Eagle_Eye : MonoBehaviour
         return false;
     }
 
-    // Helper function to calculate damage multiplier (replace with your implementation for critical hits, etc.)
+    
     private float CalculateDamageMultiplier()
     {
-        float roll = Random.Range(1f, 5f);
+        int roll = Random.Range(1, 5);
 
-        switch ((int)roll) // Cast roll to int for case matching
+        switch (roll) // Cast roll to int for case matching
         {
             case 1:
                 return 1.25f;
@@ -351,14 +351,34 @@ public class Eagle_Eye : MonoBehaviour
         switch (attacker.StaminaLevelConversion())
         {
             case StaminaLevels.Full:
+                if(roll + 10 > 5)
+                {
+                    return true;
+                }
                 break;
-            case StaminaLevels.ThreeQuarters: 
+            case StaminaLevels.ThreeQuarters:
+                if (roll + 8 > 5)
+                {
+                    return true;
+                }
                 break;
-            case StaminaLevels.Half: 
+            case StaminaLevels.Half:
+                if (roll + 6 > 5)
+                {
+                    return true;
+                }
                 break;
-            case StaminaLevels.OneQuarter: 
+            case StaminaLevels.OneQuarter:
+                if (roll + 4 > 5)
+                {
+                    return true;
+                }
                 break;
-            case StaminaLevels.Empty: 
+            case StaminaLevels.Empty:
+                if (roll + 2 > 5)
+                {
+                    return true;
+                }
                 break;
             case StaminaLevels.Broken:
                 break;
@@ -411,7 +431,7 @@ public class Eagle_Eye : MonoBehaviour
         // Apply damage after critical hit.
         if (DoesAttackCrit(attacker))
         {
-            damageBeforeDefenses *= Mathf.RoundToInt(damageBeforeDefenses * 1.5f);
+            damageBeforeDefenses = Mathf.RoundToInt(damageBeforeDefenses * 2f);
         }
 
         // Apply color resistances based on attack type and color
@@ -438,6 +458,8 @@ public class Eagle_Eye : MonoBehaviour
         }
 
         combinedResistances += defender.GetColorResistances()[attackColor];
+
+        Debug.Log($"Damage: {damage} - Mathf.RoundToInt(damage({damage} * combinedResistances({combinedResistances})");
 
         return damage - Mathf.RoundToInt(damage * combinedResistances);
         
@@ -710,58 +732,112 @@ public class Eagle_Eye : MonoBehaviour
 
     IEnumerator WaitForPlayerDecisions()
     {
-        
-        //buttonsAndPanelsScript.ToggleFightPanel();
+
+        //List<EnemyUnit_V2> enemyList = EnemyList(); 
+
         yield return new WaitUntil(PlayerChoiceIsMade);
+
         //Player is attacking single target
-        if (AttackIsChosen() && EnemyIsChosen())
+        if(AttackIsChosen() && chosenAttack.isSingleTarget == true)
         {
-            buttonsAndPanelsScript.ToggleFightPanel();
-            PayAttackCost(currentPC, chosenAttack);
-            Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
-            Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
-            yield return new WaitForSeconds(1);
-
-            for (int i = 0; i < chosenAttack.numOfHits; i++)
+            if (AttackIsChosen() && EnemyIsChosen())
             {
-                if (chosenAttack.DoesAttackHit(currentPC))
-                {
-                    Debug.Log("Attack Hits");
-                    int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
-                    int staminaDamage = 0;
-                    CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
-                    //Debug.Log(currentPC.equippedWeapon.itemName);
-                    if (currentPC.equippedWeapon != null)
-                    {
-                        switch (currentPC.equippedWeapon)
-                        {
-                            case Weapon_Axe axe:
-                                damage = Mathf.RoundToInt(damage * axe.healthPercent);
-                                staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
-                                Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                break;
-                            case Weapon_Hammer hammer:
-                                damage = Mathf.RoundToInt(damage * hammer.healthPercent);
-                                staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
-                                Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    chosenEnemyTarget.TakeDamage(damage);
-                    chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
-                    CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
-                    yield return new WaitForSeconds(1);
-                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-                    uiScript.SetAttackDescriptionText(chosenAttack, player, chosenEnemyTarget, damage.ToString());
-                    yield return new WaitForSeconds(2);
-                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                //buttonsAndPanelsScript.ToggleFightPanel();
+                PayAttackCost(currentPC, chosenAttack);
+                Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
+                Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
+                yield return new WaitForSeconds(1);
 
-                }
-                else
+                for (int i = 0; i < chosenAttack.numOfHits; i++)
                 {
-                    Debug.Log("Attack Doesn't Hit");
+                    if (chosenAttack.DoesAttackHit(currentPC))
+                    {
+                        Debug.Log("Attack Hits");
+                        int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
+                        int staminaDamage = 0;
+                        CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
+                        //Debug.Log(currentPC.equippedWeapon.itemName);
+                        if (currentPC.equippedWeapon != null)
+                        {
+                            switch (currentPC.equippedWeapon)
+                            {
+                                case Weapon_Axe axe:
+                                    damage = Mathf.RoundToInt(damage * axe.healthPercent);
+                                    staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
+                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
+                                    break;
+                                case Weapon_Hammer hammer:
+                                    damage = Mathf.RoundToInt(damage * hammer.healthPercent);
+                                    staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
+                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        chosenEnemyTarget.TakeDamage(damage);
+                        chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
+                        CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
+                        yield return new WaitForSeconds(1);
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                        uiScript.SetAttackDescriptionText(chosenAttack, player, chosenEnemyTarget, damage.ToString());
+                        yield return new WaitForSeconds(2);
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
+                    }
+                    else
+                    {
+                        Debug.Log("Attack Doesn't Hit");
+                    }
+                }
+        
+            }
+        }
+        else
+        {
+            foreach(Unit_V2 enemy in listOfCombatants)
+            {
+                if (enemy is EnemyUnit_V2)
+                {
+                    if (chosenAttack.DoesAttackHit(currentPC))
+                    {
+                        Debug.Log("Attack Hits");
+                        int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
+                        int staminaDamage = 0;
+                        CheckAttack_StatusBuildupRelationship(chosenAttack, enemy);
+                        //Debug.Log(currentPC.equippedWeapon.itemName);
+                        if (currentPC.equippedWeapon != null)
+                        {
+                            switch (currentPC.equippedWeapon)
+                            {
+                                case Weapon_Axe axe:
+                                    damage = Mathf.RoundToInt(damage * axe.healthPercent);
+                                    staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
+                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
+                                    break;
+                                case Weapon_Hammer hammer:
+                                    damage = Mathf.RoundToInt(damage * hammer.healthPercent);
+                                    staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
+                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        enemy.TakeDamage(damage);
+                        enemy.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
+                        CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, enemy);
+                        yield return new WaitForSeconds(1);
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                        uiScript.SetAttackDescriptionText(chosenAttack, player, enemy, damage.ToString());
+                        yield return new WaitForSeconds(2);
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
+                    }
+                    else
+                    {
+                        Debug.Log("Attack Doesn't Hit");
+                    }
                 }
             }
         }
@@ -937,10 +1013,11 @@ public class Eagle_Eye : MonoBehaviour
 
     private bool EnemyIsChosen()
     {
-        if (chosenEnemyTarget != null)
+        if (chosenEnemyTarget != null || chosenAttack.isSingleTarget == false)
         {
             return true;
         }
+        
         return false;
     }
 
@@ -954,8 +1031,11 @@ public class Eagle_Eye : MonoBehaviour
         
         if (AttackIsChosen() && EnemyIsChosen())
         {
+            buttonsAndPanelsScript.ToggleFightPanel();
             return true;
-        }else if (currentPC.isDefending)
+
+        }
+        else if (currentPC.isDefending)
         {
             return true;
         }

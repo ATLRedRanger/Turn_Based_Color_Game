@@ -17,9 +17,10 @@ public class Attack
     public AttackBehavior attackBehavior;
     public Buffs attackBuff;
     public Debuffs attackDebuff;
+    public bool isSingleTarget;
     
     public Attack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,
-                    int statusBuildUpAmout, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
+                    int statusBuildUpAmout, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget)
     {
         this.attackName = attackName;
         this.attackPower = attackPower;
@@ -31,6 +32,7 @@ public class Attack
         this.attackType = attackType;
         this.attackColor = attackColor;
         this.attackBehavior = attackBehavior;
+        this.isSingleTarget = isSingleTarget;
     }
 
     public bool DoesAttackHit(Unit_V2 attacker)

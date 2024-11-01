@@ -247,7 +247,7 @@ public class ButtonsAndPanels : MonoBehaviour
     {
         eagleScript.AttackChangeNotification("Fireball");
         ToggleSpellsPanel();
-        ToggleEnemiesPanel();
+        //ToggleEnemiesPanel();
     }
 
     public void _AttackClick()

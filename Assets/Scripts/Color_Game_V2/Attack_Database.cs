@@ -52,30 +52,30 @@ public class Attack_Database : MonoBehaviour
     {
         _statusEffectsDatabase = FindObjectOfType<StatusEffectsDatabase_V2>();
         //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
-        _fireball = CreateAttack("Fireball", 1, 100, 1, 1, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn);
-        _basicAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.FutureSight);
-        _basicAxeAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
-        _basicBowAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
-        _basicHammerAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
-        _basicSpellbookAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None);
-        _basicStaffAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None);
-        _basicSwordAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
+        _fireball = CreateAttack("Fireball", 1, 100, 1, 1, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, false);
+        _basicAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.FutureSight, true);
+        _basicAxeAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
+        _basicBowAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
+        _basicHammerAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
+        _basicSpellbookAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None, true);
+        _basicStaffAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None, false);
+        _basicSwordAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
 
 
         //EnemySpecific Attacks
-        _basicSlimeAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None);
+        _basicSlimeAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
 
 
 
         //Adding statuses to attacks
-        _fireball.SetAttackDebuff(_statusEffectsDatabase.deBuffington);
+        //_fireball.SetAttackDebuff(_statusEffectsDatabase.deBuffington);
         
     }
 
     private Attack CreateAttack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,
-                    int statusBuildUpAmount, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
+                    int statusBuildUpAmount, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget)
     {
-        var attack = new Attack(attackName, attackPower, attackAccuracy, colorCost, staminaCost, numOfHits, statusBuildUpAmount, attackType, attackColor, attackBehavior);
+        var attack = new Attack(attackName, attackPower, attackAccuracy, colorCost, staminaCost, numOfHits, statusBuildUpAmount, attackType, attackColor, attackBehavior, isSingleTarget);
 
         return attack;
     }
