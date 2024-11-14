@@ -4,6 +4,7 @@ using UnityEngine;
 //using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class ButtonsAndPanels : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public Button _itemsButton;
     public Button _spellsButton;
     public Button _defendButton;
-
+    public Button _spellbookButton;
     public Button _spellPanelCycleButton;
 
     //Panels
@@ -31,12 +32,17 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _ItemsPanel;
     public GameObject _EnemiesPanel;
     public GameObject _AttackDescriptionPanel;
+    public GameObject _SpellbookPanel;
+
 
     //TargetEnemyButtons
     public GameObject _enemyOneButton;
     public TMP_Text _enemyOneButtonText;
     public GameObject _enemyTwoButton;
     public TMP_Text _enemyTwoButtonText;
+
+
+    public Item itemBeingPressed;
 
     // Start is called before the first frame update
     void Start()
@@ -52,13 +58,20 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleFightPanel()
     {
+        _spellbookButton.gameObject.SetActive(false);
         //Debug.Log("Fight Panel");
         bool isActive = _FightPanel.activeSelf;
 
         if (_FightPanel != null)
         {
+            if (eagleScript.GetCurrentPC().equippedWeapon != null && eagleScript.GetCurrentPC().equippedWeapon.weaponType == WeaponType.Spellbook)
+            {
+                _spellbookButton.gameObject.SetActive(true);
+            }
             _FightPanel.SetActive(!isActive);
         }
+
+        
     }
 
     public void ToggleAbilitiesPanel()
@@ -76,6 +89,7 @@ public class ButtonsAndPanels : MonoBehaviour
             _ItemsPanel.SetActive(false);
             _EnemiesPanel.SetActive(false);
             _SpellsPanel.SetActive(false);
+            _SpellbookPanel.SetActive(false);
         }
     }
 
@@ -94,6 +108,7 @@ public class ButtonsAndPanels : MonoBehaviour
             _ItemsPanel.SetActive(false);
             _AbilitiesPanel.SetActive(false);
             _EnemiesPanel.SetActive(false);
+            _SpellbookPanel.SetActive(false);
         }
     }
 
@@ -113,6 +128,7 @@ public class ButtonsAndPanels : MonoBehaviour
             _AbilitiesPanel.SetActive(false);
             _EnemiesPanel.SetActive(false);
             _SpellsPanel.SetActive(false);
+            _SpellbookPanel.SetActive(false);
         };
     }
 
@@ -130,10 +146,27 @@ public class ButtonsAndPanels : MonoBehaviour
             _AbilitiesPanel.SetActive(false);
             _ItemsPanel.SetActive(false);
             _SpellsPanel.SetActive(false);
+            _SpellbookPanel.SetActive(false);
         }
     }
 
-   
+    public void ToggleSpellbookPanel()
+    {
+        bool isActive = _SpellbookPanel.activeSelf;
+
+        if (_SpellbookPanel != null)
+        {
+            _SpellbookPanel.SetActive(!isActive);
+        }
+
+        if (_SpellbookPanel.activeSelf)
+        {
+            _AbilitiesPanel.SetActive(false);
+            _ItemsPanel.SetActive(false);
+            _SpellsPanel.SetActive(false);
+            _EnemiesPanel.SetActive(false);
+        }
+    }
 
     public void _SpellPanelCycle()
     {
@@ -255,5 +288,80 @@ public class ButtonsAndPanels : MonoBehaviour
         eagleScript.AttackChangeNotification("Attack");
         //ToggleSpellsPanel();
         ToggleEnemiesPanel();
+    }
+
+
+    //Item Buttons
+    public void _HealthPotionClick()
+    {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void SpellbookButtonBeingPressed()
+    {
+        //buttonName is the name of the GameObject Button being pressed.
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        //buttonNum is the last 2 digits at the end of the GameObject Button name.
+        int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+        Debug.Log(eagleScript.GetCurrentPC().equippedWeapon.itemName);
+        if (eagleScript.GetCurrentPC().equippedWeapon.weaponType == WeaponType.Spellbook)
+        {
+            Debug.Log(buttonNum + "num of button.");
+            Weapon_Spellbook spellbook = eagleScript.GetCurrentPC().equippedWeapon as Weapon_Spellbook;
+            eagleScript.AttackChangeNotification(spellbook.spellbookAttacks[buttonNum - 1].attackName);
+        }
+        
+        Debug.Log(buttonName + "is being pressed.");
+        
+        ToggleSpellbookPanel();
+    }
+
+
+
+    public void ItemBeingPressed()
+    {
+        //buttonName is the name of the GameObject Button being pressed.
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        //buttonNum is the last 2 digits at the end of the GameObject Button name.
+        int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
+
+        //itemBeingPressed = playerInventory[stringButtonNum - 1];
+        Debug.Log(buttonName + "is being pressed.");
+        Debug.Log(buttonNum + "num of button.");
+
     }
 }

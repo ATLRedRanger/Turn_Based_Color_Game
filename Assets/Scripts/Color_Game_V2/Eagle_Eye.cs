@@ -72,6 +72,7 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_3()
     {
+        /*
         if(enemyOne.GetListOfDebuffs().Count != 0)
         {
             enemyOne.GetListOfDebuffs()[0].statusName = "TESTING";
@@ -79,7 +80,9 @@ public class Eagle_Eye : MonoBehaviour
         }
         
         Debug.Log($"PLAYER DEBUFF NAME: {player.GetListOfDebuffs()[0].statusName}");
+        */
 
+        player.equippedWeapon = weaponDatabaseScript.basicSpellbook;
     }
     IEnumerator LoadScripts()
     {
@@ -303,10 +306,13 @@ public class Eagle_Eye : MonoBehaviour
 
     private void PlayerTurn()
     {
+        
         playerTurnIsDone = false;
         currentPC.isDefending = false;
         chosenAttack = null;
         chosenEnemyTarget = null;
+        currentPC.isDefending = false;
+        currentPC.usedItem = false;
         //Debug.Log("Player Turn");
         buttonsAndPanelsScript.ToggleFightPanel();
         StartCoroutine(WaitForPlayerDecisions());
@@ -351,31 +357,31 @@ public class Eagle_Eye : MonoBehaviour
         switch (attacker.StaminaLevelConversion())
         {
             case StaminaLevels.Full:
-                if(roll + 10 > 5)
+                if(roll + 2 > 95)
                 {
                     return true;
                 }
                 break;
             case StaminaLevels.ThreeQuarters:
-                if (roll + 8 > 5)
+                if (roll + 4 > 95)
                 {
                     return true;
                 }
                 break;
             case StaminaLevels.Half:
-                if (roll + 6 > 5)
+                if (roll + 6 > 95)
                 {
                     return true;
                 }
                 break;
             case StaminaLevels.OneQuarter:
-                if (roll + 4 > 5)
+                if (roll + 8 > 95)
                 {
                     return true;
                 }
                 break;
             case StaminaLevels.Empty:
-                if (roll + 2 > 5)
+                if (roll + 10 > 95)
                 {
                     return true;
                 }
@@ -662,11 +668,6 @@ public class Eagle_Eye : MonoBehaviour
                 }
                 
             }
-            
-
-            
-
-            
 
             removeBuff.Clear();
             removeDebuff.Clear();
@@ -776,7 +777,7 @@ public class Eagle_Eye : MonoBehaviour
                             }
                         }
                         chosenEnemyTarget.TakeDamage(damage);
-                        chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
+                        chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
                         CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
                         yield return new WaitForSeconds(1);
                         buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
@@ -789,6 +790,8 @@ public class Eagle_Eye : MonoBehaviour
                     {
                         Debug.Log("Attack Doesn't Hit");
                     }
+
+                    CombatUIUpdates();
                 }
         
             }
@@ -839,6 +842,8 @@ public class Eagle_Eye : MonoBehaviour
                         Debug.Log("Attack Doesn't Hit");
                     }
                 }
+
+                CombatUIUpdates();
             }
         }
         
@@ -1039,6 +1044,10 @@ public class Eagle_Eye : MonoBehaviour
         {
             return true;
         }
+        else if (currentPC.usedItem)
+        {
+            return true;
+        }
         return false;
     }
     public void SetAttackTarget(string enemy)
@@ -1065,4 +1074,52 @@ public class Eagle_Eye : MonoBehaviour
         chosenAttack = null;
         chosenEnemyTarget = null;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Unit_V2 GetCurrentPC() { return currentPC; }
 }

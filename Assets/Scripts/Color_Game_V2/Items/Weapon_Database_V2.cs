@@ -6,11 +6,15 @@ public class Weapon_Database_V2 : MonoBehaviour
 {
     public Weapon_Axe basicAxe;
     public Weapon_Spellbook basicSpellbook;
+    private Attack_Database attackDatabaseScript;
     
     void Awake()
     {
+        attackDatabaseScript = FindObjectOfType<Attack_Database>();
+
         basicAxe = CreateAxe("Basic Axe", "A basic axe.", ItemIDMaker(), 1, WeaponType.Axe, 1);
-        
+        basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
+        basicSpellbook.AddAttackToSpellbook(attackDatabaseScript._fireball);
     }
 
     // Update is called once per frame

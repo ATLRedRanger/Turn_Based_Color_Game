@@ -9,7 +9,11 @@ public class Weapon_Spellbook : Weapon
     private int spellbookLevel = 1;
     [SerializeField]
     private int expNeededToLevel = 100;
-    public Dictionary<string, Attack> spellbookAttackDictionary = new Dictionary<string, Attack>();
+    private int MAXSPELLCOUNT = 4;
+    public List<Attack> spellbookAttacks = new List<Attack>();
+    
+
+
 
     public Weapon_Spellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1)
     {
@@ -44,6 +48,9 @@ public class Weapon_Spellbook : Weapon
 
     public void AddAttackToSpellbook(Attack attack)
     {
-        spellbookAttackDictionary[attack.attackName] = attack;
+        if(spellbookAttacks.Count < MAXSPELLCOUNT)
+        {
+            spellbookAttacks.Add(attack);
+        }
     }
 }

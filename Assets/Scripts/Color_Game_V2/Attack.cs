@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Should colored attacks cost less stamina than neutral ones?
+//If so, how much? <insert formula here>
+//How to incentivize the use of colored attacks?
 public class Attack
 {
     public string attackName;

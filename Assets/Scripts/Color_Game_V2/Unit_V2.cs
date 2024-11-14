@@ -23,6 +23,7 @@ public class Unit_V2 : MonoBehaviour
     private int baseDefense;
 
     public bool isDefending = false;
+    public bool usedItem = true;
 
     [SerializeField]
     private int baseSpeed;
@@ -66,6 +67,8 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private float hammerResistance;
     [SerializeField]
+    private float spellbookResistance;
+    [SerializeField]
     private float swordResistance;
 
 
@@ -102,6 +105,7 @@ public class Unit_V2 : MonoBehaviour
         unitWeaponResistances[WeaponType.Axe] = axeResistance;
         unitWeaponResistances[WeaponType.Bow] = bowResistance;
         unitWeaponResistances[WeaponType.Hammer] = hammerResistance;
+        unitWeaponResistances[WeaponType.Spellbook] = spellbookResistance;
         unitWeaponResistances[WeaponType.Sword] = swordResistance;
         unitWeaponResistances[WeaponType.Neutral] = 0;
     }

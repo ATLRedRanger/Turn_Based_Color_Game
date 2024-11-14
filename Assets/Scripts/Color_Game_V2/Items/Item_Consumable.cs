@@ -25,5 +25,6 @@ public class Item_Consumable : Item
                 unit.GainStamina(amountToIncrease);
                 break;
         }
+        unit.usedItem = true;
     }
 }
