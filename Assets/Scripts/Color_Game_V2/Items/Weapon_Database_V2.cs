@@ -14,6 +14,11 @@ public class Weapon_Database_V2 : MonoBehaviour
 
         basicAxe = CreateAxe("Basic Axe", "A basic axe.", ItemIDMaker(), 1, WeaponType.Axe, 1);
         basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
+        
+    }
+
+    void Start()
+    {
         basicSpellbook.AddAttackToSpellbook(attackDatabaseScript._fireball);
     }
 
@@ -23,6 +28,7 @@ public class Weapon_Database_V2 : MonoBehaviour
         
     }
 
+    
 
     public Weapon_Axe CreateAxe(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Axe, int weaponDamage = 0)
     {

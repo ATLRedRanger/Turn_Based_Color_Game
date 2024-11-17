@@ -11,8 +11,7 @@ public class Weapon_Spellbook : Weapon
     private int expNeededToLevel = 100;
     private int MAXSPELLCOUNT = 4;
     public List<Attack> spellbookAttacks = new List<Attack>();
-    
-
+    public int numOfAttacks = 0;
 
 
     public Weapon_Spellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1)
@@ -51,6 +50,8 @@ public class Weapon_Spellbook : Weapon
         if(spellbookAttacks.Count < MAXSPELLCOUNT)
         {
             spellbookAttacks.Add(attack);
+            numOfAttacks++;
         }
+
     }
 }

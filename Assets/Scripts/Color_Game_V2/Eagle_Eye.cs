@@ -1121,5 +1121,15 @@ public class Eagle_Eye : MonoBehaviour
 
 
 
-    public Unit_V2 GetCurrentPC() { return currentPC; }
+    public Unit_V2 GetCurrentPC() 
+    { 
+        if (currentPC.equippedWeapon.weaponType == WeaponType.Spellbook)
+        {
+            Weapon_Spellbook spellbook = currentPC.equippedWeapon as Weapon_Spellbook;
+            Debug.Log(currentPC.equippedWeapon.itemName);
+            buttonsAndPanelsScript.playerSpellbook = spellbook;
+            buttonsAndPanelsScript.playerSpellbook.spellbookAttacks = spellbook.spellbookAttacks;
+        }
+        return currentPC; 
+    }
 }

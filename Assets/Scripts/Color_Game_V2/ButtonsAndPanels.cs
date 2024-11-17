@@ -42,7 +42,16 @@ public class ButtonsAndPanels : MonoBehaviour
     public TMP_Text _enemyTwoButtonText;
 
 
+    //Spellbook Buttons
+    public TMP_Text _spellbookButton01Text;
+    public TMP_Text _spellbookButton02Text;
+    public TMP_Text _spellbookButton03Text;
+    public TMP_Text _spellbookButton04Text;
+
     public Item itemBeingPressed;
+    public Weapon_Spellbook playerSpellbook;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,12 +68,13 @@ public class ButtonsAndPanels : MonoBehaviour
     public void ToggleFightPanel()
     {
         _spellbookButton.gameObject.SetActive(false);
+        eagleScript.GetCurrentPC();
         //Debug.Log("Fight Panel");
         bool isActive = _FightPanel.activeSelf;
 
         if (_FightPanel != null)
         {
-            if (eagleScript.GetCurrentPC().equippedWeapon != null && eagleScript.GetCurrentPC().equippedWeapon.weaponType == WeaponType.Spellbook)
+            if (playerSpellbook != null)
             {
                 _spellbookButton.gameObject.SetActive(true);
             }
@@ -153,10 +163,29 @@ public class ButtonsAndPanels : MonoBehaviour
     public void ToggleSpellbookPanel()
     {
         bool isActive = _SpellbookPanel.activeSelf;
+        
 
         if (_SpellbookPanel != null)
         {
             _SpellbookPanel.SetActive(!isActive);
+        }
+
+
+        if (playerSpellbook.numOfAttacks > 0)
+        {
+            _spellbookButton01Text.text = playerSpellbook.spellbookAttacks[0].attackName;
+        }
+        if (playerSpellbook.numOfAttacks > 1)
+        {
+            _spellbookButton02Text.text = playerSpellbook.spellbookAttacks[1].attackName;
+        }
+        if (playerSpellbook.numOfAttacks > 2)
+        {
+            _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
+        }
+        if (playerSpellbook.numOfAttacks > 1)
+        {
+            _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
         }
 
         if (_SpellbookPanel.activeSelf)
@@ -336,17 +365,25 @@ public class ButtonsAndPanels : MonoBehaviour
         //buttonName is the name of the GameObject Button being pressed.
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         //buttonNum is the last 2 digits at the end of the GameObject Button name.
-        int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
-        Debug.Log(eagleScript.GetCurrentPC().equippedWeapon.itemName);
-        if (eagleScript.GetCurrentPC().equippedWeapon.weaponType == WeaponType.Spellbook)
+        int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2)) - 1;
+        
+
+        switch (playerSpellbook.numOfAttacks)
         {
-            Debug.Log(buttonNum + "num of button.");
-            Weapon_Spellbook spellbook = eagleScript.GetCurrentPC().equippedWeapon as Weapon_Spellbook;
-            eagleScript.AttackChangeNotification(spellbook.spellbookAttacks[buttonNum - 1].attackName);
+            case 1:
+                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+                break;
+            case 2:
+                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+                break;
+            case 3:
+                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+                break;
+            case 4:
+                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+                break;
+            default: break;
         }
-        
-        Debug.Log(buttonName + "is being pressed.");
-        
         ToggleSpellbookPanel();
     }
 

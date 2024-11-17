@@ -141,7 +141,7 @@ public class UI_V2 : MonoBehaviour
 
     public void UpdateEnvironmentBars()
     {
-        Debug.Log($"CurrentRed: {currentRedAmount}");
+        //Debug.Log($"CurrentRed: {currentRedAmount}");
         _redBar.fillAmount = (float)((float)currentRedAmount / (float)maxRedAmount);
         _redBarText.text = "Red: " + currentRedAmount.ToString() + " / " + maxRedAmount.ToString(); 
         _orangeBar.fillAmount = (float)(float)(currentOrangeAmount / (float)maxOrangeAmount);

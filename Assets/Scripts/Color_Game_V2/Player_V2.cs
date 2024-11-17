@@ -10,9 +10,6 @@ public class Player_V2 : Unit_V2
 
     private int expNeededToLevel = 50;
 
-    private Weapon equippedWeapon = null;
-
-    private List<Item> inventory = new List<Item>();
 
     //Weapon Mastery
     private int axeMastery = 0;

@@ -23,7 +23,7 @@ public class Unit_V2 : MonoBehaviour
     private int baseDefense;
 
     public bool isDefending = false;
-    public bool usedItem = true;
+    public bool usedItem = false;
 
     [SerializeField]
     private int baseSpeed;
@@ -374,7 +374,7 @@ public class Unit_V2 : MonoBehaviour
     }
     public void AddAttackToDictionary(Attack attack)
     {
-        Debug.Log("Adding Attack");
+        //Debug.Log("Adding Attack");
         unitAttackDictionary[attack.attackName] = attack;
     }
 }
