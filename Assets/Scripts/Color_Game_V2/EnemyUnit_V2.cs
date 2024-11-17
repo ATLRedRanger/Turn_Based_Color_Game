@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyUnit_V2 : Unit_V2
@@ -12,8 +13,9 @@ public class EnemyUnit_V2 : Unit_V2
     public override void Start()
     {
         base.Start();
-        AddAttackToDictionary(attackDatabaseScript._fireball);
-        AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
+        //AddAttackToDictionary(attackDatabaseScript._fireball);
+        //AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
+        AddAttackToDictionary(attackDatabaseScript._basicAttack);
     }
 
     // Update is called once per frame
@@ -32,10 +34,15 @@ public class EnemyUnit_V2 : Unit_V2
 
     private bool IsAttackUseable(Attack attack, Environment env)
     {
-        if (this.GetCurrentStamina() >= attack.staminaCost && env.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        if (attack.attackColor == Hue.Neutral && this.GetCurrentStamina() >= attack.staminaCost) 
         {
             return true;
         }
+        else if (this.GetCurrentStamina() >= attack.staminaCost && env.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        {
+            return true;
+        }
+
         return false;
     }
 

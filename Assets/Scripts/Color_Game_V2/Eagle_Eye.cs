@@ -82,7 +82,7 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log($"PLAYER DEBUFF NAME: {player.GetListOfDebuffs()[0].statusName}");
         */
 
-        player.equippedWeapon = weaponDatabaseScript.basicSpellbook;
+        player.equippedWeapon = weaponDatabaseScript.basicAxe;
     }
     IEnumerator LoadScripts()
     {
@@ -441,7 +441,7 @@ public class Eagle_Eye : MonoBehaviour
         }
 
         // Apply color resistances based on attack type and color
-        damageAfterDefenses = ApplyColorAndWeaponResistances(attack.attackColor, damageBeforeDefenses, attacker, defender);
+        damageAfterDefenses = ApplyColorAndWeaponResistances(attack, damageBeforeDefenses, attacker, defender);
         //Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
 
@@ -454,16 +454,18 @@ public class Eagle_Eye : MonoBehaviour
 
     
 
-    private int ApplyColorAndWeaponResistances(Hue attackColor, int damage, Unit_V2 attacker, Unit_V2 defender)
+    private int ApplyColorAndWeaponResistances(Attack attack, int damage, Unit_V2 attacker, Unit_V2 defender)
     {
         float combinedResistances = 0;
 
-        if (attacker.equippedWeapon != null)
+        
+        if (attacker.equippedWeapon != null && attack.attackType == AttackType.Physical)
         {
+            
             combinedResistances = defender.GetWeaponResistances()[attacker.equippedWeapon.weaponType];
         }
 
-        combinedResistances += defender.GetColorResistances()[attackColor];
+        combinedResistances += defender.GetColorResistances()[attack.attackColor];
 
         Debug.Log($"Damage: {damage} - Mathf.RoundToInt(damage({damage} * combinedResistances({combinedResistances})");
 
@@ -796,60 +798,58 @@ public class Eagle_Eye : MonoBehaviour
         
             }
         }
-        else
+        else if(AttackIsChosen() && chosenAttack.isSingleTarget == false)
         {
-            foreach(Unit_V2 enemy in listOfCombatants)
+            PayAttackCost(currentPC, chosenAttack);
+            foreach (Unit_V2 enemy in listOfCombatants)
             {
                 if (enemy is EnemyUnit_V2)
                 {
-                    if (chosenAttack.DoesAttackHit(currentPC))
-                    {
-                        Debug.Log("Attack Hits");
-                        int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
-                        int staminaDamage = 0;
-                        CheckAttack_StatusBuildupRelationship(chosenAttack, enemy);
-                        //Debug.Log(currentPC.equippedWeapon.itemName);
-                        if (currentPC.equippedWeapon != null)
-                        {
-                            switch (currentPC.equippedWeapon)
-                            {
-                                case Weapon_Axe axe:
-                                    damage = Mathf.RoundToInt(damage * axe.healthPercent);
-                                    staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
-                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                    break;
-                                case Weapon_Hammer hammer:
-                                    damage = Mathf.RoundToInt(damage * hammer.healthPercent);
-                                    staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
-                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        enemy.TakeDamage(damage);
-                        enemy.ReduceStamina(Mathf.Clamp(staminaDamage, 1, staminaDamage));
-                        CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, enemy);
-                        yield return new WaitForSeconds(1);
-                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-                        uiScript.SetAttackDescriptionText(chosenAttack, player, enemy, damage.ToString());
-                        yield return new WaitForSeconds(2);
-                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                    yield return new WaitForSeconds(1);
 
-                    }
-                    else
+                    for (int i = 0; i < chosenAttack.numOfHits; i++)
                     {
-                        Debug.Log("Attack Doesn't Hit");
+                        if (chosenAttack.DoesAttackHit(currentPC))
+                        {
+                            Debug.Log("Attack Hits");
+                            int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
+                            int staminaDamage = 0;
+                            CheckAttack_StatusBuildupRelationship(chosenAttack, enemy);
+                            //Debug.Log(currentPC.equippedWeapon.itemName);
+                            if (currentPC.equippedWeapon != null)
+                            {
+                                switch (currentPC.equippedWeapon)
+                                {
+                                    case Weapon_Axe axe:
+                                        damage = Mathf.RoundToInt(damage * axe.healthPercent);
+                                        staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
+                                        Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
+                                        break;
+                                    case Weapon_Hammer hammer:
+                                        damage = Mathf.RoundToInt(damage * hammer.healthPercent);
+                                        staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
+                                        Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            enemy.TakeDamage(damage);
+                            enemy.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
+                            CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, enemy);
+                            yield return new WaitForSeconds(1);
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            uiScript.SetAttackDescriptionText(chosenAttack, player, enemy, damage.ToString());
+                            yield return new WaitForSeconds(1);
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
+                        }
                     }
                 }
-
-                CombatUIUpdates();
             }
         }
         
         Debug.Log("PLAYER TURN HAS FINISHED!");
-        
-        
         playerTurnIsDone = true;
     }
 
@@ -869,6 +869,10 @@ public class Eagle_Eye : MonoBehaviour
 
     private void PayAttackCost(Unit_V2 attacker, Attack attack)
     {
+        //Debug.Log(attack.attackName + " ATTACK NAME");
+        //Debug.Log(attack.staminaCost + " Attack Cost");
+        Debug.Log(attacker.unitName + " is UNIT NAME");
+        Debug.Log(attack.attackName + " is ATTACK NAME");
         attacker.ReduceStamina(attack.staminaCost);
         switch (attack.attackColor)
         {
@@ -894,8 +898,7 @@ public class Eagle_Eye : MonoBehaviour
                 break;
         }
         
-            
-        
+
         
     }
 
@@ -1123,12 +1126,16 @@ public class Eagle_Eye : MonoBehaviour
 
     public Unit_V2 GetCurrentPC() 
     { 
-        if (currentPC.equippedWeapon.weaponType == WeaponType.Spellbook)
+        if (currentPC.equippedWeapon != null && currentPC.equippedWeapon.weaponType == WeaponType.Spellbook)
         {
             Weapon_Spellbook spellbook = currentPC.equippedWeapon as Weapon_Spellbook;
             Debug.Log(currentPC.equippedWeapon.itemName);
             buttonsAndPanelsScript.playerSpellbook = spellbook;
             buttonsAndPanelsScript.playerSpellbook.spellbookAttacks = spellbook.spellbookAttacks;
+        }
+        else
+        {
+
         }
         return currentPC; 
     }

@@ -51,7 +51,8 @@ public class Attack_Database : MonoBehaviour
     private void Awake()
     {
         _statusEffectsDatabase = FindObjectOfType<StatusEffectsDatabase_V2>();
-        //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
+        //string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits, int statusBuildUpAmount, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior)
+
         //Red
         _fireball = CreateAttack("Fireball", 1, 100, 1, 1, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, false);
 
@@ -65,6 +66,7 @@ public class Attack_Database : MonoBehaviour
 
         //Violet
 
+        //Neutral
 
         _basicAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.FutureSight, true);
         _basicAxeAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
@@ -76,7 +78,7 @@ public class Attack_Database : MonoBehaviour
 
 
         //EnemySpecific Attacks
-        _basicSlimeAttack = CreateAttack("Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
+        _basicSlimeAttack = CreateAttack("Basic Slime Attack", 1, 100, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
 
 
 
