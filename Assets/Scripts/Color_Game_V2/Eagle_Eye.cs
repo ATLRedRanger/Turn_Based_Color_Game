@@ -190,8 +190,6 @@ public class Eagle_Eye : MonoBehaviour
 
                     currentPC = unit;
 
-
-
                     if (IsPlayerAlive(player))
                     {
                         PlayerTurn();
@@ -232,7 +230,6 @@ public class Eagle_Eye : MonoBehaviour
             }
             //End of turn stuff
             
-            //I put the status effect checks before the kill checks.
             yield return new WaitForSeconds(.5f);
             CheckStatusTimes(listOfCombatants);
             yield return new WaitForSeconds(.5f);
@@ -315,7 +312,7 @@ public class Eagle_Eye : MonoBehaviour
         currentPC.isDefending = false;
         currentPC.usedItem = false;
         //Debug.Log("Player Turn");
-        buttonsAndPanelsScript.ToggleFightPanel();
+        buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
         StartCoroutine(WaitForPlayerDecisions());
     }
 
@@ -479,6 +476,7 @@ public class Eagle_Eye : MonoBehaviour
         switch (attack.attackBehavior)
         {
             case AttackBehavior.Burn:
+                //If the unit is already burning, we want to add stacks to their burn status -> Deals more burn damage.
                 if (defender.DoesStatusExist(statusEffectScript.burn))
                 {
                     foreach (StatusEffect_V2 status in defender.unitStatusEffects)
@@ -490,17 +488,22 @@ public class Eagle_Eye : MonoBehaviour
                         }
                     }
                 }
-                else if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
+                //If they aren't burning, we want to add to their burn amount
+                else
+                {
+                    defender.AddToBurnAmount(attack.GetStatusBuildUpAmount());
+                }
+
+                //If the burn amount is greater than or equal to the unit's threshhold -> The unit starts burning
+                //The turn it reaches that threshold -> Unit should start burning. 
+                if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
                 {
                     //Debug.Log($"{defender.unitName} is now burning!");
 
                     defender.AddStatus(statusEffectScript.burn.DeepCopy());
                     defender.SetBurnAmountToZero();
                 }
-                else
-                {
-                    defender.AddToBurnAmount(attack.GetStatusBuildUpAmount());
-                }
+                
 
                 break;
             case AttackBehavior.FutureSight:
@@ -711,13 +714,10 @@ public class Eagle_Eye : MonoBehaviour
                         timeInQue = (int)statusDamageQue[i][2];
                         if (timeInQue < 1)
                         {
-                            //yield return new WaitForSeconds(1);
                             buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                             uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
-                            unit.TakeDamage(damage);
-                            //yield return new WaitForSeconds(1);
+                            unit.TakeDamage(damage); 
                             buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-
                         }
                         else
                         {
@@ -729,69 +729,11 @@ public class Eagle_Eye : MonoBehaviour
 
             }
         }
-
         statusDamageQue.Clear();
         statusDamageQue = blankList;
-        //yield return null;
     }
 
-    /*private IEnumerator EndOfRoundStatusDamage()
-    {
-        //This function is for timed damage effects to go off
-        //The timeInQue is so that statusEffects can sit in the que to "cook"
-        //Then when the timer ticks down to 0, the statusEffect goes off
-        //This system was intended for effects like Pokemon's Future Sight
-        //The way it's supposed to work is that you look at each object in the que,
-        //you then iterate over it looking for whichUnit is being affected,
-        //how much damage are they going to take and then when is the damage supposed to happen.
-        //Then when the timeInQue is NOT < 1, you add it to the blank list, clear the status list, 
-        //then put it back in the Que.
-
-        List<List<object>> blankList = new List<List<object>>();
-        Unit_V2 unit = null;
-        int damage = 0;
-        int timeInQue;
-
-        if (statusDamageQue.Count != 0)
-        {
-            for (int i = 0; i < statusDamageQue.Count; i++)
-            {
-                unit = statusDamageQue[i][0] as Unit_V2;
-                if (unit.GetCurrentHp() > 0)
-                {
-                    if (statusDamageQue[i][1] is int)
-                    {
-                        damage = (int)(statusDamageQue[i][1]);
-                    }
-                    if (statusDamageQue[i][2] is int)
-                    {
-                        timeInQue = (int)statusDamageQue[i][2];
-                        if (timeInQue < 1)
-                        {
-                            yield return new WaitForSeconds(1);
-                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-                            uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
-                            unit.TakeDamage(damage);
-                            yield return new WaitForSeconds(1);
-                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
-
-                        }
-                        else
-                        {
-                            statusDamageQue[i][2] = timeInQue - 1;
-                            blankList.Add(statusDamageQue[i]);
-                        }
-                    }
-                }
-
-            }
-        }
-
-        statusDamageQue.Clear();
-        statusDamageQue = blankList;
-        yield return null;
-    }*/
-
+    
     IEnumerator WaitForPlayerDecisions()
     {
 
