@@ -17611,9 +17611,13 @@ MonoBehaviour:
   _enemyOneButtonText: {fileID: 1733775277}
   _enemyTwoButton: {fileID: 1993143389}
   _enemyTwoButtonText: {fileID: 1203772699}
+  _spellbookButtonOne: {fileID: 1035000388}
   _spellbookButton01Text: {fileID: 1512216324}
+  _spellbookButtonTwo: {fileID: 2093299134}
   _spellbookButton02Text: {fileID: 89741384}
+  _spellbookButtonThree: {fileID: 1363395027}
   _spellbookButton03Text: {fileID: 964705270}
+  _spellbookButtonFour: {fileID: 1025714737}
   _spellbookButton04Text: {fileID: 1959439174}
 --- !u!1 &1742098422
 GameObject:

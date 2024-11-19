@@ -82,7 +82,7 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log($"PLAYER DEBUFF NAME: {player.GetListOfDebuffs()[0].statusName}");
         */
 
-        player.equippedWeapon = weaponDatabaseScript.basicAxe;
+        player.equippedWeapon = weaponDatabaseScript.basicSpellbook;
     }
     IEnumerator LoadScripts()
     {

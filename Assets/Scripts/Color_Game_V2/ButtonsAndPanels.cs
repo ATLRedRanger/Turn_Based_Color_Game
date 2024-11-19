@@ -44,9 +44,13 @@ public class ButtonsAndPanels : MonoBehaviour
 
 
     //Spellbook Buttons
+    public GameObject _spellbookButtonOne;
     public TMP_Text _spellbookButton01Text;
+    public GameObject _spellbookButtonTwo;
     public TMP_Text _spellbookButton02Text;
+    public GameObject _spellbookButtonThree;
     public TMP_Text _spellbookButton03Text;
+    public GameObject _spellbookButtonFour;
     public TMP_Text _spellbookButton04Text;
 
     public Item itemBeingPressed;
@@ -163,6 +167,10 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleSpellbookPanel()
     {
+        _spellbookButtonOne.gameObject.SetActive(false);
+        _spellbookButtonTwo.gameObject.SetActive(false);
+        _spellbookButtonThree.gameObject.SetActive(false);
+        _spellbookButtonFour.gameObject.SetActive(false);
         bool isActive = _SpellbookPanel.activeSelf;
         
 
@@ -175,18 +183,22 @@ public class ButtonsAndPanels : MonoBehaviour
         if (playerSpellbook.numOfAttacks > 0)
         {
             _spellbookButton01Text.text = playerSpellbook.spellbookAttacks[0].attackName;
+            _spellbookButtonOne.gameObject.SetActive(true);
         }
         if (playerSpellbook.numOfAttacks > 1)
         {
             _spellbookButton02Text.text = playerSpellbook.spellbookAttacks[1].attackName;
+            _spellbookButtonTwo.gameObject.SetActive(true);
         }
         if (playerSpellbook.numOfAttacks > 2)
         {
             _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
+            _spellbookButtonThree.gameObject.SetActive(true);
         }
         if (playerSpellbook.numOfAttacks > 1)
         {
             _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
+            _spellbookButtonFour.gameObject.SetActive(true);
         }
 
         if (_SpellbookPanel.activeSelf)
@@ -367,24 +379,9 @@ public class ButtonsAndPanels : MonoBehaviour
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
         //buttonNum is the last 2 digits at the end of the GameObject Button name.
         int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2)) - 1;
-        
 
-        switch (playerSpellbook.numOfAttacks)
-        {
-            case 1:
-                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
-                break;
-            case 2:
-                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
-                break;
-            case 3:
-                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
-                break;
-            case 4:
-                eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
-                break;
-            default: break;
-        }
+        eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+        
         ToggleSpellbookPanel();
     }
 
