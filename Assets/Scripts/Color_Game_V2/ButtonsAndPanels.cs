@@ -171,6 +171,7 @@ public class ButtonsAndPanels : MonoBehaviour
         _spellbookButtonTwo.gameObject.SetActive(false);
         _spellbookButtonThree.gameObject.SetActive(false);
         _spellbookButtonFour.gameObject.SetActive(false);
+
         bool isActive = _SpellbookPanel.activeSelf;
         
 
