@@ -231,7 +231,8 @@ public class Eagle_Eye : MonoBehaviour
                 CombatUIUpdates();
             }
             //End of turn stuff
-
+            
+            //I put the status effect checks before the kill checks.
             yield return new WaitForSeconds(.5f);
             CheckStatusTimes(listOfCombatants);
             yield return new WaitForSeconds(.5f);
