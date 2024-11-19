@@ -18,7 +18,7 @@ public class StatusEffectsDatabase_V2 : MonoBehaviour
     // Update is called once per frame
     void Awake()
     {
-        burn = CreateStatus("Burn", 3, 0, 15, 0);
+        burn = CreateStatus("Burn", 3, 0, 5, 0);
         futureSight = CreateStatus("Future Sight", 0, 0, 15, 3);
         buffington = CreateBuff("Buffington", 5);
         deBuffington = CreateDebuff("Debuffington", 3);

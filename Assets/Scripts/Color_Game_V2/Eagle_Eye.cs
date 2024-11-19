@@ -501,6 +501,14 @@ public class Eagle_Eye : MonoBehaviour
                     //Debug.Log($"{defender.unitName} is now burning!");
 
                     defender.AddStatus(statusEffectScript.burn.DeepCopy());
+                    foreach (StatusEffect_V2 status in defender.unitStatusEffects)
+                    {
+                        if (status.GetStatusName() == "Burn")
+                        {
+                            status.SetStatusDamage(defender);
+                            Debug.Log(status.GetStatusDamage());
+                        }
+                    }
                     defender.SetBurnAmountToZero();
                 }
                 
@@ -740,6 +748,7 @@ public class Eagle_Eye : MonoBehaviour
         //List<EnemyUnit_V2> enemyList = EnemyList(); 
 
         yield return new WaitUntil(PlayerChoiceIsMade);
+        buttonsAndPanelsScript._fightButton.gameObject.SetActive(false);
 
         //Player is attacking single target
         if (AttackIsChosen() && chosenAttack.isSingleTarget == true)
@@ -1035,6 +1044,7 @@ public class Eagle_Eye : MonoBehaviour
         currentPC.isDefending = true;
         Debug.Log($"{currentPC.unitName} is Defending!");
     }
+
     private bool PlayerChoiceIsMade()
     {
 

@@ -25,6 +25,13 @@ public class StatusEffect_V2
         return damageAmount + effectStack;
     }
 
+    public void SetStatusDamage(Unit_V2 unit)
+    {
+        int damage = unit.GetMaxHp()/10;
+        damageAmount = Mathf.Clamp(damage, 1, damage);
+    }
+
+
     public string GetStatusName()
     {
         return statusName;
