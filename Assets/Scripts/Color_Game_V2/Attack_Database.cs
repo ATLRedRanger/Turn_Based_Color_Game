@@ -72,7 +72,7 @@ public class Attack_Database : MonoBehaviour
         _basicAxeAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
         _basicBowAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
         _basicHammerAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
-        _basicSpellbookAttack = CreateAttack("Attack", 1, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None, true);
+        _basicSpellbookAttack = CreateAttack("Attack", 1, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None, false);
         _basicStaffAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Special, Hue.Neutral, AttackBehavior.None, false);
         _basicSwordAttack = CreateAttack("Attack", 2, 90, 0, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
 

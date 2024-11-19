@@ -333,13 +333,13 @@ public class Eagle_Eye : MonoBehaviour
         switch (roll) // Cast roll to int for case matching
         {
             case 1:
-                return 1.25f;
+                return 1.05f;
             case 2:
-                return 1.5f;
+                return 1.1f;
             case 3:
-                return 1.75f;
+                return 1.2f;
             case 4:
-                return 2.0f;
+                return 1.3f;
             default:
                 return 1.0f;
         }
@@ -399,6 +399,7 @@ public class Eagle_Eye : MonoBehaviour
     private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
     {
         float baseDamage = attack.attackPower;
+        //Debug.Log($"{attack.attackName}'s base damage is {baseDamage}");
         int damageBeforeDefenses = 0;
         int damageAfterDefenses = 0;
         float damageMultiplier = CalculateDamageMultiplier(); // Helper function
@@ -419,8 +420,9 @@ public class Eagle_Eye : MonoBehaviour
                 case AttackType.Special:
                     if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook || attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
+                        Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()} + {attacker.equippedWeapon.GetWeaponBaseDamage()}");
                         baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
-                        //Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
+                        
                     }
 
                     break;
@@ -434,8 +436,9 @@ public class Eagle_Eye : MonoBehaviour
 
 
         // Apply damage multiplier for critical hits, etc.
+        Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
         damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
-        //Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
+        
 
         // Apply damage after critical hit.
         if (DoesAttackCrit(attacker))
@@ -447,11 +450,14 @@ public class Eagle_Eye : MonoBehaviour
         damageAfterDefenses = ApplyColorAndWeaponResistances(attack, damageBeforeDefenses, attacker, defender);
         //Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
+        //Playing around with damage numbers
+        //damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses * .5f);
 
         if (defender.isDefending)
         {
             damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses / 2);
         }
+
         return damageAfterDefenses;
     }
 

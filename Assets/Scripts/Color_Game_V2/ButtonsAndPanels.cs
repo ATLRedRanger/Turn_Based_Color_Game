@@ -335,28 +335,27 @@ public class ButtonsAndPanels : MonoBehaviour
         switch (eagleScript.GetCurrentPC().equippedWeapon.weaponType)
         {
             case WeaponType.Axe:
-                chosenAttack = attackDatabaseScript._basicAxeAttack;
+                eagleScript.AttackChangeNotification(attackDatabaseScript._basicAxeAttack);
                 break;
             case WeaponType.Bow:
-                chosenAttack = attackDatabaseScript._basicBowAttack;
+                eagleScript.AttackChangeNotification(attackDatabaseScript._basicBowAttack);
                 break;
             case WeaponType.Hammer:
-                chosenAttack = attackDatabaseScript._basicHammerAttack;
+                eagleScript.AttackChangeNotification(attackDatabaseScript._basicHammerAttack);
                 break;
             case WeaponType.Spellbook:
-                chosenAttack = attackDatabaseScript._basicSpellbookAttack;
+                eagleScript.AttackChangeNotification(attackDatabaseScript._basicSpellbookAttack);
                 break;
             case WeaponType.Staff:
-                chosenAttack = attackDatabaseScript._basicStaffAttack;
+                eagleScript.AttackChangeNotification(attackDatabaseScript._basicStaffAttack);
                 break;
             case WeaponType.Sword:
-                chosenAttack = attackDatabaseScript._basicSwordAttack;
+                eagleScript.AttackChangeNotification(attackDatabaseScript._basicSwordAttack);
                 break;
             default:
                 break;
         }       
-        //ToggleSpellsPanel();
-        ToggleEnemiesPanel();
+        
     }
 
 
