@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 public class ButtonsAndPanels : MonoBehaviour
 {
     private Eagle_Eye eagleScript;
+    private Attack_Database attackDatabaseScript;
 
     public Attack chosenAttack = null;
 
@@ -62,6 +63,7 @@ public class ButtonsAndPanels : MonoBehaviour
     void Start()
     {
         eagleScript = FindObjectOfType<Eagle_Eye>();
+        attackDatabaseScript = FindObjectOfType<Attack_Database>();
     }
 
     // Update is called once per frame
@@ -149,6 +151,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleEnemiesPanel()
     {
+        Debug.Log("PEAR");
         bool isActive = _EnemiesPanel.activeSelf;
 
         if (_EnemiesPanel != null)
@@ -156,13 +159,14 @@ public class ButtonsAndPanels : MonoBehaviour
             _EnemiesPanel.SetActive(!isActive);
         }
 
+        /*
         if (_EnemiesPanel.activeSelf)
         {
             _AbilitiesPanel.SetActive(false);
             _ItemsPanel.SetActive(false);
             _SpellsPanel.SetActive(false);
             _SpellbookPanel.SetActive(false);
-        }
+        }*/
     }
 
     public void ToggleSpellbookPanel()
@@ -196,7 +200,7 @@ public class ButtonsAndPanels : MonoBehaviour
             _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
             _spellbookButtonThree.gameObject.SetActive(true);
         }
-        if (playerSpellbook.numOfAttacks > 1)
+        if (playerSpellbook.numOfAttacks > 3)
         {
             _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
             _spellbookButtonFour.gameObject.SetActive(true);
@@ -321,14 +325,36 @@ public class ButtonsAndPanels : MonoBehaviour
     //Attack Buttons
     public void _FireballClick()
     {
-        eagleScript.AttackChangeNotification("Fireball");
+        eagleScript.AttackChangeNotification(attackDatabaseScript._fireball);
         ToggleSpellsPanel();
         //ToggleEnemiesPanel();
     }
 
     public void _AttackClick()
     {
-        eagleScript.AttackChangeNotification("Attack");
+        switch (eagleScript.GetCurrentPC().equippedWeapon.weaponType)
+        {
+            case WeaponType.Axe:
+                chosenAttack = attackDatabaseScript._basicAxeAttack;
+                break;
+            case WeaponType.Bow:
+                chosenAttack = attackDatabaseScript._basicBowAttack;
+                break;
+            case WeaponType.Hammer:
+                chosenAttack = attackDatabaseScript._basicHammerAttack;
+                break;
+            case WeaponType.Spellbook:
+                chosenAttack = attackDatabaseScript._basicSpellbookAttack;
+                break;
+            case WeaponType.Staff:
+                chosenAttack = attackDatabaseScript._basicStaffAttack;
+                break;
+            case WeaponType.Sword:
+                chosenAttack = attackDatabaseScript._basicSwordAttack;
+                break;
+            default:
+                break;
+        }       
         //ToggleSpellsPanel();
         ToggleEnemiesPanel();
     }
@@ -381,7 +407,8 @@ public class ButtonsAndPanels : MonoBehaviour
         //buttonNum is the last 2 digits at the end of the GameObject Button name.
         int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2)) - 1;
 
-        eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+        Debug.Log(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+        eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum]);
         
         ToggleSpellbookPanel();
     }

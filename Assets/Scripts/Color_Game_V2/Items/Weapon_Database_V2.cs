@@ -20,6 +20,7 @@ public class Weapon_Database_V2 : MonoBehaviour
     void Start()
     {
         basicSpellbook.AddAttackToSpellbook(attackDatabaseScript._fireball);
+        basicSpellbook.AddAttackToSpellbook(attackDatabaseScript._basicSpellbookAttack);
     }
 
     // Update is called once per frame

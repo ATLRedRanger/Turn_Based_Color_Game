@@ -357,30 +357,35 @@ public class Eagle_Eye : MonoBehaviour
             case StaminaLevels.Full:
                 if (roll + 2 > 95)
                 {
+                    Debug.Log("CRITICAL!");
                     return true;
                 }
                 break;
             case StaminaLevels.ThreeQuarters:
                 if (roll + 4 > 95)
                 {
+                    Debug.Log("CRITICAL!");
                     return true;
                 }
                 break;
             case StaminaLevels.Half:
                 if (roll + 6 > 95)
                 {
+                    Debug.Log("CRITICAL!");
                     return true;
                 }
                 break;
             case StaminaLevels.OneQuarter:
                 if (roll + 8 > 95)
                 {
+                    Debug.Log("CRITICAL!");
                     return true;
                 }
                 break;
             case StaminaLevels.Empty:
                 if (roll + 10 > 95)
                 {
+                    Debug.Log("CRITICAL!");
                     return true;
                 }
                 break;
@@ -977,47 +982,14 @@ public class Eagle_Eye : MonoBehaviour
                                         envManaScript.currentGreen, envManaScript.currentBlue, envManaScript.currentViolet);
     }
 
-    public void AttackChangeNotification(string attack)
+    public void AttackChangeNotification(Attack attack)
     {
-        switch (attack)
-        {
-            case "Fireball":
-                chosenAttack = attackDatabaseScript._fireball;
-                break;
-            case "Attack":
-                if (currentPC.equippedWeapon != null)
-                {
-                    switch (currentPC.equippedWeapon.weaponType)
-                    {
-                        case WeaponType.Axe:
-                            chosenAttack = attackDatabaseScript._basicAxeAttack;
-                            break;
-                        case WeaponType.Bow:
-                            chosenAttack = attackDatabaseScript._basicBowAttack;
-                            break;
-                        case WeaponType.Hammer:
-                            chosenAttack = attackDatabaseScript._basicHammerAttack;
-                            break;
-                        case WeaponType.Spellbook:
-                            chosenAttack = attackDatabaseScript._basicSpellbookAttack;
-                            break;
-                        case WeaponType.Staff:
-                            chosenAttack = attackDatabaseScript._basicStaffAttack;
-                            break;
-                        case WeaponType.Sword:
-                            chosenAttack = attackDatabaseScript._basicSwordAttack;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    chosenAttack = attackDatabaseScript._basicAttack;
-                }
 
-                break;
+        if(attack.isSingleTarget == true)
+        {
+            buttonsAndPanelsScript.ToggleEnemiesPanel();
         }
+        chosenAttack = attack;
     }
 
     private bool AttackIsChosen()
@@ -1140,7 +1112,7 @@ public class Eagle_Eye : MonoBehaviour
         if (currentPC.equippedWeapon != null && currentPC.equippedWeapon.weaponType == WeaponType.Spellbook)
         {
             Weapon_Spellbook spellbook = currentPC.equippedWeapon as Weapon_Spellbook;
-            Debug.Log(currentPC.equippedWeapon.itemName);
+            //Debug.Log(currentPC.equippedWeapon.itemName);
             buttonsAndPanelsScript.playerSpellbook = spellbook;
             buttonsAndPanelsScript.playerSpellbook.spellbookAttacks = spellbook.spellbookAttacks;
         }
