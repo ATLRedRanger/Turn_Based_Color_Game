@@ -128,10 +128,11 @@ MonoBehaviour:
   baseAttack: 0
   baseDefense: 0
   isDefending: 0
+  usedItem: 1
   baseSpeed: 3
   speedTier: 0
   burnAmount: 0
-  burnThreshhold: 4
+  burnThreshhold: 1
   burnTimer: 0
   redResistance: 0.5
   orangeResistance: 0
@@ -142,4 +143,5 @@ MonoBehaviour:
   axeResistance: 0
   bowResistance: 0
   hammerResistance: 0
+  spellbookResistance: 0
   swordResistance: 0

@@ -14,9 +14,10 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public Button _attackButton;
     public Button _fireBallButton;
-    
+
 
     //Panel Opening Buttons
+    public GameObject _fightButton;
     public Button _abilitiesButton;
     public Button _itemsButton;
     public Button _spellsButton;

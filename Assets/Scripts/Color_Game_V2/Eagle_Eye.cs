@@ -37,15 +37,15 @@ public class Eagle_Eye : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         StartCoroutine(LoadScripts());
 
-        
+
     }
 
     public void Test()
     {
-        
+
         /*
         CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
         CheckStatusTimes(listOfCombatants);
@@ -56,18 +56,18 @@ public class Eagle_Eye : MonoBehaviour
 
         GenerateEnemies();
         listOfCombatants.Add(player);
-        
+
         currentPC = player;
         GenerateEnvironment();
         SetMaxColorAmountsForUI();
-        
+
     }
 
     public void Test_2()
     {
-        
+
         StartCoroutine(Combat());
-        
+
     }
 
     public void Test_3()
@@ -97,17 +97,17 @@ public class Eagle_Eye : MonoBehaviour
         weaponDatabaseScript = FindObjectOfType<Weapon_Database_V2>();
 
         player = unitSpawnerScript.SpawnPlayer();
-        
+
         //Debug.Log("Finished Loading");
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     //Sorts combatants from fastest to slowest
     private void SortCombatants(List<Unit_V2> listOfCombatants)
     {
@@ -119,7 +119,7 @@ public class Eagle_Eye : MonoBehaviour
         player.gameObject.SetActive(true);
         int enemiesToGenerate = 2;//Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
-        for(int i = 0; i < enemiesToGenerate; i++) 
+        for (int i = 0; i < enemiesToGenerate; i++)
         {
             switch (i)
             {
@@ -139,7 +139,7 @@ public class Eagle_Eye : MonoBehaviour
                     break;
             }
         }
-        
+
     }
 
     private void CombatUIUpdates()
@@ -153,11 +153,11 @@ public class Eagle_Eye : MonoBehaviour
 
     IEnumerator Combat()
     {
-        
+
         List<Unit_V2> deadUnits = new List<Unit_V2>();
         theCombatState = CombatState.Active;
-        
-        
+
+
         //Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
         yield return new WaitForSeconds(1);
@@ -189,9 +189,9 @@ public class Eagle_Eye : MonoBehaviour
                 {
 
                     currentPC = unit;
-                    
-                    
-                    
+
+
+
                     if (IsPlayerAlive(player))
                     {
                         PlayerTurn();
@@ -210,11 +210,11 @@ public class Eagle_Eye : MonoBehaviour
                     {
                         //Debug.Log($"Adding {unit} to DeadUnitList");
                         deadUnits.Add(unit);
-                        
+
                     }
                     else
                     {
-                        
+
                         if (IsPlayerAlive(player))
                         {
                             StartCoroutine(EnemyTurn(unit as EnemyUnit_V2));
@@ -231,16 +231,23 @@ public class Eagle_Eye : MonoBehaviour
                 CombatUIUpdates();
             }
             //End of turn stuff
-           
-            
-            
+
+            yield return new WaitForSeconds(.5f);
+            CheckStatusTimes(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            CheckBuffsAndDebuffs(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            EndOfRoundStatusDamage();
+            //yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(1);
+            CombatUIUpdates();
 
             foreach (Unit_V2 unit in listOfCombatants)
             {
-                if ( unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
+                if (unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
                 {
-                   deadUnits.Add(unit);
-                   //Debug.Log($"Dead Units Count: {deadUnits.Count}");
+                    deadUnits.Add(unit);
+                    //Debug.Log($"Dead Units Count: {deadUnits.Count}");
                 }
             }
 
@@ -248,15 +255,15 @@ public class Eagle_Eye : MonoBehaviour
             {
                 //Debug.Log($"DeadUnit: {enemy.unitName}");
                 if (enemy == enemyOne)
-                {  
+                {
                     listOfCombatants.Remove(enemy);
                 }
-                else if(enemy == enemyTwo)
+                else if (enemy == enemyTwo)
                 {
-                    listOfCombatants.Remove(enemy); 
+                    listOfCombatants.Remove(enemy);
                 }
             }
-            
+
 
 
             if (listOfCombatants.Count == 1 && listOfCombatants[0] is Player_V2)
@@ -264,7 +271,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Won;
                 break;
             }
-            
+
             if (IsPlayerAlive(player))
             {
                 //Debug.Log("Player is alive");
@@ -274,14 +281,7 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-            yield return new WaitForSeconds(.5f);
-            CheckStatusTimes(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            CheckBuffsAndDebuffs(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            StartCoroutine(EndOfRoundStatusDamage());
-            //yield return new WaitForSeconds(.5f);
-            yield return new WaitForSeconds(1);
+            
         }
         yield return new WaitForSeconds(1f);
         if (theCombatState == CombatState.Won)
@@ -293,7 +293,7 @@ public class Eagle_Eye : MonoBehaviour
             PlayerLost();
         }
     }
-    
+
     private bool IsPlayerAlive(Unit_V2 player)
     {
         if (player.GetCurrentHp() > 1)
@@ -306,7 +306,7 @@ public class Eagle_Eye : MonoBehaviour
 
     private void PlayerTurn()
     {
-        
+
         playerTurnIsDone = false;
         currentPC.isDefending = false;
         chosenAttack = null;
@@ -327,7 +327,7 @@ public class Eagle_Eye : MonoBehaviour
         return false;
     }
 
-    
+
     private float CalculateDamageMultiplier()
     {
         int roll = Random.Range(1, 5);
@@ -357,7 +357,7 @@ public class Eagle_Eye : MonoBehaviour
         switch (attacker.StaminaLevelConversion())
         {
             case StaminaLevels.Full:
-                if(roll + 2 > 95)
+                if (roll + 2 > 95)
                 {
                     return true;
                 }
@@ -389,7 +389,7 @@ public class Eagle_Eye : MonoBehaviour
             case StaminaLevels.Broken:
                 break;
         }
-        
+
         return false;
     }
 
@@ -401,7 +401,7 @@ public class Eagle_Eye : MonoBehaviour
         float damageMultiplier = CalculateDamageMultiplier(); // Helper function
 
         // Calculate base damage with potential random variation
-        if(attacker.equippedWeapon != null)
+        if (attacker.equippedWeapon != null)
         {
             switch (attack.attackType)
             {
@@ -428,7 +428,7 @@ public class Eagle_Eye : MonoBehaviour
             baseDamage = attack.attackPower + attacker.GetCurrentAttack();
             //Debug.Log($"Base Damage: ({attack.attackPower}) + ({attacker.GetCurrentAttack()})");
         }
-        
+
 
         // Apply damage multiplier for critical hits, etc.
         damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
@@ -452,16 +452,16 @@ public class Eagle_Eye : MonoBehaviour
         return damageAfterDefenses;
     }
 
-    
+
 
     private int ApplyColorAndWeaponResistances(Attack attack, int damage, Unit_V2 attacker, Unit_V2 defender)
     {
         float combinedResistances = 0;
 
-        
+
         if (attacker.equippedWeapon != null && attack.attackType == AttackType.Physical)
         {
-            
+
             combinedResistances = defender.GetWeaponResistances()[attacker.equippedWeapon.weaponType];
         }
 
@@ -470,12 +470,12 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log($"Damage: {damage} - Mathf.RoundToInt(damage({damage} * combinedResistances({combinedResistances})");
 
         return damage - Mathf.RoundToInt(damage * combinedResistances);
-        
+
     }
 
     private void CheckAttack_StatusBuildupRelationship(Attack attack, Unit_V2 defender)
     {
-        switch(attack.attackBehavior)
+        switch (attack.attackBehavior)
         {
             case AttackBehavior.Burn:
                 if (defender.DoesStatusExist(statusEffectScript.burn))
@@ -492,7 +492,7 @@ public class Eagle_Eye : MonoBehaviour
                 else if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
                 {
                     //Debug.Log($"{defender.unitName} is now burning!");
-                    
+
                     defender.AddStatus(statusEffectScript.burn.DeepCopy());
                     defender.SetBurnAmountToZero();
                 }
@@ -500,7 +500,7 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     defender.AddToBurnAmount(attack.GetStatusBuildUpAmount());
                 }
-                
+
                 break;
             case AttackBehavior.FutureSight:
                 if (!defender.DoesStatusExist(statusEffectScript.futureSight))
@@ -515,21 +515,21 @@ public class Eagle_Eye : MonoBehaviour
 
     private void CheckAttack_Buff_DebuffBuildupRelationship(Attack attack, Unit_V2 chosenTarget)
     {
-        if(attack.attackBuff != null)
+        if (attack.attackBuff != null)
         {
-           
+
             if (chosenTarget.DoesStatusExist(attack.attackBuff))
             {
-                
+
             }
             else
             {
                 attack.attackBuff.ApplyBuff(chosenTarget);
             }
-            
+
         }
 
-        if(attack.attackDebuff != null)
+        if (attack.attackDebuff != null)
         {
             //Debug.Log("Attack Debuff != Null");
             if (chosenTarget.DoesStatusExist(attack.attackDebuff))
@@ -540,7 +540,7 @@ public class Eagle_Eye : MonoBehaviour
             {
                 attack.attackDebuff.ApplyDebuff(chosenTarget);
             }
-           
+
         }
 
     }
@@ -557,7 +557,7 @@ public class Eagle_Eye : MonoBehaviour
                 switch (status.GetStatusName())
                 {
                     case "Burn":
-                        
+
                         //Debug.Log($"{unit.unitName}'s burnStack: {status.effectStack}.");
                         if (unit.GetBurnTimer() >= status.GetEffectLength())
                         {
@@ -567,17 +567,17 @@ public class Eagle_Eye : MonoBehaviour
                         }
                         else
                         {
-                            
-                            statusDamageQue.Add(new List<object> {unit, status.GetStatusDamage(), status.timeNeededInQue, status});
+
+                            statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue, status });
                             //Debug.Log("Burn Damage: " + status.GetStatusDamage());
                             unit.AddToBurnTimer(1);
-                            
+
                         }
                         break;
                     case "Future Sight":
-                        if(status.timeNeededInQue >= status.GetEffectLength())
+                        if (status.timeNeededInQue >= status.GetEffectLength())
                         {
-                            statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue, status});
+                            statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue, status });
                         }
                         else
                         {
@@ -589,7 +589,7 @@ public class Eagle_Eye : MonoBehaviour
             }
             foreach (StatusEffect_V2 status in removeStatus)
             {
-                
+
                 //Debug.Log($"Trying to remove {status.GetStatusName()}");
                 if (unit.DoesStatusExist(status))
                 {
@@ -615,7 +615,7 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     buff.ActivateBuffEffect(unit);
                 }
-                
+
                 if (buff.GetTimeActive() > buff.GetEffectLength())
                 {
                     removeBuff.Add(buff);
@@ -633,7 +633,7 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     debuff.ActivateDebuffEffect(unit);
                 }
-                if(debuff.GetTimeActive() >= debuff.GetEffectLength())
+                if (debuff.GetTimeActive() >= debuff.GetEffectLength())
                 {
                     removeDebuff.Add(debuff);
                 }
@@ -647,7 +647,7 @@ public class Eagle_Eye : MonoBehaviour
             {
                 foreach (Buffs buff in removeBuff)
                 {
-                    
+
                     if (unit.DoesStatusExist(buff))
                     {
                         //Debug.Log($"{buff.GetStatusName()} has been removed.");
@@ -661,14 +661,14 @@ public class Eagle_Eye : MonoBehaviour
             Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active Debuffs.");
             foreach (Debuffs debuff in removeDebuff)
             {
-                   
+
                 if (unit.DoesStatusExist(debuff))
                 {
                     unit.GetListOfDebuffs().Remove(debuff);
-                   
+
                     debuff.RevertDebuffEffect(unit);
                 }
-                
+
             }
 
             removeBuff.Clear();
@@ -676,7 +676,8 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    private IEnumerator EndOfRoundStatusDamage()
+
+    private void EndOfRoundStatusDamage()
     {
         //This function is for timed damage effects to go off
         //The timeInQue is so that statusEffects can sit in the que to "cook"
@@ -688,7 +689,7 @@ public class Eagle_Eye : MonoBehaviour
         //Then when the timeInQue is NOT < 1, you add it to the blank list, clear the status list, 
         //then put it back in the Que.
 
-        List <List<object>> blankList = new List<List<object>>();
+        List<List<object>> blankList = new List<List<object>>();
         Unit_V2 unit = null;
         int damage = 0;
         int timeInQue;
@@ -698,7 +699,64 @@ public class Eagle_Eye : MonoBehaviour
             for (int i = 0; i < statusDamageQue.Count; i++)
             {
                 unit = statusDamageQue[i][0] as Unit_V2;
-                if(unit.GetCurrentHp() > 0)
+                if (unit.GetCurrentHp() > 0)
+                {
+                    if (statusDamageQue[i][1] is int)
+                    {
+                        damage = (int)(statusDamageQue[i][1]);
+                    }
+                    if (statusDamageQue[i][2] is int)
+                    {
+                        timeInQue = (int)statusDamageQue[i][2];
+                        if (timeInQue < 1)
+                        {
+                            //yield return new WaitForSeconds(1);
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
+                            unit.TakeDamage(damage);
+                            //yield return new WaitForSeconds(1);
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
+                        }
+                        else
+                        {
+                            statusDamageQue[i][2] = timeInQue - 1;
+                            blankList.Add(statusDamageQue[i]);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        statusDamageQue.Clear();
+        statusDamageQue = blankList;
+        //yield return null;
+    }
+
+    /*private IEnumerator EndOfRoundStatusDamage()
+    {
+        //This function is for timed damage effects to go off
+        //The timeInQue is so that statusEffects can sit in the que to "cook"
+        //Then when the timer ticks down to 0, the statusEffect goes off
+        //This system was intended for effects like Pokemon's Future Sight
+        //The way it's supposed to work is that you look at each object in the que,
+        //you then iterate over it looking for whichUnit is being affected,
+        //how much damage are they going to take and then when is the damage supposed to happen.
+        //Then when the timeInQue is NOT < 1, you add it to the blank list, clear the status list, 
+        //then put it back in the Que.
+
+        List<List<object>> blankList = new List<List<object>>();
+        Unit_V2 unit = null;
+        int damage = 0;
+        int timeInQue;
+
+        if (statusDamageQue.Count != 0)
+        {
+            for (int i = 0; i < statusDamageQue.Count; i++)
+            {
+                unit = statusDamageQue[i][0] as Unit_V2;
+                if (unit.GetCurrentHp() > 0)
                 {
                     if (statusDamageQue[i][1] is int)
                     {
@@ -724,14 +782,14 @@ public class Eagle_Eye : MonoBehaviour
                         }
                     }
                 }
-                
+
             }
         }
 
         statusDamageQue.Clear();
         statusDamageQue = blankList;
         yield return null;
-    }
+    }*/
 
     IEnumerator WaitForPlayerDecisions()
     {
@@ -741,7 +799,7 @@ public class Eagle_Eye : MonoBehaviour
         yield return new WaitUntil(PlayerChoiceIsMade);
 
         //Player is attacking single target
-        if(AttackIsChosen() && chosenAttack.isSingleTarget == true)
+        if (AttackIsChosen() && chosenAttack.isSingleTarget == true)
         {
             if (AttackIsChosen() && EnemyIsChosen())
             {
@@ -795,10 +853,10 @@ public class Eagle_Eye : MonoBehaviour
 
                     CombatUIUpdates();
                 }
-        
+
             }
         }
-        else if(AttackIsChosen() && chosenAttack.isSingleTarget == false)
+        else if (AttackIsChosen() && chosenAttack.isSingleTarget == false)
         {
             PayAttackCost(currentPC, chosenAttack);
             foreach (Unit_V2 enemy in listOfCombatants)
@@ -848,7 +906,7 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
         }
-        
+
         Debug.Log("PLAYER TURN HAS FINISHED!");
         playerTurnIsDone = true;
     }
@@ -857,11 +915,11 @@ public class Eagle_Eye : MonoBehaviour
     {
         List<string> useableAttacks = new List<string>();
 
-        foreach(var kvp in currentPC.GetAttackDictionary())
+        foreach (var kvp in currentPC.GetAttackDictionary())
         {
             if (currentPC.GetCurrentStamina() >= kvp.Value.staminaCost && envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
             {
-               useableAttacks.Add(kvp.Key);
+                useableAttacks.Add(kvp.Key);
             }
         }
         return useableAttacks;
@@ -897,28 +955,28 @@ public class Eagle_Eye : MonoBehaviour
             default:
                 break;
         }
-        
 
-        
+
+
     }
 
 
-    
+
 
     IEnumerator EnemyTurn(EnemyUnit_V2 unit)
     {
         Unit_V2 enemyChosenTarget = player;
-        
+
         Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
-        if(enemyChosenTarget != null)
+        if (enemyChosenTarget != null)
         {
             PayAttackCost(unit, enemyChosenAttack);
-            for(int i = 0; i < enemyChosenAttack.numOfHits; i++)
+            for (int i = 0; i < enemyChosenAttack.numOfHits; i++)
             {
                 if (enemyChosenAttack.DoesAttackHit(unit))
                 {
                     int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
-                    int staminaDamage = Mathf.Clamp(damage / 3, 1, damage/3);
+                    int staminaDamage = Mathf.Clamp(damage / 3, 1, damage / 3);
                     CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     enemyChosenTarget.TakeDamage(damage);
                     Debug.Log($"Stamina Damage: {staminaDamage}");
@@ -931,7 +989,7 @@ public class Eagle_Eye : MonoBehaviour
                     buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                 }
             }
-            
+
         }
     }
 
@@ -969,13 +1027,13 @@ public class Eagle_Eye : MonoBehaviour
 
     public void AttackChangeNotification(string attack)
     {
-        switch(attack)
+        switch (attack)
         {
             case "Fireball":
                 chosenAttack = attackDatabaseScript._fireball;
                 break;
             case "Attack":
-                if(currentPC.equippedWeapon != null)
+                if (currentPC.equippedWeapon != null)
                 {
                     switch (currentPC.equippedWeapon.weaponType)
                     {
@@ -1005,14 +1063,14 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     chosenAttack = attackDatabaseScript._basicAttack;
                 }
-                
+
                 break;
         }
     }
 
     private bool AttackIsChosen()
     {
-        if(chosenAttack != null)
+        if (chosenAttack != null)
         {
             return true;
         }
@@ -1025,7 +1083,7 @@ public class Eagle_Eye : MonoBehaviour
         {
             return true;
         }
-        
+
         return false;
     }
 
@@ -1036,7 +1094,7 @@ public class Eagle_Eye : MonoBehaviour
     }
     private bool PlayerChoiceIsMade()
     {
-        
+
         if (AttackIsChosen() && EnemyIsChosen())
         {
             buttonsAndPanelsScript.ToggleFightPanel();
@@ -1069,7 +1127,7 @@ public class Eagle_Eye : MonoBehaviour
                 //chosenEnemyTarget = enemyOne;
                 break;
         }
-        
+
     }
 
     public void ResetAttackAndEnemyTargets()
@@ -1124,8 +1182,8 @@ public class Eagle_Eye : MonoBehaviour
 
 
 
-    public Unit_V2 GetCurrentPC() 
-    { 
+    public Unit_V2 GetCurrentPC()
+    {
         if (currentPC.equippedWeapon != null && currentPC.equippedWeapon.weaponType == WeaponType.Spellbook)
         {
             Weapon_Spellbook spellbook = currentPC.equippedWeapon as Weapon_Spellbook;
@@ -1137,6 +1195,6 @@ public class Eagle_Eye : MonoBehaviour
         {
 
         }
-        return currentPC; 
+        return currentPC;
     }
 }

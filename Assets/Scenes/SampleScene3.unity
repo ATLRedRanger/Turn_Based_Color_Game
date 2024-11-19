@@ -4901,9 +4901,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OpenFightPanel
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: ToggleFightPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17592,6 +17592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackButton: {fileID: 1211379656}
   _fireBallButton: {fileID: 1530951495}
+  _fightButton: {fileID: 502051564}
   _abilitiesButton: {fileID: 1129678891}
   _itemsButton: {fileID: 1386464849}
   _spellsButton: {fileID: 525618912}
@@ -17610,6 +17611,10 @@ MonoBehaviour:
   _enemyOneButtonText: {fileID: 1733775277}
   _enemyTwoButton: {fileID: 1993143389}
   _enemyTwoButtonText: {fileID: 1203772699}
+  _spellbookButton01Text: {fileID: 1512216324}
+  _spellbookButton02Text: {fileID: 89741384}
+  _spellbookButton03Text: {fileID: 964705270}
+  _spellbookButton04Text: {fileID: 1959439174}
 --- !u!1 &1742098422
 GameObject:
   m_ObjectHideFlags: 0
