@@ -436,7 +436,7 @@ public class Eagle_Eye : MonoBehaviour
 
 
         // Apply damage multiplier for critical hits, etc.
-        Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
+        //Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
         damageBeforeDefenses = Mathf.RoundToInt(baseDamage * damageMultiplier);
         
 
@@ -450,9 +450,7 @@ public class Eagle_Eye : MonoBehaviour
         damageAfterDefenses = ApplyColorAndWeaponResistances(attack, damageBeforeDefenses, attacker, defender);
         //Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
-        //Playing around with damage numbers
-        //damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses * .5f);
-
+        
         if (defender.isDefending)
         {
             damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses / 2);
@@ -880,7 +878,11 @@ public class Eagle_Eye : MonoBehaviour
 
         foreach (var kvp in currentPC.GetAttackDictionary())
         {
-            if (currentPC.GetCurrentStamina() >= kvp.Value.staminaCost && envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
+            if (kvp.Value.attackColor != Hue.Neutral && currentPC.GetCurrentStamina() >= kvp.Value.staminaCost)
+            {
+                useableAttacks.Add(kvp.Key);
+            }
+            else if (currentPC.GetCurrentStamina() >= kvp.Value.staminaCost && envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
             {
                 useableAttacks.Add(kvp.Key);
             }
@@ -956,13 +958,15 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    private void PlayerWon()
+    public void PlayerWon()
     {
         Debug.Log("Player Won");
+        buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
     }
-    private void PlayerLost()
+    public void PlayerLost()
     {
         Debug.Log("Player Lost");
+        buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
     }
 
     private void GenerateEnvironment()

@@ -35,6 +35,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _EnemiesPanel;
     public GameObject _AttackDescriptionPanel;
     public GameObject _SpellbookPanel;
+    public GameObject _EndOfBattlePanel;
 
 
     //TargetEnemyButtons
@@ -332,29 +333,34 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void _AttackClick()
     {
-        switch (eagleScript.GetCurrentPC().equippedWeapon.weaponType)
+        if(eagleScript.GetCurrentPC().equippedWeapon != null)
         {
-            case WeaponType.Axe:
-                eagleScript.AttackChangeNotification(attackDatabaseScript._basicAxeAttack);
-                break;
-            case WeaponType.Bow:
-                eagleScript.AttackChangeNotification(attackDatabaseScript._basicBowAttack);
-                break;
-            case WeaponType.Hammer:
-                eagleScript.AttackChangeNotification(attackDatabaseScript._basicHammerAttack);
-                break;
-            case WeaponType.Spellbook:
-                eagleScript.AttackChangeNotification(attackDatabaseScript._basicSpellbookAttack);
-                break;
-            case WeaponType.Staff:
-                eagleScript.AttackChangeNotification(attackDatabaseScript._basicStaffAttack);
-                break;
-            case WeaponType.Sword:
-                eagleScript.AttackChangeNotification(attackDatabaseScript._basicSwordAttack);
-                break;
-            default:
-                break;
-        }       
+            switch (eagleScript.GetCurrentPC().equippedWeapon.weaponType)
+            {
+                case WeaponType.Axe:
+                    eagleScript.AttackChangeNotification(attackDatabaseScript._basicAxeAttack);
+                    break;
+                case WeaponType.Bow:
+                    eagleScript.AttackChangeNotification(attackDatabaseScript._basicBowAttack);
+                    break;
+                case WeaponType.Hammer:
+                    eagleScript.AttackChangeNotification(attackDatabaseScript._basicHammerAttack);
+                    break;
+                case WeaponType.Spellbook:
+                    eagleScript.AttackChangeNotification(attackDatabaseScript._basicSpellbookAttack);
+                    break;
+                case WeaponType.Staff:
+                    eagleScript.AttackChangeNotification(attackDatabaseScript._basicStaffAttack);
+                    break;
+                case WeaponType.Sword:
+                    eagleScript.AttackChangeNotification(attackDatabaseScript._basicSwordAttack);
+                    break;
+            }
+        }
+        else
+        {
+            eagleScript.AttackChangeNotification(attackDatabaseScript._basicAttack);
+        }
         
     }
 
@@ -425,5 +431,50 @@ public class ButtonsAndPanels : MonoBehaviour
         Debug.Log(buttonName + "is being pressed.");
         Debug.Log(buttonNum + "num of button.");
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void EndOfBattlePanel(CombatState combatState)
+    {
+        _EndOfBattlePanel.SetActive(true);
+
+        if(combatState == CombatState.Won)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 }

@@ -5019,7 +5019,7 @@ Canvas:
   m_GameObject: {fileID: 506840215}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -17607,6 +17607,7 @@ MonoBehaviour:
   _EnemiesPanel: {fileID: 1421754594}
   _AttackDescriptionPanel: {fileID: 1991306996}
   _SpellbookPanel: {fileID: 1415135337}
+  _EndOfBattlePanel: {fileID: 1952190493}
   _enemyOneButton: {fileID: 775971296}
   _enemyOneButtonText: {fileID: 1733775277}
   _enemyTwoButton: {fileID: 1993143389}
@@ -18705,7 +18706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

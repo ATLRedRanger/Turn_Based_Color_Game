@@ -46,4 +46,13 @@ public class Player_V2 : Unit_V2
         
     }
     
+    public void GainExp(int exp)
+    {
+        currentExp += exp;
+    }
+
+    public int GetCurrentExp()
+    {
+        return currentExp;
+    }
 }
