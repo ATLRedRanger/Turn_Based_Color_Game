@@ -23,10 +23,11 @@ public class Weapon_Axe : Weapon
         base.Use(unit);
     }
 
+    /*
     public override int GetWeaponDamage(Unit_V2 attacker, Unit_V2 defender)
     {
         return base.GetWeaponDamage(attacker, defender);
-    }
+    }*/
 
 }
 

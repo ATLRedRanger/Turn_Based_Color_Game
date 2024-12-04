@@ -41,6 +41,7 @@ public class Attack
     public bool DoesAttackHit(Unit_V2 attacker)
     {
         int roll = Random.Range(0, 101);
+        /*
         StaminaLevels staminaLevels = attacker.StaminaLevelConversion();
 
         if (staminaLevels == StaminaLevels.Full)
@@ -60,7 +61,7 @@ public class Attack
         else
         {
             roll += 0;
-        }
+        }*/
         
         if (roll < attackAccuracy)
         {

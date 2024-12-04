@@ -21,9 +21,10 @@ public class Item_Consumable : Item
             case ConsumableType.Health:
                 unit.GainHealth(amountToIncrease);
                 break;
+                /*
             case ConsumableType.Stamina:
                 unit.GainStamina(amountToIncrease);
-                break;
+                break;*/
         }
         unit.usedItem = true;
     }

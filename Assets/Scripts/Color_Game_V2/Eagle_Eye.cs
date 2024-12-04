@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEditor.UnityLinker;
 using UnityEngine;
 using static UnityEngine.UI.CanvasScaler;
@@ -350,8 +351,9 @@ public class Eagle_Eye : MonoBehaviour
         //TODO: Attacks only crit if there's a weapon equipped
         //Is this what I want?
         //Matt Suggestion: The first time a color is at full each combat, that color effect is critical. 
-        //Vincent Respons: Maybe a higher chance so that it's not a guarantee.
+        //Vincent Responds: Maybe a higher chance so that it's not a guarantee.
         int roll = Random.Range(1, 101);
+        /*
         switch (attacker.StaminaLevelConversion())
         {
             case StaminaLevels.Full:
@@ -391,14 +393,14 @@ public class Eagle_Eye : MonoBehaviour
                 break;
             case StaminaLevels.Broken:
                 break;
-        }
+        }*/
 
         return false;
     }
 
     private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
     {
-        float baseDamage = attack.attackPower;
+        float baseDamage = attack.attackPower + attacker.GetCurrentAttack();
         //Debug.Log($"{attack.attackName}'s base damage is {baseDamage}");
         int damageBeforeDefenses = 0;
         int damageAfterDefenses = 0;
@@ -412,26 +414,26 @@ public class Eagle_Eye : MonoBehaviour
                 case AttackType.Physical:
                     if (attacker.equippedWeapon.weaponType == WeaponType.Axe || attacker.equippedWeapon.weaponType == WeaponType.Bow || attacker.equippedWeapon.weaponType == WeaponType.Hammer || attacker.equippedWeapon.weaponType == WeaponType.Sword)
                     {
-                        baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
-                        //Debug.Log($"Physical Attack with a physical weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()}");
+                        
+                    }
+                    else
+                    {
+                        baseDamage -= attacker.equippedWeapon.GetWeaponBaseDamage();
                     }
 
                     break;
                 case AttackType.Special:
                     if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook || attacker.equippedWeapon.weaponType == WeaponType.Staff)
                     {
-                        Debug.Log($"Special Attack with a special weapon equipped: ({baseDamage}) = {attack.attackPower} + {attacker.GetCurrentAttack()} + {attacker.equippedWeapon.GetWeaponBaseDamage()}");
-                        baseDamage = attack.attackPower + attacker.GetCurrentAttack() + attacker.equippedWeapon.GetWeaponBaseDamage();
-                        
+
+                    }
+                    else
+                    {
+                        baseDamage -= attacker.equippedWeapon.GetWeaponBaseDamage();
                     }
 
                     break;
             }
-        }
-        else
-        {
-            baseDamage = attack.attackPower + attacker.GetCurrentAttack();
-            //Debug.Log($"Base Damage: ({attack.attackPower}) + ({attacker.GetCurrentAttack()})");
         }
 
 
@@ -447,7 +449,7 @@ public class Eagle_Eye : MonoBehaviour
         }
 
         // Apply color resistances based on attack type and color
-        damageAfterDefenses = ApplyColorAndWeaponResistances(attack, damageBeforeDefenses, attacker, defender);
+        damageAfterDefenses = ApplyColorAndWeaponResistances(attack, damageBeforeDefenses, defender);
         //Debug.Log($"DamageAfterDefenses: {damageAfterDefenses}");
 
         
@@ -461,16 +463,16 @@ public class Eagle_Eye : MonoBehaviour
 
 
 
-    private int ApplyColorAndWeaponResistances(Attack attack, int damage, Unit_V2 attacker, Unit_V2 defender)
+    private int ApplyColorAndWeaponResistances(Attack attack, int damage, Unit_V2 defender)
     {
         float combinedResistances = 0;
 
-
+        /*
         if (attacker.equippedWeapon != null && attack.attackType == AttackType.Physical)
         {
 
             combinedResistances = defender.GetWeaponResistances()[attacker.equippedWeapon.weaponType];
-        }
+        }*/
 
         combinedResistances += defender.GetColorResistances()[attack.attackColor];
 
@@ -779,6 +781,7 @@ public class Eagle_Eye : MonoBehaviour
                         int staminaDamage = 0;
                         CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
                         //Debug.Log(currentPC.equippedWeapon.itemName);
+                        /*
                         if (currentPC.equippedWeapon != null)
                         {
                             switch (currentPC.equippedWeapon)
@@ -796,9 +799,9 @@ public class Eagle_Eye : MonoBehaviour
                                 default:
                                     break;
                             }
-                        }
+                        }*/
                         chosenEnemyTarget.TakeDamage(damage);
-                        chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
+                        //chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
                         CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
                         yield return new WaitForSeconds(1);
                         buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
@@ -832,9 +835,10 @@ public class Eagle_Eye : MonoBehaviour
                         {
                             Debug.Log("Attack Hits");
                             int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
-                            int staminaDamage = 0;
+                            //int staminaDamage = 0;
                             CheckAttack_StatusBuildupRelationship(chosenAttack, enemy);
                             //Debug.Log(currentPC.equippedWeapon.itemName);
+                            /*
                             if (currentPC.equippedWeapon != null)
                             {
                                 switch (currentPC.equippedWeapon)
@@ -852,9 +856,9 @@ public class Eagle_Eye : MonoBehaviour
                                     default:
                                         break;
                                 }
-                            }
+                            }*/
                             enemy.TakeDamage(damage);
-                            enemy.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
+                            //enemy.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
                             CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, enemy);
                             yield return new WaitForSeconds(1);
                             buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
@@ -896,7 +900,7 @@ public class Eagle_Eye : MonoBehaviour
         //Debug.Log(attack.staminaCost + " Attack Cost");
         Debug.Log(attacker.unitName + " is UNIT NAME");
         Debug.Log(attack.attackName + " is ATTACK NAME");
-        attacker.ReduceStamina(attack.staminaCost);
+        //attacker.ReduceStamina(attack.staminaCost);
         switch (attack.attackColor)
         {
             case Hue.Red:
@@ -945,7 +949,7 @@ public class Eagle_Eye : MonoBehaviour
                     CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     enemyChosenTarget.TakeDamage(damage);
                     Debug.Log($"Stamina Damage: {staminaDamage}");
-                    enemyChosenTarget.ReduceStamina(staminaDamage);
+                    //enemyChosenTarget.ReduceStamina(staminaDamage);
                     CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     yield return new WaitForSeconds(1);
                     buttonsAndPanelsScript.ToggleAttackDescriptionPanel();

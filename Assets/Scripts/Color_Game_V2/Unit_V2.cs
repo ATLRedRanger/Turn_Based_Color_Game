@@ -46,7 +46,7 @@ public class Unit_V2 : MonoBehaviour
 
     //Reistances And Weaknesses
     private Dictionary<Hue, float> unitColorResistances = new Dictionary<Hue, float>();
-    private Dictionary<WeaponType, float> unitWeaponResistances = new Dictionary<WeaponType, float>();
+    //private Dictionary<WeaponType, float> unitWeaponResistances = new Dictionary<WeaponType, float>();
 
     [SerializeField]
     private float redResistance;
@@ -61,6 +61,8 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private float violetResistance;
     [SerializeField]
+
+    /*
     private float axeResistance;
     [SerializeField]
     private float bowResistance;
@@ -70,7 +72,7 @@ public class Unit_V2 : MonoBehaviour
     private float spellbookResistance;
     [SerializeField]
     private float swordResistance;
-
+    */
 
     public List<StatusEffect_V2> unitStatusEffects = new List<StatusEffect_V2>();
     private List<Buffs> unitBuffsList = new List<Buffs>();
@@ -85,7 +87,7 @@ public class Unit_V2 : MonoBehaviour
         currentHp = maxHp;
         currentStamina = maxStamina;
         SetColorResistances();
-        SetWeaponResistances();
+        //SetWeaponResistances();
 
     }
 
@@ -100,6 +102,7 @@ public class Unit_V2 : MonoBehaviour
         unitColorResistances[Hue.Neutral] = 0;
     }
 
+    /*
     public virtual void SetWeaponResistances()
     {
         unitWeaponResistances[WeaponType.Axe] = axeResistance;
@@ -108,7 +111,8 @@ public class Unit_V2 : MonoBehaviour
         unitWeaponResistances[WeaponType.Spellbook] = spellbookResistance;
         unitWeaponResistances[WeaponType.Sword] = swordResistance;
         unitWeaponResistances[WeaponType.Neutral] = 0;
-    }
+    }*/
+
     // Update is called once per frame
     void Update()
     {
@@ -139,13 +143,9 @@ public class Unit_V2 : MonoBehaviour
 
     public int GetCurrentAttack()
     {
-        if(equippedWeapon != null && attackTier != 0)
+        if(equippedWeapon != null)
         {
             return Mathf.RoundToInt((baseAttack + equippedWeapon.GetWeaponBaseDamage()) * TierBonus(attackTier));
-        }
-        else if(equippedWeapon != null && attackTier == 0)
-        {
-            return Mathf.RoundToInt(Mathf.RoundToInt(baseAttack + equippedWeapon.GetWeaponBaseDamage()) * TierBonus(attackTier));
         }
 
         return Mathf.RoundToInt((float)(baseAttack * (TierBonus(attackTier))));
@@ -201,10 +201,11 @@ public class Unit_V2 : MonoBehaviour
         return unitColorResistances;
     }
 
+    /*
     public Dictionary<WeaponType, float> GetWeaponResistances()
     {
         return unitWeaponResistances;
-    }
+    }*/
 
     public Dictionary<string, Attack> GetAttackDictionary()
     {
@@ -227,7 +228,7 @@ public class Unit_V2 : MonoBehaviour
         currentHp += amount;
         Debug.Log($"{unitName} has gained {amount} health and their currentHP is: {currentHp}");
     }
-
+    /*
     public void GainStamina(int amount)
     {
         currentHp += amount;
@@ -259,7 +260,7 @@ public class Unit_V2 : MonoBehaviour
             default:
                 return StaminaLevels.Empty;
         }
-    }
+    }*/
 
     public float TierBonus(int tier)
     {
