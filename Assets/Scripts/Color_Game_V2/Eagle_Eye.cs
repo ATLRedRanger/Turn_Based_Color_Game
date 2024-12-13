@@ -83,7 +83,7 @@ public class Eagle_Eye : MonoBehaviour
         Debug.Log($"PLAYER DEBUFF NAME: {player.GetListOfDebuffs()[0].statusName}");
         */
 
-        player.equippedWeapon = weaponDatabaseScript.basicSpellbook;
+        Debug.Log(envManaScript.GreatestColorInEnvironment(attackDatabaseScript._fireball.attackColor));
     }
     IEnumerator LoadScripts()
     {
@@ -410,11 +410,13 @@ public class Eagle_Eye : MonoBehaviour
     private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
     {
 
-        float baseDamage = attack.attackPower;
+        float baseDamage = attack.attackPower + attacker.GetUnitDamage();
         //Debug.Log($"{attack.attackName}'s base damage is {baseDamage}");
         int damageBeforeDefenses = 0;
         int damageAfterDefenses = 0;
         float damageMultiplier = CalculateDamageMultiplier(); // Helper function
+
+        CheckAttackBehavior(attack);
 
         // Calculate base damage with potential random variation
         if (attacker.equippedWeapon != null)
@@ -784,7 +786,7 @@ public class Eagle_Eye : MonoBehaviour
 
                 for (int i = 0; i < chosenAttack.numOfHits; i++)
                 {
-                    if (chosenAttack.DoesAttackHit(currentPC, chosenEnemyTarget))
+                    if (chosenAttack.DoesAttackHit(currentPC, chosenEnemyTarget, envManaScript.GreatestColorInEnvironment(chosenAttack.attackColor)))
                     {
                         Debug.Log("Attack Hits");
                         int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
@@ -827,7 +829,7 @@ public class Eagle_Eye : MonoBehaviour
 
                     for (int i = 0; i < chosenAttack.numOfHits; i++)
                     {
-                        if (chosenAttack.DoesAttackHit(currentPC, chosenEnemyTarget))
+                        if (chosenAttack.DoesAttackHit(currentPC, enemy, envManaScript.GreatestColorInEnvironment(chosenAttack.attackColor)))
                         {
                             Debug.Log("Attack Hits");
                             int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
@@ -938,7 +940,7 @@ public class Eagle_Eye : MonoBehaviour
             PayAttackCost(unit, enemyChosenAttack);
             for (int i = 0; i < enemyChosenAttack.numOfHits; i++)
             {
-                if (enemyChosenAttack.DoesAttackHit(unit, enemyChosenTarget))
+                if (enemyChosenAttack.DoesAttackHit(unit, enemyChosenTarget, envManaScript.GreatestColorInEnvironment(enemyChosenAttack.attackColor)))
                 {
                     int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
                     int staminaDamage = Mathf.Clamp(damage / 3, 1, damage / 3);

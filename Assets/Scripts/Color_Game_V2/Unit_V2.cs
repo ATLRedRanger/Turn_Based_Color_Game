@@ -18,9 +18,11 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int maxStamina = 10;
     [SerializeField]
-    private int baseAttackBonus;
+    private int baseDamage = 0;
     [SerializeField]
-    private int armorClass;
+    private int baseAttackBonus = 0;
+    [SerializeField]
+    private int armorClass = 0;
     [SerializeField]
     private int difficultyClass;
 
@@ -137,6 +139,16 @@ public class Unit_V2 : MonoBehaviour
         return maxStamina;
     }
 
+    public int GetUnitDamage()
+    {
+        if(equippedWeapon != null)
+        {
+            return baseDamage + equippedWeapon.baseDamage;
+        }
+
+        return baseDamage;
+    }
+
     public int GetBAB()
     {
         return baseAttackBonus;
@@ -144,7 +156,11 @@ public class Unit_V2 : MonoBehaviour
 
     public int GetCombatBAB()
     {
-        return baseAttackBonus + equippedWeapon.GetWeaponBaseDamage();
+        if(equippedWeapon != null)
+        {
+            return baseAttackBonus + equippedWeapon.bonusModifier;
+        }
+        return baseAttackBonus;
     }
 
     public int GetDC()
