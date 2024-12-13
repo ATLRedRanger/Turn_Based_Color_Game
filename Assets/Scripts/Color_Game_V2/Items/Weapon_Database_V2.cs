@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon_Database_V2 : MonoBehaviour
 {
     public Weapon_Axe basicAxe;
+    public Weapon basicBow;
     public Weapon_Spellbook basicSpellbook;
     private Attack_Database attackDatabaseScript;
     
@@ -13,8 +14,11 @@ public class Weapon_Database_V2 : MonoBehaviour
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
 
         basicAxe = CreateAxe("Basic Axe", "A basic axe.", ItemIDMaker(), 1, WeaponType.Axe, 1);
+        basicBow = CreateWeapon("Basic Bow", "A basic bow.", ItemIDMaker(), WeaponType.Bow, 1, 0);
         basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
         
+
+
     }
 
     void Start()
@@ -30,6 +34,15 @@ public class Weapon_Database_V2 : MonoBehaviour
     }
 
     
+
+
+
+    public Weapon CreateWeapon(string name, string itemDescription, string itemID, WeaponType weaponType, int baseDamage, int bonusModifier)
+    {
+        Weapon weapon = new Weapon(name, itemDescription, itemID, 1, weaponType, baseDamage, bonusModifier);
+
+        return weapon;
+    }
 
     public Weapon_Axe CreateAxe(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Axe, int weaponDamage = 0)
     {

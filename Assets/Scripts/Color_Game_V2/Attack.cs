@@ -38,32 +38,13 @@ public class Attack
         this.isSingleTarget = isSingleTarget;
     }
 
-    public bool DoesAttackHit(Unit_V2 attacker)
+    public bool DoesAttackHit(Unit_V2 attacker, Unit_V2 defender)
     {
-        int roll = Random.Range(0, 101);
-        /*
-        StaminaLevels staminaLevels = attacker.StaminaLevelConversion();
+        int roll = Random.Range(1, attackAccuracy);
 
-        if (staminaLevels == StaminaLevels.Full)
-        {
-            roll -= 20;
-        }
-        else if (staminaLevels == StaminaLevels.ThreeQuarters)
-        {
-            roll -= 15;
-        }else if (staminaLevels == StaminaLevels.Half)
-        {
-            roll -= 10;
-        }else if (staminaLevels == StaminaLevels.OneQuarter)
-        {
-            roll -= 5;
-        }
-        else
-        {
-            roll += 0;
-        }*/
-        
-        if (roll < attackAccuracy)
+        Debug.Log($"Does attack hit: Roll: {roll} + {attacker.unitName}'s  CombatBAB: {attacker.GetCombatBAB()} vs {defender.unitName}'s DC: {defender.GetCombatDC()}");
+
+        if (roll + attacker.GetCombatBAB() >= defender.GetCombatDC())
         {
             return true;
         }

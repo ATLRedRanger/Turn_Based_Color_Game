@@ -774,39 +774,25 @@ public class Eagle_Eye : MonoBehaviour
 
                 for (int i = 0; i < chosenAttack.numOfHits; i++)
                 {
-                    if (chosenAttack.DoesAttackHit(currentPC))
+                    if (chosenAttack.DoesAttackHit(currentPC, chosenEnemyTarget))
                     {
                         Debug.Log("Attack Hits");
                         int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
-                        int staminaDamage = 0;
+                        
                         CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
-                        //Debug.Log(currentPC.equippedWeapon.itemName);
-                        /*
-                        if (currentPC.equippedWeapon != null)
-                        {
-                            switch (currentPC.equippedWeapon)
-                            {
-                                case Weapon_Axe axe:
-                                    damage = Mathf.RoundToInt(damage * axe.healthPercent);
-                                    staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
-                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                    break;
-                                case Weapon_Hammer hammer:
-                                    damage = Mathf.RoundToInt(damage * hammer.healthPercent);
-                                    staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
-                                    Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }*/
+                        
                         chosenEnemyTarget.TakeDamage(damage);
-                        //chosenEnemyTarget.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
+                        
                         CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
+
                         yield return new WaitForSeconds(1);
+
                         buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
                         uiScript.SetAttackDescriptionText(chosenAttack, player, chosenEnemyTarget, damage.ToString());
+
                         yield return new WaitForSeconds(2);
+
                         buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
 
                     }
@@ -831,7 +817,7 @@ public class Eagle_Eye : MonoBehaviour
 
                     for (int i = 0; i < chosenAttack.numOfHits; i++)
                     {
-                        if (chosenAttack.DoesAttackHit(currentPC))
+                        if (chosenAttack.DoesAttackHit(currentPC, chosenEnemyTarget))
                         {
                             Debug.Log("Attack Hits");
                             int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
@@ -882,11 +868,11 @@ public class Eagle_Eye : MonoBehaviour
 
         foreach (var kvp in currentPC.GetAttackDictionary())
         {
-            if (kvp.Value.attackColor != Hue.Neutral && currentPC.GetCurrentStamina() >= kvp.Value.staminaCost)
+            if (kvp.Value.attackColor != Hue.Neutral)
             {
                 useableAttacks.Add(kvp.Key);
             }
-            else if (currentPC.GetCurrentStamina() >= kvp.Value.staminaCost && envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
+            else if (envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
             {
                 useableAttacks.Add(kvp.Key);
             }
@@ -942,7 +928,7 @@ public class Eagle_Eye : MonoBehaviour
             PayAttackCost(unit, enemyChosenAttack);
             for (int i = 0; i < enemyChosenAttack.numOfHits; i++)
             {
-                if (enemyChosenAttack.DoesAttackHit(unit))
+                if (enemyChosenAttack.DoesAttackHit(unit, enemyChosenTarget))
                 {
                     int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
                     int staminaDamage = Mathf.Clamp(damage / 3, 1, damage / 3);
@@ -1074,6 +1060,144 @@ public class Eagle_Eye : MonoBehaviour
         chosenAttack = null;
         chosenEnemyTarget = null;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Reimagining my combat to fit the new AC/DC scheme
+    //Does the attack hit? Check to see if the attack has any environment conditions for boosting accuracy.
+    //Roll the "die" (random roll from 1-attack's accuracy + attacker's combatBAB). If it's >= defender DC, then it hits. 
+    //If it hits -> Check to see if the attack has any environment conditions for boosting damage. 
+    //Deal damage
+
+
+
+
+
+
+
+
+
+
 
 
 

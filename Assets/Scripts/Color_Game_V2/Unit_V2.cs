@@ -18,9 +18,11 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int maxStamina = 10;
     [SerializeField]
-    private int baseAttack;
+    private int baseAttackBonus;
     [SerializeField]
-    private int baseDefense;
+    private int armorClass;
+    [SerializeField]
+    private int difficultyClass;
 
     public bool isDefending = false;
     public bool usedItem = false;
@@ -28,9 +30,9 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int baseSpeed;
 
-    private int attackTier = 0;
+    //private int attackTier = 0;
 
-    private int defenseTier = 0;
+    //private int defenseTier = 0;
     [SerializeField]
     private int speedTier = 0;
 
@@ -135,12 +137,27 @@ public class Unit_V2 : MonoBehaviour
         return maxStamina;
     }
 
-    public int GetBaseAttack()
+    public int GetBAB()
     {
-        return baseAttack;
+        return baseAttackBonus;
     }
 
+    public int GetCombatBAB()
+    {
+        return baseAttackBonus + equippedWeapon.GetWeaponBaseDamage();
+    }
 
+    public int GetDC()
+    {
+        return difficultyClass;
+    }
+
+    public int GetCombatDC()
+    {
+        return difficultyClass;
+    }
+
+    /*
     public int GetCurrentAttack()
     {
         if(equippedWeapon != null)
@@ -155,6 +172,8 @@ public class Unit_V2 : MonoBehaviour
         int defense = Mathf.RoundToInt((float)(baseDefense * (TierBonus(defenseTier))));
         return defense;
     }
+    */
+
     public int GetCurrentSpeed()
     {
 
@@ -162,6 +181,7 @@ public class Unit_V2 : MonoBehaviour
          
     }
 
+    /*
     public void SetDefenseTier(int value)
     {
         defenseTier += value;
@@ -171,7 +191,8 @@ public class Unit_V2 : MonoBehaviour
         
         attackTier += value;
         
-    }
+    }*/
+
     public void SetSpeedTier(int value)
     {
         Debug.Log($"{unitName}'s SpeedTier: {speedTier}");

@@ -6,6 +6,7 @@ public class Weapon : Item
 {
     public WeaponType weaponType;
     public int baseDamage;
+    public int bonusModifier;
     //private int critChance;
     //private int critPercent;
     //private int weaponDamage;
@@ -23,7 +24,7 @@ public class Weapon : Item
         this.weaponType = weaponType;
         this.baseDamage = baseDamage;
     }*/
-    public Weapon(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int baseDamage = 0)
+    public Weapon(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int baseDamage = 0, int bonusModifier = 0)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -31,6 +32,7 @@ public class Weapon : Item
         this.itemAmount = itemAmount;
         //this.weaponType = weaponType;
         this.baseDamage = baseDamage;
+        this.bonusModifier = bonusModifier;
     }
     public override void Use(Unit_V2 unit)
     {
