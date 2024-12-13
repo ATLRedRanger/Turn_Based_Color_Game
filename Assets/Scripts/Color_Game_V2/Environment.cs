@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Environment : MonoBehaviour
@@ -306,4 +307,26 @@ public class Environment : MonoBehaviour
             currentViolet = maxViolet;
         }
     }
+
+    public bool GreatestColorInEnvironment(Hue color)
+    {
+        int colorValue = GetColorValue(color);
+        return colorValue >= currentRed && colorValue >= currentOrange && colorValue >= currentYellow && colorValue >= currentGreen && colorValue >= currentBlue && colorValue >= currentViolet;
+    }
+
+    private int GetColorValue(Hue color)
+    {
+        switch(color)
+        {
+            case Hue.Red: return currentRed;
+            case Hue.Orange: return currentOrange;
+            case Hue.Yellow: return currentYellow;
+            case Hue.Green: return currentGreen;
+            case Hue.Blue: return currentBlue;
+            case Hue.Violet: return currentViolet;
+            default:
+                return 0;
+        }
+    }
+
 }

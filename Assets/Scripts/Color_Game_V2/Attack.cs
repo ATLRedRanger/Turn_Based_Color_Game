@@ -21,13 +21,16 @@ public class Attack
     public Buffs attackBuff;
     public Debuffs attackDebuff;
     public bool isSingleTarget;
-    
-    public Attack(string attackName, int attackPower, int attackAccuracy, int colorCost, int staminaCost, int numOfHits,
+    public int attackBonus = 0;
+    public int critRoll = 0;
+    public Attack(string attackName, int attackPower, int attackAccuracy, int attackBonus, int critRoll, int colorCost, int staminaCost, int numOfHits,
                     int statusBuildUpAmout, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget)
     {
         this.attackName = attackName;
         this.attackPower = attackPower;
         this.attackAccuracy = attackAccuracy;
+        this.attackBonus = attackBonus;
+        this.critRoll = critRoll;
         this.colorCost = colorCost;
         this.staminaCost = staminaCost;
         this.numOfHits = numOfHits;
@@ -65,4 +68,17 @@ public class Attack
     {
         return statusBuildUpAmount;
     }
+
+    public void envBehavior(bool greatestColor)
+    {
+        if (greatestColor)
+        {
+            attackBonus = 2;
+        }
+        else
+        {
+            attackBonus = 0;
+        }
+    }
+
 }

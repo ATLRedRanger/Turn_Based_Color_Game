@@ -346,13 +346,22 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    private bool DoesAttackCrit(Unit_V2 attacker)
+    private bool DoesAttackCrit(Attack attack)
     {
         //TODO: Attacks only crit if there's a weapon equipped
         //Is this what I want?
         //Matt Suggestion: The first time a color is at full each combat, that color effect is critical. 
         //Vincent Responds: Maybe a higher chance so that it's not a guarantee.
-        int roll = Random.Range(1, 101);
+        int roll = Random.Range(1, 21);
+        if (envManaScript.GreatestColorInEnvironment(attack.attackColor))
+        {
+            roll += 2;
+        }
+
+        if (roll >= attack.critRoll)
+        {
+            return true;
+        }
         /*
         switch (attacker.StaminaLevelConversion())
         {
@@ -400,7 +409,8 @@ public class Eagle_Eye : MonoBehaviour
 
     private int CalcAttackDamage(Attack attack, Unit_V2 attacker, Unit_V2 defender)
     {
-        float baseDamage = attack.attackPower + attacker.GetCurrentAttack();
+
+        float baseDamage = attack.attackPower;
         //Debug.Log($"{attack.attackName}'s base damage is {baseDamage}");
         int damageBeforeDefenses = 0;
         int damageAfterDefenses = 0;
@@ -443,7 +453,7 @@ public class Eagle_Eye : MonoBehaviour
         
 
         // Apply damage after critical hit.
-        if (DoesAttackCrit(attacker))
+        if (DoesAttackCrit(attack))
         {
             damageBeforeDefenses = Mathf.RoundToInt(damageBeforeDefenses * 2f);
         }
@@ -1188,6 +1198,11 @@ public class Eagle_Eye : MonoBehaviour
     //Roll the "die" (random roll from 1-attack's accuracy + attacker's combatBAB). If it's >= defender DC, then it hits. 
     //If it hits -> Check to see if the attack has any environment conditions for boosting damage. 
     //Deal damage
+    
+    private void CheckAttackBehavior(Attack attack)
+    {
+        attack.envBehavior(envManaScript.GreatestColorInEnvironment(attack.attackColor));
+    }
 
 
 
