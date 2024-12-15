@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Color_Game_V2\Unit_V2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\UI_V2.cs" />
+    <Compile Include="Assets\Scripts\Color_Game_V2\Inventory_V2.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\Items\Weapon_Hammer.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\Buffs.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\StatusEffect_V2.cs" />

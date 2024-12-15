@@ -44,12 +44,10 @@ public class Attack
     {
         int roll = Random.Range(1, attackAccuracy);
 
-        Debug.Log(roll);
         envBehavior(greatestColor);
 
         roll += attackAccuracyBonus;
-        Debug.Log(roll);
-
+        
         Debug.Log($"Does attack hit: Roll: {roll} + {attacker.unitName}'s  CombatBAB: {attacker.GetCombatBAB()} vs {defender.unitName}'s DC: ");//{defender.GetCombatDC()}");
         
         if (roll + attacker.GetCombatBAB() >= defender.GetCombatDC())

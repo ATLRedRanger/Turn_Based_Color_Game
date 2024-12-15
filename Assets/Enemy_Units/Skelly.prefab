@@ -125,10 +125,14 @@ MonoBehaviour:
   maxHp: 10
   currentStamina: 10
   maxStamina: 10
-  baseAttack: 0
-  baseDefense: 0
+  baseDamage: 0
+  baseAttackBonus: 5
+  armorClass: 15
+  difficultyClass: 15
   isDefending: 0
+  usedItem: 0
   baseSpeed: 7
+  speedTier: 0
   burnAmount: 0
   burnThreshhold: 5
   burnTimer: 0
@@ -138,7 +142,3 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: 0
-  axeResistance: 0
-  bowResistance: 0
-  hammerResistance: 0
-  swordResistance: 0

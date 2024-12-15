@@ -127,8 +127,8 @@ MonoBehaviour:
   maxStamina: 10
   baseDamage: 5
   baseAttackBonus: 1
-  armorClass: 20
-  difficultyClass: 20
+  armorClass: 10
+  difficultyClass: 10
   isDefending: 0
   usedItem: 0
   baseSpeed: 5

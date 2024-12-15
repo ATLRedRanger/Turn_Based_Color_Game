@@ -35,6 +35,7 @@ public class Eagle_Eye : MonoBehaviour
     private ButtonsAndPanels buttonsAndPanelsScript;
     private UI_V2 uiScript;
     private Weapon_Database_V2 weaponDatabaseScript;
+    private Inventory_V2 inventoryScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,24 +67,16 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_2()
     {
-
-        StartCoroutine(Combat());
+        inventoryScript.AddToInventory(weaponDatabaseScript.basicBow);
+        //StartCoroutine(Combat());
 
     }
 
     public void Test_3()
     {
-        /*
-        if(enemyOne.GetListOfDebuffs().Count != 0)
-        {
-            enemyOne.GetListOfDebuffs()[0].statusName = "TESTING";
-            Debug.Log(enemyOne.GetListOfDebuffs().Count);
-        }
         
-        Debug.Log($"PLAYER DEBUFF NAME: {player.GetListOfDebuffs()[0].statusName}");
-        */
 
-        Debug.Log(envManaScript.GreatestColorInEnvironment(attackDatabaseScript._fireball.attackColor));
+        inventoryScript.RemoveFromInventory(weaponDatabaseScript.basicBow);
     }
     IEnumerator LoadScripts()
     {
@@ -96,6 +89,7 @@ public class Eagle_Eye : MonoBehaviour
         buttonsAndPanelsScript = FindObjectOfType<ButtonsAndPanels>();
         uiScript = FindObjectOfType<UI_V2>();
         weaponDatabaseScript = FindObjectOfType<Weapon_Database_V2>();
+        inventoryScript = FindObjectOfType<Inventory_V2>();
 
         player = unitSpawnerScript.SpawnPlayer();
 
