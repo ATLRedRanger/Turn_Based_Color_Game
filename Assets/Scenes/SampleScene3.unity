@@ -10943,9 +10943,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: ItemBeingInteractedWith
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: ItemBeingPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13533,8 +13533,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1343528408}
+  - component: {fileID: 1343528409}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Inventory_V2_Script
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13555,6 +13556,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1343528409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343528407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40abd7192c4afff4881c5c64003be8a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1352682067
 GameObject:
   m_ObjectHideFlags: 0
@@ -17634,11 +17647,27 @@ MonoBehaviour:
   _SpellsPanel: {fileID: 271913637}
   _SpellsPanel2: {fileID: 380596619}
   _AbilitiesPanel: {fileID: 1237830480}
-  _ItemsPanel: {fileID: 1416767523}
+  _ItemsPanel: {fileID: 944391588}
   _EnemiesPanel: {fileID: 1421754594}
   _AttackDescriptionPanel: {fileID: 1991306996}
   _SpellbookPanel: {fileID: 1415135337}
   _EndOfBattlePanel: {fileID: 1952190493}
+  _inventoryButton1: {fileID: 1025964628}
+  _inventoryButton1Text: {fileID: 722528146}
+  _inventoryButton2: {fileID: 942149210}
+  _inventoryButton2Text: {fileID: 871967853}
+  _inventoryButton3: {fileID: 2023128875}
+  _inventoryButton3Text: {fileID: 443040040}
+  _inventoryButton4: {fileID: 1611727123}
+  _inventoryButton4Text: {fileID: 1886353074}
+  _inventoryButton5: {fileID: 1677137375}
+  _inventoryButton5Text: {fileID: 222143035}
+  _inventoryButton6: {fileID: 1444496880}
+  _inventoryButton6Text: {fileID: 65340296}
+  _inventoryButton7: {fileID: 1521910354}
+  _inventoryButton7Text: {fileID: 565135884}
+  _inventoryButton8: {fileID: 1218824975}
+  _inventoryButton8Text: {fileID: 1742098423}
   _enemyOneButton: {fileID: 775971296}
   _enemyOneButtonText: {fileID: 1733775277}
   _enemyTwoButton: {fileID: 1993143389}

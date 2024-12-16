@@ -66,15 +66,15 @@ public enum WeaponType
 public enum ItemType
 {
     Consumable, 
-    Equipment,
-    Weapon
+    Weapon,
+    Null
 }
 
 public enum ConsumableType
 {
     Health,
-    Stamina,
-    Tint
+    Tint,
+    Null
 }
 
 public enum AttackType

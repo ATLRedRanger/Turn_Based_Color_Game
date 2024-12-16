@@ -13,7 +13,7 @@ public class Eagle_Eye : MonoBehaviour
     private CombatState theCombatState = CombatState.Active;
     private WhoseTurn whoseTurnIsIt = WhoseTurn.Nobody;
     [SerializeField]
-    private Unit_V2 player;
+    private Player_V2 player;
     private Unit_V2 enemyOne;
     private Unit_V2 enemyTwo;
     private Unit_V2 currentPC;
@@ -34,7 +34,8 @@ public class Eagle_Eye : MonoBehaviour
     private Attack_Database attackDatabaseScript;
     private ButtonsAndPanels buttonsAndPanelsScript;
     private UI_V2 uiScript;
-    private Weapon_Database_V2 weaponDatabaseScript;
+    //private Weapon_Database_V2 weaponDatabaseScript;
+    private Item_Database itemDatabaseScript;
     private Inventory_V2 inventoryScript;
     // Start is called before the first frame update
     void Start()
@@ -75,8 +76,14 @@ public class Eagle_Eye : MonoBehaviour
     public void Test_3()
     {
 
-        inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
+        //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
+        inventoryScript.AddToInventory(itemDatabaseScript.healthPotion);
         
+    }
+
+    public void Test_4(Unit_V2 unit)
+    {
+
     }
     IEnumerator LoadScripts()
     {
@@ -88,7 +95,8 @@ public class Eagle_Eye : MonoBehaviour
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         buttonsAndPanelsScript = FindObjectOfType<ButtonsAndPanels>();
         uiScript = FindObjectOfType<UI_V2>();
-        weaponDatabaseScript = FindObjectOfType<Weapon_Database_V2>();
+        //weaponDatabaseScript = FindObjectOfType<Weapon_Database_V2>();
+        itemDatabaseScript = FindObjectOfType<Item_Database>();
         inventoryScript = FindObjectOfType<Inventory_V2>();
 
         player = unitSpawnerScript.SpawnPlayer();
@@ -463,6 +471,9 @@ public class Eagle_Eye : MonoBehaviour
         {
             damageAfterDefenses = Mathf.RoundToInt(damageAfterDefenses / 2);
         }
+
+        //Keeps the damage from being negative.
+        damageAfterDefenses = Mathf.Clamp(damageAfterDefenses, 0, damageAfterDefenses);
 
         return damageAfterDefenses;
     }
@@ -1026,6 +1037,23 @@ public class Eagle_Eye : MonoBehaviour
         return false;
     }
 
+    private bool ConsumableIsChosen()
+    {
+        if(buttonsAndPanelsScript.itemBeingPressed != null && buttonsAndPanelsScript.itemBeingPressed is Item_Consumable)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool PlayerIsChosen()
+    {
+        if(chosenPCTarget != null)
+        {
+            return true;
+        }
+        return false;
+    }
     public void DefendIsChosen()
     {
         currentPC.isDefending = true;
@@ -1040,6 +1068,11 @@ public class Eagle_Eye : MonoBehaviour
             buttonsAndPanelsScript.ToggleFightPanel();
             return true;
 
+        }
+        else if (ConsumableIsChosen() && PlayerIsChosen())
+        {
+            buttonsAndPanelsScript.ToggleFightPanel();
+            return true;
         }
         else if (currentPC.isDefending)
         {
@@ -1070,6 +1103,23 @@ public class Eagle_Eye : MonoBehaviour
 
     }
 
+    public void SetPlayerTarget(string playerName)
+    {
+        switch (playerName)
+        {
+            case "Player":
+                chosenEnemyTarget = player;
+                Debug.Log($"{player.unitName} is the chosen target!");
+                break;
+            case "PlayerTwo":
+                
+                break;
+            default:
+                //chosenEnemyTarget = playerOne;
+                break;
+        }
+
+    }
     public void ResetAttackAndEnemyTargets()
     {
         chosenAttack = null;
@@ -1138,7 +1188,15 @@ public class Eagle_Eye : MonoBehaviour
 
 
 
+    public void UsingConsumable()
+    {
+        if(whoseTurnIsIt == WhoseTurn.Player)
+        {
+            var item = buttonsAndPanelsScript.itemBeingPressed as Item_Consumable;
 
+            item.Use(currentPC);
+        }
+    }
 
 
 
@@ -1279,5 +1337,10 @@ public class Eagle_Eye : MonoBehaviour
 
         }
         return currentPC;
+    }
+
+    public Player_V2 GetPlayer()
+    {
+        return player;
     }
 }

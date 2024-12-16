@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Color_Game_V2\StatusEffect_V2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Color_Game_V2\Items\Item_Database.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\ButtonsAndPanels.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\Debuffs.cs" />

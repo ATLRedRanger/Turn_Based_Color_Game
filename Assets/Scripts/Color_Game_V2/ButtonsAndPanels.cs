@@ -34,6 +34,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _AbilitiesPanel;
     public GameObject _ItemsPanel;
     public GameObject _EnemiesPanel;
+    public GameObject _PCsPanel;
     public GameObject _AttackDescriptionPanel;
     public GameObject _SpellbookPanel;
     public GameObject _EndOfBattlePanel;
@@ -57,7 +58,11 @@ public class ButtonsAndPanels : MonoBehaviour
     public TMP_Text _inventoryButton8Text;
     private List<GameObject> inventoryButtons = new List<GameObject>();
     private List<TMP_Text> inventoryButtonsText = new List<TMP_Text>();
-    
+
+
+    //TargetPlayerButtons
+    public GameObject _playerOneButton;
+    public TMP_Text _playerOneButtonText;
 
     //TargetEnemyButtons
     public GameObject _enemyOneButton;
@@ -206,6 +211,18 @@ public class ButtonsAndPanels : MonoBehaviour
         }
     }
 
+    public void TogglePCsPanel()
+    {
+        bool isActive = _PCsPanel.activeSelf;
+        
+        if (_PCsPanel != null)
+        {
+            _PCsPanel.SetActive(!isActive);
+            TogglePCsButtons();
+        }
+    }
+
+
     public void ToggleEnemiesPanel()
     {
         Debug.Log("PEAR");
@@ -293,6 +310,16 @@ public class ButtonsAndPanels : MonoBehaviour
         if (_AttackDescriptionPanel != null)
         {
             _AttackDescriptionPanel.SetActive(!isActive);
+        }
+    }
+
+
+    public void TogglePCsButtons()
+    {
+        if(eagleScript.GetPlayer() != null && eagleScript.GetPlayer().GetCurrentHp() > 0)
+        {
+            _playerOneButton.SetActive(true);
+            _playerOneButtonText.text = eagleScript.GetPlayer().unitName;
         }
     }
 
@@ -480,20 +507,25 @@ public class ButtonsAndPanels : MonoBehaviour
     {
         //buttonName is the name of the GameObject Button being pressed.
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log(buttonName + "is being pressed.");
+        //Debug.Log(buttonName + "is being pressed.");
         //buttonNum is the last 2 digits at the end of the GameObject Button name.
         int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
-        Debug.Log(buttonNum + "num of button.");
+        //Debug.Log(buttonNum + "num of button.");
         itemBeingPressed = inventoryScript.GetInventory()[buttonNum - 1];
         
-       
-
+        if(itemBeingPressed is Item_Consumable)
+        {
+            TogglePCsPanel();
+        }
     }
 
 
 
 
-
+    public void UseItemButton()
+    {
+        
+    }
 
 
 

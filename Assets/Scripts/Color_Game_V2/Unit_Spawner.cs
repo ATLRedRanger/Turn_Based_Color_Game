@@ -15,7 +15,7 @@ public class Unit_Spawner : MonoBehaviour
 
     public GameObject playerPosition;
 
-    public Unit_V2 player;
+    public Player_V2 player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +24,9 @@ public class Unit_Spawner : MonoBehaviour
         
     }
 
-    public Unit_V2 SpawnPlayer()
+    public Player_V2 SpawnPlayer()
     {
-        var playerObj = Instantiate(player, playerPosition.transform).GetComponent<Unit_V2>();
+        var playerObj = Instantiate(player, playerPosition.transform).GetComponent<Player_V2>();
         return playerObj;
     }
 

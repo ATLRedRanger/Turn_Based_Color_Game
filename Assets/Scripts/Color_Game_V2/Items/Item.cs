@@ -8,6 +8,7 @@ public class Item
     public string itemDescription;
     public string itemID;
     public int itemAmount;
+    
 
     public Item()
     {
