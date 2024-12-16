@@ -30,7 +30,7 @@ public class Weapon : Item
         this.itemDescription = itemDescription;
         this.itemID = itemID;
         this.itemAmount = itemAmount;
-        //this.weaponType = weaponType;
+        this.weaponType = weaponType;
         this.baseDamage = baseDamage;
         this.bonusModifier = bonusModifier;
     }

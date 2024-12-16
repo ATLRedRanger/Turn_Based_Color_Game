@@ -12,6 +12,7 @@ public class Attack_Database : MonoBehaviour
     public Attack _fireball;
 
     //Orange Attacks
+    public Attack _orangeAttackOne;
 
     //Yellow Attacks
 
@@ -57,6 +58,7 @@ public class Attack_Database : MonoBehaviour
         _fireball = CreateAttack("Fireball", 1, 100, 0, 20, 5, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, false);
 
         //Orange
+        _orangeAttackOne = CreateAttack("Orange Attack", 2, 20, 0, 20, 6, 2, 4, AttackType.Special, Hue.Orange, AttackBehavior.None, true);
 
         //Yellow
 

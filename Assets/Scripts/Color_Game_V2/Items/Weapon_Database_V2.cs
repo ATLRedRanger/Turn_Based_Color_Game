@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Weapon_Database_V2 : MonoBehaviour
 {
-    public Weapon_Axe basicAxe;
+    public Weapon basicAxe;
     public Weapon basicBow;
     public Weapon_Spellbook basicSpellbook;
+    public Weapon_Spellbook redSpellbook;
+
+
+
+
     private Attack_Database attackDatabaseScript;
     
     void Awake()
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
 
-        basicAxe = CreateAxe("Basic Axe", "A basic axe.", ItemIDMaker(), 1, WeaponType.Axe, 1);
+        basicAxe = CreateWeapon("Basic Axe", "A basic axe.", ItemIDMaker(), WeaponType.Axe, 1, 0);
         basicBow = CreateWeapon("Basic Bow", "A basic bow.", ItemIDMaker(), WeaponType.Bow, 1, 0);
         basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
-        
+        redSpellbook = CreateSpellbook("Red Spellbook", "A spellbook with a light red cover.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
 
 
     }
@@ -25,6 +30,8 @@ public class Weapon_Database_V2 : MonoBehaviour
     {
         basicSpellbook.AddAttackToSpellbook(attackDatabaseScript._fireball);
         basicSpellbook.AddAttackToSpellbook(attackDatabaseScript._basicSpellbookAttack);
+        redSpellbook.AddAttackToSpellbook(attackDatabaseScript._orangeAttackOne);
+        redSpellbook.AddAttackToSpellbook(attackDatabaseScript._fireball);
     }
 
     // Update is called once per frame

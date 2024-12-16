@@ -37,6 +37,10 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _SpellbookPanel;
     public GameObject _EndOfBattlePanel;
 
+    //Inventory Buttons
+
+
+
 
     //TargetEnemyButtons
     public GameObject _enemyOneButton;
