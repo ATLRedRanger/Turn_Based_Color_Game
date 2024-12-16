@@ -10,6 +10,7 @@ public class ButtonsAndPanels : MonoBehaviour
 {
     private Eagle_Eye eagleScript;
     private Attack_Database attackDatabaseScript;
+    private Inventory_V2 inventoryScript;
 
     public Attack chosenAttack = null;
 
@@ -38,9 +39,25 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _EndOfBattlePanel;
 
     //Inventory Buttons
-
-
-
+    public GameObject _inventoryButton1;
+    public TMP_Text _inventoryButton1Text;
+    public GameObject _inventoryButton2;
+    public TMP_Text _inventoryButton2Text;
+    public GameObject _inventoryButton3;
+    public TMP_Text _inventoryButton3Text;
+    public GameObject _inventoryButton4;
+    public TMP_Text _inventoryButton4Text;
+    public GameObject _inventoryButton5;
+    public TMP_Text _inventoryButton5Text;
+    public GameObject _inventoryButton6;
+    public TMP_Text _inventoryButton6Text;
+    public GameObject _inventoryButton7;
+    public TMP_Text _inventoryButton7Text;
+    public GameObject _inventoryButton8;
+    public TMP_Text _inventoryButton8Text;
+    private List<GameObject> inventoryButtons = new List<GameObject>();
+    private List<TMP_Text> inventoryButtonsText = new List<TMP_Text>();
+    
 
     //TargetEnemyButtons
     public GameObject _enemyOneButton;
@@ -69,6 +86,26 @@ public class ButtonsAndPanels : MonoBehaviour
     {
         eagleScript = FindObjectOfType<Eagle_Eye>();
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
+        inventoryScript = FindObjectOfType<Inventory_V2>();
+        inventoryButtons.Add(_inventoryButton1);
+        inventoryButtons.Add(_inventoryButton2);
+        inventoryButtons.Add(_inventoryButton3);
+        inventoryButtons.Add(_inventoryButton4);
+        inventoryButtons.Add(_inventoryButton5);
+        inventoryButtons.Add(_inventoryButton6);
+        inventoryButtons.Add(_inventoryButton7);
+        inventoryButtons.Add(_inventoryButton8);
+
+        inventoryButtonsText.Add(_inventoryButton1Text);
+        inventoryButtonsText.Add(_inventoryButton2Text);
+        inventoryButtonsText.Add(_inventoryButton3Text);
+        inventoryButtonsText.Add(_inventoryButton4Text);
+        inventoryButtonsText.Add(_inventoryButton5Text);
+        inventoryButtonsText.Add(_inventoryButton6Text);
+        inventoryButtonsText.Add(_inventoryButton7Text);
+        inventoryButtonsText.Add(_inventoryButton8Text);
+
+
     }
 
     // Update is called once per frame
@@ -145,13 +182,28 @@ public class ButtonsAndPanels : MonoBehaviour
             _ItemsPanel.SetActive(!isActive);
         }
 
+        for(int i = 0; i < inventoryButtons.Count; i++)
+        {
+            inventoryButtons[i].SetActive(false);
+        }
+
+        
+        for(int i = 0; i < inventoryScript.GetInventory().Count; i++)
+        {
+            inventoryButtons[i].SetActive(true);
+            inventoryButtonsText[i].text = inventoryScript.GetInventory()[i].itemName;
+
+        }
+
+
+
         if (_ItemsPanel.activeSelf)
         {
             _AbilitiesPanel.SetActive(false);
             _EnemiesPanel.SetActive(false);
             _SpellsPanel.SetActive(false);
             _SpellbookPanel.SetActive(false);
-        };
+        }
     }
 
     public void ToggleEnemiesPanel()
@@ -428,12 +480,13 @@ public class ButtonsAndPanels : MonoBehaviour
     {
         //buttonName is the name of the GameObject Button being pressed.
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        Debug.Log(buttonName + "is being pressed.");
         //buttonNum is the last 2 digits at the end of the GameObject Button name.
         int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2));
-
-        //itemBeingPressed = playerInventory[stringButtonNum - 1];
-        Debug.Log(buttonName + "is being pressed.");
         Debug.Log(buttonNum + "num of button.");
+        itemBeingPressed = inventoryScript.GetInventory()[buttonNum - 1];
+        
+       
 
     }
 

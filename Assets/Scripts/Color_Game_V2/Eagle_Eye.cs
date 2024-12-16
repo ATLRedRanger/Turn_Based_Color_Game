@@ -75,7 +75,7 @@ public class Eagle_Eye : MonoBehaviour
     public void Test_3()
     {
 
-        player.equippedWeapon = weaponDatabaseScript.redSpellbook;
+        inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
         
     }
     IEnumerator LoadScripts()
@@ -863,7 +863,6 @@ public class Eagle_Eye : MonoBehaviour
                                 yield return new WaitForSeconds(1);
                                 buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                             }
-                            
 
                         }
 

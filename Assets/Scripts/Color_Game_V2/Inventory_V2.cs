@@ -6,6 +6,7 @@ public class Inventory_V2 : MonoBehaviour
 {
 
     private List<Item> inventory = new List<Item>();
+    const int MAX_CAPACITY = 8;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +25,14 @@ public class Inventory_V2 : MonoBehaviour
 
             Debug.Log($"You have {item.itemAmount} of {item.itemName}.");
         }
-        else
+        else if(inventory.Count < MAX_CAPACITY)
         {
             inventory.Add(item);
             Debug.Log($"{item.itemName} has been added to your inventory. Inventory Count: {inventory.Count}");
+        }
+        else
+        {
+            Debug.Log("Inventory is full.");
         }
  
     }
