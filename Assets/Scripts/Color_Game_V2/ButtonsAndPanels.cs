@@ -72,13 +72,13 @@ public class ButtonsAndPanels : MonoBehaviour
 
 
     //Spellbook Buttons
-    public GameObject _spellbookButtonOne;
+    public Button _spellbookButtonOne;
     public TMP_Text _spellbookButton01Text;
-    public GameObject _spellbookButtonTwo;
+    public Button _spellbookButtonTwo;
     public TMP_Text _spellbookButton02Text;
-    public GameObject _spellbookButtonThree;
+    public Button _spellbookButtonThree;
     public TMP_Text _spellbookButton03Text;
-    public GameObject _spellbookButtonFour;
+    public Button _spellbookButtonFour;
     public TMP_Text _spellbookButton04Text;
 
     public Item itemBeingPressed;
@@ -249,10 +249,14 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleSpellbookPanel()
     {
-        _spellbookButtonOne.gameObject.SetActive(false);
-        _spellbookButtonTwo.gameObject.SetActive(false);
-        _spellbookButtonThree.gameObject.SetActive(false);
-        _spellbookButtonFour.gameObject.SetActive(false);
+        _spellbookButtonOne.interactable = false;
+        _spellbookButtonTwo.interactable = false;
+        _spellbookButtonThree.interactable = false;
+        _spellbookButtonFour.interactable = false;
+        _spellbookButton01Text.text = "";
+        _spellbookButton02Text.text = "";
+        _spellbookButton03Text.text = "";
+        _spellbookButton04Text.text = "";
 
         bool isActive = _SpellbookPanel.activeSelf;
         
@@ -261,28 +265,48 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _SpellbookPanel.SetActive(!isActive);
         }
+        
+        if (playerSpellbook.numOfAttacks > 3)
+        {
+            _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
 
+            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[3]))
+            {
+                _spellbookButtonFour.interactable = true;
+            }
+        }
+
+        if (playerSpellbook.numOfAttacks > 2)
+        {
+            _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
+
+            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[2]))
+            {
+                _spellbookButtonThree.interactable = true;
+            }
+        }
+
+        if (playerSpellbook.numOfAttacks > 1)
+        {
+
+            _spellbookButton02Text.text = playerSpellbook.spellbookAttacks[1].attackName;
+
+            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[1]))
+            {
+                _spellbookButtonTwo.interactable = true;
+            }
+        }
 
         if (playerSpellbook.numOfAttacks > 0)
         {
             _spellbookButton01Text.text = playerSpellbook.spellbookAttacks[0].attackName;
-            _spellbookButtonOne.gameObject.SetActive(true);
+
+            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[0]))
+            {
+                _spellbookButtonOne.interactable = true;
+            }
         }
-        if (playerSpellbook.numOfAttacks > 1)
-        {
-            _spellbookButton02Text.text = playerSpellbook.spellbookAttacks[1].attackName;
-            _spellbookButtonTwo.gameObject.SetActive(true);
-        }
-        if (playerSpellbook.numOfAttacks > 2)
-        {
-            _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
-            _spellbookButtonThree.gameObject.SetActive(true);
-        }
-        if (playerSpellbook.numOfAttacks > 3)
-        {
-            _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
-            _spellbookButtonFour.gameObject.SetActive(true);
-        }
+        
 
         if (_SpellbookPanel.activeSelf)
         {
@@ -344,7 +368,7 @@ public class ButtonsAndPanels : MonoBehaviour
             _enemyOneButton.SetActive(false);
             SetEnemyOneButtonName("");
         }
-        if (enemyTwo != null)
+        if (enemyTwo != null && enemyTwo.GetCurrentHp() > 0)
         {
             _enemyTwoButton.SetActive(true);
             SetEnemyTwoButtonName(enemyTwo.unitName);
@@ -353,6 +377,8 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _enemyTwoButton.SetActive(false);
         }
+
+        
     }
 
     public void SetEnemyOneButtonName(string name)
@@ -370,7 +396,6 @@ public class ButtonsAndPanels : MonoBehaviour
     public void OnEnemeyOneButtonClick()
     {
         eagleScript.SetAttackTarget("EnemyOne");
-        //ToggleEnemiesPanel();
     }
 
     public void SetEnemyTwoButtonName(string name)
@@ -381,8 +406,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void OnEnemyTwoButtonClick()
     {
-        eagleScript.SetAttackTarget("EnemyTwo");
-        //ToggleEnemiesPanel();
+        eagleScript.SetAttackTarget("EnemyTwo"); 
     }
     public void OnDefendButtonClick()
     {
@@ -401,16 +425,9 @@ public class ButtonsAndPanels : MonoBehaviour
     {
         SetButtonsToUninteractable();
 
-        List<string> useableAttacks = eagleScript.IsPlayerAttackUseable();
-
-        foreach(string attack in useableAttacks)
+        if (eagleScript.IsAttackUseable(attackDatabaseScript._fireball))
         {
-            switch (attack)
-            {
-                case "Fireball":
-                    _fireBallButton.interactable = true;
-                    break;
-            }
+            _fireBallButton.enabled = true;
         }
     }
 
@@ -519,6 +536,7 @@ public class ButtonsAndPanels : MonoBehaviour
         int buttonNum = int.Parse(buttonName.Substring(buttonName.Length - 2)) - 1;
 
         Debug.Log(playerSpellbook.spellbookAttacks[buttonNum].attackName);
+        
         eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum]);
         
         //ToggleSpellbookPanel();

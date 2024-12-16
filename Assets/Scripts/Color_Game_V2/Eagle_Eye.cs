@@ -78,7 +78,7 @@ public class Eagle_Eye : MonoBehaviour
     {
 
         //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
-        //inventoryScript.AddToInventory(itemDatabaseScript.healthPotion);
+        inventoryScript.AddToInventory(itemDatabaseScript.healthPotion);
         player.equippedWeapon = itemDatabaseScript.redSpellbook;
         
     }
@@ -889,6 +889,7 @@ public class Eagle_Eye : MonoBehaviour
         else if (ConsumableIsChosen() && PlayerIsChosen())
         {
             UseConsumable();
+            inventoryScript.RemoveFromInventory(chosenConsumable);
             chosenPCTarget = null;
             chosenConsumable = null;
         }
@@ -897,22 +898,15 @@ public class Eagle_Eye : MonoBehaviour
         playerTurnIsDone = true;
     }
 
-    public List<string> IsPlayerAttackUseable()
+    public bool IsAttackUseable(Attack attack)
     {
-        List<string> useableAttacks = new List<string>();
-
-        foreach (var kvp in currentPC.GetAttackDictionary())
+        //Debug.Log($"COLOR IN ENV: {envManaScript.GetCurrentColorDictionary()[attack.attackColor]} vs ATTACK COLOR COST: {attack.colorCost}");
+        
+        if (envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
         {
-            if (kvp.Value.attackColor != Hue.Neutral)
-            {
-                useableAttacks.Add(kvp.Key);
-            }
-            else if (envManaScript.GetCurrentColorDictionary()[kvp.Value.attackColor] >= kvp.Value.colorCost)
-            {
-                useableAttacks.Add(kvp.Key);
-            }
+            return true;
         }
-        return useableAttacks;
+        return false;
     }
 
     private void PayAttackCost(Unit_V2 attacker, Attack attack)
