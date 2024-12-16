@@ -55,7 +55,7 @@ public class Attack_Database : MonoBehaviour
         //string attackName, int attackPower, int attackAccuracy, int attackBonus, int critRoll, int colorCost, int numOfHits, int statusBuildUpAmount, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget
 
         //Red
-        _fireball = CreateAttack("Fireball", 1, 100, 0, 20, 5, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, false);
+        _fireball = CreateAttack("Fireball", 1, 100, 0, 20, 5, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, true);
 
         //Orange
         _orangeAttackOne = CreateAttack("Orange Attack", 2, 20, 0, 20, 6, 2, 4, AttackType.Special, Hue.Orange, AttackBehavior.None, true);

@@ -135,7 +135,9 @@ public class ButtonsAndPanels : MonoBehaviour
             _FightPanel.SetActive(!isActive);
         }
 
-        
+        _EnemiesPanel.SetActive(false);
+        _ItemsPanel.SetActive(false);
+        _SpellbookPanel.SetActive(false);
     }
 
     public void ToggleAbilitiesPanel()
@@ -213,6 +215,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void TogglePCsPanel()
     {
+        
         bool isActive = _PCsPanel.activeSelf;
         
         if (_PCsPanel != null)
@@ -225,22 +228,23 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public void ToggleEnemiesPanel()
     {
-        Debug.Log("PEAR");
+        
         bool isActive = _EnemiesPanel.activeSelf;
 
         if (_EnemiesPanel != null)
         {
+            Debug.Log("PEAR");
             _EnemiesPanel.SetActive(!isActive);
         }
 
-        /*
+        
         if (_EnemiesPanel.activeSelf)
         {
             _AbilitiesPanel.SetActive(false);
             _ItemsPanel.SetActive(false);
             _SpellsPanel.SetActive(false);
             _SpellbookPanel.SetActive(false);
-        }*/
+        }
     }
 
     public void ToggleSpellbookPanel()
@@ -356,10 +360,17 @@ public class ButtonsAndPanels : MonoBehaviour
         _enemyOneButtonText.text = name;
     }
 
+    public void OnPlayerOneButtonClick()
+    {
+        eagleScript.SetPlayerTarget("Player");
+        TogglePCsPanel();
+        ToggleItemPanel();
+    }
+
     public void OnEnemeyOneButtonClick()
     {
         eagleScript.SetAttackTarget("EnemyOne");
-        ToggleEnemiesPanel();
+        //ToggleEnemiesPanel();
     }
 
     public void SetEnemyTwoButtonName(string name)
@@ -371,11 +382,18 @@ public class ButtonsAndPanels : MonoBehaviour
     public void OnEnemyTwoButtonClick()
     {
         eagleScript.SetAttackTarget("EnemyTwo");
-        ToggleEnemiesPanel();
+        //ToggleEnemiesPanel();
     }
     public void OnDefendButtonClick()
     {
         eagleScript.DefendIsChosen();
+
+        _AbilitiesPanel.SetActive(false);
+        _EnemiesPanel.SetActive(false);
+        _ItemsPanel.SetActive(false);
+        _SpellsPanel.SetActive(false);
+        _SpellbookPanel.SetActive(false);
+        _PCsPanel.SetActive(false);
         ToggleFightPanel();
     }
 
@@ -410,8 +428,13 @@ public class ButtonsAndPanels : MonoBehaviour
     public void _FireballClick()
     {
         eagleScript.AttackChangeNotification(attackDatabaseScript._fireball);
+        
+    }
+
+    public void _OrangeAttackClick()
+    {
+        eagleScript.AttackChangeNotification(attackDatabaseScript._orangeAttackOne);
         ToggleSpellsPanel();
-        //ToggleEnemiesPanel();
     }
 
     public void _AttackClick()
@@ -498,7 +521,7 @@ public class ButtonsAndPanels : MonoBehaviour
         Debug.Log(playerSpellbook.spellbookAttacks[buttonNum].attackName);
         eagleScript.AttackChangeNotification(playerSpellbook.spellbookAttacks[buttonNum]);
         
-        ToggleSpellbookPanel();
+        //ToggleSpellbookPanel();
     }
 
 
@@ -515,7 +538,8 @@ public class ButtonsAndPanels : MonoBehaviour
         
         if(itemBeingPressed is Item_Consumable)
         {
-            TogglePCsPanel();
+            Item_Consumable consumable = itemBeingPressed as Item_Consumable;
+            eagleScript.ConsumableChangeNotification(consumable);
         }
     }
 

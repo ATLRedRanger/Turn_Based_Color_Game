@@ -22,6 +22,7 @@ public class Eagle_Eye : MonoBehaviour
     private string currentLocation = "Forest";
 
     private Attack chosenAttack = null;
+    private Item_Consumable chosenConsumable = null;
     private Unit_V2 chosenPCTarget = null;
     private Unit_V2 chosenEnemyTarget = null;
     private bool playerTurnIsDone = false;
@@ -77,7 +78,8 @@ public class Eagle_Eye : MonoBehaviour
     {
 
         //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
-        inventoryScript.AddToInventory(itemDatabaseScript.healthPotion);
+        //inventoryScript.AddToInventory(itemDatabaseScript.healthPotion);
+        player.equippedWeapon = itemDatabaseScript.redSpellbook;
         
     }
 
@@ -781,7 +783,8 @@ public class Eagle_Eye : MonoBehaviour
         //Player is attacking single target
         if (AttackIsChosen() && chosenAttack.isSingleTarget == true)
         {
-            if (AttackIsChosen() && EnemyIsChosen())
+            
+            if (EnemyIsChosen())
             {
                 //buttonsAndPanelsScript.ToggleFightPanel();
                 PayAttackCost(currentPC, chosenAttack);
@@ -882,6 +885,12 @@ public class Eagle_Eye : MonoBehaviour
                     }
                 }
             }
+        }
+        else if (ConsumableIsChosen() && PlayerIsChosen())
+        {
+            UseConsumable();
+            chosenPCTarget = null;
+            chosenConsumable = null;
         }
 
         Debug.Log("PLAYER TURN HAS FINISHED!");
@@ -1018,6 +1027,12 @@ public class Eagle_Eye : MonoBehaviour
         chosenAttack = attack;
     }
 
+    public void ConsumableChangeNotification(Item_Consumable consumable)
+    {
+        buttonsAndPanelsScript.TogglePCsPanel();
+        chosenConsumable = consumable;
+
+    }
     private bool AttackIsChosen()
     {
         if (chosenAttack != null)
@@ -1108,7 +1123,7 @@ public class Eagle_Eye : MonoBehaviour
         switch (playerName)
         {
             case "Player":
-                chosenEnemyTarget = player;
+                chosenPCTarget = player;
                 Debug.Log($"{player.unitName} is the chosen target!");
                 break;
             case "PlayerTwo":
@@ -1188,14 +1203,9 @@ public class Eagle_Eye : MonoBehaviour
 
 
 
-    public void UsingConsumable()
+    public void UseConsumable()
     {
-        if(whoseTurnIsIt == WhoseTurn.Player)
-        {
-            var item = buttonsAndPanelsScript.itemBeingPressed as Item_Consumable;
-
-            item.Use(currentPC);
-        }
+        chosenConsumable.Use(chosenPCTarget);
     }
 
 

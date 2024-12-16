@@ -262,8 +262,13 @@ public class Unit_V2 : MonoBehaviour
 
     public void GainHealth(int amount)
     {
+        
         currentHp += amount;
-        Debug.Log($"{unitName} has gained {amount} health and their currentHP is: {currentHp}");
+        if (currentHp > maxHp)
+        {
+            currentHp = maxHp;
+        }
+            Debug.Log($"{unitName} has gained {amount} health and their currentHP is: {currentHp}");
     }
     /*
     public void GainStamina(int amount)
