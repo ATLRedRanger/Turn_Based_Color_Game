@@ -125,6 +125,7 @@ MonoBehaviour:
   maxHp: 10
   currentStamina: 10
   maxStamina: 10
+  baseDamage: 3
   baseAttackBonus: 5
   armorClass: 5
   difficultyClass: 0

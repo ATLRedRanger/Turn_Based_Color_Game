@@ -80,7 +80,7 @@ public class Attack_Database : MonoBehaviour
 
 
         //EnemySpecific Attacks
-        _basicSlimeAttack = CreateAttack("Basic Slime Attack", 1, 100, 0, 20, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
+        _basicSlimeAttack = CreateAttack("Basic Slime Attack", 1, 100, 0, 20, 1, 1, 1, AttackType.Physical, Hue.Neutral, AttackBehavior.Burn, true);
 
 
 

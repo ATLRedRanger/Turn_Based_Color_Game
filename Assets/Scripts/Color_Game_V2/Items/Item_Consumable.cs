@@ -25,6 +25,10 @@ public class Item_Consumable : Item
             case ConsumableType.Health:
                 unit.GainHealth(amountToIncrease);
                 break;
+            case ConsumableType.BurnHeal:
+                unit.SetBurnAmountToZero();
+                unit.AddToBurnTimer(100);
+                break;
                 /*
             case ConsumableType.Stamina:
                 unit.GainStamina(amountToIncrease);

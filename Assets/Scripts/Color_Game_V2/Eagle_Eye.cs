@@ -78,7 +78,7 @@ public class Eagle_Eye : MonoBehaviour
     {
 
         //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
-        inventoryScript.AddToInventory(itemDatabaseScript.healthPotion);
+        inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
         player.equippedWeapon = itemDatabaseScript.redSpellbook;
         
     }
@@ -526,11 +526,12 @@ public class Eagle_Eye : MonoBehaviour
 
                 //If the burn amount is greater than or equal to the unit's threshhold -> The unit starts burning
                 //The turn it reaches that threshold -> Unit should start burning. 
-                if (defender.GetBurnAmount() >= defender.GetBurnThreshhold())
+                if (defender.GetBurnAmount() >= defender.GetBurnThreshhold() && defender.DoesStatusExist(statusEffectScript.burn) == false)
                 {
                     //Debug.Log($"{defender.unitName} is now burning!");
 
                     defender.AddStatus(statusEffectScript.burn.DeepCopy());
+                    defender.SetBurnAmountToZero();
                     foreach (StatusEffect_V2 status in defender.unitStatusEffects)
                     {
                         if (status.GetStatusName() == "Burn")
@@ -539,10 +540,7 @@ public class Eagle_Eye : MonoBehaviour
                             Debug.Log(status.GetStatusDamage());
                         }
                     }
-                    defender.SetBurnAmountToZero();
                 }
-                
-
                 break;
             case AttackBehavior.FutureSight:
                 if (!defender.DoesStatusExist(statusEffectScript.futureSight))
@@ -700,7 +698,7 @@ public class Eagle_Eye : MonoBehaviour
             }
 
 
-            Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active Debuffs.");
+            //Debug.Log($"{unit.unitName} has {unit.GetListOfDebuffs().Count} active Debuffs.");
             foreach (Debuffs debuff in removeDebuff)
             {
 

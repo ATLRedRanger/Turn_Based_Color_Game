@@ -27,7 +27,7 @@ public class StatusEffect_V2
 
     public void SetStatusDamage(Unit_V2 unit)
     {
-        int damage = unit.GetMaxHp()/10;
+        int damage = unit.GetMaxHp()/16;
         damageAmount = Mathf.Clamp(damage, 1, damage);
     }
 

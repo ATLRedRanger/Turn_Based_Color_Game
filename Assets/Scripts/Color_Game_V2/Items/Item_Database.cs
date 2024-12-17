@@ -6,7 +6,7 @@ public class Item_Database : MonoBehaviour
 {
     //Consumable Items
     public Item_Consumable healthPotion;
-
+    public Item_Consumable burnHeal;
 
     //Weapons
     public Weapon basicAxe;
@@ -24,7 +24,7 @@ public class Item_Database : MonoBehaviour
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         //Consumables
         healthPotion = CreateConsumable("Health Potion", "Heals 20hp.", ItemIDMaker(), 1, ConsumableType.Health, 20);
-        
+        burnHeal = CreateConsumable("Burn Heal", "Heals burn", ItemIDMaker(), 1, ConsumableType.BurnHeal, 0);
 
         //Weapons
         basicAxe = CreateWeapon("Basic Axe", "A basic axe.", ItemIDMaker(), WeaponType.Axe, 1, 0, null);

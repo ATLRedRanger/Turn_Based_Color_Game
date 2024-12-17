@@ -397,6 +397,7 @@ public class Unit_V2 : MonoBehaviour
     }
     public void AddToBurnAmount(int amount)
     {
+        
         burnAmount += amount;
     }
     public void AddToBurnTimer(int amount)
@@ -415,6 +416,7 @@ public class Unit_V2 : MonoBehaviour
         burnAmount = 0;
         Debug.Log($"Burn Amount being set to 0: {burnAmount}");
     }
+
     public void AddAttackToDictionary(Attack attack)
     {
         //Debug.Log("Adding Attack");

@@ -74,6 +74,7 @@ public enum ConsumableType
 {
     Health,
     Tint,
+    BurnHeal,
     Null
 }
 
