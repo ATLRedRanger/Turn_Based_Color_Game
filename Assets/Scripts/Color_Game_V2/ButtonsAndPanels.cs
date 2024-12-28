@@ -427,7 +427,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
         if (eagleScript.IsAttackUseable(attackDatabaseScript._fireball))
         {
-            _fireBallButton.enabled = true;
+            _fireBallButton.interactable = true;
         }
     }
 
@@ -445,7 +445,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public void _FireballClick()
     {
         eagleScript.AttackChangeNotification(attackDatabaseScript._fireball);
-        ToggleSpellsPanel();
+        //ToggleSpellsPanel();
 
 
     }
@@ -453,7 +453,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public void _OrangeAttackClick()
     {
         eagleScript.AttackChangeNotification(attackDatabaseScript._orangeAttackOne);
-        ToggleSpellsPanel();
+        //ToggleSpellsPanel();
     }
 
     public void _AttackClick()

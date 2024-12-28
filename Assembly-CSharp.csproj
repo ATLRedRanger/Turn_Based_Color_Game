@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\Attack_Database.cs" />
+    <Compile Include="Assets\Scripts\Color_Game_V2\Items\Weapon_Staff.cs" />
     <Compile Include="Assets\Scripts\Color_Game_V2\Eagle_Eye.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />

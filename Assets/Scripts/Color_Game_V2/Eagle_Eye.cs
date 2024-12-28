@@ -79,7 +79,8 @@ public class Eagle_Eye : MonoBehaviour
 
         //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
         inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
-        player.equippedWeapon = itemDatabaseScript.redSpellbook;
+        player.equippedWeapon = itemDatabaseScript.basicStaff;
+        //player.equippedWeapon = itemDatabaseScript.basicSpellbook;
         
     }
 
@@ -422,6 +423,7 @@ public class Eagle_Eye : MonoBehaviour
 
         CheckAttackBehavior(attack);
 
+        Debug.Log($"Base Damage: {baseDamage}");
         // Calculate base damage with potential random variation
         if (attacker.equippedWeapon != null)
         {
@@ -439,9 +441,18 @@ public class Eagle_Eye : MonoBehaviour
 
                     break;
                 case AttackType.Special:
-                    if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook || attacker.equippedWeapon.weaponType == WeaponType.Staff)
+                    if (attacker.equippedWeapon.weaponType == WeaponType.Spellbook)
                     {
-
+                        
+                    }
+                    else if(attacker.equippedWeapon.weaponType == WeaponType.Staff)
+                    {
+                        Weapon_Staff staff = attacker.equippedWeapon as Weapon_Staff;
+                        if(staff.affinity != Hue.Neutral && staff.affinity == attack.attackColor)
+                        {
+                            Debug.Log($"Staff Affinity: {staff.affinity} and Attack Color: {attack.attackColor}");
+                            baseDamage = Mathf.RoundToInt(baseDamage * 1.2f);
+                        }
                     }
                     else
                     {
@@ -451,7 +462,7 @@ public class Eagle_Eye : MonoBehaviour
                     break;
             }
         }
-
+        Debug.Log($"Base Damage: {baseDamage}");
 
         // Apply damage multiplier for critical hits, etc.
         //Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
@@ -900,7 +911,7 @@ public class Eagle_Eye : MonoBehaviour
     {
         //Debug.Log($"COLOR IN ENV: {envManaScript.GetCurrentColorDictionary()[attack.attackColor]} vs ATTACK COLOR COST: {attack.colorCost}");
         
-        if (envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        if (attack.attackColor != Hue.Neutral && envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
         {
             return true;
         }

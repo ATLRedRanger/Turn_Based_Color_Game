@@ -14,7 +14,7 @@ public class Item_Database : MonoBehaviour
     public Weapon_Spellbook basicSpellbook;
     public Weapon_Spellbook redSpellbook;
 
-
+    public Weapon_Staff basicStaff;
 
     private Attack_Database attackDatabaseScript;
 
@@ -26,11 +26,28 @@ public class Item_Database : MonoBehaviour
         healthPotion = CreateConsumable("Health Potion", "Heals 20hp.", ItemIDMaker(), 1, ConsumableType.Health, 20);
         burnHeal = CreateConsumable("Burn Heal", "Heals burn", ItemIDMaker(), 1, ConsumableType.BurnHeal, 0);
 
-        //Weapons
+        //Weapons:
+
+        //Axes
         basicAxe = CreateWeapon("Basic Axe", "A basic axe.", ItemIDMaker(), WeaponType.Axe, 1, 0, null);
+
+
+        //Bows
         basicBow = CreateWeapon("Basic Bow", "A basic bow.", ItemIDMaker(), WeaponType.Bow, 1, 0, null);
+
+
+        //Hammers
+
+
+        //Spellbooks
         basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
         redSpellbook = CreateSpellbook("Red Spellbook", "A spellbook with a light red cover.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
+
+        //Staves
+        basicStaff = CreateStaff("Basic Staff", "A basic staff.", ItemIDMaker(), 1, WeaponType.Staff, 1, 0, null, Hue.Neutral);
+
+        //Swords
+
 
 
     }
@@ -64,6 +81,13 @@ public class Item_Database : MonoBehaviour
         var spellbook = new Weapon_Spellbook(itemName, itemDescription, itemID, itemAmount, WeaponType.Spellbook, baseDamage, spellbookTier);
 
         return spellbook;
+    }
+
+    public Weapon_Staff CreateStaff(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null, Hue affinity = Hue.Neutral)
+    {
+        Weapon_Staff staff = new Weapon_Staff(itemName, itemDescription, itemID, itemAmount, weaponType, baseDamage, bonusModifier, weaponAttack, affinity);
+
+        return staff;
     }
 
     private string ItemIDMaker()
