@@ -70,6 +70,14 @@ public enum ItemType
     Null
 }
 
+public enum ItemTier
+{
+    Common,
+    Uncommon,
+    Rare,
+    Super_Rare
+}
+
 public enum ConsumableType
 {
     Health,

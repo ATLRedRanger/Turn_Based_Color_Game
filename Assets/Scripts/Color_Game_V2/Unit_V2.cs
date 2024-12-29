@@ -5,6 +5,7 @@ using UnityEngine;
 public class Unit_V2 : MonoBehaviour
 {
     public Attack_Database attackDatabaseScript;
+    public Item_Database itemDatabaseScript;
 
     public string unitName;
 
@@ -87,6 +88,7 @@ public class Unit_V2 : MonoBehaviour
     public virtual void Start()
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
+        itemDatabaseScript = FindObjectOfType<Item_Database>();
 
         currentHp = maxHp;
         currentStamina = maxStamina;

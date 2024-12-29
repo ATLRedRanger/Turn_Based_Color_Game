@@ -16,7 +16,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
     public Button _attackButton;
     public Button _fireBallButton;
-
+    public Button _orangeAttackButton;
 
     //Panel Opening Buttons
     public GameObject _fightButton;
@@ -113,6 +113,7 @@ public class ButtonsAndPanels : MonoBehaviour
         inventoryButtonsText.Add(_inventoryButton8Text);
 
         attackButtonDict.Add("Fireball", _fireBallButton);
+        attackButtonDict.Add("Orange Attack", _orangeAttackButton);
     }
 
     // Update is called once per frame
@@ -423,45 +424,9 @@ public class ButtonsAndPanels : MonoBehaviour
         ToggleFightPanel();
     }
 
-    public void InteractableAttackButtons()
-    {
-        SetButtonsToUninteractable();
-
-        foreach(var kvp in eagleScript.GetCurrentPC().unitAttackDictionary)
-        {
-            attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().alpha = 1;
-            if(eagleScript.IsAttackUseable(kvp.Value))
-            {
-                attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().interactable = true;
-            }
-            /*switch (kvp.Key)
-            {
-                case "Fireball":
-                    attackButtonDict["Fireball"].GetComponent<CanvasGroup>().alpha = 1;
-                    if (eagleScript.IsAttackUseable(kvp.Value))
-                    {
-                        attackButtonDict["Fireball"].GetComponent<CanvasGroup>().interactable = true;
-                        
-                    }
-                    else
-                    {
-                        attackButtonDict["Fireball"].GetComponent<CanvasGroup>().interactable = false;
-                    }
-                    break;
-            }*/
-        }
-        
-    }
-
+    
     public void SetButtonsToUninteractable()
     {
-        /*CanvasGroup _fireBallButtonCG = _fireBallButton.GetComponent<CanvasGroup>();
-        _fireBallButtonCG.alpha = 0f;
-        _fireBallButtonCG.interactable = false;
-
-        attackButtonDict["Fireball"].GetComponent<CanvasGroup>().interactable = false;
-        attackButtonDict["Fireball"].GetComponent<CanvasGroup>().alpha = 0;*/
-
         foreach(var kvp in attackButtonDict)
         {
             attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().interactable = false;
@@ -469,6 +434,20 @@ public class ButtonsAndPanels : MonoBehaviour
         }
     }
 
+    public void InteractableAttackButtons()
+    {
+        SetButtonsToUninteractable();
+
+        foreach (var kvp in eagleScript.GetCurrentPC().unitAttackDictionary)
+        {
+            attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().alpha = 1;
+            if (eagleScript.IsAttackUseable(kvp.Value))
+            {
+                attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().interactable = true;
+            }
+        }
+
+    }
 
 
 

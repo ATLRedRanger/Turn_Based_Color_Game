@@ -9,6 +9,12 @@ public class EnemyUnit_V2 : Unit_V2
     private Hue sensitiveColor = Hue.Green;
     private Hue tolerantColor = Hue.Blue;
     private List<Attack> attackList = new List<Attack>();
+    private Item commonDrop = null;
+    private Item uncommonDrop = null;
+    private Item rareDrop = null;
+    private Item superRareDrop = null;
+    
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -16,6 +22,10 @@ public class EnemyUnit_V2 : Unit_V2
         //AddAttackToDictionary(attackDatabaseScript._fireball);
         AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         AddAttackToDictionary(attackDatabaseScript._basicAttack);
+        commonDrop = itemDatabaseScript.basicAxe;
+        uncommonDrop = itemDatabaseScript.basicSpellbook;
+        rareDrop = itemDatabaseScript.burnHeal;
+        superRareDrop = itemDatabaseScript.redSpellbook;
     }
 
     // Update is called once per frame
@@ -63,5 +73,29 @@ public class EnemyUnit_V2 : Unit_V2
         }
 
         return null;
+    }
+
+    public Item DroppedItem()
+    {
+        int roll = Random.Range(1, 101);
+        Debug.Log($"DroppedItem() Roll: {roll}");
+        if(roll == 1)
+        {
+            return superRareDrop;
+        }
+        else if(roll <= 11)
+        {
+            return rareDrop;
+        }
+        else if(roll <= 30)
+        {
+            return uncommonDrop;
+        }
+        else
+        {
+            return commonDrop;
+        }
+
+        
     }
 }

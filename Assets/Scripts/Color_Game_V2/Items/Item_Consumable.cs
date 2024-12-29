@@ -8,7 +8,7 @@ public class Item_Consumable : Item
     public ConsumableType consumableType;
     public int amountToIncrease;
 
-    public Item_Consumable(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, ConsumableType consumableType = ConsumableType.Null, int amountToIncrease = 0)
+    public Item_Consumable(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, ConsumableType consumableType = ConsumableType.Null, int amountToIncrease = 0, ItemTier itemTier = ItemTier.Common)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -16,6 +16,7 @@ public class Item_Consumable : Item
         this.itemAmount = itemAmount;
         this.consumableType = consumableType;
         this.amountToIncrease = amountToIncrease;
+        this.itemTier = itemTier;
     }
 
     public override void Use(Unit_V2 unit)

@@ -467,6 +467,7 @@ GameObject:
   - component: {fileID: 34189375}
   - component: {fileID: 34189374}
   - component: {fileID: 34189376}
+  - component: {fileID: 34189377}
   m_Layer: 5
   m_Name: Blue Attack
   m_TagString: Untagged
@@ -577,9 +578,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1741761540}
         m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OnBlueCrushClick
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -589,6 +590,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &34189377
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34189372}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &37491806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1342,7 @@ GameObject:
   - component: {fileID: 132016792}
   - component: {fileID: 132016791}
   - component: {fileID: 132016790}
+  - component: {fileID: 132016793}
   m_Layer: 5
   m_Name: Violet Attack
   m_TagString: Untagged
@@ -1401,9 +1415,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1741761540}
         m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OnBlueCrushClick
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1451,6 +1465,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132016788}
   m_CullTransparentMesh: 0
+--- !u!225 &132016793
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132016788}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &158344322
 GameObject:
   m_ObjectHideFlags: 0
@@ -6766,6 +6792,7 @@ GameObject:
   - component: {fileID: 615704782}
   - component: {fileID: 615704781}
   - component: {fileID: 615704783}
+  - component: {fileID: 615704784}
   m_Layer: 5
   m_Name: 'Yellow Attack '
   m_TagString: Untagged
@@ -6876,9 +6903,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1741761540}
         m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OnYellowSplashClick
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6888,6 +6915,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &615704784
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615704779}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &627644255
 GameObject:
   m_ObjectHideFlags: 0
@@ -8948,6 +8987,7 @@ GameObject:
   - component: {fileID: 854639346}
   - component: {fileID: 854639345}
   - component: {fileID: 854639347}
+  - component: {fileID: 854639348}
   m_Layer: 5
   m_Name: Green Attack
   m_TagString: Untagged
@@ -9058,9 +9098,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1741761540}
         m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OnGreenPunchClick
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9070,6 +9110,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &854639348
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854639343}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &860833089
 GameObject:
   m_ObjectHideFlags: 0
@@ -10160,6 +10212,7 @@ GameObject:
   - component: {fileID: 944391589}
   - component: {fileID: 944391591}
   - component: {fileID: 944391590}
+  - component: {fileID: 944391592}
   m_Layer: 5
   m_Name: Panel_Inventory
   m_TagString: Untagged
@@ -10237,6 +10290,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944391588}
   m_CullTransparentMesh: 1
+--- !u!223 &944391592
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944391588}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &958258556
 GameObject:
   m_ObjectHideFlags: 0
@@ -16579,6 +16655,7 @@ GameObject:
   - component: {fileID: 1530951497}
   - component: {fileID: 1530951496}
   - component: {fileID: 1530951495}
+  - component: {fileID: 1530951498}
   m_Layer: 5
   m_Name: Fireball
   m_TagString: Untagged
@@ -16701,6 +16778,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530951493}
   m_CullTransparentMesh: 0
+--- !u!225 &1530951498
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530951493}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1537446136
 GameObject:
   m_ObjectHideFlags: 0
@@ -16799,6 +16888,7 @@ GameObject:
   - component: {fileID: 1554331857}
   - component: {fileID: 1554331856}
   - component: {fileID: 1554331858}
+  - component: {fileID: 1554331859}
   m_Layer: 5
   m_Name: Orange Attack
   m_TagString: Untagged
@@ -16909,9 +16999,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: OnOrangeSpikeClick
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: _OrangeAttackClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16921,6 +17011,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &1554331859
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554331854}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1579958729
 GameObject:
   m_ObjectHideFlags: 0
@@ -18246,6 +18348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackButton: {fileID: 1211379656}
   _fireBallButton: {fileID: 1530951495}
+  _orangeAttackButton: {fileID: 1554331858}
   _fightButton: {fileID: 502051564}
   _abilitiesButton: {fileID: 1129678891}
   _itemsButton: {fileID: 1386464849}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Weapon : Item
@@ -25,7 +26,8 @@ public class Weapon : Item
         this.weaponType = weaponType;
         this.baseDamage = baseDamage;
     }*/
-    public Weapon(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Neutral, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null)
+    public Weapon(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0,
+        WeaponType weaponType = WeaponType.Neutral, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null, ItemTier itemTier = ItemTier.Common)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -35,6 +37,7 @@ public class Weapon : Item
         this.baseDamage = baseDamage;
         this.bonusModifier = bonusModifier;
         this.weaponAttack = weaponAttack;
+        this.itemTier = itemTier;
     }
     public override void Use(Unit_V2 unit)
     {

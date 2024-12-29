@@ -23,28 +23,28 @@ public class Item_Database : MonoBehaviour
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         //Consumables
-        healthPotion = CreateConsumable("Health Potion", "Heals 20hp.", ItemIDMaker(), 1, ConsumableType.Health, 20);
-        burnHeal = CreateConsumable("Burn Heal", "Heals burn", ItemIDMaker(), 1, ConsumableType.BurnHeal, 0);
+        healthPotion = CreateConsumable("Health Potion", "Heals 20hp.", ItemIDMaker(), 1, ConsumableType.Health, 20, ItemTier.Common);
+        burnHeal = CreateConsumable("Burn Heal", "Heals burn", ItemIDMaker(), 1, ConsumableType.BurnHeal, 0, ItemTier.Common);
 
         //Weapons:
 
         //Axes
-        basicAxe = CreateWeapon("Basic Axe", "A basic axe.", ItemIDMaker(), WeaponType.Axe, 1, 0, null);
+        basicAxe = CreateWeapon("Basic Axe", "A basic axe.", ItemIDMaker(), WeaponType.Axe, 1, 0, null, ItemTier.Common);
 
 
         //Bows
-        basicBow = CreateWeapon("Basic Bow", "A basic bow.", ItemIDMaker(), WeaponType.Bow, 1, 0, null);
+        basicBow = CreateWeapon("Basic Bow", "A basic bow.", ItemIDMaker(), WeaponType.Bow, 1, 0, null, ItemTier.Common);
 
 
         //Hammers
 
 
         //Spellbooks
-        basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
-        redSpellbook = CreateSpellbook("Red Spellbook", "A spellbook with a light red cover.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1);
+        basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1, ItemTier.Common);
+        redSpellbook = CreateSpellbook("Red Spellbook", "A spellbook with a light red cover.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1, ItemTier.Uncommon);
 
         //Staves
-        basicStaff = CreateStaff("Basic Staff", "A basic staff.", ItemIDMaker(), 1, WeaponType.Staff, 1, 0, null, Hue.Neutral);
+        basicStaff = CreateStaff("Basic Staff", "A basic staff.", ItemIDMaker(), 1, WeaponType.Staff, 1, 0, null, Hue.Neutral, ItemTier.Common);
 
         //Swords
 
@@ -62,30 +62,34 @@ public class Item_Database : MonoBehaviour
         redSpellbook.AddAttackToSpellbook(attackDatabaseScript._fireball);
     }
 
-    public Item_Consumable CreateConsumable(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, ConsumableType consumableType = ConsumableType.Null, int amountToIncrease = 0)
+    public Item_Consumable CreateConsumable(string itemName = "", string itemDescription = "", string itemID = "",
+                                            int itemAmount = 0, ConsumableType consumableType = ConsumableType.Null, int amountToIncrease = 0, ItemTier itemTier = ItemTier.Common)
     {
-        Item_Consumable consumable = new Item_Consumable(itemName, itemDescription, itemID, itemAmount, consumableType, amountToIncrease);
+        Item_Consumable consumable = new Item_Consumable(itemName, itemDescription, itemID, itemAmount, consumableType, amountToIncrease, itemTier);
         
         return consumable;
     }
 
-    public Weapon CreateWeapon(string name, string itemDescription, string itemID, WeaponType weaponType, int baseDamage, int bonusModifier, Attack weaponAttack)
+    public Weapon CreateWeapon(string name, string itemDescription, string itemID,
+                                WeaponType weaponType, int baseDamage, int bonusModifier, Attack weaponAttack, ItemTier itemTier = ItemTier.Common)
     {
-        Weapon weapon = new Weapon(name, itemDescription, itemID, 1, weaponType, baseDamage, bonusModifier, weaponAttack);
+        Weapon weapon = new Weapon(name, itemDescription, itemID, 1, weaponType, baseDamage, bonusModifier, weaponAttack, itemTier);
 
         return weapon;
     }
 
-    public Weapon_Spellbook CreateSpellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1)
+    public Weapon_Spellbook CreateSpellbook(string itemName = "", string itemDescription = "", string itemID = "",
+                                            int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1, ItemTier itemTier = ItemTier.Common)
     {
-        var spellbook = new Weapon_Spellbook(itemName, itemDescription, itemID, itemAmount, WeaponType.Spellbook, baseDamage, spellbookTier);
+        var spellbook = new Weapon_Spellbook(itemName, itemDescription, itemID, itemAmount, WeaponType.Spellbook, baseDamage, spellbookTier, itemTier);
 
         return spellbook;
     }
 
-    public Weapon_Staff CreateStaff(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null, Hue affinity = Hue.Neutral)
+    public Weapon_Staff CreateStaff(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0,
+                                    WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null, Hue affinity = Hue.Neutral, ItemTier itemTier = ItemTier.Common)
     {
-        Weapon_Staff staff = new Weapon_Staff(itemName, itemDescription, itemID, itemAmount, weaponType, baseDamage, bonusModifier, weaponAttack, affinity);
+        Weapon_Staff staff = new Weapon_Staff(itemName, itemDescription, itemID, itemAmount, weaponType, baseDamage, bonusModifier, weaponAttack, affinity, itemTier);
 
         return staff;
     }

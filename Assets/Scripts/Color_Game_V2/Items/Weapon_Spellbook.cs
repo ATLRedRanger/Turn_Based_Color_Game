@@ -14,7 +14,8 @@ public class Weapon_Spellbook : Weapon
     public int numOfAttacks = 0;
 
 
-    public Weapon_Spellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1)
+    public Weapon_Spellbook(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0,
+        WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int spellbookTier = 1, ItemTier itemTier = ItemTier.Common)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -22,7 +23,7 @@ public class Weapon_Spellbook : Weapon
         this.weaponType = weaponType;
         this.baseDamage = baseDamage;
         this.spellbookTier = spellbookTier;
-        
+        this.itemTier = itemTier;
     }
 
     public override void Use(Unit_V2 unit)

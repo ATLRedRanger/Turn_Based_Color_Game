@@ -81,10 +81,29 @@ public class Eagle_Eye : MonoBehaviour
         inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
         player.equippedWeapon = itemDatabaseScript.basicStaff;
         //player.equippedWeapon = itemDatabaseScript.basicSpellbook;
+        foreach(Unit_V2 unit in listOfCombatants)
+        {
+            if(unit is EnemyUnit_V2)
+            {
+                EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
+                Item item = enemy.DroppedItem();
+                if(item != null)
+                {
+                    Debug.Log($"Enemy Dropped: {item.itemName}");
+                }
+                else
+                {
+                    Debug.Log("Dropped item was null!");
+                }
+                
+            }
+            
+            
+        }
         
     }
 
-    public void Test_4(Unit_V2 unit)
+    public void Test_4()
     {
 
     }
@@ -995,6 +1014,11 @@ public class Eagle_Eye : MonoBehaviour
     {
         Debug.Log("Player Lost");
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
+    }
+
+    private void LootDrops()
+    {
+
     }
 
     private void GenerateEnvironment()

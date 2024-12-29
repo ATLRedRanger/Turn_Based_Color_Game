@@ -11,7 +11,8 @@ public class Weapon_Staff : Weapon
         
     }
 
-    public Weapon_Staff(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null, Hue affinity = Hue.Neutral)
+    public Weapon_Staff(string itemName = "", string itemDescription = "", string itemID = "", int itemAmount = 0, 
+        WeaponType weaponType = WeaponType.Spellbook, int baseDamage = 0, int bonusModifier = 0, Attack weaponAttack = null, Hue affinity = Hue.Neutral, ItemTier itemTier = ItemTier.Common)
     {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
@@ -22,5 +23,6 @@ public class Weapon_Staff : Weapon
         this.bonusModifier = bonusModifier;
         this.weaponAttack = weaponAttack;
         this.affinity = affinity;
+        this.itemTier = itemTier;
     }
 }
