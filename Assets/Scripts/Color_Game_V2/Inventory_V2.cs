@@ -7,6 +7,7 @@ public class Inventory_V2 : MonoBehaviour
 
     private List<Item> inventory = new List<Item>();
     const int MAX_CAPACITY = 8;
+    private int money = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -58,4 +59,24 @@ public class Inventory_V2 : MonoBehaviour
     {
         return inventory;
     }
+
+    public int GetMoney()
+    {
+        return money;
+    }
+
+    public void GainMoney(int amount)
+    {
+        money += amount;
+    }
+
+    public void LoseMoney(int amount)
+    {
+        money -= amount;
+        if(money < 0)
+        {
+            money = 0;
+        }
+    }
+
 }

@@ -294,7 +294,7 @@ public class Eagle_Eye : MonoBehaviour
         }
         else
         {
-            PlayerLost();
+            PlayerLost(deadUnits);
         }
     }
 
@@ -997,11 +997,13 @@ public class Eagle_Eye : MonoBehaviour
             Weapon_Spellbook spellbook = player.equippedWeapon as Weapon_Spellbook;
             spellbook.GainExp(GainExperience(deadEnemies));
         }
+        inventoryScript.GainMoney(GainMoney(deadEnemies));
     }
-    public void PlayerLost()
+    public void PlayerLost(List<Unit_V2> deadEnemies)
     {
         Debug.Log("Player Lost");
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
+        inventoryScript.LoseMoney(GainMoney(deadEnemies));
     }
 
     private void LootDrops(List<Unit_V2> deadEnemies)
@@ -1035,10 +1037,24 @@ public class Eagle_Eye : MonoBehaviour
                 expGained += enemy.GetExpDropped();
 
             }
-
-        }
-        
+        } 
         return expGained;
+    }
+
+    private int GainMoney(List<Unit_V2> deadEnemies)
+    {
+        int moneyDropped = 0;
+        foreach (Unit_V2 unit in deadEnemies)
+        {
+            if (unit is EnemyUnit_V2)
+            {
+                EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
+
+                moneyDropped += enemy.GetMoneyDropped();
+
+            }
+        }
+        return moneyDropped;
     }
 
     private void GenerateEnvironment()

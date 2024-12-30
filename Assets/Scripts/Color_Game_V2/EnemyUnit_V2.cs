@@ -15,6 +15,8 @@ public class EnemyUnit_V2 : Unit_V2
     private Item superRareDrop = null;
     [SerializeField]
     private int expDropped;
+    [SerializeField]
+    private int moneyDropped;
 
     // Start is called before the first frame update
     public override void Start()
@@ -102,5 +104,10 @@ public class EnemyUnit_V2 : Unit_V2
     {
         Debug.Log($"ENEMY HAS {expDropped} TO GIVE!");
         return expDropped;
+    }
+
+    public int GetMoneyDropped()
+    {
+        return moneyDropped;
     }
 }
