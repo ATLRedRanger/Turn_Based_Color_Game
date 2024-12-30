@@ -81,26 +81,7 @@ public class Eagle_Eye : MonoBehaviour
         inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
         player.equippedWeapon = itemDatabaseScript.basicStaff;
         //player.equippedWeapon = itemDatabaseScript.basicSpellbook;
-        foreach(Unit_V2 unit in listOfCombatants)
-        {
-            if(unit is EnemyUnit_V2)
-            {
-                EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
-                Item item = enemy.DroppedItem();
-                if(item != null)
-                {
-                    Debug.Log($"Enemy Dropped: {item.itemName}");
-                }
-                else
-                {
-                    Debug.Log("Dropped item was null!");
-                }
-                
-            }
-            
-            
-        }
-        
+
     }
 
     public void Test_4()
@@ -309,7 +290,7 @@ public class Eagle_Eye : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (theCombatState == CombatState.Won)
         {
-            PlayerWon();
+            PlayerWon(deadUnits);
         }
         else
         {
@@ -1005,10 +986,12 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
-    public void PlayerWon()
+    public void PlayerWon(List<Unit_V2> deadEnemies)
     {
         Debug.Log("Player Won");
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
+        LootDrops(deadEnemies);
+        player.GainExp(GainExperience(deadEnemies));
     }
     public void PlayerLost()
     {
@@ -1016,9 +999,41 @@ public class Eagle_Eye : MonoBehaviour
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
     }
 
-    private void LootDrops()
+    private void LootDrops(List<Unit_V2> deadEnemies)
     {
+        foreach (Unit_V2 unit in deadEnemies)
+        {
+            if (unit is EnemyUnit_V2)
+            {
+                EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
+                Item item = enemy.DroppedItem();
+                if (item != null)
+                {
+                    Debug.Log($"Enemy Dropped: {item.itemName}");
+                    inventoryScript.AddToInventory(item);
+                }
+                
+            }
 
+        }
+    }
+
+    private int GainExperience(List<Unit_V2> deadEnemies)
+    {
+        int expGained = 0;
+        foreach (Unit_V2 unit in deadEnemies)
+        {
+            if (unit is EnemyUnit_V2)
+            {
+                EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
+
+                expGained += enemy.GetExpDropped();
+
+            }
+
+        }
+        Debug.Log($"The party gained {expGained} experience!");
+        return expGained;
     }
 
     private void GenerateEnvironment()

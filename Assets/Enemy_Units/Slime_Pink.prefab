@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDatabaseScript: {fileID: 0}
+  itemDatabaseScript: {fileID: 0}
   unitName: Pink_Slime
   currentHp: 10
   maxHp: 10
@@ -142,3 +143,4 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: 0
+  expDropped: 15

@@ -13,7 +13,8 @@ public class EnemyUnit_V2 : Unit_V2
     private Item uncommonDrop = null;
     private Item rareDrop = null;
     private Item superRareDrop = null;
-    
+    [SerializeField]
+    private int expDropped;
 
     // Start is called before the first frame update
     public override void Start()
@@ -22,10 +23,8 @@ public class EnemyUnit_V2 : Unit_V2
         //AddAttackToDictionary(attackDatabaseScript._fireball);
         AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         AddAttackToDictionary(attackDatabaseScript._basicAttack);
-        commonDrop = itemDatabaseScript.basicAxe;
-        uncommonDrop = itemDatabaseScript.basicSpellbook;
         rareDrop = itemDatabaseScript.burnHeal;
-        superRareDrop = itemDatabaseScript.redSpellbook;
+        
     }
 
     // Update is called once per frame
@@ -78,7 +77,9 @@ public class EnemyUnit_V2 : Unit_V2
     public Item DroppedItem()
     {
         int roll = Random.Range(1, 101);
+
         Debug.Log($"DroppedItem() Roll: {roll}");
+
         if(roll == 1)
         {
             return superRareDrop;
@@ -94,8 +95,12 @@ public class EnemyUnit_V2 : Unit_V2
         else
         {
             return commonDrop;
-        }
+        }   
+    }
 
-        
+    public int GetExpDropped()
+    {
+        Debug.Log($"ENEMY HAS {expDropped} TO GIVE!");
+        return expDropped;
     }
 }
