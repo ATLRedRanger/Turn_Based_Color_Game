@@ -48,10 +48,12 @@ public class Player_V2 : Unit_V2
     
     public void GainExp(int exp)
     {
+        Debug.Log($"{unitName} gained {exp} experience!");
         currentExp += exp;
         if (currentExp >= expNeededToLevel)
         {
             LevelUp();
+            expNeededToLevel = Mathf.RoundToInt(expNeededToLevel * 1.5f);
         }
     }
 

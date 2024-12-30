@@ -262,14 +262,15 @@ public class ButtonsAndPanels : MonoBehaviour
         _spellbookButton04Text.text = "";
 
         bool isActive = _SpellbookPanel.activeSelf;
-        
+
+        Debug.Log($"Player Spellbook: {playerSpellbook.spellbookAttacks.Count}");
 
         if (_SpellbookPanel != null)
         {
             _SpellbookPanel.SetActive(!isActive);
         }
         
-        if (playerSpellbook.numOfAttacks > 3)
+        if (playerSpellbook.spellbookAttacks.Count > 3)
         {
             _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
 
@@ -279,7 +280,7 @@ public class ButtonsAndPanels : MonoBehaviour
             }
         }
 
-        if (playerSpellbook.numOfAttacks > 2)
+        if (playerSpellbook.spellbookAttacks.Count > 2)
         {
             _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
 
@@ -289,7 +290,7 @@ public class ButtonsAndPanels : MonoBehaviour
             }
         }
 
-        if (playerSpellbook.numOfAttacks > 1)
+        if (playerSpellbook.spellbookAttacks.Count > 1)
         {
 
             _spellbookButton02Text.text = playerSpellbook.spellbookAttacks[1].attackName;
@@ -300,7 +301,7 @@ public class ButtonsAndPanels : MonoBehaviour
             }
         }
 
-        if (playerSpellbook.numOfAttacks > 0)
+        if (playerSpellbook.spellbookAttacks.Count > 0)
         {
             _spellbookButton01Text.text = playerSpellbook.spellbookAttacks[0].attackName;
 

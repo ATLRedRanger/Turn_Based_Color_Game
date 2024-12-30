@@ -79,8 +79,8 @@ public class Eagle_Eye : MonoBehaviour
 
         //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
         inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
-        player.equippedWeapon = itemDatabaseScript.basicStaff;
-        //player.equippedWeapon = itemDatabaseScript.basicSpellbook;
+        //player.equippedWeapon = itemDatabaseScript.basicStaff;
+        player.equippedWeapon = itemDatabaseScript.basicSpellbook;
 
     }
 
@@ -992,6 +992,11 @@ public class Eagle_Eye : MonoBehaviour
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
         LootDrops(deadEnemies);
         player.GainExp(GainExperience(deadEnemies));
+        if(player.equippedWeapon != null && player.equippedWeapon.weaponType == WeaponType.Spellbook)
+        {
+            Weapon_Spellbook spellbook = player.equippedWeapon as Weapon_Spellbook;
+            spellbook.GainExp(GainExperience(deadEnemies));
+        }
     }
     public void PlayerLost()
     {
@@ -1032,7 +1037,7 @@ public class Eagle_Eye : MonoBehaviour
             }
 
         }
-        Debug.Log($"The party gained {expGained} experience!");
+        
         return expGained;
     }
 
