@@ -676,18 +676,13 @@ public class ButtonsAndPanels : MonoBehaviour
 
 
 
-    public IEnumerator CoroutineEndOfBattleScreen(CombatState combatState)
+    public void OnEndOfBattleNextClick()
     {
-        if (_EndOfBattlePanel != null && _EndOfBattlePanel.activeSelf == true)
-        {
-            yield return new WaitForSeconds(2);
-
-            _EndOfBattlePanel.SetActive(false);
-        }
-
+        ToggleEndOfBattlePanel();
+        ToggleLocationsPanel();
     }
 
-    public void EndOfBattlePanel(CombatState combatState)
+    public void ToggleEndOfBattlePanel()
     {
         bool isActive = _EndOfBattlePanel.activeSelf;
 
@@ -697,7 +692,7 @@ public class ButtonsAndPanels : MonoBehaviour
         }
         
 
-        if(combatState == CombatState.Won)
+        if(eagleScript.GetCombatState() == CombatState.Won)
         {
 
         }
@@ -728,7 +723,25 @@ public class ButtonsAndPanels : MonoBehaviour
     public void OnSublocation_1Click()
     {
         eagleScript.SetSubLocation("subLocation_1");
+    }
 
+    public void OnSublocation_2Click()
+    {
+        eagleScript.SetSubLocation("subLocation_2");
+    }
 
+    public void OnSublocation_3Click()
+    {
+        eagleScript.SetSubLocation("subLocation_3");
+    }
+
+    public void OnSublocation_4Click()
+    {
+        eagleScript.SetSubLocation("subLocation_4");
+    }
+
+    public void OnSublocation_5Click()
+    {
+        eagleScript.SetSubLocation("subLocation_5");
     }
 }
