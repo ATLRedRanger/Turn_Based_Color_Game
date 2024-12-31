@@ -28,6 +28,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public Button _spellPanelCycleButton;
 
     //Panels
+    public GameObject _CombatPanel;
     public GameObject _FightPanel;
     public GameObject _SpellsPanel;
     public GameObject _SpellsPanel2;
@@ -121,7 +122,17 @@ public class ButtonsAndPanels : MonoBehaviour
     {
         
     }
+    public void ToggleCombatPanel()
+    {
+        Debug.Log("TREE");
+        bool isActive = _CombatPanel.activeSelf;
 
+        if(_CombatPanel != null)
+        {
+            _CombatPanel.SetActive(!isActive);
+        }
+        
+    }
     public void ToggleFightPanel()
     {
         _spellbookButton.gameObject.SetActive(false);

@@ -68,6 +68,7 @@ public class Inventory_V2 : MonoBehaviour
     public void GainMoney(int amount)
     {
         money += amount;
+        Debug.Log($"You have gained {amount} money. \n You now have {money} money.");
     }
 
     public void LoseMoney(int amount)
@@ -77,6 +78,7 @@ public class Inventory_V2 : MonoBehaviour
         {
             money = 0;
         }
+        Debug.Log($"You have lost {amount} money. \n You now have {money} money.");
     }
 
 }

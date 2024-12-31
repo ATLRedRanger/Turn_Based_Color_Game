@@ -144,3 +144,4 @@ MonoBehaviour:
   blueResistance: 0
   violetResistance: 0
   expDropped: 10
+  moneyDropped: 3

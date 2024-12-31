@@ -58,20 +58,13 @@ public class Eagle_Eye : MonoBehaviour
         uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
         */
 
-        GenerateEnemies();
-        listOfCombatants.Add(player);
-
-        currentPC = player;
-        GenerateEnvironment();
-        SetMaxColorAmountsForUI();
+        StartCombat();
 
     }
 
     public void Test_2()
     {
-        
-        StartCoroutine(Combat());
-
+        EndCombat();
     }
 
     public void Test_3()
@@ -79,14 +72,14 @@ public class Eagle_Eye : MonoBehaviour
 
         //inventoryScript.AddToInventory(weaponDatabaseScript.basicAxe);
         inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
-        //player.equippedWeapon = itemDatabaseScript.basicStaff;
-        player.equippedWeapon = itemDatabaseScript.basicSpellbook;
+        player.equippedWeapon = itemDatabaseScript.basicStaff;
+        //player.equippedWeapon = itemDatabaseScript.basicSpellbook;
 
     }
 
     public void Test_4()
     {
-
+        
     }
     IEnumerator LoadScripts()
     {
@@ -103,6 +96,7 @@ public class Eagle_Eye : MonoBehaviour
         inventoryScript = FindObjectOfType<Inventory_V2>();
 
         player = unitSpawnerScript.SpawnPlayer();
+        player.gameObject.SetActive(false);
 
         //Debug.Log("Finished Loading");
 
@@ -114,6 +108,34 @@ public class Eagle_Eye : MonoBehaviour
 
     }
 
+    private void StartCombat()
+    {
+        player.gameObject.SetActive(true);
+        GenerateEnemies();
+        listOfCombatants.Add(player);
+
+        currentPC = player;
+        GenerateEnvironment();
+        SetMaxColorAmountsForUI();
+        StartCoroutine(Combat());
+        buttonsAndPanelsScript.ToggleCombatPanel();
+    }
+
+    private void EndCombat()
+    {
+        player.gameObject.SetActive(false);
+        currentLocation = null;
+        buttonsAndPanelsScript.ToggleCombatPanel();
+        if(enemyOne.gameObject != null)
+        {
+            Destroy(enemyOne.gameObject);
+        }
+        if (enemyTwo.gameObject != null)
+        {
+            Destroy(enemyTwo.gameObject);
+        }
+    }
+
     //Sorts combatants from fastest to slowest
     private void SortCombatants(List<Unit_V2> listOfCombatants)
     {
@@ -122,7 +144,7 @@ public class Eagle_Eye : MonoBehaviour
 
     private void GenerateEnemies()
     {
-        player.gameObject.SetActive(true);
+        
         int enemiesToGenerate = 2;//Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         for (int i = 0; i < enemiesToGenerate; i++)
@@ -166,7 +188,7 @@ public class Eagle_Eye : MonoBehaviour
 
         //Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.1f);
         while (theCombatState == CombatState.Active)
         {
             /*
@@ -186,7 +208,7 @@ public class Eagle_Eye : MonoBehaviour
             //Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1);
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 CombatUIUpdates();
@@ -243,7 +265,7 @@ public class Eagle_Eye : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             EndOfRoundStatusDamage();
             //yield return new WaitForSeconds(.5f);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.5f);
             CombatUIUpdates();
 
             foreach (Unit_V2 unit in listOfCombatants)
@@ -287,7 +309,8 @@ public class Eagle_Eye : MonoBehaviour
             }
             
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1);
+
         if (theCombatState == CombatState.Won)
         {
             PlayerWon(deadUnits);
@@ -989,6 +1012,7 @@ public class Eagle_Eye : MonoBehaviour
     public void PlayerWon(List<Unit_V2> deadEnemies)
     {
         Debug.Log("Player Won");
+        EndCombat();
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
         LootDrops(deadEnemies);
         player.GainExp(GainExperience(deadEnemies));
@@ -997,13 +1021,14 @@ public class Eagle_Eye : MonoBehaviour
             Weapon_Spellbook spellbook = player.equippedWeapon as Weapon_Spellbook;
             spellbook.GainExp(GainExperience(deadEnemies));
         }
-        inventoryScript.GainMoney(GainMoney(deadEnemies));
+        inventoryScript.GainMoney(EnemyMoneyAmount(deadEnemies));
     }
     public void PlayerLost(List<Unit_V2> deadEnemies)
     {
+        EndCombat();
         Debug.Log("Player Lost");
         buttonsAndPanelsScript.EndOfBattlePanel(theCombatState);
-        inventoryScript.LoseMoney(GainMoney(deadEnemies));
+        inventoryScript.LoseMoney(EnemyMoneyAmount(deadEnemies));
     }
 
     private void LootDrops(List<Unit_V2> deadEnemies)
@@ -1041,7 +1066,7 @@ public class Eagle_Eye : MonoBehaviour
         return expGained;
     }
 
-    private int GainMoney(List<Unit_V2> deadEnemies)
+    private int EnemyMoneyAmount(List<Unit_V2> deadEnemies)
     {
         int moneyDropped = 0;
         foreach (Unit_V2 unit in deadEnemies)
