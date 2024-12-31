@@ -110,6 +110,16 @@ public enum Statuses
 
 }
 
+public enum SubLocation
+{
+    subLocation_1,
+    subLocation_2,
+    subLocation_3,
+    subLocation_4,
+    subLocation_5,
+    beginning
+}
+
 public struct LocationMana
 {
     

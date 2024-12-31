@@ -39,6 +39,7 @@ public class ButtonsAndPanels : MonoBehaviour
     public GameObject _AttackDescriptionPanel;
     public GameObject _SpellbookPanel;
     public GameObject _EndOfBattlePanel;
+    public GameObject _LocationsPanel;
 
     //Inventory Buttons
     public GameObject _inventoryButton1;
@@ -86,6 +87,18 @@ public class ButtonsAndPanels : MonoBehaviour
     public Weapon_Spellbook playerSpellbook;
 
 
+    //Locations
+    public Button location_Forest;
+
+    //SubLocations
+    public Button subLocation_1;
+    public Button subLocation_2;
+    public Button subLocation_3;
+    public Button subLocation_4;
+    public Button subLocation_5;
+    private List<Button> subLocationsList = new List<Button>();
+
+
 
     private Dictionary<string, Button> attackButtonDict = new Dictionary<string, Button>();
 
@@ -112,6 +125,12 @@ public class ButtonsAndPanels : MonoBehaviour
         inventoryButtonsText.Add(_inventoryButton6Text);
         inventoryButtonsText.Add(_inventoryButton7Text);
         inventoryButtonsText.Add(_inventoryButton8Text);
+
+        subLocationsList.Add(subLocation_1);
+        subLocationsList.Add(subLocation_2);
+        subLocationsList.Add(subLocation_3);    
+        subLocationsList.Add(subLocation_4);
+        subLocationsList.Add(subLocation_5);
 
         attackButtonDict.Add("Fireball", _fireBallButton);
         attackButtonDict.Add("Orange Attack", _orangeAttackButton);
@@ -331,6 +350,44 @@ public class ButtonsAndPanels : MonoBehaviour
             _EnemiesPanel.SetActive(false);
         }
     }
+
+    public void ToggleLocationsPanel()
+    {
+        bool isActive = _LocationsPanel.activeSelf;
+
+        if(_LocationsPanel != null)
+        {
+            _LocationsPanel.SetActive(!isActive);
+        }
+
+        switch (eagleScript.GetSubLocation())
+        {
+            case SubLocation.subLocation_1:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = true;
+                break;
+            case SubLocation.subLocation_2:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = true;
+                break;
+            case SubLocation.subLocation_3:
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = true;
+                break;
+            case SubLocation.subLocation_4:
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = true;
+                break;
+            case SubLocation.subLocation_5:
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
+                break;
+        }
+    }
+
 
     public void _SpellPanelCycle()
     {
@@ -619,11 +676,26 @@ public class ButtonsAndPanels : MonoBehaviour
 
 
 
+    public IEnumerator CoroutineEndOfBattleScreen(CombatState combatState)
+    {
+        if (_EndOfBattlePanel != null && _EndOfBattlePanel.activeSelf == true)
+        {
+            yield return new WaitForSeconds(2);
 
+            _EndOfBattlePanel.SetActive(false);
+        }
+
+    }
 
     public void EndOfBattlePanel(CombatState combatState)
     {
-        _EndOfBattlePanel.SetActive(true);
+        bool isActive = _EndOfBattlePanel.activeSelf;
+
+        if (_EndOfBattlePanel != null)
+        {
+            _EndOfBattlePanel.SetActive(!isActive);
+        }
+        
 
         if(combatState == CombatState.Won)
         {
@@ -633,5 +705,30 @@ public class ButtonsAndPanels : MonoBehaviour
         {
 
         }
+
+        //StartCoroutine(CoroutineEndOfBattleScreen(combatState));
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public void OnForestLocationClick()
+    {
+        eagleScript.SetLocation("Forest");
+        subLocationsList[0].GetComponent<CanvasGroup>().interactable = true;
+    }
+
+    public void OnSublocation_1Click()
+    {
+        eagleScript.SetSubLocation("subLocation_1");
+
+
     }
 }

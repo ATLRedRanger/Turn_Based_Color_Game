@@ -20,6 +20,7 @@ public class Eagle_Eye : MonoBehaviour
     private int numOfEnemies;
     private int turnsInRound;
     private string currentLocation = "Forest";
+    private SubLocation subLocation = SubLocation.beginning;
 
     private Attack chosenAttack = null;
     private Item_Consumable chosenConsumable = null;
@@ -64,7 +65,8 @@ public class Eagle_Eye : MonoBehaviour
 
     public void Test_2()
     {
-        EndCombat();
+        //EndCombat();
+        //buttonsAndPanelsScript.ToggleLocationsPanel();
     }
 
     public void Test_3()
@@ -74,7 +76,7 @@ public class Eagle_Eye : MonoBehaviour
         inventoryScript.AddToInventory(itemDatabaseScript.burnHeal);
         player.equippedWeapon = itemDatabaseScript.basicStaff;
         //player.equippedWeapon = itemDatabaseScript.basicSpellbook;
-
+        
     }
 
     public void Test_4()
@@ -1022,6 +1024,9 @@ public class Eagle_Eye : MonoBehaviour
             spellbook.GainExp(GainExperience(deadEnemies));
         }
         inventoryScript.GainMoney(EnemyMoneyAmount(deadEnemies));
+        StartCoroutine(buttonsAndPanelsScript.CoroutineEndOfBattleScreen(theCombatState));
+        
+        buttonsAndPanelsScript.ToggleLocationsPanel();
     }
     public void PlayerLost(List<Unit_V2> deadEnemies)
     {
@@ -1381,10 +1386,39 @@ public class Eagle_Eye : MonoBehaviour
 
 
 
+    //Locations
+    public void SetLocation(string location)
+    {
+        currentLocation = location;
+    }
 
+    public string GetLocation()
+    {
+        return currentLocation;
+    }
 
+    public void SetSubLocation(string location)
+    {
+        int roll = Random.Range(0, 2);
+        Debug.Log($"Location Roll: {roll}");
+        switch(location)
+        {
+            case "subLocation_1":
+                subLocation = SubLocation.subLocation_1;
+                if(roll == 1)
+                {
+                    Debug.Log("ATLANTA");
+                    buttonsAndPanelsScript.ToggleLocationsPanel();
+                    StartCombat();
+                }
+                break;
+        }
+    }
 
-
+    public SubLocation GetSubLocation()
+    {
+        return subLocation;
+    }
 
 
 
