@@ -19,7 +19,8 @@ public class Eagle_Eye : MonoBehaviour
     private Unit_V2 currentPC;
     private int numOfEnemies;
     private int turnsInRound;
-    private string currentLocation = "Forest";
+    [SerializeField]
+    private string currentLocation = "";
     private SubLocation subLocation = SubLocation.beginning;
 
     private Attack chosenAttack = null;
@@ -126,7 +127,6 @@ public class Eagle_Eye : MonoBehaviour
     private void EndCombat()
     {
         player.gameObject.SetActive(false);
-        currentLocation = null;
         buttonsAndPanelsScript.ToggleCombatPanel();
         if(enemyOne.gameObject != null)
         {
@@ -136,6 +136,7 @@ public class Eagle_Eye : MonoBehaviour
         {
             Destroy(enemyTwo.gameObject);
         }
+        listOfCombatants.Clear();
     }
 
     //Sorts combatants from fastest to slowest
@@ -210,7 +211,7 @@ public class Eagle_Eye : MonoBehaviour
             //Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.5f);
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 CombatUIUpdates();
@@ -254,21 +255,13 @@ public class Eagle_Eye : MonoBehaviour
                             break;
                         }
                     }
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(.5f);
                 }
                 CombatUIUpdates();
             }
             //End of turn stuff
             
-            yield return new WaitForSeconds(.5f);
-            CheckStatusTimes(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            CheckBuffsAndDebuffs(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            EndOfRoundStatusDamage();
-            //yield return new WaitForSeconds(.5f);
-            yield return new WaitForSeconds(.5f);
-            CombatUIUpdates();
+            
 
             foreach (Unit_V2 unit in listOfCombatants)
             {
@@ -309,9 +302,19 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-            
+
+            yield return new WaitForSeconds(.5f);
+            CheckStatusTimes(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            CheckBuffsAndDebuffs(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            EndOfRoundStatusDamage();
+            //yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.5f);
+            CombatUIUpdates();
+
         }
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(.5f);
 
         if (theCombatState == CombatState.Won)
         {
@@ -1025,14 +1028,16 @@ public class Eagle_Eye : MonoBehaviour
         }
         inventoryScript.GainMoney(EnemyMoneyAmount(deadEnemies));
         buttonsAndPanelsScript.ToggleEndOfBattlePanel();
-        //buttonsAndPanelsScript.ToggleLocationsPanel();
+        PlayerLocationAfterBattle();
     }
+
     public void PlayerLost(List<Unit_V2> deadEnemies)
     {
         EndCombat();
         Debug.Log("Player Lost");
         buttonsAndPanelsScript.ToggleEndOfBattlePanel();
         inventoryScript.LoseMoney(EnemyMoneyAmount(deadEnemies));
+        PlayerLocationAfterBattle();
     }
 
     private void LootDrops(List<Unit_V2> deadEnemies)
@@ -1088,7 +1093,7 @@ public class Eagle_Eye : MonoBehaviour
 
     private void GenerateEnvironment()
     {
-        currentLocation = "Forest";
+        //currentLocation = "Forest";
         envManaScript.GenerateEnvironment(currentLocation);
     }
 
@@ -1406,12 +1411,57 @@ public class Eagle_Eye : MonoBehaviour
                 subLocation = SubLocation.subLocation_1;
                 if(roll == 1)
                 {
-                    Debug.Log("ATLANTA");
                     buttonsAndPanelsScript.ToggleLocationsPanel();
                     StartCombat();
                 }
+                else
+                {
+                    subLocation = SubLocation.subLocation_2;
+                    buttonsAndPanelsScript.RefreshSubLocations();
+                }
+                break;
+            case "subLocation_2":
+                subLocation = SubLocation.subLocation_2;
+                if (roll == 1)
+                {
+                    buttonsAndPanelsScript.ToggleLocationsPanel();
+                    StartCombat();
+                }
+                else
+                {
+                    subLocation = SubLocation.subLocation_3;
+                    buttonsAndPanelsScript.RefreshSubLocations();
+                }
+                break;
+            case "subLocation_3":
+                subLocation = SubLocation.subLocation_3;
+                if (roll == 1)
+                {
+                    buttonsAndPanelsScript.ToggleLocationsPanel();
+                    StartCombat();
+                }
+                else
+                {
+                    subLocation = SubLocation.subLocation_4;
+                    buttonsAndPanelsScript.RefreshSubLocations();
+                }
+                break;
+            case "subLocation_4":
+                subLocation = SubLocation.subLocation_4;
+                if (roll == 1)
+                {
+                    buttonsAndPanelsScript.ToggleLocationsPanel();
+                    StartCombat();
+                }
+                else
+                {
+                    subLocation = SubLocation.subLocation_5;
+                    buttonsAndPanelsScript.RefreshSubLocations();
+                }
                 break;
         }
+
+        
     }
 
     public SubLocation GetSubLocation()
@@ -1419,7 +1469,46 @@ public class Eagle_Eye : MonoBehaviour
         return subLocation;
     }
 
-
+    private void PlayerLocationAfterBattle()
+    {
+        switch(theCombatState)
+        {
+            case CombatState.Won:
+                if(subLocation == SubLocation.subLocation_1)
+                {
+                    subLocation = SubLocation.subLocation_2;
+                }else if(subLocation == SubLocation.subLocation_2)
+                {
+                    subLocation = SubLocation.subLocation_3;
+                }else if(subLocation == SubLocation.subLocation_3)
+                {
+                    subLocation = SubLocation.subLocation_4;
+                }else if (subLocation == SubLocation.subLocation_4)
+                {
+                    subLocation = SubLocation.subLocation_5;
+                }
+                break;
+            case CombatState.Lost:
+                
+                if (subLocation == SubLocation.subLocation_2)
+                {
+                    subLocation = SubLocation.subLocation_1;
+                }
+                else if (subLocation == SubLocation.subLocation_3)
+                {
+                    subLocation = SubLocation.subLocation_2;
+                }
+                else if (subLocation == SubLocation.subLocation_4)
+                {
+                    subLocation = SubLocation.subLocation_3;
+                }
+                else if(subLocation == SubLocation.subLocation_5)
+                {
+                    subLocation = SubLocation.subLocation_4;
+                }
+                break;
+        }
+    }
 
 
 

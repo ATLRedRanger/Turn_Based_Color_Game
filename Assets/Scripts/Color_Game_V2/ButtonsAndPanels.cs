@@ -360,32 +360,7 @@ public class ButtonsAndPanels : MonoBehaviour
             _LocationsPanel.SetActive(!isActive);
         }
 
-        switch (eagleScript.GetSubLocation())
-        {
-            case SubLocation.subLocation_1:
-                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
-                subLocationsList[1].GetComponent<CanvasGroup>().interactable = true;
-                break;
-            case SubLocation.subLocation_2:
-                subLocationsList[0].GetComponent<CanvasGroup>().interactable = true;
-                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
-                subLocationsList[2].GetComponent<CanvasGroup>().interactable = true;
-                break;
-            case SubLocation.subLocation_3:
-                subLocationsList[1].GetComponent<CanvasGroup>().interactable = true;
-                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
-                subLocationsList[3].GetComponent<CanvasGroup>().interactable = true;
-                break;
-            case SubLocation.subLocation_4:
-                subLocationsList[2].GetComponent<CanvasGroup>().interactable = true;
-                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
-                subLocationsList[4].GetComponent<CanvasGroup>().interactable = true;
-                break;
-            case SubLocation.subLocation_5:
-                subLocationsList[3].GetComponent<CanvasGroup>().interactable = true;
-                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
-                break;
-        }
+        RefreshSubLocations();
     }
 
 
@@ -712,7 +687,47 @@ public class ButtonsAndPanels : MonoBehaviour
 
 
 
-
+    public void RefreshSubLocations()
+    {
+        switch (eagleScript.GetSubLocation())
+        {
+            case SubLocation.subLocation_1:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
+                break;
+            case SubLocation.subLocation_2:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
+                break;
+            case SubLocation.subLocation_3:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
+                break;
+            case SubLocation.subLocation_4:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = true;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
+                break;
+            case SubLocation.subLocation_5:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = true;
+                break;
+        }
+    }
 
     public void OnForestLocationClick()
     {
