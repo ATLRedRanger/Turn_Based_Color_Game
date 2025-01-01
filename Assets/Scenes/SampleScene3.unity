@@ -6745,7 +6745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Forest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -19179,7 +19179,7 @@ GameObject:
   - component: {fileID: 1702320163}
   - component: {fileID: 1702320162}
   m_Layer: 5
-  m_Name: Location
+  m_Name: Location_Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19239,9 +19239,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.16027798, g: 0.6132076, b: 0.13594696, a: 1}
+    m_HighlightedColor: {r: 0.18472639, g: 1, b: 0.1768868, a: 1}
+    m_PressedColor: {r: 0.18431373, g: 0.31764707, b: 0.1764706, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -23218,6 +23218,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listOfCombatants: []
   player: {fileID: 5002846481952680520, guid: a2b2f0991e6b82c49b7182be870f57c3, type: 3}
+  enemyOne: {fileID: 0}
+  enemyTwo: {fileID: 0}
   currentLocation: 
 --- !u!4 &2109637884
 Transform:

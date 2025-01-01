@@ -1,7 +1,6 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
@@ -304,7 +303,7 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _spellbookButton04Text.text = playerSpellbook.spellbookAttacks[3].attackName;
 
-            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[3]))
+            if (eagleScript.IsPlayerAttackUseable(playerSpellbook.spellbookAttacks[3]))
             {
                 _spellbookButtonFour.interactable = true;
             }
@@ -314,7 +313,7 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _spellbookButton03Text.text = playerSpellbook.spellbookAttacks[2].attackName;
 
-            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[2]))
+            if (eagleScript.IsPlayerAttackUseable(playerSpellbook.spellbookAttacks[2]))
             {
                 _spellbookButtonThree.interactable = true;
             }
@@ -325,7 +324,7 @@ public class ButtonsAndPanels : MonoBehaviour
 
             _spellbookButton02Text.text = playerSpellbook.spellbookAttacks[1].attackName;
 
-            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[1]))
+            if (eagleScript.IsPlayerAttackUseable(playerSpellbook.spellbookAttacks[1]))
             {
                 _spellbookButtonTwo.interactable = true;
             }
@@ -335,7 +334,7 @@ public class ButtonsAndPanels : MonoBehaviour
         {
             _spellbookButton01Text.text = playerSpellbook.spellbookAttacks[0].attackName;
 
-            if (eagleScript.IsAttackUseable(playerSpellbook.spellbookAttacks[0]))
+            if (eagleScript.IsPlayerAttackUseable(playerSpellbook.spellbookAttacks[0]))
             {
                 _spellbookButtonOne.interactable = true;
             }
@@ -485,7 +484,7 @@ public class ButtonsAndPanels : MonoBehaviour
         foreach (var kvp in eagleScript.GetCurrentPC().unitAttackDictionary)
         {
             attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().alpha = 1;
-            if (eagleScript.IsAttackUseable(kvp.Value))
+            if (eagleScript.IsPlayerAttackUseable(kvp.Value))
             {
                 attackButtonDict[kvp.Key].GetComponent<CanvasGroup>().interactable = true;
             }
@@ -725,6 +724,13 @@ public class ButtonsAndPanels : MonoBehaviour
                 subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
                 subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
                 subLocationsList[4].GetComponent<CanvasGroup>().interactable = true;
+                break;
+            default:
+                subLocationsList[0].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[1].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[2].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[3].GetComponent<CanvasGroup>().interactable = false;
+                subLocationsList[4].GetComponent<CanvasGroup>().interactable = false;
                 break;
         }
     }

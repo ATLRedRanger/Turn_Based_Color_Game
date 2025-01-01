@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class EnemyUnit_V2 : Unit_V2
@@ -43,7 +42,7 @@ public class EnemyUnit_V2 : Unit_V2
         }
     }
 
-    private bool IsAttackUseable(Attack attack, Environment env)
+    private bool IsEnemyAttackUseable(Attack attack, Environment env)
     {
         if (attack.attackColor == Hue.Neutral && this.GetCurrentStamina() >= attack.staminaCost) 
         {
@@ -67,7 +66,7 @@ public class EnemyUnit_V2 : Unit_V2
 
         foreach (Attack attack in attackList)
         {
-            if (IsAttackUseable(attack, env))
+            if (IsEnemyAttackUseable(attack, env))
             {
                 return attack;
             }

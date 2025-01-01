@@ -101,6 +101,7 @@ public enum AttackBehavior
     None
 }
 
+
 public enum Statuses
 {
     Burned,

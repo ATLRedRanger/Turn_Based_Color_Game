@@ -1,6 +1,4 @@
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //Should colored attacks cost less stamina than neutral ones?
@@ -18,13 +16,14 @@ public class Attack
     public AttackType attackType;
     public Hue attackColor;
     public AttackBehavior attackBehavior;
+    public WeaponType weaponReq;
     public Buffs attackBuff;
     public Debuffs attackDebuff;
     public bool isSingleTarget;
     public int attackAccuracyBonus = 0;
     public int critRoll = 0;
     public Attack(string attackName, int attackPower, int attackAccuracy, int attackAccuracyBonus, int critRoll, int colorCost, int numOfHits,
-                    int statusBuildUpAmout, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget)
+                    int statusBuildUpAmout, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget, WeaponType weaponReq)
     {
         this.attackName = attackName;
         this.attackPower = attackPower;
@@ -38,6 +37,7 @@ public class Attack
         this.attackColor = attackColor;
         this.attackBehavior = attackBehavior;
         this.isSingleTarget = isSingleTarget;
+        this.weaponReq = weaponReq;
     }
 
     public bool DoesAttackHit(Unit_V2 attacker, Unit_V2 defender, bool greatestColor)

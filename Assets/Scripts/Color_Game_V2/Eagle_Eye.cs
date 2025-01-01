@@ -1,10 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using UnityEditor.UnityLinker;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 public class Eagle_Eye : MonoBehaviour
 {
@@ -957,13 +954,35 @@ public class Eagle_Eye : MonoBehaviour
         playerTurnIsDone = true;
     }
 
-    public bool IsAttackUseable(Attack attack)
+    public bool IsPlayerAttackUseable(Attack attack)
     {
         //Debug.Log($"COLOR IN ENV: {envManaScript.GetCurrentColorDictionary()[attack.attackColor]} vs ATTACK COLOR COST: {attack.colorCost}");
-        
-        if (attack.attackColor != Hue.Neutral && envManaScript.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        if (attack.attackColor != Hue.Neutral && attack.weaponReq == WeaponType.Neutral)
         {
-            return true;
+            if(attack.colorCost <= envManaScript.GetCurrentColorDictionary()[attack.attackColor])
+            {
+                return true;
+            }
+        }
+        else if(attack.attackColor != Hue.Neutral && attack.weaponReq != WeaponType.Neutral && currentPC.equippedWeapon != null)
+        {
+            if(currentPC.equippedWeapon.weaponType == attack.weaponReq && attack.colorCost <= envManaScript.GetCurrentColorDictionary()[attack.attackColor])
+            {
+                return true;
+            }
+        }
+        else if(attack.attackColor == Hue.Neutral && attack.weaponReq == WeaponType.Neutral)
+        {
+            if (envManaScript.IsThereEnoughColor(attack.colorCost))
+            {
+                return true;
+            }
+        }else if (attack.attackColor == Hue.Neutral && attack.weaponReq != WeaponType.Neutral && currentPC.equippedWeapon != null)
+        {
+            if(envManaScript.IsThereEnoughColor(attack.colorCost) && attack.weaponReq == currentPC.equippedWeapon.weaponType)
+            {
+                return true;
+            }
         }
         return false;
     }
@@ -996,6 +1015,7 @@ public class Eagle_Eye : MonoBehaviour
                 envManaScript.LoseViolet(attack.colorCost);
                 break;
             default:
+                envManaScript.LoseRandomColor(attack.colorCost);
                 break;
         }
 
@@ -1513,6 +1533,9 @@ public class Eagle_Eye : MonoBehaviour
                 }else if (subLocation == SubLocation.subLocation_4)
                 {
                     subLocation = SubLocation.subLocation_5;
+                }else if (subLocation == SubLocation.subLocation_5)
+                {
+                    subLocation = SubLocation.beginning;
                 }
                 break;
             case CombatState.Lost:

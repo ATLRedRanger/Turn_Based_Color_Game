@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Environment : MonoBehaviour
@@ -308,6 +306,33 @@ public class Environment : MonoBehaviour
         }
     }
 
+    public void LoseRandomColor(int amount)
+    {
+        int roll = Random.Range(1, 7);
+        if(roll == 1 && amount <= currentRed)
+        {
+            LoseRed(amount);
+        }else if(roll == 2 && amount <= currentOrange)
+        {
+            LoseOrange(amount);
+        }else if(roll == 3 && amount <= currentYellow)
+        {
+            LoseYellow(amount);
+        }
+        else if (roll == 4 && amount <= currentGreen)
+        {
+            LoseGreen(amount);
+        }
+        else if (roll == 5 && amount <= currentBlue)
+        {
+            LoseBlue(amount);
+        }
+        else if (roll == 6 && amount <= currentViolet)
+        {
+            LoseViolet(amount);
+        }
+    }
+
     public bool GreatestColorInEnvironment(Hue color)
     {
         int colorValue = GetColorValue(color);
@@ -329,4 +354,15 @@ public class Environment : MonoBehaviour
         }
     }
 
+    public bool IsThereEnoughColor(int amount)
+    {
+        foreach(var kvp in environmentColorDictionary)
+        {
+            if(kvp.Value >= amount)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
