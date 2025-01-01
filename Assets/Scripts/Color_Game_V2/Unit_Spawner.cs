@@ -11,6 +11,8 @@ public class Unit_Spawner : MonoBehaviour
 
     public List<Unit_V2> listOfCaveEnemies;
 
+    public Unit_V2 forestBoss;
+
     public List<GameObject> enemyPositions;
 
     public GameObject playerPosition;
@@ -45,6 +47,9 @@ public class Unit_Spawner : MonoBehaviour
             case "Forest":
                 whatEnemy = Random.Range(0, listOfForestEnemies.Count);
                 enemy = (Instantiate(listOfForestEnemies[whatEnemy], enemyPositions[enemyPosition].transform).GetComponent<Unit_V2>());
+                break;
+            case "Forest_Boss":
+                enemy = Instantiate(forestBoss, enemyPositions[0].transform).GetComponent<Unit_V2>();
                 break;
             case "Cave":
                 whatEnemy = Random.Range(0, listOfCaveEnemies.Count);

@@ -70,7 +70,7 @@ public class Attack_Database : MonoBehaviour
 
         //Neutral
 
-        _basicAttack = CreateAttack("Basic Attack", 1, 100, 0, 20, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.FutureSight, true);
+        _basicAttack = CreateAttack("Basic Attack", 1, 100, 0, 20, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.FutureSight, false);
         _basicAxeAttack = CreateAttack("Attack", 2, 90, 0, 20, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
         _basicBowAttack = CreateAttack("Attack", 2, 90, 0, 20, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);
         _basicHammerAttack = CreateAttack("Attack", 2, 90, 0, 20, 1, 1, 0, AttackType.Physical, Hue.Neutral, AttackBehavior.None, true);

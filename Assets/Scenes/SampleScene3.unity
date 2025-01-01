@@ -14558,6 +14558,8 @@ MonoBehaviour:
   - {fileID: 8382424229916251683, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
   listOfCaveEnemies:
   - {fileID: 309705362981679431, guid: 9f5ccccfc108d074c85250060b862985, type: 3}
+  forestBoss: {fileID: 309705362981679431, guid: 9f5ccccfc108d074c85250060b862985,
+    type: 3}
   enemyPositions:
   - {fileID: 236893717}
   - {fileID: 249592960}
@@ -23214,7 +23216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4062502d05e19419f70576920fff9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listOfCombatants: []
   player: {fileID: 5002846481952680520, guid: a2b2f0991e6b82c49b7182be870f57c3, type: 3}
+  currentLocation: 
 --- !u!4 &2109637884
 Transform:
   m_ObjectHideFlags: 0

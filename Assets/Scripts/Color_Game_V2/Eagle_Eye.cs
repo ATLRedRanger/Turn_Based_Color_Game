@@ -9,12 +9,15 @@ using static UnityEngine.UI.CanvasScaler;
 public class Eagle_Eye : MonoBehaviour
 {
     private List<List<object>> statusDamageQue = new List<List<object>>();
+    [SerializeField]
     private List<Unit_V2> listOfCombatants = new List<Unit_V2>();
     private CombatState theCombatState = CombatState.Active;
     private WhoseTurn whoseTurnIsIt = WhoseTurn.Nobody;
     [SerializeField]
     private Player_V2 player;
+    [SerializeField]
     private Unit_V2 enemyOne;
+    [SerializeField]
     private Unit_V2 enemyTwo;
     private Unit_V2 currentPC;
     private int numOfEnemies;
@@ -128,14 +131,19 @@ public class Eagle_Eye : MonoBehaviour
     {
         player.gameObject.SetActive(false);
         buttonsAndPanelsScript.ToggleCombatPanel();
-        if(enemyOne.gameObject != null)
+        if(enemyOne != null)
         {
             Destroy(enemyOne.gameObject);
+            enemyOne = null;
         }
-        if (enemyTwo.gameObject != null)
+        if (enemyTwo != null)
         {
             Destroy(enemyTwo.gameObject);
+            enemyTwo = null;
         }
+
+        
+        
         listOfCombatants.Clear();
     }
 
@@ -150,26 +158,40 @@ public class Eagle_Eye : MonoBehaviour
         
         int enemiesToGenerate = 2;//Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
-        for (int i = 0; i < enemiesToGenerate; i++)
+        if(subLocation != SubLocation.subLocation_5)
         {
-            switch (i)
+            for (int i = 0; i < enemiesToGenerate; i++)
             {
-                case 0:
-                    enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
-                    Debug.Log($"EnemyOne is {enemyOne.unitName}");
+                switch (i)
+                {
+                    case 0:
+                        enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
+                        Debug.Log($"EnemyOne is {enemyOne.unitName}");
+                        listOfCombatants.Add(enemyOne);
+
+                        break;
+                    case 1:
+                        enemyTwo = unitSpawnerScript.GenerateEnemy(1, currentLocation);
+                        Debug.Log($"EnemyTwo is {enemyTwo.unitName}");
+                        listOfCombatants.Add(enemyTwo);
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            switch (currentLocation)
+            {
+                case "Forest":
+                    enemyOne = unitSpawnerScript.GenerateEnemy(0, "Forest_Boss");
                     listOfCombatants.Add(enemyOne);
-
-                    break;
-                case 1:
-                    enemyTwo = unitSpawnerScript.GenerateEnemy(1, currentLocation);
-                    Debug.Log($"EnemyTwo is {enemyTwo.unitName}");
-                    listOfCombatants.Add(enemyTwo);
-
-                    break;
-                default:
                     break;
             }
         }
+        
 
     }
 
@@ -1458,6 +1480,11 @@ public class Eagle_Eye : MonoBehaviour
                     subLocation = SubLocation.subLocation_5;
                     buttonsAndPanelsScript.RefreshSubLocations();
                 }
+                break;
+            case "subLocation_5":
+                subLocation = SubLocation.subLocation_5;
+                buttonsAndPanelsScript.ToggleLocationsPanel();
+                StartCombat();
                 break;
         }
 
