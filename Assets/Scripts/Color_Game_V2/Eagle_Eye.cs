@@ -939,11 +939,11 @@ public class Eagle_Eye : MonoBehaviour
                                 buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                                 uiScript.SetAttackDescriptionText(chosenAttack, player, enemy, damage.ToString());
                                 yield return new WaitForSeconds(1);
-                                buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                                // buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                             }
 
                         }
-
+                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         CombatUIUpdates();
 
                     }

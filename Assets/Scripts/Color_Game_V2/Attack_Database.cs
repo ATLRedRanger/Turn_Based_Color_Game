@@ -69,7 +69,7 @@ public class Attack_Database : MonoBehaviour
         _greenAttackOne = CreateAttack("Green Attack", 2, 20, 0, 20, 6, 1, 0, AttackType.Physical, Hue.Green, AttackBehavior.None, false, WeaponType.Hammer);
 
         //Blue
-        _blueAttackOne = CreateAttack("Blue Attack", 2, 20, 0, 20, 5, 2, 0, AttackType.Special, Hue.Blue, AttackBehavior.None, true, WeaponType.Staff);
+        _blueAttackOne = CreateAttack("Blue Attack", 0, 20, 0, 20, 5, 2, 0, AttackType.Special, Hue.Blue, AttackBehavior.None, true, WeaponType.Staff);
 
         //Violet
         _violetAttackOne = CreateAttack("Violet Attack", 2, 20, 0, 20, 6, 1, 0, AttackType.Special, Hue.Violet, AttackBehavior.None, true, WeaponType.Neutral);
