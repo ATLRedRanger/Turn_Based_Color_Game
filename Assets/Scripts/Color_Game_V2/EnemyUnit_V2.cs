@@ -55,11 +55,17 @@ public class EnemyUnit_V2 : Unit_V2
             if (envColors[tolerantColor] > envColors[sensitiveColor])
             {
                 //Debug.Log("KIWI");
+                AddAttackToDictionary(attackDatabaseScript._fireball);
                 unitAnimator.SetBool("isRaging", true);
             }
             else
             {
                 unitAnimator.SetBool("isRaging", false);
+            }
+
+            if (unitAnimator.GetBool("isRaging") == false && unitAttackDictionary.ContainsKey("Fireball"))
+            {
+                unitAttackDictionary.Remove("Fireball");
             }
         }
         
