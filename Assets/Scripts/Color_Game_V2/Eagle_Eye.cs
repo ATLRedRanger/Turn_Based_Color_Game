@@ -40,6 +40,14 @@ public class Eagle_Eye : MonoBehaviour
     //private Weapon_Database_V2 weaponDatabaseScript;
     private Item_Database itemDatabaseScript;
     private Inventory_V2 inventoryScript;
+
+
+
+
+    private string lootDrop1 = null;
+    private string lootDrop2 = null;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -153,7 +161,7 @@ public class Eagle_Eye : MonoBehaviour
     private void GenerateEnemies()
     {
         
-        int enemiesToGenerate = 2;//Random.Range(1, 3);
+        int enemiesToGenerate = Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         if(subLocation != SubLocation.subLocation_5)
         {
@@ -1056,8 +1064,12 @@ public class Eagle_Eye : MonoBehaviour
         }
     }
 
+    
     public void PlayerWon(List<Unit_V2> deadEnemies)
     {
+        lootDrop1 = null;
+        lootDrop2 = null;
+
         Debug.Log("Player Won");
         EndCombat();
         
@@ -1069,6 +1081,7 @@ public class Eagle_Eye : MonoBehaviour
             spellbook.GainExp(GainExperience(deadEnemies));
         }
         inventoryScript.GainMoney(EnemyMoneyAmount(deadEnemies));
+        uiScript.SetVictoryScreenText(GainExperience(deadEnemies), EnemyMoneyAmount(deadEnemies), lootDrop1, lootDrop2);
         buttonsAndPanelsScript.ToggleEndOfBattlePanel();
         PlayerLocationAfterBattle();
     }
@@ -1084,6 +1097,8 @@ public class Eagle_Eye : MonoBehaviour
 
     private void LootDrops(List<Unit_V2> deadEnemies)
     {
+        int count = 0;
+
         foreach (Unit_V2 unit in deadEnemies)
         {
             if (unit is EnemyUnit_V2)
@@ -1092,8 +1107,19 @@ public class Eagle_Eye : MonoBehaviour
                 Item item = enemy.DroppedItem();
                 if (item != null)
                 {
+                    count++;
                     Debug.Log($"Enemy Dropped: {item.itemName}");
                     inventoryScript.AddToInventory(item);
+                    if (count == 1)
+                    {
+                        lootDrop1 = item.itemName;
+                    }
+                    if (count == 2)
+                    {
+                        lootDrop2 = item.itemName;
+                    }
+                    
+                    
                 }
                 
             }

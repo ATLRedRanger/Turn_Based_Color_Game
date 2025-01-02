@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,7 @@ public class UI_V2 : MonoBehaviour
     public Image enemyTwoHealthBar;
     public Image enemyTwoStaminaBar;
     public Text enemyTwoDamageNumberText;
+    public GameObject enemyTwoHealthBarGO;
 
 
     //Environment Bars
@@ -59,6 +61,14 @@ public class UI_V2 : MonoBehaviour
 
     //Attack Description Panel
     public Text _attackDescriptionText;
+
+    //Win Screen Text
+    public TMP_Text victoryText;
+    public TMP_Text defeatText;
+    public TMP_Text experienceGainedText;
+    public TMP_Text moneyText;
+    public TMP_Text lootDrop1Text;
+    public TMP_Text lootDrop2Text;
 
     // Start is called before the first frame update
     void Start()
@@ -85,32 +95,35 @@ public class UI_V2 : MonoBehaviour
     {
         if(enemyOne == null)
         {
-
+            
         }
         else
         {
             enemyOneName.text = enemyOne.unitName;
             enemyOneHealthText.text = enemyOne.GetCurrentHp().ToString() + " / " + enemyOne.GetMaxHp().ToString();
-            enemyOneStaminaText.text = enemyOne.GetCurrentStamina().ToString() + " / " + enemyOne.GetMaxStamina().ToString();
+            //enemyOneStaminaText.text = enemyOne.GetCurrentStamina().ToString() + " / " + enemyOne.GetMaxStamina().ToString();
             enemyOneHealthBar.fillAmount = (float)(float)(enemyOne.GetCurrentHp() / (float)(enemyOne.GetMaxHp()));
-            enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
+            //enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
         }
         
     }
 
     public void SetEnemeyTwoHealthAndStamina(Unit_V2 enemyTwo)
     {
+        enemyTwoHealthBarGO.SetActive(true);
         if (enemyTwo == null)
         {
-
+            enemyTwoName.text = "";
+            enemyTwoHealthText.text = "";
+            enemyTwoHealthBarGO.SetActive(false);
         }
         else
         {
             enemyTwoName.text = enemyTwo.unitName;
             enemyTwoHealthText.text = enemyTwo.GetCurrentHp().ToString() + " / " + enemyTwo.GetMaxHp().ToString();
-            enemyTwoStaminaText.text = enemyTwo.GetCurrentStamina().ToString() + " / " + enemyTwo.GetMaxStamina().ToString();
+            //enemyTwoStaminaText.text = enemyTwo.GetCurrentStamina().ToString() + " / " + enemyTwo.GetMaxStamina().ToString();
             enemyTwoHealthBar.fillAmount = (float)(float)(enemyTwo.GetCurrentHp() / (float)(enemyTwo.GetMaxHp()));
-            enemyTwoStaminaBar.fillAmount = (float)(float)(enemyTwo.GetCurrentStamina() / (float)(enemyTwo.GetMaxStamina()));
+            //enemyTwoStaminaBar.fillAmount = (float)(float)(enemyTwo.GetCurrentStamina() / (float)(enemyTwo.GetMaxStamina()));
         }
 
     }
@@ -178,5 +191,30 @@ public class UI_V2 : MonoBehaviour
     public void DisplayDamageNumber()
     {
 
+    }
+
+    public void SetVictoryScreenText(int experience, int money, string lootDrop1, string lootDrop2)
+    {
+        victoryText.text = "YOU'VE DEFEATED THE ENEMY(s)!";
+        defeatText.text = "";
+        experienceGainedText.text = $"You've gained {experience} experience!";
+        moneyText.text = $"You've gained {money} money!";
+        if(lootDrop1 != null)
+        {
+            lootDrop1Text.text = $"An enemy dropped a(n) {lootDrop1}!";
+        }
+        else
+        {
+            lootDrop1Text.text = $"";
+        }
+        if (lootDrop2 != null)
+        {
+            lootDrop2Text.text = $"An enemy dropped a(n) {lootDrop2}!";
+        }
+        else
+        {
+            lootDrop2Text.text = $"";
+        }
+        
     }
 }
