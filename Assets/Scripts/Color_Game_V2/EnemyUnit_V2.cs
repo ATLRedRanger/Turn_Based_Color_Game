@@ -10,6 +10,7 @@ public class EnemyUnit_V2 : Unit_V2
     private Hue tolerantColor = Hue.Blue;
     private int baseAttackBonusModifier = 0;
     private int armorClassBonusModifier = 0;
+    private int dcBonousModifier = 0;
     [SerializeField]
     private int postiveBonus = 0;
     [SerializeField]
@@ -23,13 +24,13 @@ public class EnemyUnit_V2 : Unit_V2
     private int expDropped;
     [SerializeField]
     private int moneyDropped;
-    public SpriteRenderer baseSprite;
-    public SpriteRenderer differentSprite;
+    public Animator unitAnimator;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
+        unitAnimator = GetComponent<Animator>();
         //AddAttackToDictionary(attackDatabaseScript._fireball);
         AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         AddAttackToDictionary(attackDatabaseScript._basicAttack);
@@ -43,19 +44,22 @@ public class EnemyUnit_V2 : Unit_V2
         
     }
 
-    public override int GetCombatAC()
-    {
-        return base.GetCombatAC() + armorClassBonusModifier;
-
-    }
+    
 
     public virtual void UnitColorBehavior(Dictionary<Hue, int> envColors)
     {
+        //Debug.Log("PINEAPPLE");
         if(sensitiveColor != Hue.Neutral && tolerantColor != Hue.Neutral)
         {
+            Debug.Log($"Pos Color: {envColors[tolerantColor]} vs Neg Color: {envColors[sensitiveColor]}");
             if (envColors[tolerantColor] > envColors[sensitiveColor])
             {
-                unitSpriteRenderer = differentSprite;
+                //Debug.Log("KIWI");
+                unitAnimator.SetBool("isRaging", true);
+            }
+            else
+            {
+                unitAnimator.SetBool("isRaging", false);
             }
         }
         
@@ -147,5 +151,25 @@ public class EnemyUnit_V2 : Unit_V2
     public int GetBABBonusModifier()
     {
         return baseAttackBonusModifier;
+    }
+
+    public int GetDCBonusModifier()
+    {
+        return dcBonousModifier;
+    }
+    public override int GetCombatBAB()
+    {
+        return GetBAB() + GetBABBonusModifier();
+    }
+
+    public override int GetCombatAC()
+    {
+        return base.GetCombatAC() + GetACBonusModifier();
+
+    }
+
+    public override int GetCombatDC()
+    {
+        return base.GetCombatDC() + GetDCBonusModifier();
     }
 }

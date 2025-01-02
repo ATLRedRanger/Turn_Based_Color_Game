@@ -202,6 +202,7 @@ public class Eagle_Eye : MonoBehaviour
 
     private void CombatUIUpdates()
     {
+        UpdateEnvironmentColors();
         uiScript.SetPlayerHealthAndStamina(currentPC);
         uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
         uiScript.SetEnemeyTwoHealthAndStamina(enemyTwo);
@@ -329,7 +330,15 @@ public class Eagle_Eye : MonoBehaviour
                 theCombatState = CombatState.Lost;
                 break;
             }
-
+            
+            foreach (Unit_V2 unit in listOfCombatants)
+            {
+                if(unit is EnemyUnit_V2)
+                {
+                    EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
+                    enemy.UnitColorBehavior(envManaScript.GetCurrentColorDictionary());
+                }
+            }
             yield return new WaitForSeconds(.5f);
             CheckStatusTimes(listOfCombatants);
             yield return new WaitForSeconds(.5f);
@@ -339,7 +348,7 @@ public class Eagle_Eye : MonoBehaviour
             //yield return new WaitForSeconds(.5f);
             yield return new WaitForSeconds(.5f);
             CombatUIUpdates();
-
+            
         }
         //yield return new WaitForSeconds(.5f);
 

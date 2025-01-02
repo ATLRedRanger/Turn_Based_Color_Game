@@ -42,11 +42,9 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
         {
             if (envColors[GetTolerantColor()] > envColors[GetSensitiveColor()])
             {
-                unitSpriteRenderer = differentSprite;
+                
             }
         }
 
     }
 }
-
-//TESTING TESTING TESTING TESTING

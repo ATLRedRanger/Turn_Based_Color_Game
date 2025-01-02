@@ -168,6 +168,7 @@ public class Environment : MonoBehaviour
 
     public Dictionary<Hue, int> GetCurrentColorDictionary()
     {
+        UpdateEnvironmentColorDictionary();
         return environmentColorDictionary; 
     }
 

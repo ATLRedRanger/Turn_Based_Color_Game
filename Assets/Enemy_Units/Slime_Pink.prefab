@@ -143,13 +143,10 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: 0
-  unitSpriteRenderer: {fileID: 0}
   sensitiveColor: 3
-  tolerantColor: 4
+  tolerantColor: 0
   postiveBonus: 0
   negativeBonus: 0
   expDropped: 15
   moneyDropped: 7
-  baseSprite: {fileID: 0}
-  differentSprite: {fileID: 3024841788098867035, guid: 7b4d18cd0b85d0c4489a31d1a370ec72,
-    type: 3}
+  unitAnimator: {fileID: 0}

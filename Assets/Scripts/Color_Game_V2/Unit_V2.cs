@@ -67,7 +67,6 @@ public class Unit_V2 : MonoBehaviour
     private float violetResistance;
     [SerializeField]
 
-    public SpriteRenderer unitSpriteRenderer;
     /*
     private float axeResistance;
     [SerializeField]
@@ -90,7 +89,7 @@ public class Unit_V2 : MonoBehaviour
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         itemDatabaseScript = FindObjectOfType<Item_Database>();
-        unitSpriteRenderer = GetComponent<SpriteRenderer>();
+        
         currentHp = maxHp;
         currentStamina = maxStamina;
         SetColorResistances();
@@ -161,9 +160,9 @@ public class Unit_V2 : MonoBehaviour
     {
         if(equippedWeapon != null)
         {
-            return baseAttackBonus + equippedWeapon.bonusModifier;
+            return GetBAB() + equippedWeapon.bonusModifier;
         }
-        return baseAttackBonus;
+        return GetBAB();
     }
 
     public int GetAC()
@@ -180,7 +179,7 @@ public class Unit_V2 : MonoBehaviour
             return armorClass + equippedArmor.bonusModifier;
         }*/
 
-        return armorClass;
+        return GetAC();
     }
 
     public int GetDC()
