@@ -32,6 +32,7 @@ public class Player_V2 : Unit_V2
         base.Start();
         
         unitAttackDictionary["Fireball"] = attackDatabaseScript._fireball;
+        unitAttackDictionary["Blue Attack"] = attackDatabaseScript._blueAttackOne;
     }
 
     // Update is called once per frame
@@ -63,6 +64,6 @@ public class Player_V2 : Unit_V2
 
     public void LevelUp()
     {
-        
+        currentLevel++;   
     }
 }

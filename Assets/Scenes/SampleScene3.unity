@@ -578,9 +578,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1741761540}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: _BlueAttacklClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1415,9 +1415,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1741761540}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: _VioletAttackClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7319,9 +7319,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1741761540}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: _YellowAttacklClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9592,9 +9592,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1741761540}
-        m_TargetAssemblyTypeName: UI, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1741761542}
+        m_TargetAssemblyTypeName: ButtonsAndPanels, Assembly-CSharp
+        m_MethodName: _GreenAttackClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15484,7 +15484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1384980333
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20056,6 +20056,10 @@ MonoBehaviour:
   _attackButton: {fileID: 1211379656}
   _fireBallButton: {fileID: 1530951495}
   _orangeAttackButton: {fileID: 1554331858}
+  _yellowAttackButton: {fileID: 615704783}
+  _greenAttackButton: {fileID: 854639347}
+  _blueAttackButton: {fileID: 34189376}
+  _violetAttackButton: {fileID: 132016790}
   _fightButton: {fileID: 502051564}
   _abilitiesButton: {fileID: 1129678891}
   _itemsButton: {fileID: 1386464849}
@@ -21578,7 +21582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1952190494
 RectTransform:
   m_ObjectHideFlags: 0

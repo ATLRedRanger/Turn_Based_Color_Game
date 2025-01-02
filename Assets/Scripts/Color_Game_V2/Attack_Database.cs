@@ -13,12 +13,16 @@ public class Attack_Database : MonoBehaviour
     public Attack _orangeAttackOne;
 
     //Yellow Attacks
+    public Attack _yellowAttackOne;
 
     //Green Attacks
+    public Attack _greenAttackOne;
 
     //Blue Attacks
+    public Attack _blueAttackOne;
 
     //Violet Attacks
+    public Attack _violetAttackOne;
 
     //Axe
     public Attack _basicAxeAttack;
@@ -53,18 +57,22 @@ public class Attack_Database : MonoBehaviour
         //string attackName, int attackPower, int attackAccuracy, int attackBonus, int critRoll, int colorCost, int numOfHits, int statusBuildUpAmount, AttackType attackType, Hue attackColor, AttackBehavior attackBehavior, bool isSingleTarget
 
         //Red
-        _fireball = CreateAttack("Fireball", 1, 100, 0, 20, 5, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, true, WeaponType.Neutral);
+        _fireball = CreateAttack("Fireball", 1, 100, 0, 20, 5, 1, 2, AttackType.Special, Hue.Red, AttackBehavior.Burn, false, WeaponType.Neutral);
 
         //Orange
-        _orangeAttackOne = CreateAttack("Orange Attack", 2, 20, 0, 20, 6, 2, 4, AttackType.Special, Hue.Orange, AttackBehavior.None, true, WeaponType.Neutral);
+        _orangeAttackOne = CreateAttack("Orange Attack", 2, 20, 0, 20, 6, 1, 0, AttackType.Special, Hue.Orange, AttackBehavior.None, true, WeaponType.Neutral);
 
         //Yellow
+        _yellowAttackOne = CreateAttack("Yellow Attack", 2, 20, 0, 20, 6, 1, 4, AttackType.Special, Hue.Yellow, AttackBehavior.FutureSight, true, WeaponType.Neutral);
 
         //Green
+        _greenAttackOne = CreateAttack("Green Attack", 2, 20, 0, 20, 6, 1, 0, AttackType.Physical, Hue.Green, AttackBehavior.None, false, WeaponType.Hammer);
 
         //Blue
+        _blueAttackOne = CreateAttack("Blue Attack", 2, 20, 0, 20, 5, 2, 0, AttackType.Special, Hue.Blue, AttackBehavior.None, true, WeaponType.Staff);
 
         //Violet
+        _violetAttackOne = CreateAttack("Violet Attack", 2, 20, 0, 20, 6, 1, 0, AttackType.Special, Hue.Violet, AttackBehavior.None, true, WeaponType.Neutral);
 
         //Neutral
 

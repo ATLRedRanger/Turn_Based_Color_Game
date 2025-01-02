@@ -16,6 +16,10 @@ public class ButtonsAndPanels : MonoBehaviour
     public Button _attackButton;
     public Button _fireBallButton;
     public Button _orangeAttackButton;
+    public Button _yellowAttackButton;
+    public Button _greenAttackButton;
+    public Button _blueAttackButton;
+    public Button _violetAttackButton;
 
     //Panel Opening Buttons
     public GameObject _fightButton;
@@ -133,6 +137,10 @@ public class ButtonsAndPanels : MonoBehaviour
 
         attackButtonDict.Add("Fireball", _fireBallButton);
         attackButtonDict.Add("Orange Attack", _orangeAttackButton);
+        attackButtonDict.Add("Yellow Attack", _yellowAttackButton);
+        attackButtonDict.Add("Green Attack", _greenAttackButton);
+        attackButtonDict.Add("Blue Attack", _blueAttackButton);
+        attackButtonDict.Add("Violet Attack", _violetAttackButton);
     }
 
     // Update is called once per frame
@@ -500,16 +508,51 @@ public class ButtonsAndPanels : MonoBehaviour
     public void _FireballClick()
     {
         eagleScript.AttackChangeNotification(attackDatabaseScript._fireball);
-        //ToggleSpellsPanel();
-
-
     }
 
     public void _OrangeAttackClick()
     {
         eagleScript.AttackChangeNotification(attackDatabaseScript._orangeAttackOne);
-        //ToggleSpellsPanel();
     }
+
+    public void _YellowAttacklClick()
+    {
+        eagleScript.AttackChangeNotification(attackDatabaseScript._yellowAttackOne);
+    }
+
+    public void _GreenAttackClick()
+    {
+        eagleScript.AttackChangeNotification(attackDatabaseScript._orangeAttackOne);
+    }
+
+    public void _BlueAttacklClick()
+    {
+        eagleScript.AttackChangeNotification(attackDatabaseScript._blueAttackOne);
+    }
+
+    public void _VioletAttackClick()
+    {
+        eagleScript.AttackChangeNotification(attackDatabaseScript._violetAttackOne);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void _AttackClick()
     {
