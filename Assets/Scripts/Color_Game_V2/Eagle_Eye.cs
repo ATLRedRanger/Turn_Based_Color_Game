@@ -424,11 +424,15 @@ public class Eagle_Eye : MonoBehaviour
         int roll = Random.Range(1, 21);
         if (envManaScript.GreatestColorInEnvironment(attack.attackColor))
         {
+            Debug.Log("CRIT ROLL + 2");
             roll += 2;
         }
 
+        Debug.Log($"CRIT ROLL: {roll}");
+
         if (roll >= attack.critRoll)
         {
+            Debug.Log("CRITICAL HIT!");
             return true;
         }
         /*
@@ -487,7 +491,7 @@ public class Eagle_Eye : MonoBehaviour
 
         CheckAttackBehavior(attack);
 
-        Debug.Log($"Base Damage: {baseDamage}");
+        Debug.Log($"Base Damage: {baseDamage} = Attack Power: {attack.attackPower} + Attacker Unit Damage: {attacker.GetUnitDamage()}");
         // Calculate base damage with potential random variation
         if (attacker.equippedWeapon != null)
         {
@@ -526,7 +530,7 @@ public class Eagle_Eye : MonoBehaviour
                     break;
             }
         }
-        Debug.Log($"Base Damage: {baseDamage}");
+        //Debug.Log($"Base Damage: {baseDamage}");
 
         // Apply damage multiplier for critical hits, etc.
         //Debug.Log($"DamageBeforeDefenses ({damageBeforeDefenses}) = {baseDamage} * {damageMultiplier}");
@@ -612,7 +616,7 @@ public class Eagle_Eye : MonoBehaviour
                         if (status.GetStatusName() == "Burn")
                         {
                             status.SetStatusDamage(defender);
-                            Debug.Log(status.GetStatusDamage());
+                            //Debug.Log(status.GetStatusDamage());
                         }
                     }
                 }
@@ -1197,6 +1201,13 @@ public class Eagle_Eye : MonoBehaviour
         if(attack.isSingleTarget == true)
         {
             buttonsAndPanelsScript.ToggleEnemiesPanel();
+        }
+        else
+        {
+            if(buttonsAndPanelsScript._SpellsPanel.activeSelf == true)
+            {
+                buttonsAndPanelsScript.ToggleSpellsPanel();
+            }
         }
         chosenAttack = attack;
     }

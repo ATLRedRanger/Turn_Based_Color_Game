@@ -10,7 +10,7 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
     private Item uncommonDrop = null;
     private Item rareDrop = null;
     private Item superRareDrop = null;
-    
+    public SpriteRenderer sprite;
 
     // Start is called before the first frame update
     public override void Start()
@@ -20,7 +20,7 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
         uncommonDrop = itemDatabaseScript.basicBow;
         rareDrop = itemDatabaseScript.basicAxe;
         superRareDrop = itemDatabaseScript.redSpellbook;
-
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -42,7 +42,11 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
         {
             if (envColors[GetTolerantColor()] > envColors[GetSensitiveColor()])
             {
-                
+                sprite.color = Color.red;
+            }
+            else
+            {
+                sprite.color = Color.white;
             }
         }
 

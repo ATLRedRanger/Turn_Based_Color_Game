@@ -145,9 +145,11 @@ public class Unit_V2 : MonoBehaviour
     {
         if(equippedWeapon != null)
         {
+            Debug.Log($"UNIT BASE DAMAGE: {baseDamage} + Weapon Base Damage: {equippedWeapon.baseDamage}");
             return baseDamage + equippedWeapon.baseDamage;
         }
 
+        Debug.Log($"UNIT BASE DAMAGE: {baseDamage}");
         return baseDamage;
     }
 

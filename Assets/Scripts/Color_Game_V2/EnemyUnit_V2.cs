@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class EnemyUnit_V2 : Unit_V2
 {
-    [SerializeField]
-    private Hue sensitiveColor = Hue.Red;
+    
     [SerializeField]
     private Hue tolerantColor = Hue.Blue;
+    [SerializeField]
+    private Hue sensitiveColor = Hue.Red;
     private int baseAttackBonusModifier = 0;
     private int armorClassBonusModifier = 0;
     private int dcBonousModifier = 0;

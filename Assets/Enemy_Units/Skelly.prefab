@@ -144,15 +144,13 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: 0
-  unitSpriteRenderer: {fileID: 0}
-  sensitiveColor: 3
-  tolerantColor: 4
+  sensitiveColor: 5
+  tolerantColor: 0
   postiveBonus: 0
   negativeBonus: 0
   expDropped: 0
   moneyDropped: 0
-  baseSprite: {fileID: 0}
-  differentSprite: {fileID: 0}
+  unitAnimator: {fileID: 0}
 --- !u!114 &3232683162939563697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,13 +187,11 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: -0.3
-  unitSpriteRenderer: {fileID: 0}
   sensitiveColor: 5
   tolerantColor: 0
   postiveBonus: 0
   negativeBonus: 0
   expDropped: 150
   moneyDropped: 100
-  baseSprite: {fileID: 1255798536640787275}
-  differentSprite: {fileID: 1655976847201112183, guid: 1b814c22004b7a84b96f986648db2e25,
-    type: 3}
+  unitAnimator: {fileID: 0}
+  sprite: {fileID: 0}
