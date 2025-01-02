@@ -67,6 +67,7 @@ public class Unit_V2 : MonoBehaviour
     private float violetResistance;
     [SerializeField]
 
+    public SpriteRenderer unitSpriteRenderer;
     /*
     private float axeResistance;
     [SerializeField]
@@ -89,7 +90,7 @@ public class Unit_V2 : MonoBehaviour
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         itemDatabaseScript = FindObjectOfType<Item_Database>();
-
+        unitSpriteRenderer = GetComponent<SpriteRenderer>();
         currentHp = maxHp;
         currentStamina = maxStamina;
         SetColorResistances();
@@ -156,7 +157,7 @@ public class Unit_V2 : MonoBehaviour
         return baseAttackBonus;
     }
 
-    public int GetCombatBAB()
+    public virtual int GetCombatBAB()
     {
         if(equippedWeapon != null)
         {
@@ -165,12 +166,29 @@ public class Unit_V2 : MonoBehaviour
         return baseAttackBonus;
     }
 
+    public int GetAC()
+    {
+        return armorClass;
+    }
+
+    public virtual int GetCombatAC()
+    {
+        //When armor is introduced, this is where I'll put the armor modifiers
+        /*
+         if(equippedArmor != null)
+        {
+            return armorClass + equippedArmor.bonusModifier;
+        }*/
+
+        return armorClass;
+    }
+
     public int GetDC()
     {
         return difficultyClass;
     }
 
-    public int GetCombatDC()
+    public virtual int GetCombatDC()
     {
         return difficultyClass;
     }
@@ -250,7 +268,7 @@ public class Unit_V2 : MonoBehaviour
     {
         return unitAttackDictionary;
     }
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         
         currentHp -= damage;
@@ -262,7 +280,7 @@ public class Unit_V2 : MonoBehaviour
         Debug.Log($"{unitName} has taken {damage} damage and their currentHP is: {currentHp}");
     }
 
-    public void GainHealth(int amount)
+    public virtual void GainHealth(int amount)
     {
         
         currentHp += amount;

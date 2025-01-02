@@ -50,7 +50,7 @@ public class Attack
         
         Debug.Log($"Does attack hit: Roll: {roll} + {attacker.unitName}'s  CombatBAB: {attacker.GetCombatBAB()} vs {defender.unitName}'s DC: ");//{defender.GetCombatDC()}");
         
-        if (roll + attacker.GetCombatBAB() >= defender.GetCombatDC())
+        if (roll + attacker.GetCombatBAB() >= defender.GetCombatAC())
         {
             return true;
         }

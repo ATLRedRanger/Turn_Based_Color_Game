@@ -10,6 +10,8 @@ public class Item_Database : MonoBehaviour
     //Weapons
     public Weapon basicAxe;
     public Weapon basicBow;
+    public Weapon basicHammer;
+    public Weapon basicSword;
     public Weapon_Spellbook basicSpellbook;
     public Weapon_Spellbook redSpellbook;
 
@@ -36,7 +38,7 @@ public class Item_Database : MonoBehaviour
 
 
         //Hammers
-
+        basicHammer = CreateWeapon("Basic Hammer", "A basic hammer.", ItemIDMaker(), WeaponType.Hammer, 1, 0, null, ItemTier.Common);
 
         //Spellbooks
         basicSpellbook = CreateSpellbook("Basic Spellbook", "A basic spellbook.", ItemIDMaker(), 1, WeaponType.Spellbook, 1, 1, ItemTier.Common);
@@ -46,7 +48,7 @@ public class Item_Database : MonoBehaviour
         basicStaff = CreateStaff("Basic Staff", "A basic staff.", ItemIDMaker(), 1, WeaponType.Staff, 1, 0, null, Hue.Neutral, ItemTier.Common);
 
         //Swords
-
+        basicSword = CreateWeapon("Basic Sword", "A basic sword.", ItemIDMaker(), WeaponType.Sword, 1, 0, null, ItemTier.Common);
 
 
     }

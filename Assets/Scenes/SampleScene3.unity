@@ -20909,6 +20909,7 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: 0
+  unitSpriteRenderer: {fileID: 0}
 --- !u!1 &1866017119
 GameObject:
   m_ObjectHideFlags: 0

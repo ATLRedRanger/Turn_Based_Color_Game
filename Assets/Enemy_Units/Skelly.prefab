@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1255798536640787275}
   - component: {fileID: 818922341243487471}
   - component: {fileID: 309705362981679431}
+  - component: {fileID: 3232683162939563697}
   m_Layer: 0
   m_Name: Skelly
   m_TagString: Untagged
@@ -114,12 +115,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2890627231294434629}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d22838e5003898c40a40524cf0cd2a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDatabaseScript: {fileID: 0}
+  itemDatabaseScript: {fileID: 0}
   unitName: Skelly
   currentHp: 10
   maxHp: 10
@@ -142,3 +144,58 @@ MonoBehaviour:
   greenResistance: 0
   blueResistance: 0
   violetResistance: 0
+  unitSpriteRenderer: {fileID: 0}
+  sensitiveColor: 3
+  tolerantColor: 4
+  postiveBonus: 0
+  negativeBonus: 0
+  expDropped: 0
+  moneyDropped: 0
+  baseSprite: {fileID: 0}
+  differentSprite: {fileID: 0}
+--- !u!114 &3232683162939563697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2890627231294434629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27958aac3889fb4e962a0355431d96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDatabaseScript: {fileID: 0}
+  itemDatabaseScript: {fileID: 0}
+  unitName: 
+  currentHp: 30
+  maxHp: 30
+  currentStamina: 0
+  maxStamina: 10
+  baseDamage: 3
+  baseAttackBonus: 2
+  armorClass: 20
+  difficultyClass: 20
+  isDefending: 0
+  usedItem: 0
+  baseSpeed: 10
+  speedTier: 0
+  burnAmount: 0
+  burnThreshhold: 5
+  burnTimer: 0
+  redResistance: 0
+  orangeResistance: 0
+  yellowResistance: 0
+  greenResistance: 0
+  blueResistance: 0
+  violetResistance: -0.3
+  unitSpriteRenderer: {fileID: 0}
+  sensitiveColor: 5
+  tolerantColor: 0
+  postiveBonus: 0
+  negativeBonus: 0
+  expDropped: 150
+  moneyDropped: 100
+  baseSprite: {fileID: 1255798536640787275}
+  differentSprite: {fileID: 1655976847201112183, guid: 1b814c22004b7a84b96f986648db2e25,
+    type: 3}

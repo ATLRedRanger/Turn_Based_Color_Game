@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class EnemyUnit_V2 : Unit_V2
 {
-
-    private Hue sensitiveColor = Hue.Green;
+    [SerializeField]
+    private Hue sensitiveColor = Hue.Red;
+    [SerializeField]
     private Hue tolerantColor = Hue.Blue;
+    private int baseAttackBonusModifier = 0;
+    private int armorClassBonusModifier = 0;
+    [SerializeField]
+    private int postiveBonus = 0;
+    [SerializeField]
+    private int negativeBonus = 0;
     private List<Attack> attackList = new List<Attack>();
     private Item commonDrop = null;
     private Item uncommonDrop = null;
@@ -16,6 +23,8 @@ public class EnemyUnit_V2 : Unit_V2
     private int expDropped;
     [SerializeField]
     private int moneyDropped;
+    public SpriteRenderer baseSprite;
+    public SpriteRenderer differentSprite;
 
     // Start is called before the first frame update
     public override void Start()
@@ -34,12 +43,22 @@ public class EnemyUnit_V2 : Unit_V2
         
     }
 
-    public void UnitColorBehavior(Dictionary<Hue, int> envColors)
+    public override int GetCombatAC()
     {
-        if (envColors[tolerantColor] > envColors[sensitiveColor])
+        return base.GetCombatAC() + armorClassBonusModifier;
+
+    }
+
+    public virtual void UnitColorBehavior(Dictionary<Hue, int> envColors)
+    {
+        if(sensitiveColor != Hue.Neutral && tolerantColor != Hue.Neutral)
         {
-            //SetSpeedTier(1);
+            if (envColors[tolerantColor] > envColors[sensitiveColor])
+            {
+                unitSpriteRenderer = differentSprite;
+            }
         }
+        
     }
 
     private bool IsEnemyAttackUseable(Attack attack, Environment env)
@@ -108,5 +127,25 @@ public class EnemyUnit_V2 : Unit_V2
     public int GetMoneyDropped()
     {
         return moneyDropped;
+    }
+
+    public Hue GetSensitiveColor()
+    {
+        return sensitiveColor;
+    }
+
+    public Hue GetTolerantColor()
+    {
+        return tolerantColor;
+    }
+
+    public int GetACBonusModifier()
+    {
+        return armorClassBonusModifier;
+    }
+
+    public int GetBABBonusModifier()
+    {
+        return baseAttackBonusModifier;
     }
 }
