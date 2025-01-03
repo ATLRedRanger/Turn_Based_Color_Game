@@ -160,8 +160,8 @@ public class Eagle_Eye : MonoBehaviour
 
     private void GenerateEnemies()
     {
-        
-        int enemiesToGenerate = Random.Range(1, 3);
+
+        int enemiesToGenerate = 2;//Random.Range(1, 3);
         //Debug.Log($"Generated Enemies: {enemiesToGenerate}");
         if(subLocation != SubLocation.subLocation_5)
         {
@@ -219,7 +219,7 @@ public class Eagle_Eye : MonoBehaviour
 
         //Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(0);
         while (theCombatState == CombatState.Active)
         {
             /*
@@ -251,8 +251,9 @@ public class Eagle_Eye : MonoBehaviour
                     
                     if (IsPlayerAlive(player))
                     {
-                        yield return new WaitForSeconds(1);
                         PlayerTurn();
+                        yield return new WaitForSeconds(1);
+                        buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
                         yield return new WaitUntil(PlayerTurnIsDone);
                         //Debug.Log("Player is alive");
                     }
@@ -382,7 +383,7 @@ public class Eagle_Eye : MonoBehaviour
         chosenEnemyTarget = null;
         currentPC.isDefending = false;
         currentPC.usedItem = false;
-        buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
+        //buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
         StartCoroutine(WaitForPlayerDecisions());
     }
 
@@ -427,8 +428,6 @@ public class Eagle_Eye : MonoBehaviour
             Debug.Log("CRIT ROLL + 2");
             roll += 2;
         }
-
-        Debug.Log($"CRIT ROLL: {roll}");
 
         if (roll >= attack.critRoll)
         {
@@ -781,10 +780,10 @@ public class Eagle_Eye : MonoBehaviour
                         timeInQue = (int)statusDamageQue[i][2];
                         if (timeInQue < 1)
                         {
-                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                             uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
                             unit.TakeDamage(damage); 
-                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         }
                         else
                         {
@@ -832,15 +831,15 @@ public class Eagle_Eye : MonoBehaviour
 
                             CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, chosenEnemyTarget);
 
-                            yield return new WaitForSeconds(1);
+                            yield return new WaitForSeconds(0);
 
-                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
 
                             uiScript.SetAttackDescriptionText(chosenAttack, player, chosenEnemyTarget, damage.ToString());
 
                             yield return new WaitForSeconds(2);
 
-                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         }
 
                     }
@@ -877,14 +876,15 @@ public class Eagle_Eye : MonoBehaviour
                                 
                                 CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, enemy);
                                 yield return new WaitForSeconds(1);
-                                //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                                buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                                 uiScript.SetAttackDescriptionText(chosenAttack, player, enemy, damage.ToString());
                                 yield return new WaitForSeconds(1);
-                                
+                                buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
                             }
 
                         }
-                        //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                        
                         CombatUIUpdates();
 
                     }
@@ -976,10 +976,9 @@ public class Eagle_Eye : MonoBehaviour
         Unit_V2 enemyChosenTarget = player;
         
         Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
-        if(enemyChosenAttack == null)
-        {
-            Debug.Log("ATTACK IS NULL");
-        }
+
+        yield return new WaitForSeconds(.5f);
+        
         if (enemyChosenTarget != null)
         {
             PayAttackCost(unit, enemyChosenAttack);
@@ -991,15 +990,18 @@ public class Eagle_Eye : MonoBehaviour
                     CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     enemyChosenTarget.TakeDamage(damage);
                     CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
-                    yield return new WaitForSeconds(1);
-                    //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
                     uiScript.SetAttackDescriptionText(enemyChosenAttack, unit, enemyChosenTarget, damage.ToString());
+                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
                     yield return new WaitForSeconds(1);
-                    //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+
+                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                 }
             }
 
         }
+        
     }
     
     public void PlayerWon(List<Unit_V2> deadEnemies)
