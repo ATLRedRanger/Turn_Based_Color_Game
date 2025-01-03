@@ -171,13 +171,13 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     case 0:
                         enemyOne = unitSpawnerScript.GenerateEnemy(0, currentLocation);
-                        Debug.Log($"EnemyOne is {enemyOne.unitName}");
+                        
                         listOfCombatants.Add(enemyOne);
 
                         break;
                     case 1:
                         enemyTwo = unitSpawnerScript.GenerateEnemy(1, currentLocation);
-                        Debug.Log($"EnemyTwo is {enemyTwo.unitName}");
+                        
                         listOfCombatants.Add(enemyTwo);
 
                         break;
@@ -248,9 +248,10 @@ public class Eagle_Eye : MonoBehaviour
                 {
 
                     currentPC = unit;
-
+                    
                     if (IsPlayerAlive(player))
                     {
+                        yield return new WaitForSeconds(1);
                         PlayerTurn();
                         yield return new WaitUntil(PlayerTurnIsDone);
                         //Debug.Log("Player is alive");
@@ -274,6 +275,7 @@ public class Eagle_Eye : MonoBehaviour
 
                         if (IsPlayerAlive(player))
                         {
+                            yield return new WaitForSeconds(1);
                             StartCoroutine(EnemyTurn(unit as EnemyUnit_V2));
                             //Debug.Log("Player is alive");
                         }
@@ -288,8 +290,16 @@ public class Eagle_Eye : MonoBehaviour
                 CombatUIUpdates();
             }
             //End of turn stuff
-            
-            
+
+            yield return new WaitForSeconds(.5f);
+            CheckStatusTimes(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            CheckBuffsAndDebuffs(listOfCombatants);
+            yield return new WaitForSeconds(.5f);
+            EndOfRoundStatusDamage();
+            //yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.5f);
+            CombatUIUpdates();
 
             foreach (Unit_V2 unit in listOfCombatants)
             {
@@ -313,8 +323,6 @@ public class Eagle_Eye : MonoBehaviour
                 }
             }
 
-
-
             if (listOfCombatants.Count == 1 && listOfCombatants[0] is Player_V2)
             {
                 theCombatState = CombatState.Won;
@@ -333,22 +341,15 @@ public class Eagle_Eye : MonoBehaviour
             
             foreach (Unit_V2 unit in listOfCombatants)
             {
-                if(unit is EnemyUnit_V2)
+                if (unit is EnemyUnit_V2)
                 {
                     EnemyUnit_V2 enemy = unit as EnemyUnit_V2;
                     enemy.UnitColorBehavior(envManaScript.GetCurrentColorDictionary());
                 }
             }
-            yield return new WaitForSeconds(.5f);
-            CheckStatusTimes(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            CheckBuffsAndDebuffs(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
-            EndOfRoundStatusDamage();
-            //yield return new WaitForSeconds(.5f);
-            yield return new WaitForSeconds(.5f);
-            CombatUIUpdates();
-            
+
+            yield return new WaitForSeconds(1);
+
         }
         //yield return new WaitForSeconds(.5f);
 
@@ -381,7 +382,6 @@ public class Eagle_Eye : MonoBehaviour
         chosenEnemyTarget = null;
         currentPC.isDefending = false;
         currentPC.usedItem = false;
-        //Debug.Log("Player Turn");
         buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
         StartCoroutine(WaitForPlayerDecisions());
     }
@@ -435,47 +435,6 @@ public class Eagle_Eye : MonoBehaviour
             Debug.Log("CRITICAL HIT!");
             return true;
         }
-        /*
-        switch (attacker.StaminaLevelConversion())
-        {
-            case StaminaLevels.Full:
-                if (roll + 2 > 95)
-                {
-                    Debug.Log("CRITICAL!");
-                    return true;
-                }
-                break;
-            case StaminaLevels.ThreeQuarters:
-                if (roll + 4 > 95)
-                {
-                    Debug.Log("CRITICAL!");
-                    return true;
-                }
-                break;
-            case StaminaLevels.Half:
-                if (roll + 6 > 95)
-                {
-                    Debug.Log("CRITICAL!");
-                    return true;
-                }
-                break;
-            case StaminaLevels.OneQuarter:
-                if (roll + 8 > 95)
-                {
-                    Debug.Log("CRITICAL!");
-                    return true;
-                }
-                break;
-            case StaminaLevels.Empty:
-                if (roll + 10 > 95)
-                {
-                    Debug.Log("CRITICAL!");
-                    return true;
-                }
-                break;
-            case StaminaLevels.Broken:
-                break;
-        }*/
 
         return false;
     }
@@ -565,13 +524,6 @@ public class Eagle_Eye : MonoBehaviour
     {
         float combinedResistances = 0;
 
-        /*
-        if (attacker.equippedWeapon != null && attack.attackType == AttackType.Physical)
-        {
-
-            combinedResistances = defender.GetWeaponResistances()[attacker.equippedWeapon.weaponType];
-        }*/
-
         combinedResistances += defender.GetColorResistances()[attack.attackColor];
 
         Debug.Log($"Damage: {damage} - Mathf.RoundToInt(damage({damage} * combinedResistances({combinedResistances})");
@@ -622,7 +574,7 @@ public class Eagle_Eye : MonoBehaviour
                 }
                 break;
             case AttackBehavior.FutureSight:
-                if (!defender.DoesStatusExist(statusEffectScript.futureSight))
+                if (defender.DoesStatusExist(statusEffectScript.futureSight) == false)
                 {
                     defender.AddStatus(statusEffectScript.futureSight.DeepCopy());
                 }
@@ -672,7 +624,6 @@ public class Eagle_Eye : MonoBehaviour
         {
             foreach (StatusEffect_V2 status in unit.unitStatusEffects)
             {
-                //Debug.Log("First Foreach");
                 switch (status.GetStatusName())
                 {
                     case "Burn":
@@ -697,6 +648,7 @@ public class Eagle_Eye : MonoBehaviour
                         if (status.timeNeededInQue >= status.GetEffectLength())
                         {
                             statusDamageQue.Add(new List<object> { unit, status.GetStatusDamage(), status.timeNeededInQue, status });
+                            removeStatus.Add(status);
                         }
                         else
                         {
@@ -709,7 +661,7 @@ public class Eagle_Eye : MonoBehaviour
             foreach (StatusEffect_V2 status in removeStatus)
             {
 
-                //Debug.Log($"Trying to remove {status.GetStatusName()}");
+                Debug.Log($"Trying to remove {status.GetStatusName()}");
                 if (unit.DoesStatusExist(status))
                 {
                     Debug.Log($"{status.GetStatusName()} has been removed.");
@@ -829,10 +781,10 @@ public class Eagle_Eye : MonoBehaviour
                         timeInQue = (int)statusDamageQue[i][2];
                         if (timeInQue < 1)
                         {
-                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                             uiScript.SetStatusDescriptionText(unit, damage, statusDamageQue[i][3].ToString());
                             unit.TakeDamage(damage); 
-                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         }
                         else
                         {
@@ -852,8 +804,6 @@ public class Eagle_Eye : MonoBehaviour
     IEnumerator WaitForPlayerDecisions()
     {
 
-        //List<EnemyUnit_V2> enemyList = EnemyList(); 
-
         yield return new WaitUntil(PlayerChoiceIsMade);
         buttonsAndPanelsScript._fightButton.gameObject.SetActive(false);
 
@@ -865,8 +815,6 @@ public class Eagle_Eye : MonoBehaviour
             {
                 //buttonsAndPanelsScript.ToggleFightPanel();
                 PayAttackCost(currentPC, chosenAttack);
-                Debug.Log($"Chosen Attack: {chosenAttack.attackName}");
-                Debug.Log($"Chosen Attack Target: {chosenEnemyTarget.unitName}");
                 yield return new WaitForSeconds(1);
 
                 for (int i = 0; i < chosenAttack.numOfHits; i++)
@@ -886,13 +834,13 @@ public class Eagle_Eye : MonoBehaviour
 
                             yield return new WaitForSeconds(1);
 
-                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
 
                             uiScript.SetAttackDescriptionText(chosenAttack, player, chosenEnemyTarget, damage.ToString());
 
                             yield return new WaitForSeconds(2);
 
-                            buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                            //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         }
 
                     }
@@ -923,40 +871,20 @@ public class Eagle_Eye : MonoBehaviour
                             {
                                 Debug.Log("Attack Hits");
                                 int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
-                                //int staminaDamage = 0;
+                                
                                 CheckAttack_StatusBuildupRelationship(chosenAttack, enemy);
-                                //Debug.Log(currentPC.equippedWeapon.itemName);
-                                /*
-                                if (currentPC.equippedWeapon != null)
-                                {
-                                    switch (currentPC.equippedWeapon)
-                                    {
-                                        case Weapon_Axe axe:
-                                            damage = Mathf.RoundToInt(damage * axe.healthPercent);
-                                            staminaDamage = Mathf.RoundToInt(damage * axe.staminaPercent);
-                                            Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                            break;
-                                        case Weapon_Hammer hammer:
-                                            damage = Mathf.RoundToInt(damage * hammer.healthPercent);
-                                            staminaDamage = Mathf.RoundToInt(damage * hammer.staminaPercent);
-                                            Debug.Log($"STAMINA DAMAGE: {staminaDamage}");
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }*/
                                 enemy.TakeDamage(damage);
-                                //enemy.ReduceStamina(Mathf.Clamp(staminaDamage, 0, staminaDamage));
+                                
                                 CheckAttack_Buff_DebuffBuildupRelationship(chosenAttack, enemy);
                                 yield return new WaitForSeconds(1);
-                                buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                                //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                                 uiScript.SetAttackDescriptionText(chosenAttack, player, enemy, damage.ToString());
                                 yield return new WaitForSeconds(1);
-                                // buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                                
                             }
 
                         }
-                        buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                        //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                         CombatUIUpdates();
 
                     }
@@ -977,7 +905,7 @@ public class Eagle_Eye : MonoBehaviour
 
     public bool IsPlayerAttackUseable(Attack attack)
     {
-        //Debug.Log($"COLOR IN ENV: {envManaScript.GetCurrentColorDictionary()[attack.attackColor]} vs ATTACK COLOR COST: {attack.colorCost}");
+
         if (attack.attackColor != Hue.Neutral && attack.weaponReq == WeaponType.Neutral)
         {
             if(attack.colorCost <= envManaScript.GetCurrentColorDictionary()[attack.attackColor])
@@ -1010,9 +938,6 @@ public class Eagle_Eye : MonoBehaviour
 
     private void PayAttackCost(Unit_V2 attacker, Attack attack)
     {
-        
-        //Debug.Log(attacker.unitName + " is UNIT NAME");
-        //Debug.Log(attack.attackName + " is ATTACK NAME");
 
         switch (attack.attackColor)
         {
@@ -1062,18 +987,15 @@ public class Eagle_Eye : MonoBehaviour
             {
                 if (enemyChosenAttack.DoesAttackHit(unit, enemyChosenTarget, envManaScript.GreatestColorInEnvironment(enemyChosenAttack.attackColor)))
                 {
-                    int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
-                    //int staminaDamage = Mathf.Clamp(damage / 3, 1, damage / 3);
+                    int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);                
                     CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     enemyChosenTarget.TakeDamage(damage);
-                    //Debug.Log($"Stamina Damage: {staminaDamage}");
-                    //enemyChosenTarget.ReduceStamina(staminaDamage);
                     CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     yield return new WaitForSeconds(1);
-                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                    //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                     uiScript.SetAttackDescriptionText(enemyChosenAttack, unit, enemyChosenTarget, damage.ToString());
                     yield return new WaitForSeconds(1);
-                    buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
+                    //buttonsAndPanelsScript.ToggleAttackDescriptionPanel();
                 }
             }
 
@@ -1084,7 +1006,8 @@ public class Eagle_Eye : MonoBehaviour
     {
         lootDrop1 = null;
         lootDrop2 = null;
-
+        int experience = GainExperience(deadEnemies);
+        int money = EnemyMoneyAmount(deadEnemies);
         Debug.Log("Player Won");
         EndCombat();
         
@@ -1093,20 +1016,22 @@ public class Eagle_Eye : MonoBehaviour
         if(player.equippedWeapon != null && player.equippedWeapon.weaponType == WeaponType.Spellbook)
         {
             Weapon_Spellbook spellbook = player.equippedWeapon as Weapon_Spellbook;
-            spellbook.GainExp(GainExperience(deadEnemies));
+            spellbook.GainExp(experience);
         }
-        inventoryScript.GainMoney(EnemyMoneyAmount(deadEnemies));
-        uiScript.SetVictoryScreenText(GainExperience(deadEnemies), EnemyMoneyAmount(deadEnemies), lootDrop1, lootDrop2);
+        inventoryScript.GainMoney(money);
+        uiScript.SetVictoryScreenText(experience, money, lootDrop1, lootDrop2);
         buttonsAndPanelsScript.ToggleEndOfBattlePanel();
         PlayerLocationAfterBattle();
     }
 
     public void PlayerLost(List<Unit_V2> deadEnemies)
     {
+        int money = EnemyMoneyAmount(deadEnemies);
         EndCombat();
         Debug.Log("Player Lost");
         buttonsAndPanelsScript.ToggleEndOfBattlePanel();
-        inventoryScript.LoseMoney(EnemyMoneyAmount(deadEnemies));
+        inventoryScript.LoseMoney(money);
+        uiScript.SetDefeatScreenText(money);
         PlayerLocationAfterBattle();
     }
 
@@ -1176,7 +1101,6 @@ public class Eagle_Eye : MonoBehaviour
 
     private void GenerateEnvironment()
     {
-        //currentLocation = "Forest";
         envManaScript.GenerateEnvironment(currentLocation);
     }
 
@@ -1299,7 +1223,6 @@ public class Eagle_Eye : MonoBehaviour
                 Debug.Log($"{enemyTwo.unitName} is the chosen target!");
                 break;
             default:
-                //chosenEnemyTarget = enemyOne;
                 break;
         }
 
@@ -1317,7 +1240,6 @@ public class Eagle_Eye : MonoBehaviour
                 
                 break;
             default:
-                //chosenEnemyTarget = playerOne;
                 break;
         }
 
@@ -1494,7 +1416,6 @@ public class Eagle_Eye : MonoBehaviour
     public void SetSubLocation(string location)
     {
         int roll = Random.Range(0, 2);
-        Debug.Log($"Location Roll: {roll}");
         switch(location)
         {
             case "subLocation_1":

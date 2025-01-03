@@ -8,17 +8,11 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
     private Item uncommonDrop = null;
     private Item rareDrop = null;
     private Item superRareDrop = null;
-    public SpriteRenderer sprite;
 
     
     public override void Start()
     {
         base.Start();
-        //foreach(var kvp in unitAttackDictionary)
-        //{
-        //    Debug.Log(kvp.Key);
-        //}
-        //AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         commonDrop = itemDatabaseScript.healthPotion;
         uncommonDrop = itemDatabaseScript.basicBow;
         rareDrop = itemDatabaseScript.basicAxe;

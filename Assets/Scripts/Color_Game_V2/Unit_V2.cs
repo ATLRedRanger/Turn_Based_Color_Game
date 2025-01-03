@@ -137,11 +137,11 @@ public class Unit_V2 : MonoBehaviour
     {
         if(equippedWeapon != null)
         {
-            Debug.Log($"UNIT BASE DAMAGE: {baseDamage} + Weapon Base Damage: {equippedWeapon.baseDamage}");
+            //Debug.Log($"UNIT BASE DAMAGE: {baseDamage} + Weapon Base Damage: {equippedWeapon.baseDamage}");
             return baseDamage + equippedWeapon.baseDamage;
         }
 
-        Debug.Log($"UNIT BASE DAMAGE: {baseDamage}");
+        //Debug.Log($"UNIT BASE DAMAGE: {baseDamage}");
         return baseDamage;
     }
 
@@ -348,10 +348,13 @@ public class Unit_V2 : MonoBehaviour
 
     public void AddStatus(StatusEffect_V2 statusEffect)
     {
-        if (!unitStatusEffects.Contains(statusEffect)){
+        if (unitStatusEffects.Contains(statusEffect) == false)
+        {
+            Debug.Log($"Status Effect {statusEffect.GetStatusName()} is being added!");
             unitStatusEffects.Add(statusEffect);
         }
-        
+
+        Debug.Log($"Status Effects Count: {unitStatusEffects.Count}");
     }
 
     public bool DoesStatusExist(StatusEffect_V2 statusEffect)

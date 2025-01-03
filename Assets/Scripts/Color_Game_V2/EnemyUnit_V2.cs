@@ -5,7 +5,7 @@ using UnityEngine.Purchasing;
 
 public class EnemyUnit_V2 : Unit_V2
 {
-    
+    public SpriteRenderer sprite;
     [SerializeField]
     private Hue tolerantColor = Hue.Blue;
     [SerializeField]
@@ -27,24 +27,17 @@ public class EnemyUnit_V2 : Unit_V2
     [SerializeField]
     private int moneyDropped;
     public Animator unitAnimator;
-    public SpriteRenderer sprite;
+    
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         //unitAnimator = GetComponent<Animator>();
-        foreach (var kvp in unitAttackDictionary)
-        {
-            Debug.Log("BEFORE: " + kvp.Key);
-        }
         AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         AddAttackToDictionary(attackDatabaseScript._basicAttack);
         rareDrop = itemDatabaseScript.burnHeal;
-        foreach (var kvp in unitAttackDictionary)
-        {
-            Debug.Log("AFTER: " + kvp.Key);
-        }
+
         sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -108,24 +101,22 @@ public class EnemyUnit_V2 : Unit_V2
 
     public virtual Attack EnemyAttackDecision(Environment env)
     {
-        //Debug.Log($"Dictionary COUNT: {unitAttackDictionary.Count}");
+        attackList.Clear();
+
         foreach (var kvp in unitAttackDictionary)
-        {
-            //Debug.Log($"ATTACK NAMES: {kvp.Key}");
+        {  
             attackList.Add(kvp.Value);
         }
-        //Debug.Log($"ATTACK LIST COUNT: {attackList.Count}");
-        //Clear the list
+
         foreach (Attack attack in attackList)
         {
            
             if (IsEnemyAttackUseable(attack, env))
             {
-                Debug.Log("MATT!");
                 return attack;
             }
         }
-        //Debug.Log("MATT SAYS RETURNING NULL!");
+
         return null;
     }
 

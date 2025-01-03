@@ -10191,7 +10191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &907703765
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14702,8 +14702,7 @@ MonoBehaviour:
   - {fileID: 8382424229916251683, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
   - {fileID: 3830047205450419014, guid: 1b814c22004b7a84b96f986648db2e25, type: 3}
   listOfForestEnemies:
-  - {fileID: 8382424229916251683, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
-  - {fileID: 3830047205450419014, guid: 1b814c22004b7a84b96f986648db2e25, type: 3}
+  - {fileID: 3232683162939563697, guid: 9f5ccccfc108d074c85250060b862985, type: 3}
   listOfCaveEnemies:
   - {fileID: 0}
   forestBoss: {fileID: 3232683162939563697, guid: 9f5ccccfc108d074c85250060b862985,
@@ -21431,8 +21430,7 @@ MonoBehaviour:
   _violetBar: {fileID: 1426110473}
   _violetBarText: {fileID: 37491808}
   _attackDescriptionText: {fileID: 1723304283}
-  victoryText: {fileID: 158344324}
-  defeatText: {fileID: 907703766}
+  winLostText: {fileID: 158344324}
   experienceGainedText: {fileID: 788598976}
   moneyText: {fileID: 1678588474}
   lootDrop1Text: {fileID: 1151215437}

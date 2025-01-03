@@ -63,39 +63,40 @@ public class UI_V2 : MonoBehaviour
     public Text _attackDescriptionText;
 
     //Win Screen Text
-    public TMP_Text victoryText;
-    public TMP_Text defeatText;
+    public TMP_Text winLostText;
     public TMP_Text experienceGainedText;
     public TMP_Text moneyText;
     public TMP_Text lootDrop1Text;
     public TMP_Text lootDrop2Text;
 
+    //Lose Screen Text
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SetPlayerHealthAndStamina(Unit_V2 player)
     {
         playerName.text = player.unitName;
         playerHealthText.text = player.GetCurrentHp().ToString() + " / " + player.GetMaxHp().ToString();
-        
+
         playerHealthBar.fillAmount = (float)(float)(player.GetCurrentHp() / (float)(player.GetMaxHp()));
-        
+
     }
 
     public void SetEnemeyOneHealthAndStamina(Unit_V2 enemyOne)
     {
-        if(enemyOne == null)
+        if (enemyOne == null)
         {
-            
+
         }
         else
         {
@@ -105,7 +106,7 @@ public class UI_V2 : MonoBehaviour
             enemyOneHealthBar.fillAmount = (float)(float)(enemyOne.GetCurrentHp() / (float)(enemyOne.GetMaxHp()));
             //enemyOneStaminaBar.fillAmount = (float)(float)(enemyOne.GetCurrentStamina() / (float)(enemyOne.GetMaxStamina()));
         }
-        
+
     }
 
     public void SetEnemeyTwoHealthAndStamina(Unit_V2 enemyTwo)
@@ -140,7 +141,7 @@ public class UI_V2 : MonoBehaviour
 
     public void UpdateEnvironmentColors(int currentRed, int currentOrange, int currentYellow, int currentGreen, int currentBlue, int currentViolet)
     {
-        
+
         currentRedAmount = currentRed;
         currentOrangeAmount = currentOrange;
         currentYellowAmount = currentYellow;
@@ -155,7 +156,7 @@ public class UI_V2 : MonoBehaviour
     {
         //Debug.Log($"CurrentRed: {currentRedAmount}");
         _redBar.fillAmount = (float)((float)currentRedAmount / (float)maxRedAmount);
-        _redBarText.text = "Red: " + currentRedAmount.ToString() + " / " + maxRedAmount.ToString(); 
+        _redBarText.text = "Red: " + currentRedAmount.ToString() + " / " + maxRedAmount.ToString();
         _orangeBar.fillAmount = (float)(float)(currentOrangeAmount / (float)maxOrangeAmount);
         _orangeBarText.text = "Orange: " + currentOrangeAmount.ToString() + " / " + maxOrangeAmount.ToString();
         _yellowBar.fillAmount = (float)(float)(currentYellowAmount / (float)maxYellowAmount);
@@ -175,7 +176,7 @@ public class UI_V2 : MonoBehaviour
         _attackDescriptionText.text = "";
 
         string description = " " + attacker.unitName + " has dealt " + source + " damage to " + defender.unitName + ".";
-        
+
         _attackDescriptionText.text = description;
     }
 
@@ -195,11 +196,10 @@ public class UI_V2 : MonoBehaviour
 
     public void SetVictoryScreenText(int experience, int money, string lootDrop1, string lootDrop2)
     {
-        victoryText.text = "YOU'VE DEFEATED THE ENEMY(s)!";
-        defeatText.text = "";
+        winLostText.text = "YOU'VE DEFEATED THE ENEMY(s)!";
         experienceGainedText.text = $"You've gained {experience} experience!";
         moneyText.text = $"You've gained {money} money!";
-        if(lootDrop1 != null)
+        if (lootDrop1 != null)
         {
             lootDrop1Text.text = $"An enemy dropped a(n) {lootDrop1}!";
         }
@@ -215,6 +215,15 @@ public class UI_V2 : MonoBehaviour
         {
             lootDrop2Text.text = $"";
         }
-        
+
+    }
+
+    public void SetDefeatScreenText(int money)
+    {
+        winLostText.text = "YOU'VE BEEN DEFEATED!";
+        experienceGainedText.text = $"";
+        moneyText.text = $"You've lost {money} money!";
+        lootDrop1Text.text = $"";
+        lootDrop2Text.text = $"";
     }
 }

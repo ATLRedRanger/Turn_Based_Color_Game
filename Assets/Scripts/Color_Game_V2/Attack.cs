@@ -52,8 +52,11 @@ public class Attack
         
         if (roll + attacker.GetCombatBAB() >= defender.GetCombatAC())
         {
+            Debug.Log("Attack hits!");
             return true;
         }
+
+        Debug.Log("Attack misses!");
         return false;
     }
 
