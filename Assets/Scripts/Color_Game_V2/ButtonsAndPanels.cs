@@ -150,7 +150,7 @@ public class ButtonsAndPanels : MonoBehaviour
     }
     public void ToggleCombatPanel()
     {
-        Debug.Log("TREE");
+        //Debug.Log("TREE");
         bool isActive = _CombatPanel.activeSelf;
 
         if(_CombatPanel != null)

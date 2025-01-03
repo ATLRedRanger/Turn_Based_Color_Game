@@ -239,7 +239,7 @@ public class Eagle_Eye : MonoBehaviour
             //Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(1);
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 CombatUIUpdates();
@@ -283,7 +283,7 @@ public class Eagle_Eye : MonoBehaviour
                             break;
                         }
                     }
-                    yield return new WaitForSeconds(.5f);
+                    yield return new WaitForSeconds(1);
                 }
                 CombatUIUpdates();
             }
@@ -1010,11 +1010,10 @@ public class Eagle_Eye : MonoBehaviour
 
     private void PayAttackCost(Unit_V2 attacker, Attack attack)
     {
-        //Debug.Log(attack.attackName + " ATTACK NAME");
-        //Debug.Log(attack.staminaCost + " Attack Cost");
-        Debug.Log(attacker.unitName + " is UNIT NAME");
-        Debug.Log(attack.attackName + " is ATTACK NAME");
-        //attacker.ReduceStamina(attack.staminaCost);
+        
+        //Debug.Log(attacker.unitName + " is UNIT NAME");
+        //Debug.Log(attack.attackName + " is ATTACK NAME");
+
         switch (attack.attackColor)
         {
             case Hue.Red:
@@ -1050,8 +1049,12 @@ public class Eagle_Eye : MonoBehaviour
     IEnumerator EnemyTurn(EnemyUnit_V2 unit)
     {
         Unit_V2 enemyChosenTarget = player;
-
+        
         Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
+        if(enemyChosenAttack == null)
+        {
+            Debug.Log("ATTACK IS NULL");
+        }
         if (enemyChosenTarget != null)
         {
             PayAttackCost(unit, enemyChosenAttack);
@@ -1060,10 +1063,10 @@ public class Eagle_Eye : MonoBehaviour
                 if (enemyChosenAttack.DoesAttackHit(unit, enemyChosenTarget, envManaScript.GreatestColorInEnvironment(enemyChosenAttack.attackColor)))
                 {
                     int damage = CalcAttackDamage(enemyChosenAttack, unit, enemyChosenTarget);
-                    int staminaDamage = Mathf.Clamp(damage / 3, 1, damage / 3);
+                    //int staminaDamage = Mathf.Clamp(damage / 3, 1, damage / 3);
                     CheckAttack_StatusBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     enemyChosenTarget.TakeDamage(damage);
-                    Debug.Log($"Stamina Damage: {staminaDamage}");
+                    //Debug.Log($"Stamina Damage: {staminaDamage}");
                     //enemyChosenTarget.ReduceStamina(staminaDamage);
                     CheckAttack_Buff_DebuffBuildupRelationship(enemyChosenAttack, enemyChosenTarget);
                     yield return new WaitForSeconds(1);
@@ -1076,7 +1079,6 @@ public class Eagle_Eye : MonoBehaviour
 
         }
     }
-
     
     public void PlayerWon(List<Unit_V2> deadEnemies)
     {

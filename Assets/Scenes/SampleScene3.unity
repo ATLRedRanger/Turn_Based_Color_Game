@@ -14702,8 +14702,7 @@ MonoBehaviour:
   - {fileID: 8382424229916251683, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
   - {fileID: 3830047205450419014, guid: 1b814c22004b7a84b96f986648db2e25, type: 3}
   listOfForestEnemies:
-  - {fileID: 3830047205450419014, guid: 1b814c22004b7a84b96f986648db2e25, type: 3}
-  - {fileID: 8382424229916251683, guid: 6d9194ee4d998484fbd9d0e7739365aa, type: 3}
+  - {fileID: 309705362981679431, guid: 9f5ccccfc108d074c85250060b862985, type: 3}
   listOfCaveEnemies:
   - {fileID: 309705362981679431, guid: 9f5ccccfc108d074c85250060b862985, type: 3}
   forestBoss: {fileID: 309705362981679431, guid: 9f5ccccfc108d074c85250060b862985,
@@ -20890,8 +20889,6 @@ MonoBehaviour:
   unitName: 
   currentHp: 10
   maxHp: 0
-  currentStamina: 0
-  maxStamina: 10
   baseDamage: 0
   baseAttackBonus: 0
   armorClass: 0

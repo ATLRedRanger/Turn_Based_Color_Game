@@ -31,12 +31,20 @@ public class EnemyUnit_V2 : Unit_V2
     public override void Start()
     {
         base.Start();
-        unitAnimator = GetComponent<Animator>();
-        //AddAttackToDictionary(attackDatabaseScript._fireball);
+        //unitAnimator = GetComponent<Animator>();
+        foreach (var kvp in unitAttackDictionary)
+        {
+            Debug.Log("BEFORE: " + kvp.Key);
+        }
+        AddAttackToDictionary(attackDatabaseScript._fireball);
         AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         AddAttackToDictionary(attackDatabaseScript._basicAttack);
         rareDrop = itemDatabaseScript.burnHeal;
-        
+        foreach (var kvp in unitAttackDictionary)
+        {
+            Debug.Log("AFTER: " + kvp.Key);
+        }
+
     }
 
     // Update is called once per frame
@@ -74,11 +82,12 @@ public class EnemyUnit_V2 : Unit_V2
 
     private bool IsEnemyAttackUseable(Attack attack, Environment env)
     {
-        if (attack.attackColor == Hue.Neutral && this.GetCurrentStamina() >= attack.staminaCost) 
+        
+        if (attack.attackColor == Hue.Neutral) 
         {
             return true;
         }
-        else if (this.GetCurrentStamina() >= attack.staminaCost && env.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
+        else if (env.GetCurrentColorDictionary()[attack.attackColor] >= attack.colorCost)
         {
             return true;
         }
@@ -86,22 +95,26 @@ public class EnemyUnit_V2 : Unit_V2
         return false;
     }
 
-    public Attack EnemyAttackDecision(Environment env)
+    public virtual Attack EnemyAttackDecision(Environment env)
     {
-       
-        foreach(var kvp in unitAttackDictionary)
+        //Debug.Log($"Dictionary COUNT: {unitAttackDictionary.Count}");
+        foreach (var kvp in unitAttackDictionary)
         {
+            //Debug.Log($"ATTACK NAMES: {kvp.Key}");
             attackList.Add(kvp.Value);
         }
-
+        //Debug.Log($"ATTACK LIST COUNT: {attackList.Count}");
+        //Clear the list
         foreach (Attack attack in attackList)
         {
+           
             if (IsEnemyAttackUseable(attack, env))
             {
+                Debug.Log("MATT!");
                 return attack;
             }
         }
-
+        //Debug.Log("MATT SAYS RETURNING NULL!");
         return null;
     }
 

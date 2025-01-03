@@ -10,7 +10,7 @@ public class Attack
     public int attackPower;
     public int attackAccuracy;
     public int colorCost;
-    public int staminaCost;
+    //public int staminaCost;
     public int numOfHits;
     public int statusBuildUpAmount;
     public AttackType attackType;

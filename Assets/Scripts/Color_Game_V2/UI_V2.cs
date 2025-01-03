@@ -86,9 +86,9 @@ public class UI_V2 : MonoBehaviour
     {
         playerName.text = player.unitName;
         playerHealthText.text = player.GetCurrentHp().ToString() + " / " + player.GetMaxHp().ToString();
-        playerStaminaText.text = player.GetCurrentStamina().ToString() + " / " + player.GetMaxStamina().ToString();
+        
         playerHealthBar.fillAmount = (float)(float)(player.GetCurrentHp() / (float)(player.GetMaxHp()));
-        playerStaminaBar.fillAmount = (float)(float)(player.GetCurrentStamina() / (float)(player.GetMaxStamina()));
+        
     }
 
     public void SetEnemeyOneHealthAndStamina(Unit_V2 enemyOne)

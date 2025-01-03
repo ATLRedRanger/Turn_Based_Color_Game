@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class EnemyUnit_Skelleton : EnemyUnit_V2
 {
-    
-    private List<Attack> attackList = new List<Attack>();
     private Item commonDrop = null;
     private Item uncommonDrop = null;
     private Item rareDrop = null;
     private Item superRareDrop = null;
     public SpriteRenderer sprite;
 
-    // Start is called before the first frame update
+    
     public override void Start()
     {
-        AddAttackToDictionary(attackDatabaseScript._fireball);
+        base.Start();
+        //foreach(var kvp in unitAttackDictionary)
+        //{
+        //    Debug.Log(kvp.Key);
+        //}
+        //AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         commonDrop = itemDatabaseScript.healthPotion;
         uncommonDrop = itemDatabaseScript.basicBow;
         rareDrop = itemDatabaseScript.basicAxe;
@@ -23,17 +26,11 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
 
-        
+
     }
 
     public override void UnitColorBehavior(Dictionary<Hue, int> envColors)
@@ -50,5 +47,10 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
             }
         }
 
+    }
+
+    public override Attack EnemyAttackDecision(Environment env)
+    {
+        return base.EnemyAttackDecision(env);
     }
 }

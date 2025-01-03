@@ -14,10 +14,10 @@ public class Unit_V2 : MonoBehaviour
     private int currentHp;
     [SerializeField]
     private int maxHp = 10;
-    [SerializeField]
-    private int currentStamina;
-    [SerializeField]
-    private int maxStamina = 10;
+    
+    //private int currentStamina;
+    
+    //private int maxStamina = 10;
     [SerializeField]
     private int baseDamage = 0;
     [SerializeField]
@@ -91,7 +91,7 @@ public class Unit_V2 : MonoBehaviour
         itemDatabaseScript = FindObjectOfType<Item_Database>();
         
         currentHp = maxHp;
-        currentStamina = maxStamina;
+        
         SetColorResistances();
         //SetWeaponResistances();
 
@@ -132,15 +132,7 @@ public class Unit_V2 : MonoBehaviour
     {
         return maxHp;
     }
-    public int GetCurrentStamina()
-    {
-        return currentStamina;
-    }
-    public int GetMaxStamina()
-    {
-        return maxStamina;
-    }
-
+    
     public int GetUnitDamage()
     {
         if(equippedWeapon != null)
