@@ -29,8 +29,6 @@ public class EnemyUnit_Skelleton : EnemyUnit_V2
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
-
-
     }
 
     public override void UnitColorBehavior(Dictionary<Hue, int> envColors)

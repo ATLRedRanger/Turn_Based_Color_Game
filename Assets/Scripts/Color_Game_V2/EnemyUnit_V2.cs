@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 
 public class EnemyUnit_V2 : Unit_V2
 {
@@ -26,6 +27,7 @@ public class EnemyUnit_V2 : Unit_V2
     [SerializeField]
     private int moneyDropped;
     public Animator unitAnimator;
+    public SpriteRenderer sprite;
 
     // Start is called before the first frame update
     public override void Start()
@@ -36,7 +38,6 @@ public class EnemyUnit_V2 : Unit_V2
         {
             Debug.Log("BEFORE: " + kvp.Key);
         }
-        AddAttackToDictionary(attackDatabaseScript._fireball);
         AddAttackToDictionary(attackDatabaseScript._basicSlimeAttack);
         AddAttackToDictionary(attackDatabaseScript._basicAttack);
         rareDrop = itemDatabaseScript.burnHeal;
@@ -44,7 +45,7 @@ public class EnemyUnit_V2 : Unit_V2
         {
             Debug.Log("AFTER: " + kvp.Key);
         }
-
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -58,26 +59,36 @@ public class EnemyUnit_V2 : Unit_V2
     public virtual void UnitColorBehavior(Dictionary<Hue, int> envColors)
     {
         //Debug.Log("PINEAPPLE");
-        if(sensitiveColor != Hue.Neutral && tolerantColor != Hue.Neutral)
+        //if(sensitiveColor != Hue.Neutral && tolerantColor != Hue.Neutral)
+        //{
+        //    Debug.Log($"Pos Color: {envColors[tolerantColor]} vs Neg Color: {envColors[sensitiveColor]}");
+        //    if (envColors[tolerantColor] > envColors[sensitiveColor])
+        //    {
+        //        //Debug.Log("KIWI");
+        //        AddAttackToDictionary(attackDatabaseScript._fireball);
+        //        unitAnimator.SetBool("isRaging", true);
+        //    }
+        //    else
+        //    {
+        //        unitAnimator.SetBool("isRaging", false);
+        //    }
+
+        //    if (unitAnimator.GetBool("isRaging") == false && unitAttackDictionary.ContainsKey("Fireball"))
+        //    {
+        //        unitAttackDictionary.Remove("Fireball");
+        //    }
+        //}
+        if (GetSensitiveColor() != Hue.Neutral && GetTolerantColor() != Hue.Neutral)
         {
-            Debug.Log($"Pos Color: {envColors[tolerantColor]} vs Neg Color: {envColors[sensitiveColor]}");
-            if (envColors[tolerantColor] > envColors[sensitiveColor])
+            if (envColors[GetTolerantColor()] > envColors[GetSensitiveColor()])
             {
-                //Debug.Log("KIWI");
-                AddAttackToDictionary(attackDatabaseScript._fireball);
-                unitAnimator.SetBool("isRaging", true);
+                sprite.color = Color.red;
             }
             else
             {
-                unitAnimator.SetBool("isRaging", false);
-            }
-
-            if (unitAnimator.GetBool("isRaging") == false && unitAttackDictionary.ContainsKey("Fireball"))
-            {
-                unitAttackDictionary.Remove("Fireball");
+                sprite.color = Color.white;
             }
         }
-        
     }
 
     private bool IsEnemyAttackUseable(Attack attack, Environment env)
