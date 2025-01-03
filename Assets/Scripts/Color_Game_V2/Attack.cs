@@ -48,7 +48,7 @@ public class Attack
 
         roll += attackAccuracyBonus;
         
-        Debug.Log($"Does attack hit: Roll: {roll} + {attacker.unitName}'s  CombatBAB: {attacker.GetCombatBAB()} vs {defender.unitName}'s DC: ");//{defender.GetCombatDC()}");
+        //Debug.Log($"Does attack hit: Roll: {roll} + {attacker.unitName}'s  CombatBAB: {attacker.GetCombatBAB()} vs {defender.unitName}'s AC: ");//{defender.GetCombatDC()}");
         
         if (roll + attacker.GetCombatBAB() >= defender.GetCombatAC())
         {

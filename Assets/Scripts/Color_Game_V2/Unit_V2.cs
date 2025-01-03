@@ -6,6 +6,7 @@ public class Unit_V2 : MonoBehaviour
 {
     public Attack_Database attackDatabaseScript;
     public Item_Database itemDatabaseScript;
+    public StatusEffectsDatabase_V2 statusEffectsScript;
 
     public string unitName;
 
@@ -14,10 +15,7 @@ public class Unit_V2 : MonoBehaviour
     private int currentHp;
     [SerializeField]
     private int maxHp = 10;
-    
-    //private int currentStamina;
-    
-    //private int maxStamina = 10;
+
     [SerializeField]
     private int baseDamage = 0;
     [SerializeField]
@@ -26,6 +24,13 @@ public class Unit_V2 : MonoBehaviour
     private int armorClass = 0;
     [SerializeField]
     private int difficultyClass;
+    private int baseAttackBonusModifier = 0;
+    private int armorClassBonusModifier = 0;
+    private int dcBonousModifier = 0;
+    [SerializeField]
+    private int postiveBonus = 0;
+    [SerializeField]
+    private int negativeBonus = 0;
 
     public bool isDefending = false;
     public bool usedItem = false;
@@ -33,9 +38,6 @@ public class Unit_V2 : MonoBehaviour
     [SerializeField]
     private int baseSpeed;
 
-    //private int attackTier = 0;
-
-    //private int defenseTier = 0;
     [SerializeField]
     private int speedTier = 0;
 
@@ -89,7 +91,7 @@ public class Unit_V2 : MonoBehaviour
     {
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         itemDatabaseScript = FindObjectOfType<Item_Database>();
-        
+        statusEffectsScript = FindObjectOfType<StatusEffectsDatabase_V2>();
         currentHp = maxHp;
         
         SetColorResistances();
@@ -144,6 +146,28 @@ public class Unit_V2 : MonoBehaviour
         //Debug.Log($"UNIT BASE DAMAGE: {baseDamage}");
         return baseDamage;
     }
+    public int GetACBonusModifier()
+    {
+        int bonus = armorClassBonusModifier;
+
+        if (DoesStatusExist(statusEffectsScript.burn))
+        {
+            bonus += postiveBonus;
+        } 
+        
+
+        return bonus;
+    }
+
+    public int GetBABBonusModifier()
+    {
+        return baseAttackBonusModifier;
+    }
+
+    public int GetDCBonusModifier()
+    {
+        return dcBonousModifier;
+    }
 
     public int GetBAB()
     {
@@ -154,9 +178,10 @@ public class Unit_V2 : MonoBehaviour
     {
         if(equippedWeapon != null)
         {
-            return GetBAB() + equippedWeapon.bonusModifier;
+            return GetBAB() + GetBABBonusModifier() + equippedWeapon.bonusModifier;
         }
-        return GetBAB();
+        Debug.Log($"GetBAB(): {GetBAB()} + GetBABBonusModifier(): {GetBABBonusModifier()}");
+        return GetBAB() + GetBABBonusModifier();
     }
 
     public int GetAC()
@@ -172,8 +197,8 @@ public class Unit_V2 : MonoBehaviour
         {
             return armorClass + equippedArmor.bonusModifier;
         }*/
-
-        return GetAC();
+        Debug.Log($"GetAC(): {GetAC()} + GetBABBonusModifier(): {GetACBonusModifier()}");
+        return GetAC() + GetACBonusModifier();
     }
 
     public int GetDC()
@@ -183,25 +208,8 @@ public class Unit_V2 : MonoBehaviour
 
     public virtual int GetCombatDC()
     {
-        return difficultyClass;
+        return GetDC() + GetDCBonusModifier();
     }
-
-    /*
-    public int GetCurrentAttack()
-    {
-        if(equippedWeapon != null)
-        {
-            return Mathf.RoundToInt((baseAttack + equippedWeapon.GetWeaponBaseDamage()) * TierBonus(attackTier));
-        }
-
-        return Mathf.RoundToInt((float)(baseAttack * (TierBonus(attackTier))));
-    }
-    public int GetCurrentDefense()
-    {
-        int defense = Mathf.RoundToInt((float)(baseDefense * (TierBonus(defenseTier))));
-        return defense;
-    }
-    */
 
     public int GetCurrentSpeed()
     {
@@ -224,14 +232,14 @@ public class Unit_V2 : MonoBehaviour
 
     public void SetSpeedTier(int value)
     {
-        Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
+        //Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
         speedTier += value;
-        Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
+        //Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
     }
     
     public int GetSpeedTier()
     {
-        Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
+        //Debug.Log($"{unitName}'s SpeedTier: {speedTier}");
         return speedTier;
     }
 
@@ -283,40 +291,7 @@ public class Unit_V2 : MonoBehaviour
         }
             Debug.Log($"{unitName} has gained {amount} health and their currentHP is: {currentHp}");
     }
-    /*
-    public void GainStamina(int amount)
-    {
-        currentHp += amount;
-    }
-
-    public void ReduceStamina(int staminaCost)
-    {
-        currentStamina -= staminaCost;
-        if(currentStamina < 0)
-        {
-            currentStamina = 0;
-        }
-    }
-
-    public StaminaLevels StaminaLevelConversion()
-    {
-        int staminaPercent = Mathf.RoundToInt((currentStamina / maxStamina) * 100);
-
-        switch (staminaPercent)
-        {
-            case 100:
-                return StaminaLevels.Full;
-            case var expression when (staminaPercent > 50 && staminaPercent < 100):
-                return StaminaLevels.ThreeQuarters;
-            case var expression when (staminaPercent > 25 && staminaPercent <= 50):
-                return StaminaLevels.Half;
-            case var expression when (staminaPercent > 0 && staminaPercent <= 25):
-                return StaminaLevels.ThreeQuarters;
-            default:
-                return StaminaLevels.Empty;
-        }
-    }*/
-
+    
     public float TierBonus(int tier)
     {
         switch (tier)

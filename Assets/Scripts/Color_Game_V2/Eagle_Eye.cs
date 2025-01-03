@@ -60,22 +60,13 @@ public class Eagle_Eye : MonoBehaviour
     public void Test()
     {
 
-        /*
-        CheckAttack_StatusBuildupRelationship(player.GetAttackDictionary()["Fireball"], enemyOne);
-        CheckStatusTimes(listOfCombatants);
-        EndOfRoundStatusDamage();
-        uiScript.SetPlayerHealthAndStamina(player);
-        uiScript.SetEnemeyOneHealthAndStamina(enemyOne);
-        */
-
         StartCombat();
 
     }
 
     public void Test_2()
     {
-        //EndCombat();
-        //buttonsAndPanelsScript.ToggleLocationsPanel();
+
     }
 
     public void Test_3()
@@ -102,14 +93,11 @@ public class Eagle_Eye : MonoBehaviour
         attackDatabaseScript = FindObjectOfType<Attack_Database>();
         buttonsAndPanelsScript = FindObjectOfType<ButtonsAndPanels>();
         uiScript = FindObjectOfType<UI_V2>();
-        //weaponDatabaseScript = FindObjectOfType<Weapon_Database_V2>();
         itemDatabaseScript = FindObjectOfType<Item_Database>();
         inventoryScript = FindObjectOfType<Inventory_V2>();
 
         player = unitSpawnerScript.SpawnPlayer();
         player.gameObject.SetActive(false);
-
-        //Debug.Log("Finished Loading");
 
     }
 
@@ -219,7 +207,7 @@ public class Eagle_Eye : MonoBehaviour
 
         //Debug.Log($"List Of Combatants: {listOfCombatants.Count}");
         int currentRound = 0;
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(.5f);
         while (theCombatState == CombatState.Active)
         {
             /*
@@ -239,23 +227,21 @@ public class Eagle_Eye : MonoBehaviour
             //Debug.Log($"Current Round: {currentRound}");
 
             SortCombatants(listOfCombatants);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.5f);
             foreach (Unit_V2 unit in listOfCombatants)
             {
                 CombatUIUpdates();
-                //Debug.Log($"Current Unit: {unit.unitName}");
                 if (unit is Player_V2)
                 {
 
                     currentPC = unit;
-                    
+                    yield return new WaitForSeconds(1);
                     if (IsPlayerAlive(player))
                     {
                         PlayerTurn();
-                        yield return new WaitForSeconds(1);
+                        
                         buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
                         yield return new WaitUntil(PlayerTurnIsDone);
-                        //Debug.Log("Player is alive");
                     }
                     else
                     {
@@ -267,9 +253,7 @@ public class Eagle_Eye : MonoBehaviour
                 {
                     if (unit.GetCurrentHp() < 1)
                     {
-                        //Debug.Log($"Adding {unit} to DeadUnitList");
                         deadUnits.Add(unit);
-
                     }
                     else
                     {
@@ -278,7 +262,6 @@ public class Eagle_Eye : MonoBehaviour
                         {
                             yield return new WaitForSeconds(1);
                             StartCoroutine(EnemyTurn(unit as EnemyUnit_V2));
-                            //Debug.Log("Player is alive");
                         }
                         else
                         {
@@ -298,7 +281,6 @@ public class Eagle_Eye : MonoBehaviour
             CheckBuffsAndDebuffs(listOfCombatants);
             yield return new WaitForSeconds(.5f);
             EndOfRoundStatusDamage();
-            //yield return new WaitForSeconds(.5f);
             yield return new WaitForSeconds(.5f);
             CombatUIUpdates();
 
@@ -307,7 +289,6 @@ public class Eagle_Eye : MonoBehaviour
                 if (unit is EnemyUnit_V2 && !deadUnits.Contains(unit) && unit.GetCurrentHp() < 1)
                 {
                     deadUnits.Add(unit);
-                    //Debug.Log($"Dead Units Count: {deadUnits.Count}");
                 }
             }
 
@@ -332,7 +313,7 @@ public class Eagle_Eye : MonoBehaviour
 
             if (IsPlayerAlive(player))
             {
-                //Debug.Log("Player is alive");
+
             }
             else
             {
@@ -352,7 +333,6 @@ public class Eagle_Eye : MonoBehaviour
             yield return new WaitForSeconds(1);
 
         }
-        //yield return new WaitForSeconds(.5f);
 
         if (theCombatState == CombatState.Won)
         {
@@ -383,7 +363,6 @@ public class Eagle_Eye : MonoBehaviour
         chosenEnemyTarget = null;
         currentPC.isDefending = false;
         currentPC.usedItem = false;
-        //buttonsAndPanelsScript._fightButton.gameObject.SetActive(true);
         StartCoroutine(WaitForPlayerDecisions());
     }
 
@@ -401,7 +380,7 @@ public class Eagle_Eye : MonoBehaviour
     {
         int roll = Random.Range(1, 5);
 
-        switch (roll) // Cast roll to int for case matching
+        switch (roll)
         {
             case 1:
                 return 1.05f;
@@ -418,15 +397,14 @@ public class Eagle_Eye : MonoBehaviour
 
     private bool DoesAttackCrit(Attack attack)
     {
-        //TODO: Attacks only crit if there's a weapon equipped
-        //Is this what I want?
-        //Matt Suggestion: The first time a color is at full each combat, that color effect is critical. 
-        //Vincent Responds: Maybe a higher chance so that it's not a guarantee.
-        int roll = Random.Range(1, 21);
+        //Attacks have a higher chance to crit if the greatest color in the env matches its color.
+
+        int roll = Random.Range(1, attack.critRoll + 1);
+        //Debug.Log($"CRIT COLOR BONUS ROLL: {roll} + {(attack.critRoll * 1 / 7)}");
         if (envManaScript.GreatestColorInEnvironment(attack.attackColor))
         {
-            Debug.Log("CRIT ROLL + 2");
-            roll += 2;
+            
+            roll += Mathf.RoundToInt(attack.critRoll * 1/7);
         }
 
         if (roll >= attack.critRoll)
@@ -524,8 +502,6 @@ public class Eagle_Eye : MonoBehaviour
         float combinedResistances = 0;
 
         combinedResistances += defender.GetColorResistances()[attack.attackColor];
-
-        Debug.Log($"Damage: {damage} - Mathf.RoundToInt(damage({damage} * combinedResistances({combinedResistances})");
 
         return damage - Mathf.RoundToInt(damage * combinedResistances);
 
@@ -659,8 +635,6 @@ public class Eagle_Eye : MonoBehaviour
             }
             foreach (StatusEffect_V2 status in removeStatus)
             {
-
-                Debug.Log($"Trying to remove {status.GetStatusName()}");
                 if (unit.DoesStatusExist(status))
                 {
                     Debug.Log($"{status.GetStatusName()} has been removed.");
@@ -822,7 +796,6 @@ public class Eagle_Eye : MonoBehaviour
                     {
                         if(chosenEnemyTarget.GetCurrentHp() > 0)
                         {
-                            Debug.Log("Attack Hits");
                             int damage = CalcAttackDamage(chosenAttack, currentPC, chosenEnemyTarget);
 
                             CheckAttack_StatusBuildupRelationship(chosenAttack, chosenEnemyTarget);
@@ -868,7 +841,6 @@ public class Eagle_Eye : MonoBehaviour
                         {
                             if(enemy.GetCurrentHp() > 0)
                             {
-                                Debug.Log("Attack Hits");
                                 int damage = CalcAttackDamage(chosenAttack, currentPC, enemy);
                                 
                                 CheckAttack_StatusBuildupRelationship(chosenAttack, enemy);
@@ -899,7 +871,6 @@ public class Eagle_Eye : MonoBehaviour
             chosenConsumable = null;
         }
 
-        Debug.Log("PLAYER TURN HAS FINISHED!");
         playerTurnIsDone = true;
     }
 
@@ -978,7 +949,7 @@ public class Eagle_Eye : MonoBehaviour
         Attack enemyChosenAttack = unit.EnemyAttackDecision(envManaScript);
 
         yield return new WaitForSeconds(.5f);
-        
+        Debug.Log($"Enemy Chosen Attack: {enemyChosenAttack.attackName}");
         if (enemyChosenTarget != null)
         {
             PayAttackCost(unit, enemyChosenAttack);
@@ -1010,7 +981,6 @@ public class Eagle_Eye : MonoBehaviour
         lootDrop2 = null;
         int experience = GainExperience(deadEnemies);
         int money = EnemyMoneyAmount(deadEnemies);
-        Debug.Log("Player Won");
         EndCombat();
         
         LootDrops(deadEnemies);
@@ -1030,7 +1000,6 @@ public class Eagle_Eye : MonoBehaviour
     {
         int money = EnemyMoneyAmount(deadEnemies);
         EndCombat();
-        Debug.Log("Player Lost");
         buttonsAndPanelsScript.ToggleEndOfBattlePanel();
         inventoryScript.LoseMoney(money);
         uiScript.SetDefeatScreenText(money);
@@ -1050,7 +1019,6 @@ public class Eagle_Eye : MonoBehaviour
                 if (item != null)
                 {
                     count++;
-                    Debug.Log($"Enemy Dropped: {item.itemName}");
                     inventoryScript.AddToInventory(item);
                     if (count == 1)
                     {
@@ -1218,11 +1186,9 @@ public class Eagle_Eye : MonoBehaviour
         {
             case "EnemyOne":
                 chosenEnemyTarget = enemyOne;
-                Debug.Log($"{enemyOne.unitName} is the chosen target!");
                 break;
             case "EnemyTwo":
                 chosenEnemyTarget = enemyTwo;
-                Debug.Log($"{enemyTwo.unitName} is the chosen target!");
                 break;
             default:
                 break;
@@ -1236,7 +1202,6 @@ public class Eagle_Eye : MonoBehaviour
         {
             case "Player":
                 chosenPCTarget = player;
-                Debug.Log($"{player.unitName} is the chosen target!");
                 break;
             case "PlayerTwo":
                 

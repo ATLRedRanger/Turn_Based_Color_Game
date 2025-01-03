@@ -10,13 +10,7 @@ public class EnemyUnit_V2 : Unit_V2
     private Hue tolerantColor = Hue.Blue;
     [SerializeField]
     private Hue sensitiveColor = Hue.Red;
-    private int baseAttackBonusModifier = 0;
-    private int armorClassBonusModifier = 0;
-    private int dcBonousModifier = 0;
-    [SerializeField]
-    private int postiveBonus = 0;
-    [SerializeField]
-    private int negativeBonus = 0;
+    
     private List<Attack> attackList = new List<Attack>();
     private Item commonDrop = null;
     private Item uncommonDrop = null;
@@ -165,20 +159,7 @@ public class EnemyUnit_V2 : Unit_V2
         return tolerantColor;
     }
 
-    public int GetACBonusModifier()
-    {
-        return armorClassBonusModifier;
-    }
-
-    public int GetBABBonusModifier()
-    {
-        return baseAttackBonusModifier;
-    }
-
-    public int GetDCBonusModifier()
-    {
-        return dcBonousModifier;
-    }
+    
     public override int GetCombatBAB()
     {
         return GetBAB() + GetBABBonusModifier();
@@ -186,12 +167,12 @@ public class EnemyUnit_V2 : Unit_V2
 
     public override int GetCombatAC()
     {
-        return base.GetCombatAC() + GetACBonusModifier();
+        return GetAC() + GetACBonusModifier();
 
     }
 
     public override int GetCombatDC()
     {
-        return base.GetCombatDC() + GetDCBonusModifier();
+        return GetDC() + GetDCBonusModifier();
     }
 }
